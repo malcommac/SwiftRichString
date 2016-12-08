@@ -10,11 +10,10 @@ import Foundation
 
 public extension UIColor {
 
-	/**
-	The rgba string representation of color with alpha of the form #RRGGBBAA/#RRGGBB, throws error.
 	
-	- parameter rgba: String value.
-	*/
+	/// Initialize a new color using given rgba string representation of color with alpha of the form #RRGGBBAA/#RRGGBB
+	/// Return nil if it no valid.
+	/// - return: valid UIColor or nil
 	public convenience init?(hex: String, alpha: Float, default dColor: UIColor = UIColor.black) {
 		guard hex.hasPrefix("#") else {
 			self.init(cgColor: dColor.cgColor)

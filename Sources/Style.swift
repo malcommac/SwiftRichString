@@ -15,7 +15,7 @@ import Foundation
 /// - `default`: this is the default style. If added to a RichString, default style is applied automatically to the entire string
 ///              before any other defined style is added to given text ranges.
 /// - named: custom style with given name
-public enum StyleType {
+public enum StyleName {
 	case `default`
 	case named(String)
 	
@@ -31,15 +31,14 @@ public enum StyleType {
 
 //MARK: Style
 
-public class Style {
+public func == (lhs: Style, rhs: Style) -> Bool {
+	return lhs.name.value == rhs.name.value
+}
+
+public class Style: Equatable {
 	
-	/// Type of style
-	public var type: StyleType
-	
-	/// Return style's name which is the same of the tag name
-	public var name: String {
-		get { return self.type.value }
-	}
+	/// Identifier of style
+	public var name: StyleName
 	
 	/// Cache of attributes dictionary
 	public fileprivate(set) var attributes: [String:Any] = [:]
@@ -50,20 +49,9 @@ public class Style {
 	///   - type: type of style
 	///   - maker: a closure which allows you to contextually define styles to apply. Use $0.<text_property> to define each property you
 	///            want to apply to style.
-	private init(_ type: StyleType, _ maker: (_ maker: Style) -> (Void) ) {
-		self.type = type
+	private init(_ name: StyleName, _ maker: (_ maker: Style) -> (Void) ) {
+		self.name = name
 		maker(self)
-	}
-	
-	/// Create a new default attribute. Default attribute is applied to the string in first place.
-	/// Any other attribute will be added to this default attribute if present.
-	/// If you don't define a default attribute only other styles may change the attribute of your attributed string.
-	///
-	///   - maker: a closure which allows you to contextually define styles to apply. Use $0.<text_property> to define each property you
-	///            want to apply to style.
-	/// - Returns: a new Style instance
-	public static func `default`(_ maker: (_ maker: Style) -> (Void) ) -> Style {
-		return Style(.default, maker)
 	}
 	
 	/// Create a new custom style with given name and attributes
@@ -78,8 +66,20 @@ public class Style {
 	///			$0.font = FontAttribute(.TimesNewRomanPSMT, size: 50)
 	///			$0.color = UIColor.green
 	///		})
-	public static func new(_ name: String, _ maker: (_ maker: Style) -> (Void) ) -> Style {
-		return Style(.named(name), maker)
+	public init(_ name: String, _ maker: (_ maker: Style) -> (Void) ) {
+		self.name = .named(name)
+		maker(self)
+	}
+	
+	/// Create a new default attribute. Default attribute is applied to the string in first place.
+	/// Any other attribute will be added to this default attribute if present.
+	/// If you don't define a default attribute only other styles may change the attribute of your attributed string.
+	///
+	///   - maker: a closure which allows you to contextually define styles to apply. Use $0.<text_property> to define each property you
+	///            want to apply to style.
+	/// - Returns: a new Style instance
+	public static func `default`(_ maker: (_ maker: Style) -> (Void) ) -> Style {
+		return Style(.default, maker)
 	}
 	
 	/// Set or remove from cached attributes dict value for a specified key

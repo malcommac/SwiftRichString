@@ -10,24 +10,48 @@ import Foundation
 
 //MARK: RichString
 
-public struct RichString {
-	fileprivate(set) var content: String
-	internal var styles: [String : Style] = [:]
+public class RichString {
 	
+	/// Raw content include plain text and given tags
+	public fileprivate(set) var content: String
+
+	/// Styles applied to RichString
+	public internal(set) var styles: [String : Style] = [:]
+
+	/// Cached attributed string, parsed one time and keep until RichString object still alive
+	private var cachedAttributedString: NSMutableAttributedString?
+	
+	/// Initialize a new RichString with given string content and applicable styles
+	///
+	/// - Parameters:
+	///   - content: plain text with tags
+	///   - styles: styles to apply. Styles are applied based upon tags added to the content variabile.
 	public init(_ content: String, _ styles: [Style]?) {
 		self.content = content
 		if let styles = styles {
-			styles.forEach { self.styles[$0.type.value] = $0 }
+			// styles are transformed to dictionary in order to optimize our code
+			styles.forEach { self.styles[$0.name.value] = $0 }
 		}
 	}
+
+	/// Return plain string without tags
+	public var plain: String {
+		get { return content }
+	}
 	
-	public var string: NSMutableAttributedString {
+	/// Return NSMutableAttributed string rendered upon given tags and styles
+	public var text: NSMutableAttributedString {
+		if let cachedAttributedString = self.cachedAttributedString {
+			return cachedAttributedString
+		}
+		
 		do {
-			let (plainText,tags) = try parseContentAndExtractData()
+			let (plainText,tags) = try RichString.parse(self.content)
 			let renderedString = NSMutableAttributedString(string: plainText)
 			
-			// Apply default style if any
-			if let defaultStyle = styles[StyleType.default.value] {
+			// Apply default style if specified
+			// Default style is applied to the entire string before any other style will replace or integrate it based upon tags
+			if let defaultStyle = styles[StyleName.default.value] {
 				renderedString.addAttributes(defaultStyle.attributes, range: NSRange(location: 0, length: renderedString.length))
 			}
 			
@@ -38,19 +62,21 @@ public struct RichString {
 				}
 			}
 			
-			return renderedString
+			self.cachedAttributedString = renderedString
 		} catch {
-			return NSMutableAttributedString()
+			self.cachedAttributedString = NSMutableAttributedString()
 		}
+		return cachedAttributedString!
 	}
 	
-	fileprivate let htmlEntities = ["quot":"\"","amp":"&","apos":"'","lt":"<","gt":">"]
+	/// Custom html entities
+	fileprivate static let htmlEntities = ["quot":"\"","amp":"&","apos":"'","lt":"<","gt":">"]
 	
 	/// This function parse the text content of a string and extract tags entities and plain text
 	///
 	/// - Returns: plain text and list of tags found
-	private func parseContentAndExtractData() throws -> (text: String, tags: [Tag]) {
-		let scanner = StringScanner(self.content)
+	private static func parse(_ content: String) throws -> (text: String, tags: [Tag]) {
+		let scanner = StringScanner(content)
 		var tagStacks: [Tag] = [] // temporary stack
 		var tagsList: [Tag] = [] // final stack with all found tags
 		

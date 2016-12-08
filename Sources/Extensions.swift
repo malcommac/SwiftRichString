@@ -28,7 +28,7 @@ public extension String {
 	/// - Parameter tag: name of the tag
 	/// - Returns: self enclosed between given open/close tag name
 	public func add(tag: String) -> String {
-		return "<\(tag)>self</\(tag)>"
+		return "<\(tag)>\(self)</\(tag)>"
 	}
 	
 	/// Enclose string between passed tag defined by given Style. Each style is defined with its own name
@@ -37,9 +37,33 @@ public extension String {
 	/// - Parameter style: style to apply
 	/// - Returns: self enclosed between given open/close tag name defined in Style
 	public func add(tag style: Style) -> String {
-		return "<\(style.type.value)>self</\(style.type.value)>"
+		return "<\(style.name.value)>\(self)</\(style.name.value)>"
 	}
 	
+	
+	/// Enclose pattern matched strings in self with specified tag and return tagged string.
+	///
+	/// - Parameters:
+	///   - style: style to apply
+	///   - pattern: pattern to search for content to enclose in tag
+	///   - options: options for pattern mathing
+	/// - Returns: enclosed string
+	public func add(tag style: Style, pattern: String, options: NSRegularExpression.Options = .caseInsensitive) -> String {
+		do {
+			var taggedString = self
+			let regex = try NSRegularExpression(pattern: pattern, options: options)
+			let allRange = Range<String.Index>(uncheckedBounds: (self.startIndex,self.endIndex))
+			let matches = regex.matches(in: self, options: NSRegularExpression.MatchingOptions(rawValue: 0), range: self.toNSRange(from: allRange))
+			matches.reversed().forEach({ r in
+				let cRg = self.toStringRange(from: r.range)!
+				let substringToEnclose = taggedString.substring(with: cRg).add(tag: style)
+				taggedString = taggedString.replacingCharacters(in: cRg, with: substringToEnclose)
+			})
+			return taggedString
+		} catch {
+			return self
+		}
+	}
 }
 
 //MARK: String Extensions
@@ -52,7 +76,7 @@ public extension String {
 	///   - style: style to apply
 	///   - range: range to apply (nil means entire string's range)
 	/// - Returns: an NSMutableAttributedString instance
-	public func apply(_ style: Style, range: Range<Int>? = nil) -> NSMutableAttributedString {
+	public func with(_ style: Style, range: Range<Int>? = nil) -> NSMutableAttributedString {
 		guard let range = range else { // apply to entire string
 			return NSMutableAttributedString(string: self, attributes: style.attributes)
 		}
@@ -63,15 +87,75 @@ public extension String {
 		return str
 	}
 	
+	
+	/// Apply attributes in order, as passed. The only exception is .default Style; it will be applied always as first style
+	///
+	/// - Parameter styles: styles to apply
+	/// - Returns: a new attributed string
+	public func with(styles: Style...) -> NSMutableAttributedString {
+		// Get any default style to apply in first place
+		let defaultStyle = styles.filter {
+			if case .default = $0.name { return true }
+			return false
+		}.first
+		let defaultStyleAttributes = defaultStyle?.attributes ?? [:]
+		let attributedString = NSMutableAttributedString(string: self, attributes: defaultStyleAttributes)
+		
+		// Apply any other defined style in order
+		styles.forEach {
+			if defaultStyle != $0 {
+				let range = Range<String.Index>(uncheckedBounds: (self.startIndex,self.endIndex))
+				attributedString.addAttributes($0.attributes, range: self.toNSRange(from: range))
+			}
+		}
+		return attributedString
+	}
+	
+	/// Apply style's attributes to given string with pattern matching specified
+	///
+	/// - Parameters:
+	///   - styles: styles to apply
+	///   - pattern: pattern to search via regexp
+	///   - options: options of pattern matching
+	/// - Returns: a new attributed string instance
+	public func with(styles: Style..., pattern: String, options: NSRegularExpression.Options = .caseInsensitive) -> NSAttributedString {
+		do {
+			let attributedString = NSMutableAttributedString(string: self)
+			let regex = try NSRegularExpression(pattern: pattern, options: options)
+			let allRange = Range<String.Index>(uncheckedBounds: (self.startIndex,self.endIndex))
+			regex.enumerateMatches(in: self, options: NSRegularExpression.MatchingOptions(rawValue: 0), range: self.toNSRange(from: allRange)) {
+				(result : NSTextCheckingResult?, _, _) in
+				if let r = result {
+					styles.forEach({
+						attributedString.addAttributes($0.attributes, range: r.range)
+					})
+				}
+			}
+			return attributedString
+		} catch {
+			return NSMutableAttributedString(string: self)
+		}
+	}
+	
+}
+
+//MARK: String Extensions for RichString
+
+public extension String {
+	
+	/// Create a new RichString by parsing the content of self string and apply given styles
+	///
+	/// - Parameter styles: styles to apply
+	/// - Returns: a new RichString instances
+	public func rich(_ styles: Style...) -> RichString {
+		return RichString(self, styles)
+	}
+	
 }
 
 //MARK: String Extensions for Ranges
 
 public extension String {
-	
-	public func styled(_ styles: Style...) -> RichString {
-		return RichString(self, styles)
-	}
 	
 	public func toNSRange(from range: Range<Int>) -> NSRange {
 		return self.toNSRange(from: self.toStringRange(range: range))

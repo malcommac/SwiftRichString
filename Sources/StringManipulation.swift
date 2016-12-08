@@ -17,7 +17,7 @@ import Foundation
 ///   - rhs: right RichString
 /// - Returns: a new RichString with the content of both lhs and rhs strings and with merged styles
 public func + (lhs: RichString, rhs: RichString) -> RichString {
-	var concatenate = RichString(lhs.content + rhs.content, nil) // concatenate the content
+	let concatenate = RichString(lhs.content + rhs.content, nil) // concatenate the content
 	concatenate.styles = lhs.styles + rhs.styles // sum styles between lhs and rhs (rhs may replace existing lhs's styles)
 	return concatenate
 }
@@ -42,7 +42,7 @@ public extension NSMutableAttributedString {
 	///   - string: string to append
 	///   - style: style to apply to the entire string before appending it to self
 	public func append(string: String, style: Style) {
-		self.append(string.apply(style))
+		self.append(string.with(style))
 	}
 	
 	
@@ -50,7 +50,7 @@ public extension NSMutableAttributedString {
 	///
 	/// - Parameter string: string to append
 	public func append(string: RichString) {
-		self.append(string.string)
+		self.append(string.text)
 	}
 	
 }
