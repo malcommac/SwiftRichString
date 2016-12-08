@@ -3,8 +3,6 @@
 </p>
 
 [![Build Status](https://travis-ci.org/oarrabi/SwiftRichString.svg?branch=master)](https://travis-ci.org/oarrabi/SwiftRichString)
-[![codecov](https://codecov.io/gh/oarrabi/SwiftRichString/branch/master/graph/badge.svg)](https://codecov.io/gh/oarrabi/SwiftRichString)
-[![Platform](https://img.shields.io/badge/platform-osx-lightgrey.svg)](https://travis-ci.org/oarrabi/SwiftRichString)
 [![Platform](https://img.shields.io/badge/platform-ios-lightgrey.svg)](https://travis-ci.org/oarrabi/SwiftRichString)
 [![Language: Swift](https://img.shields.io/badge/language-swift-orange.svg)](https://travis-ci.org/oarrabi/SwiftRichString)
 [![CocoaPods](https://img.shields.io/cocoapods/v/SwiftRichString.svg)](https://cocoapods.org/pods/SwiftRichString)
@@ -12,12 +10,19 @@
 
 
 # SwiftRichString
-`SwiftRichString` is the the way you can manage attributed string painless in Swift.
+`SwiftRichString` is a tiny lightweight library wich allows you to simplify working with `NSAttributedString`. It provides convenient way to create and manage string with complex attributes.
+
+And, best of all, it's fully compatible with unicode (who don't love emoji?).
+
 
 <p align="center" >★★ <b>Star our github repository to help us!</b> ★★</p>
 
-## Main Features
-Some text
+## Usage
+You can work with `SwiftRichString` in two ways:
+* working directly with `NSAttributedString` without
+* by creating `RichString` objects from `String`, parsing 
+
+### 
 
 
 <a name="installation" />
