@@ -33,6 +33,24 @@ public class RichString {
 			styles.forEach { self.styles[$0.name.value] = $0 }
 		}
 	}
+	
+	/// Create RichString from file at specified path
+	///
+	/// - Parameters:
+	///   - path: URL to load
+	///	  - encoding: encoding to use
+	///   - styles: styles to apply. Styles are applied based upon tags added to the content variabile.
+	public init?(_ path: URL, encoding: String.Encoding = .utf8, _ styles: [Style]? = nil) {
+		do {
+			self.content = try String(contentsOf: path, encoding: encoding)
+			if let styles = styles {
+				// styles are transformed to dictionary in order to optimize our code
+				styles.forEach { self.styles[$0.name.value] = $0 }
+			}
+		} catch {
+			return nil
+		}
+	}
 
 	/// Return plain string without tags
 	public var plain: String {

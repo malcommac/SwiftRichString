@@ -47,6 +47,14 @@ let text = "Hello <style1>\(userName)!</style1>, <style2>welcome here!</style2>"
 let renderedText = text.rich(tStyle1,tStyle2).text
 ```
 
+## Load from file
+Obviously you can load your source string from file and apply your own defined styles.
+
+```swift
+let sourceURL = URL(fileURLWithPath: "...")
+let sourceText = RichString(sourceURL, encoding: .utf8, [bold,italic])!
+let renderedText = sourceText.text
+```
 
 ![assets](https://raw.githubusercontent.com/malcommac/SwiftRichString/develop/assets/assets_1.png)
 

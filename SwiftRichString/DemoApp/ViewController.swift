@@ -48,6 +48,10 @@ class ViewController: UIViewController {
 		let userName = "Daniele"
 		let renderText = "Hello " + userName.with(bold) + "! " + "welcome here".with(italic)
 		
+		let sourceURL = URL(fileURLWithPath: "...")
+		let sourceText = RichString(sourceURL, encoding: .utf8, [bold,italic])!
+		let renderedText = sourceText.text
+		
 		// Create and render text
 //		let text = "Hello <bold>\(userName)!</bold>, <italic>welcome here!</italic>"
 //		let renderedText = text.rich(bold,italic).text
