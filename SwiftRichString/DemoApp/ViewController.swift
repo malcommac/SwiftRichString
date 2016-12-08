@@ -19,15 +19,17 @@ class ViewController: UIViewController {
 //			$0.color = UIColor.red
 //		})
 //		
-//		let big = Style("italic", {
-//			$0.font = FontAttribute(.CourierNewPS_ItalicMT, size: 80)
-//		})
+		let big = Style("italic", {
+			$0.font = FontAttribute(.CourierNewPS_ItalicMT, size: 25)
+			$0.strike = NSUnderlineStyle.patternDash
+			$0.strikeColor = UIColor.green
+		})
 		
 		//let c = "Hello".with(italic) + "Daniele".with(bold)
 		//let c = "Hello".with(styles: bold,italic)
 		
-		//let c = "👿🏅pig"
-		//let w = c.with(styles: big, pattern: "pig", options: .caseInsensitive)
+		let c = "👿🏅I'm the winner"
+		let w = c.with(styles: big, pattern: "I'm the winner", options: .caseInsensitive)
 
 //		let c = "prefix12 aaa3 prefix45"
 		//let w = c.with(styles: big, pattern: "fix([0-9])([0-9])", options: .caseInsensitive)
@@ -45,12 +47,15 @@ class ViewController: UIViewController {
 			$0.backColor = UIColor.yellow
 		})
 
-		let userName = "Daniele"
-		let renderText = "Hello " + userName.with(bold) + "! " + "welcome here".with(italic)
+	//	let userName = "Daniele"
+	//	let renderText = "Hello " + userName.with(bold) + "! " + "welcome here".with(italic)
 		
-		let sourceURL = URL(fileURLWithPath: "...")
-		let sourceText = RichString(sourceURL, encoding: .utf8, [bold,italic])!
-		let renderedText = sourceText.text
+		//let text = "Hello Man! Welcome".with(bold, range: 6..<10)
+	
+		
+//		let sourceURL = URL(fileURLWithPath: "...")
+//		let sourceText = RichString(sourceURL, encoding: .utf8, [bold,italic])!
+//		let renderedText = sourceText.text
 		
 		// Create and render text
 //		let text = "Hello <bold>\(userName)!</bold>, <italic>welcome here!</italic>"
@@ -59,7 +64,7 @@ class ViewController: UIViewController {
 //		let c = ("Hello " + userName.add(tag: "bold") + " welcome here".add(tag: italic)).rich(bold,italic).text
 //		
 	//	let c = "<bold>Hello</bold>".rich(bold).text
-		print("\(renderText)")
+		print("")
 		
 	}
 

@@ -22,7 +22,7 @@ You can work with `SwiftRichString` in two ways:
 * working directly with `NSAttributedString` by extending exisisting Cocoa types.
 * by creating `RichString` objects from a tag-based formatted source `Strings`, apply your favorite `Styles` and render them as `NSAttributedString`.
 
-## Attributed String from tag-based string
+## Using Tag-Based Markups
 Sometimes you may have a text you want to render with your own favorite application's styles, like HTML/CSS does with web page.
 With `SwiftRichString` it's really easy; add your favourite tags to your source string, create associated `Style` and apply them.
 Let me show an example:
@@ -47,13 +47,12 @@ let text = "Hello <style1>\(userName)!</style1>, <style2>welcome here!</style2>"
 let renderedText = text.rich(tStyle1,tStyle2).text
 ```
 
-## Load from file
+## Load source string from file
 Obviously you can load your source string from file and apply your own defined styles.
 
 ```swift
 let sourceURL = URL(fileURLWithPath: "...")
-let sourceText = RichString(sourceURL, encoding: .utf8, [bold,italic])!
-let renderedText = sourceText.text
+let renderedText = RichString(sourceURL, encoding: .utf8, [bold,italic])!.text
 ```
 
 ![assets](https://raw.githubusercontent.com/malcommac/SwiftRichString/develop/assets/assets_1.png)
