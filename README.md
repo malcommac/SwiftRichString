@@ -23,7 +23,9 @@ Our framework define only two main entities:
 * `Style` is the central point of `SwiftRichString`: this class allows you to create easily and safety a collection of styles (align, text color, ligature, font etc.).
 In fact the ideal use-case is to create your own set of styles for your app, then apply to your strings.
 
-* `MarkupString` allows you to load a string which is pretty like a web page, where your styles are enclosed between tags; `MarkupString` will parse it for your by generating a valid `NSMutableAttributedString` with your choosed `Styles` array.
+* `MarkupString` allows you to load a string which is pretty like a web page where your content can contain styles enclosed between classic html-style tags (`ie. "<bold>Hello</bold> <nameStyle>\(username)</nameStyle>`). `MarkupString` will parse data for your by generating a valid `NSMutableAttributedString` along your choosed `Styles`.
+
+* Several `NSMutableAttributedString` and `String` extensions allows you to play and combine strings and styles easily without introducing extra structures to your code and by mantaing readability.
 
 ## Define your own `Style`
 `Style` is a class which define attributes you can apply to strings in a type-safe swifty way.
