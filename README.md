@@ -28,24 +28,25 @@ With `SwiftRichString` it's really easy; add your favourite tags to your source 
 Let me show an example:
 
 ```swift
-// Define your own style
+// First of all we want to define all `Style` you want to use in your
+// source string.
 // Each style has its own name (any letter-based identifier) you should use in your source string
-let bold = Style("bold", {
+let tStyle1 = Style("style1", {
   $0.font = FontAttribute(.AvenirNextCondensed_Medium, size: 50)
   $0.color = UIColor.red
 })
-let italic = Style("italic", {
+
+let tStyle2 = Style("style2", {
   $0.font = FontAttribute(.HelveticaNeue_LightItalic, size: 20)
   $0.color = UIColor.green
   $0.backColor = UIColor.yellow
 })
 		
 // Create and render text
-let text = "Hello <bold>\(userName)!</bold>, <italic>welcome here!</italic>"
-let renderedText = text.rich(bold,italic).text
+let text = "Hello <style1>\(userName)!</style1>, <style2>welcome here!</style2>"
+let renderedText = text.rich(tStyle1,tStyle2).text
 ```
 
-You got your `NSAttributedString` easily!
 
 ![assets](https://raw.githubusercontent.com/malcommac/SwiftRichString/develop/assets/assets_1.png)
 
@@ -54,8 +55,8 @@ You can also add tag directly on variables in a safe swifty way, then render it:
 ```swift
 // This produce a tag-based source string by applying bold style to the userName
 // variable and italic style to the rest part on right.
-// You can add a tag to a source string by passing a Style object or simply the name of the style itself.
-let c = ("Hello " + userName.add(tag: "bold") + " welcome here".add(tag: italic)).rich(bold,italic).text
+// You can add a tag to a source string by passing the name of the tag (as for "style1") or directly the instance of the Style itself (as for tStyle2).
+let c = ("Hello " + userName.add(tag: "style1") + " welcome here".add(tag: tStyle2)).rich(tStyle1,tStyle2).text
 ```
 
 <a name="installation" />
