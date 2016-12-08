@@ -57,10 +57,27 @@ class ViewController: UIViewController {
 		
 		//let text = "Hello Man! Welcome".with(bold, range: 6..<10)
 	
+		let text = "Hello".with(style: bold)
 		
 //		let sourceURL = URL(fileURLWithPath: "...")
 //		let sourceText = RichString(sourceURL, encoding: .utf8, [bold,italic])!
 //		let renderedText = sourceText.text
+		
+		let style_bold = Style("bold", {
+			$0.font = FontAttribute(.HelveticaNeue_CondensedBlack, size: 12)
+		})
+		let style_italic = Style("italic", {
+			$0.font = FontAttribute(.HelveticaNeue_LightItalic, size: 12)
+		})
+		let style_exteme = Style("extreme", {
+			$0.font = FontAttribute(.TimesNewRomanPS_BoldItalicMT, size: 12)
+			$0.underlineStyle = NSUnderlineStyle.patternSolid
+			$0.underlineColor = UIColor.red
+		})
+		let s = "The <bold>quick brown fox jumps over the lazy dog</bold> is an <italic>English-language</italic> pangram—a phrase that contains <italic>all</italic> of the letters of the alphabet. It is <extreme><bold>commonly</bold></extreme> used for touch-typing practice."
+		
+		let mk = MarkupString(s, [style_bold,style_italic,style_exteme])
+		let att = mk.text
 		
 		// Create and render text
 //		let text = "Hello <bold>\(userName)!</bold>, <italic>welcome here!</italic>"

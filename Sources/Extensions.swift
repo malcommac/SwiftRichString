@@ -76,7 +76,7 @@ public extension String {
 	///   - style: style to apply
 	///   - range: range to apply (nil means entire string's range)
 	/// - Returns: an NSMutableAttributedString instance
-	public func with(_ style: Style, range: Range<Int>? = nil) -> NSMutableAttributedString {
+	public func with(style: Style, range: Range<Int>? = nil) -> NSMutableAttributedString {
 		guard let range = range else { // apply to entire string
 			return NSMutableAttributedString(string: self, attributes: style.attributes)
 		}

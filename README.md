@@ -51,35 +51,75 @@ let def = Style.default {
 }
 ```
 
-## Apply Styles to `String`/`NSMutableAttributedString`
+## Apply Styles
+
+## Apply Style to `String`
 Styles can be applied directly to `String` instances (by generating `NSMutableAttributedString` automatically) or on existing `NSMutableAttributedString`.
 
 In this example we can combine simple `String` instances and apply your own set of styles:
 
 ```swift
-// Define your own styles
-let bold: Style = Style(...
-let italic: Style = Style(...
-// Create a string with different styles
-let renderText = "Hello " + userName.with(bold) + ".welcome here".with(italic) // you will get a combines NSMutableAttributedString
+// Define your own Style
+let bold: Style: = // ...
+let italic: Style = // ...
+// Combine simple string and apply styles to each
+let attributedString = "Hello " + userName.with(style: bold) + ".welcome here".with(style: italic)
 ```
 
 ![assets](https://raw.githubusercontent.com/malcommac/SwiftRichString/develop/assets/assets_2.png)
 
-## Apply styles on substring
-You can also apply one or more styles to a string by passing a valid range.
+## Apply style on substring with `Range`
+You can also apply one or more styles to a substring by passing a valid range.
 In this example we want to apply bold style to the "Man!" substring.
 
 ```swift
-let renderText = "Hello Man! Welcome".with(bold, range: 6..<10)
+let renderText = "Hello Man! Welcome".with(style: bold, range: 6..<10)
 ```
-![assets](https://raw.githubusercontent.com/malcommac/SwiftRichString/develop/assets/assets_3.png)
 
-## apply style on substring using Regular Expression
-Regular expressions are also supported; you can add your own style/s to matched strings:
+## Apply style/s on substring with `NSRegularExpression`
+Regular expressions are also supported; you can add your own style/s to matched strings.
+`SwiftRichString` has fully unicode support.
 
 ```swift
-let renderText = "Hello Man! Welcome".with(bold, range: 6..<10)
+let sourceText = "👿🏅the winner"
+let attributedString = sourceText.with(styles: myStyle, pattern: "the winner", options: .caseInsensitive)
+
+// another example
+let sourceText = "prefix12 aaa3 prefix45"
+let attributedText = c.with(styles: myStyle, pattern: "fix([0-9])([0-9])", options: .caseInsensitive)
+```
+
+## Combine Strings and Attributed Strings
+You can combine `String` and `NSMutableAttributedString` easily with `+` operator.
+
+For example:
+```swift
+let part1 = "Hello"
+let part2 = "Mario"
+let part3 = "Welcome here!"
+
+// You can combine simple String and `NSMutableAttributedString`
+// Resulting is an `NSMutableAttributedString` instance.
+let result = part1 + " " + part2.with(style: bold) + " " + part3
+```
+
+You can avoid creating new instances of `NSMutableAttributedString` and change directly your instance:
+
+```swift
+let attributedText = "Welcome".with(style: bold)
+// Render a simple string with given style and happend it to the previous instance
+attributedText.append(string: " mario! ", style: bold)
+```
+
+Is possible to append a `MarkupString` to an `NSMutableAttributedString` instance:
+
+```swift
+let sourceURL = URL(fileURLWithPath: "...")
+let markUpObj = RichString(sourceURL, encoding: .utf8, [bold,italic])!
+
+let finalAttributed = "Welcome!".with(style: bold)
+// Create an `NSMutableAttributedString` render from markUpObj and append it to the instance
+finalAttributed.append(markup: markUpObj)
 ```
 
 ## Using Tag-Based Markups
@@ -107,8 +147,42 @@ let text = "Hello <style1>\(userName)!</style1>, <style2>welcome here!</style2>"
 let renderedText = text.rich(tStyle1,tStyle2).text
 ```
 
-## Load source string from file
-Obviously you can load your source string from file and apply your own defined styles.
+## Load source string and render it using `MarkupString`
+`MarkupString` allows you to load an tags-based string (even from a file, a literals or content from url) and parse it by applying with your own styles.
+
+Suppose you have this text:
+
+```html
+The <bold>quick brown fox jumps over the lazy dog</bold>" is an <italic>English-language</italic>
+pangram—a phrase that contains <italic>all</italic> of the letters of the alphabet.
+It is <extreme><bold>commonly</bold></extreme> used for touch-typing practice. 
+```
+
+This text defines following styles: `"bold", "italic" and "extreme"`.
+
+So, in order to render your text you may want create `Style` instances which represent these tags:
+
+```swift
+let style_bold = Style("bold", {
+  $0.font = FontAttribute(.HelveticaNeue_CondensedBlack, size: 12)
+})
+
+let style_italic = Style("italic", {
+  $0.font = FontAttribute(.HelveticaNeue_LightItalic, size: 12)
+})
+
+let style_exteme = Style("extreme", {
+  $0.font = FontAttribute(.TimesNewRomanPS_BoldItalicMT, size: 12)
+  $0.underlineStyle = NSUnderlineStyle.patternSolid
+  $0.underlineColor = UIColor.red
+})
+
+let sourceString = // The <bold>quick brown...
+// Parse and get the `NSMutableAttributedString` instance
+let mk = MarkupString(s, [style_bold,style_italic,style_exteme]).text
+```
+
+Clearly you can load string also from file at specified `URL`:
 
 ```swift
 let sourceURL = URL(fileURLWithPath: "...")
@@ -116,19 +190,6 @@ let renderedText = RichString(sourceURL, encoding: .utf8, [bold,italic])!.text
 ```
 
 ![assets](https://raw.githubusercontent.com/malcommac/SwiftRichString/develop/assets/assets_1.png)
-
-## Add tags to strings
-You can also add tag directly on variables in a safe swifty way, then render it:
-
-```swift
-// This produce a tag-based source string by applying bold style to the userName
-// variable and italic style to the rest part on right.
-// You can add a tag to a source string by passing the name of the tag (as for "style1") or directly the instance of the Style itself (as for tStyle2).
-let src = ("Hello " + userName.add(tag: "style1") + " welcome here".add(tag: tStyle2))
-// Create `RichString` and use `.text` to render it as `NSAttributedString`
-let renderedText = src.rich(tStyle1,tStyle2).text
-```
-
 
 <a name="installation" />
 ## Installation

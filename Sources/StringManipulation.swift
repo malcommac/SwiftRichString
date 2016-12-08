@@ -54,14 +54,13 @@ public extension NSMutableAttributedString {
 	///   - string: string to append
 	///   - style: style to apply to the entire string before appending it to self
 	public func append(string: String, style: Style) {
-		self.append(string.with(style))
-	}
-	
+		self.append(string.with(style: style))
+	}	
 	
 	/// Append a MarkupString instance to an exesting NSMutableAttributedString (self)
 	///
 	/// - Parameter string: string to append
-	public func append(string: MarkupString) {
+	public func append(markup string: MarkupString) {
 		self.append(string.text)
 	}
 	
