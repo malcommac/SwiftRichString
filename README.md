@@ -213,7 +213,7 @@ let style_exteme = Style("extreme", {
 let sourceTaggedString = "<center>The quick brown fox ...
 let parser = MarkupString(sourceTaggedString, [style_center,style_italic,style_exteme,style_bold])
 // Render attributes string
-// Result is cached and parsing is performed only when requested, only first time.
+// Result is parsed only upon requested, only first time (then it will be cached).
 let att = parser.text
 ```
 

@@ -290,10 +290,12 @@ public class Style: Equatable {
 	}
 	
 	/// The value of this attribute is an NSShadow object. The default value of this property is nil.
+	#if os(iOS) || os(macOS)
 	public var shadow: ShadowAttribute? {
 		set { self.set(key: NSShadowAttributeName, value: newValue?.shadowObj) }
 		get { return ShadowAttribute(shadow: attributes[NSShadowAttributeName] as? NSShadow) }
 	}
+	#endif
 	
 	/// The value of this attribute is an NSString object. Use this attribute to specify a text effect, such as NSTextEffectLetterpressStyle.
 	/// The default value of this property is nil, indicating no text effect.
@@ -302,9 +304,11 @@ public class Style: Equatable {
 	}
 	
 	/// The value of this attribute is an NSTextAttachment object. The default value of this property is nil, indicating no attachment.
+	#if os(iOS) || os(macOS)
 	public var attach: NSTextAttachment? {
 		didSet { self.set(key: NSAttachmentAttributeName, value: self.attach) }
 	}
+	#endif
 	
 	/// The value of this attribute is an NSURL object (preferred) or an NSString object. The default value of this property is nil, indicating no link.
 	public var linkURL: URL? {
