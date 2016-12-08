@@ -151,6 +151,10 @@ public extension String {
 		return RichString(self, styles)
 	}
 	
+	public func rich() -> RichString {
+		return RichString(self)
+	}
+	
 }
 
 //MARK: String Extensions for Ranges

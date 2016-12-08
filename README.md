@@ -49,6 +49,15 @@ You got your `NSAttributedString` easily!
 
 ![assets](https://raw.githubusercontent.com/malcommac/SwiftRichString/develop/assets/assets_1.png)
 
+You can also add tag directly on variables in a safe swifty way, then render it:
+
+```swift
+// This produce a tag-based source string by applying bold style to the userName
+// variable and italic style to the rest part on right.
+// You can add a tag to a source string by passing a Style object or simply the name of the style itself.
+let c = ("Hello " + userName.add(tag: "bold") + " welcome here".add(tag: italic)).rich(bold,italic).text
+```
+
 <a name="installation" />
 ## Installation
 You can install Swiftline using CocoaPods, carthage and Swift package manager

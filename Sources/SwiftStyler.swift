@@ -26,7 +26,7 @@ public class RichString {
 	/// - Parameters:
 	///   - content: plain text with tags
 	///   - styles: styles to apply. Styles are applied based upon tags added to the content variabile.
-	public init(_ content: String, _ styles: [Style]?) {
+	public init(_ content: String, _ styles: [Style]? = nil) {
 		self.content = content
 		if let styles = styles {
 			// styles are transformed to dictionary in order to optimize our code

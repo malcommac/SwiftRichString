@@ -50,6 +50,8 @@ class ViewController: UIViewController {
 		let text = "Hello <bold>\(userName)!</bold>, <italic>welcome here!</italic>"
 		let renderedText = text.rich(bold,italic).text
 		
+		let c = ("Hello " + userName.add(tag: "bold") + " welcome here".add(tag: italic)).rich(bold,italic).text
+		
 	//	let c = "<bold>Hello</bold>".rich(bold).text
 		print("\(renderedText)")
 		
