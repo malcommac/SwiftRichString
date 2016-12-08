@@ -41,7 +41,7 @@ public class Style: Equatable {
 	public var name: StyleName
 	
 	/// Cache of attributes dictionary
-	public fileprivate(set) var attributes: [String:Any] = [:]
+	public fileprivate(set) var attributes: [String:Any] = [NSParagraphStyleAttributeName : NSMutableParagraphStyle()]
 	
 	/// Initialize a new style with given type
 	///
@@ -95,9 +95,15 @@ public class Style: Equatable {
 		attributes[key] = setValue
 	}
 	
+	private func remove(key: String) {
+		attributes.removeValue(forKey: key)
+	}
+	
 	/// Private cached ParagraphStyle instance
-	private var paragraph: NSMutableParagraphStyle = NSMutableParagraphStyle() {
-		didSet { self.set(key: NSParagraphStyleAttributeName, value: self.paragraph) }
+	private var paragraph: NSMutableParagraphStyle {
+		get {
+			return attributes[NSParagraphStyleAttributeName] as! NSMutableParagraphStyle
+		}
 	}
 	
 	/// The text alignment of the receiver.
@@ -249,29 +255,38 @@ public class Style: Equatable {
 		didSet { self.set(key: NSStrikethroughColorAttributeName, value: self.strikeColor) }
 	}
 	
-	/// This value indicates whether the text is underlined and corresponds to one of the constants described in NSUnderlineStyle.
-	/// The default value for this attribute is styleNone.
-	public var underlineStyle: NSUnderlineStyle? {
-		didSet { self.set(key: NSUnderlineStyleAttributeName, value: self.underlineStyle) }
+	/// Define the underline attributes of the text
+	public var underline: UnderlineAttribute? {
+		set {
+			guard let underline = newValue else {
+				self.remove(key: NSUnderlineStyleAttributeName)
+				self.remove(key: NSUnderlineColorAttributeName)
+				return
+			}
+			self.set(key: NSUnderlineStyleAttributeName, value: underline.style?.rawValue)
+			self.set(key: NSUnderlineColorAttributeName, value: underline.color)
+		}
+		get {
+			return UnderlineAttribute(color: attributes[NSUnderlineColorAttributeName] as? UIColor,
+			                          style: attributes[NSUnderlineStyleAttributeName] as? NSUnderlineStyle)
+		}
 	}
 	
-	/// The value of this attribute is a UIColor object. The default value is nil, indicating same as foreground color.
-	public var underlineColor: UIColor? {
-		didSet { self.set(key: NSUnderlineColorAttributeName, value: self.underlineColor) }
-	}
-	
-	/// The value of this parameter is a UIColor object. If it is not defined (which is the case by default),
-	/// it is assumed to be the same as the value of NSForegroundColorAttributeName; otherwise, it describes the outline color.
-	/// For more details, see Drawing attributed strings that are both filled and stroked.
-	public var strokeColor: UIColor? {
-		didSet { self.set(key: NSStrokeColorAttributeName, value: self.strokeColor) }
-	}
-	
-	/// This value represents the amount to change the stroke width and is specified as a percentage of the font point size.
-	/// Specify 0 (the default) for no additional changes. Specify positive values to change the stroke width alone.
-	/// Specify negative values to stroke and fill the text. For example, a typical value for outlined text would be 3.0.
-	public var strokeWidth: Float? {
-		didSet { self.set(key: NSStrokeWidthAttributeName, value: self.strokeWidth) }
+	/// Define stroke attributes
+	public var stroke: StrokeAttribute? {
+		set {
+			guard let stroke = newValue else {
+				self.remove(key: NSStrokeColorAttributeName)
+				self.remove(key: NSStrokeWidthAttributeName)
+				return
+			}
+			self.set(key: NSStrokeWidthAttributeName, value: stroke.width)
+			self.set(key: NSStrokeColorAttributeName, value: stroke.color)
+		}
+		get {
+			return StrokeAttribute(color: attributes[NSStrokeColorAttributeName] as? UIColor,
+			                       width: attributes[NSStrokeWidthAttributeName] as? CGFloat)
+		}
 	}
 	
 	/// The value of this attribute is an NSShadow object. The default value of this property is nil.
@@ -382,6 +397,44 @@ public struct ShadowAttribute {
 	public var shadowObj: NSShadow {
 		return self.shadow
 	}
+}
+
+//MARK: StrokeAttribute
+
+public struct StrokeAttribute {
+	
+	/// If it is not defined (which is the case by default), 
+	// it is assumed to be the same as the value of color; otherwise, it describes the outline color.
+	public let color: UIColor?
+	
+	/// This value represents the amount to change the stroke width and is specified as a percentage
+	/// of the font point size. Specify 0 (the default) for no additional changes. Specify positive values to change the 
+	/// stroke width alone. Specify negative values to stroke and fill the text. For example, a typical value for 
+	/// outlined text would be 3.0.
+	public let width: CGFloat?
+	
+	public init(color: UIColor?, width: CGFloat?) {
+		self.color = color
+		self.width = width
+	}
+
+}
+
+//MARK: UnderlineAttribute
+
+public struct UnderlineAttribute {
+	/// The value of this attribute is a UIColor object. The default value is nil, indicating same as foreground color.
+	public let color: UIColor?
+	
+	/// This value indicates whether the text is underlined and corresponds to one of the constants described in NSUnderlineStyle.
+	/// The default value for this attribute is styleNone.
+	public let style: NSUnderlineStyle?
+	
+	public init(color: UIColor?, style: NSUnderlineStyle?) {
+		self.color = color
+		self.style = style
+	}
+
 }
 
 //MARK: FontAttribute

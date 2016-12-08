@@ -183,33 +183,38 @@ let renderedText = text.parse(tStyle1,tStyle2).text
 Suppose you have this text:
 
 ```html
-The <bold>quick brown fox jumps over the lazy dog</bold>" is an <italic>English-language</italic>
-pangram—a phrase that contains <italic>all</italic> of the letters of the alphabet.
-It is <extreme><bold>commonly</bold></extreme> used for touch-typing practice. 
+<center>The quick brown fox</center>\njumps over the lazy dogis an <italic>English-language</italic> pangram—a phrase that contains <italic>all</italic> of the letters of the alphabet. It is <extreme><bold>commonly</bold></extreme> used for touch-typing practice.
 ```
 
-This text defines following styles: `"bold", "italic" and "extreme"`.
+This text defines following styles: `"center", "bold", "italic" and "extreme"`.
 
 So, in order to render your text you may want create `Style` instances which represent these tags:
 
 ```swift
 let style_bold = Style("bold", {
-  $0.font = FontAttribute(.HelveticaNeue_CondensedBlack, size: 12)
+  $0.font = FontAttribute(.Futura_CondensedExtraBold, size: 15)
+})
+
+let style_center = Style("center", {
+  $0.font = FontAttribute(.Menlo_Regular, size: 15)
+  $0.align = .center
 })
 
 let style_italic = Style("italic", {
-  $0.font = FontAttribute(.HelveticaNeue_LightItalic, size: 12)
+  $0.font = FontAttribute(.HelveticaNeue_LightItalic, size: 15)
+  $0.color = UIColor.red
 })
 
 let style_exteme = Style("extreme", {
-  $0.font = FontAttribute(.TimesNewRomanPS_BoldItalicMT, size: 12)
-  $0.underlineStyle = NSUnderlineStyle.patternSolid
-  $0.underlineColor = UIColor.red
+  $0.font = FontAttribute(.TimesNewRomanPS_BoldItalicMT, size: 40)
+  $0.underline = UnderlineAttribute(color: UIColor.blue, style: NSUnderlineStyle.styleSingle)
 })
 
-let sourceString = // The <bold>quick brown...
-// Parse and get the `NSMutableAttributedString` instance
-let mk = MarkupString(s, [style_bold,style_italic,style_exteme]).text
+let sourceTaggedString = "<center>The quick brown fox ...
+let parser = MarkupString(sourceTaggedString, [style_center,style_italic,style_exteme,style_bold])
+// Render attributes string
+// Result is cached and parsing is performed only when requested, only first time.
+let att = parser.text
 ```
 
 Clearly you can load string also from file at specified `URL`:
