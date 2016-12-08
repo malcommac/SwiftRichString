@@ -28,24 +28,26 @@ With `SwiftRichString` it's really easy; add your favourite tags to your source 
 Let me show an example:
 
 ```swift
-
 // Define your own style
-// Each style has its own name you should use in your source string
+// Each style has its own name (any letter-based identifier) you should use in your source string
 let bold = Style("bold", {
-  $0.font = FontAttribute(.Copperplate, size: 50)
+  $0.font = FontAttribute(.AvenirNextCondensed_Medium, size: 50)
   $0.color = UIColor.red
 })
 let italic = Style("italic", {
-  $0.font = FontAttribute(.Courier, size: 20)
+  $0.font = FontAttribute(.HelveticaNeue_LightItalic, size: 20)
   $0.color = UIColor.green
+  $0.backColor = UIColor.yellow
 })
-
+		
 // Create and render text
-let text = "Hello <bold>\(userName)</bold>, <italic>welcome here!</italic>"
-let renderedText = text.rich(bold,italic)
+let text = "Hello <bold>\(userName)!</bold>, <italic>welcome here!</italic>"
+let renderedText = text.rich(bold,italic).text
 ```
 
 You got your `NSAttributedString` easily!
+
+![assets](https://raw.githubusercontent.com/malcommac/SwiftRichString/develop/assets/assets_1.png)
 
 <a name="installation" />
 ## Installation
