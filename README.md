@@ -17,12 +17,12 @@ And, best of all, it's fully compatible with unicode (who don't love emoji?).
 
 <p align="center" >★★ <b>Star our github repository to help us!</b> ★★</p>
 
-## Documentation
+# Documentation
 You can work with `SwiftRichString` in two ways:
 * working directly with `NSAttributedString` by extending exisisting Cocoa types.
 * by creating `RichString` objects from a tag-based formatted source `Strings`, apply your favorite `Styles` and render them as `NSAttributedString`.
 
-### Create Attributed String from tag-based markup language
+## Attributed String from tag-based string
 Sometimes you may have a text you want to render with your own favorite application's styles, like HTML/CSS does with web page.
 With `SwiftRichString` it's really easy; add your favourite tags to your source string, create associated `Style` and apply them.
 Let me show an example:
@@ -50,14 +50,29 @@ let renderedText = text.rich(tStyle1,tStyle2).text
 
 ![assets](https://raw.githubusercontent.com/malcommac/SwiftRichString/develop/assets/assets_1.png)
 
+## Add tags to strings
 You can also add tag directly on variables in a safe swifty way, then render it:
 
 ```swift
 // This produce a tag-based source string by applying bold style to the userName
 // variable and italic style to the rest part on right.
 // You can add a tag to a source string by passing the name of the tag (as for "style1") or directly the instance of the Style itself (as for tStyle2).
-let c = ("Hello " + userName.add(tag: "style1") + " welcome here".add(tag: tStyle2)).rich(tStyle1,tStyle2).text
+let src = ("Hello " + userName.add(tag: "style1") + " welcome here".add(tag: tStyle2))
+// Create `RichString` and use `.text` to render it as `NSAttributedString`
+let renderedText = src.rich(tStyle1,tStyle2).text
 ```
+
+## Working directly on `NSAttributedString`
+You can also work directly on `NSAttributedString` instances without using `RichString` objects by concatenating String and NSMutableAttributedString.
+
+So, for example:
+```swift
+let renderText = "Hello " + userName.with(bold) + ".welcome here".with(italic)
+```
+
+![assets](https://raw.githubusercontent.com/malcommac/SwiftRichString/develop/assets/assets_2.png)
+
+
 
 <a name="installation" />
 ## Installation

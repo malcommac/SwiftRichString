@@ -44,16 +44,18 @@ class ViewController: UIViewController {
 			$0.color = UIColor.green
 			$0.backColor = UIColor.yellow
 		})
+
+		let userName = "Daniele"
+		let renderText = "Hello " + userName.with(bold) + "! " + "welcome here".with(italic)
 		
 		// Create and render text
-		let userName = "Daniele"
-		let text = "Hello <bold>\(userName)!</bold>, <italic>welcome here!</italic>"
-		let renderedText = text.rich(bold,italic).text
-		
-		let c = ("Hello " + userName.add(tag: "bold") + " welcome here".add(tag: italic)).rich(bold,italic).text
-		
+//		let text = "Hello <bold>\(userName)!</bold>, <italic>welcome here!</italic>"
+//		let renderedText = text.rich(bold,italic).text
+//		
+//		let c = ("Hello " + userName.add(tag: "bold") + " welcome here".add(tag: italic)).rich(bold,italic).text
+//		
 	//	let c = "<bold>Hello</bold>".rich(bold).text
-		print("\(renderedText)")
+		print("\(renderText)")
 		
 	}
 

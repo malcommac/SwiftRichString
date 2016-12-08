@@ -34,6 +34,18 @@ public func + (lhs: NSMutableAttributedString, rhs: NSMutableAttributedString) -
 	return final
 }
 
+public func + (lhs: String, rhs: NSMutableAttributedString) -> NSMutableAttributedString {
+	let final = NSMutableAttributedString(string: lhs)
+	final.append(rhs)
+	return final
+}
+
+public func + (lhs: NSMutableAttributedString, rhs: String) -> NSMutableAttributedString {
+	let final = NSMutableAttributedString(attributedString: lhs)
+	final.append(NSMutableAttributedString(string: rhs))
+	return final
+}
+
 public extension NSMutableAttributedString {
 	
 	/// Append a plain string with given attributes to an existing NSMutableAttributedString (self)
