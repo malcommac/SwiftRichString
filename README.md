@@ -10,7 +10,7 @@
 
 
 # SwiftRichString
-`SwiftRichString` is a tiny lightweight library wich allows you to simplify working with `NSAttributedString`. It provides convenient way to create and manage string with complex attributes.
+`SwiftRichString` is a lightweight library wich allows you to simplify your work  with attributed strings in UIKit. It provides convenient way to create and manage string with complex attributes, render tag-based string and manipulate styles at specified indexes.
 
 And, best of all, it's fully compatible with unicode (who don't love emoji?).
 
@@ -24,18 +24,20 @@ Features Documentation
 * **[Apply Style to `String`](#applystyletostring)**
 * **[Apply style on substring with `Range`](#applystylerange)**
 * **[Apply style/s on substring with `NSRegularExpression`](#applystyleregexp)**
-* **[Combine Strings and Attributed Strings`](#combinestrings)**
+* **[Combine `Strings` and `Attributed Strings`](#combinestrings)**
 * **[Create Tag-Based Strings](#createtagbased)**
 * **[Render Tag-Based Strings](#rendertagbased)**
 
 Other
 -------
-* **[Installation (CocoaPods, Carthage and Swift PM)](#installation)**
+* **[Installation (via CocoaPods, Carthage or Swift PM)](#installation)**
 * **[Requirements](#requirements)**
 * **[Credits & License](#credits)**
 
 <a name="introduction" />
-# Documentation
+
+# Introduction
+
 `SwiftRichString` integrate seamlessy into UIKit by allowing you to manage, combine and apply styles directly on `NSMutableAttributedString` instances.
 Our framework define only two main entities:
 
@@ -47,6 +49,7 @@ In fact the ideal use-case is to create your own set of styles for your app, the
 * Several `NSMutableAttributedString` and `String` extensions allows you to play and combine strings and styles easily without introducing extra structures to your code and by mantaing readability.
 
 <a name="definestyle" />
+
 ## Define your own `Style`
 `Style` is a class which define attributes you can apply to strings in a type-safe swifty way.
 Each style has a name and a set of attributes you can set.
@@ -71,9 +74,8 @@ let def = Style.default {
 }
 ```
 
-## Apply Styles
-
 <a name="applystyletostring" />
+
 ## Apply Style to `String`
 Styles can be applied directly to `String` instances (by generating `NSMutableAttributedString` automatically) or on existing `NSMutableAttributedString`.
 
@@ -90,6 +92,7 @@ let attributedString = "Hello " + userName.with(style: bold) + ".welcome here".w
 ![assets](https://raw.githubusercontent.com/malcommac/SwiftRichString/develop/assets/assets_2.png)
 
 <a name="applystylerange" />
+
 ## Apply style on substring with `Range`
 You can also apply one or more styles to a substring by passing a valid range.
 In this example we want to apply bold style to the "Man!" substring.
@@ -99,6 +102,7 @@ let renderText = "Hello Man! Welcome".with(style: bold, range: 6..<10)
 ```
 
 <a name="applystyleregexp" />
+
 ## Apply style/s on substring with `NSRegularExpression`
 Regular expressions are also supported; you can add your own style/s to matched strings.
 `SwiftRichString` has fully unicode support.
@@ -112,6 +116,7 @@ let sourceText = "prefix12 aaa3 prefix45"
 let attributedText = c.with(styles: myStyle, pattern: "fix([0-9])([0-9])", options: .caseInsensitive)
 ```
 <a name="combinestrings" />
+
 ## Combine Strings and Attributed Strings
 You can combine `String` and `NSMutableAttributedString` easily with `+` operator.
 
@@ -145,6 +150,7 @@ let finalAttributed = "Welcome!".with(style: bold)
 finalAttributed.append(markup: markUpObj)
 ```
 <a name="createtagbased" />
+
 ## Create Tag-Based Strings
 Sometimes you may have a text you want to render with your own favorite application's styles, like HTML/CSS does with web page.
 With `SwiftRichString` it's really easy; add your favourite tags to your source string, create associated `Style` and apply them.
@@ -170,6 +176,7 @@ let text = "Hello <style1>\(userName)!</style1>, <style2>welcome here!</style2>"
 let renderedText = text.parse(tStyle1,tStyle2).text
 ```
 <a name="rendertagfile" />
+
 ## Render Tag-Based Strings
 `MarkupString` allows you to load an tags-based string (even from a file, a literals or content from url) and parse it by applying with your own styles.
 
@@ -213,6 +220,7 @@ let renderedText = RichString(sourceURL, encoding: .utf8, [bold,italic])!.text
 ```
 
 <a name="installation" />
+
 ## Installation
 You can install Swiftline using CocoaPods, carthage and Swift package manager
 
@@ -237,6 +245,7 @@ Add swiftline as dependency in your `Package.swift`
 ```
 
 <a name="tests" />
+
 ## Tests
 Tests can be found [here](https://github.com/malcommac/SwiftRichString/tree/master/Tests). 
 
@@ -246,6 +255,7 @@ swift test
 ```
 
 <a name="requirements" />
+
 ## Requirements
 
 Current version is compatible with:
@@ -259,6 +269,7 @@ Current version is compatible with:
 
 
 <a name="credits" />
+
 ## Credits & License
 SwiftRichString is owned and maintained by [Daniele Margutti](http://www.danielemargutti.com/).
 
