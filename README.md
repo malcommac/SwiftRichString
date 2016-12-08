@@ -17,13 +17,35 @@ And, best of all, it's fully compatible with unicode (who don't love emoji?).
 
 <p align="center" >★★ <b>Star our github repository to help us!</b> ★★</p>
 
-## Usage
+## Documentation
 You can work with `SwiftRichString` in two ways:
-* working directly with `NSAttributedString` without
-* by creating `RichString` objects from `String`, parsing 
+* working directly with `NSAttributedString` by extending exisisting Cocoa types.
+* by creating `RichString` objects from a tag-based formatted source `Strings`, apply your favorite `Styles` and render them as `NSAttributedString`.
 
-### 
+### Create Attributed String from tag-based markup language
+Sometimes you may have a text you want to render with your own favorite application's styles, like HTML/CSS does with web page.
+With `SwiftRichString` it's really easy; add your favourite tags to your source string, create associated `Style` and apply them.
+Let me show an example:
 
+```swift
+
+// Define your own style
+// Each style has its own name you should use in your source string
+let bold = Style("bold", {
+  $0.font = FontAttribute(.Copperplate, size: 50)
+  $0.color = UIColor.red
+})
+let italic = Style("italic", {
+  $0.font = FontAttribute(.Courier, size: 20)
+  $0.color = UIColor.green
+})
+
+// Create and render text
+let text = "Hello <bold>\(userName)</bold>, <italic>welcome here!</italic>"
+let renderedText = text.rich(bold,italic)
+```
+
+You got your `NSAttributedString` easily!
 
 <a name="installation" />
 ## Installation
