@@ -23,13 +23,14 @@ class ViewController: UIViewController {
 			$0.font = FontAttribute(.CourierNewPS_ItalicMT, size: 25)
 			$0.strike = NSUnderlineStyle.patternDash
 			$0.strikeColor = UIColor.green
+			$0.color = UIColor.red
 		})
 		
 		//let c = "Hello".with(italic) + "Daniele".with(bold)
 		//let c = "Hello".with(styles: bold,italic)
 		
-		let c = "👿🏅I'm the winner"
-		let w = c.with(styles: big, pattern: "I'm the winner", options: .caseInsensitive)
+		let c = "👿🏅the winner"
+		let w = c.with(styles: big, pattern: "the winner", options: .caseInsensitive)
 
 //		let c = "prefix12 aaa3 prefix45"
 		//let w = c.with(styles: big, pattern: "fix([0-9])([0-9])", options: .caseInsensitive)

@@ -139,20 +139,20 @@ public extension String {
 	
 }
 
-//MARK: String Extensions for RichString
+//MARK: String Extensions for MarkupString
 
 public extension String {
 	
-	/// Create a new RichString by parsing the content of self string and apply given styles
+	/// Create a new MarkupString by parsing the content of self string and apply given styles
 	///
 	/// - Parameter styles: styles to apply
-	/// - Returns: a new RichString instances
-	public func rich(_ styles: Style...) -> RichString {
-		return RichString(self, styles)
+	/// - Returns: a new MarkupString instances
+	public func parse(_ styles: Style...) -> MarkupString {
+		return MarkupString(self, styles)
 	}
 	
-	public func rich() -> RichString {
-		return RichString(self)
+	public func parse() -> MarkupString {
+		return MarkupString(self)
 	}
 	
 }

@@ -12,7 +12,7 @@ import Foundation
 
 /// StyleType define the type of a style
 ///
-/// - `default`: this is the default style. If added to a RichString, default style is applied automatically to the entire string
+/// - `default`: this is the default style. If added to a MarkupString, default style is applied automatically to the entire string
 ///              before any other defined style is added to given text ranges.
 /// - named: custom style with given name
 public enum StyleName {

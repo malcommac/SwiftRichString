@@ -8,20 +8,20 @@
 
 import Foundation
 
-//MARK: RichString
+//MARK: MarkupString
 
-public class RichString {
+public class MarkupString {
 	
 	/// Raw content include plain text and given tags
 	public fileprivate(set) var content: String
 
-	/// Styles applied to RichString
+	/// Styles applied to MarkupString
 	public internal(set) var styles: [String : Style] = [:]
 
-	/// Cached attributed string, parsed one time and keep until RichString object still alive
+	/// Cached attributed string, parsed one time and keep until MarkupString object still alive
 	private var cachedAttributedString: NSMutableAttributedString?
 	
-	/// Initialize a new RichString with given string content and applicable styles
+	/// Initialize a new MarkupString with given string content and applicable styles
 	///
 	/// - Parameters:
 	///   - content: plain text with tags
@@ -34,7 +34,7 @@ public class RichString {
 		}
 	}
 	
-	/// Create RichString from file at specified path
+	/// Create MarkupString from file at specified path
 	///
 	/// - Parameters:
 	///   - path: URL to load
@@ -64,7 +64,7 @@ public class RichString {
 		}
 		
 		do {
-			let (plainText,tags) = try RichString.parse(self.content)
+			let (plainText,tags) = try MarkupString.parse(self.content)
 			let renderedString = NSMutableAttributedString(string: plainText)
 			
 			// Apply default style if specified

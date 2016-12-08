@@ -8,16 +8,16 @@
 
 import Foundation
 
-/// Sum two RichString and produce a new string sum of both passed.
+/// Sum two MarkupString and produce a new string sum of both passed.
 /// Remember: [Style] associated with lhs will be merged with [Style] associated with rhs string and
 /// may be replaced when name is the same between two Styles.
 ///
 /// - Parameters:
-///   - lhs: left RichString
-///   - rhs: right RichString
-/// - Returns: a new RichString with the content of both lhs and rhs strings and with merged styles
-public func + (lhs: RichString, rhs: RichString) -> RichString {
-	let concatenate = RichString(lhs.content + rhs.content, nil) // concatenate the content
+///   - lhs: left MarkupString
+///   - rhs: right MarkupString
+/// - Returns: a new MarkupString with the content of both lhs and rhs strings and with merged styles
+public func + (lhs: MarkupString, rhs: MarkupString) -> MarkupString {
+	let concatenate = MarkupString(lhs.content + rhs.content, nil) // concatenate the content
 	concatenate.styles = lhs.styles + rhs.styles // sum styles between lhs and rhs (rhs may replace existing lhs's styles)
 	return concatenate
 }
@@ -58,10 +58,10 @@ public extension NSMutableAttributedString {
 	}
 	
 	
-	/// Append a RichString instance to an exesting NSMutableAttributedString (self)
+	/// Append a MarkupString instance to an exesting NSMutableAttributedString (self)
 	///
 	/// - Parameter string: string to append
-	public func append(string: RichString) {
+	public func append(string: MarkupString) {
 		self.append(string.text)
 	}
 	

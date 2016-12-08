@@ -14,13 +14,42 @@
 
 And, best of all, it's fully compatible with unicode (who don't love emoji?).
 
-
 <p align="center" >★★ <b>Star our github repository to help us!</b> ★★</p>
 
 # Documentation
-You can work with `SwiftRichString` in two ways:
-* working directly with `NSAttributedString` by extending exisisting Cocoa types.
-* by creating `RichString` objects from a tag-based formatted source `Strings`, apply your favorite `Styles` and render them as `NSAttributedString`.
+`SwiftRichString` integrate seamlessy into UIKit by allowing you to manage, combine and apply styles directly on `NSMutableAttributedString` instances.
+Our framework define only two main entities:
+
+* `Style` is the central point of `SwiftRichString`: this class allows you to create easily and safety a collection of styles (align, text color, ligature, font etc.).
+In fact the ideal use-case is to create your own set of styles and render your strings using them.
+
+* `MarkupString` allows you to load a string which contains tags and apply styles to it, just like it happends with HTML+CSS pages.
+
+## Apply Styles to `String` and `NSMutableAttributedString`
+You can manage and apply styles directly on your `NSMutableAttributedString` instances:
+
+So, for example:
+```swift
+let renderText = "Hello " + userName.with(bold) + ".welcome here".with(italic)
+```
+
+![assets](https://raw.githubusercontent.com/malcommac/SwiftRichString/develop/assets/assets_2.png)
+
+## Apply style on substring with Range
+You can also apply one or more styles to a string by passing a valid range.
+In this example we want to apply bold style to the "Man!" substring.
+
+```swift
+let renderText = "Hello Man! Welcome".with(bold, range: 6..<10)
+```
+![assets](https://raw.githubusercontent.com/malcommac/SwiftRichString/develop/assets/assets_3.png)
+
+## apply style on substring using Regular Expression
+Regular expressions are also supported; you can add your own style/s to matched strings:
+
+```swift
+let renderText = "Hello Man! Welcome".with(bold, range: 6..<10)
+```
 
 ## Using Tag-Based Markups
 Sometimes you may have a text you want to render with your own favorite application's styles, like HTML/CSS does with web page.
@@ -68,17 +97,6 @@ let src = ("Hello " + userName.add(tag: "style1") + " welcome here".add(tag: tSt
 // Create `RichString` and use `.text` to render it as `NSAttributedString`
 let renderedText = src.rich(tStyle1,tStyle2).text
 ```
-
-## Working directly on `NSAttributedString`
-You can also work directly on `NSAttributedString` instances without using `RichString` objects by concatenating String and NSMutableAttributedString.
-
-So, for example:
-```swift
-let renderText = "Hello " + userName.with(bold) + ".welcome here".with(italic)
-```
-
-![assets](https://raw.githubusercontent.com/malcommac/SwiftRichString/develop/assets/assets_2.png)
-
 
 
 <a name="installation" />
