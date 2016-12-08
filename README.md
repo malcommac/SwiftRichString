@@ -1,5 +1,5 @@
 <p align="center" >
-  <img src="https://raw.githubusercontent.com/malcommac/SwiftRichString/develop/swift_scanner_logo.png" width=200px height=219px alt="SwiftRichString" title="SwiftRichString">
+  <img src="https://raw.githubusercontent.com/malcommac/SwiftRichString/develop/swift-richstring" width=180px height=237px alt="SwiftRichString" title="SwiftRichString">
 </p>
 
 [![Build Status](https://travis-ci.org/oarrabi/SwiftRichString.svg?branch=master)](https://travis-ci.org/oarrabi/SwiftRichString)
