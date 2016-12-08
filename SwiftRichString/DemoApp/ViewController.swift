@@ -26,6 +26,10 @@ class ViewController: UIViewController {
 			$0.color = UIColor.red
 		})
 		
+		let def = Style.default {
+			$0.font = FontAttribute(.GillSans_Italic, size: 20)
+		}
+		
 		//let c = "Hello".with(italic) + "Daniele".with(bold)
 		//let c = "Hello".with(styles: bold,italic)
 		

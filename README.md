@@ -21,21 +21,50 @@ And, best of all, it's fully compatible with unicode (who don't love emoji?).
 Our framework define only two main entities:
 
 * `Style` is the central point of `SwiftRichString`: this class allows you to create easily and safety a collection of styles (align, text color, ligature, font etc.).
-In fact the ideal use-case is to create your own set of styles and render your strings using them.
+In fact the ideal use-case is to create your own set of styles for your app, then apply to your strings.
 
 * `MarkupString` allows you to load a string which is pretty like a web page, where your styles are enclosed between tags; `MarkupString` will parse it for your by generating a valid `NSMutableAttributedString` with your choosed `Styles` array.
 
-## Apply Styles to `String` and `NSMutableAttributedString`
-You can manage and apply styles directly on your `NSMutableAttributedString` instances:
+## Define your own `Style`
+`Style` is a class which define attributes you can apply to strings in a type-safe swifty way.
+Each style has a name and a set of attributes you can set.
 
-So, for example:
+Creating `Style` is pretty easy.
+In this example we create a style which set a particular font with given size and color.
+
+```swift 
+let big = Style("italic", {
+  $0.font = FontAttribute(.CourierNewPS_ItalicMT, size: 25)
+  $0.color = UIColor.red
+})
+```
+
+This is also a special style called `.default`.
+Default - if present - is applied automatically before any other style to the entire sender string.
+Other styles are applied in order just after it.
+
 ```swift
-let renderText = "Hello " + userName.with(bold) + ".welcome here".with(italic)
+let def = Style.default {
+  $0.font = FontAttribute(.GillSans_Italic, size: 20)
+}
+```
+
+## Apply Styles to `String`/`NSMutableAttributedString`
+Styles can be applied directly to `String` instances (by generating `NSMutableAttributedString` automatically) or on existing `NSMutableAttributedString`.
+
+In this example we can combine simple `String` instances and apply your own set of styles:
+
+```swift
+// Define your own styles
+let bold: Style = Style(...
+let italic: Style = Style(...
+// Create a string with different styles
+let renderText = "Hello " + userName.with(bold) + ".welcome here".with(italic) // you will get a combines NSMutableAttributedString
 ```
 
 ![assets](https://raw.githubusercontent.com/malcommac/SwiftRichString/develop/assets/assets_2.png)
 
-## Apply style on substring with Range
+## Apply styles on substring
 You can also apply one or more styles to a string by passing a valid range.
 In this example we want to apply bold style to the "Man!" substring.
 
