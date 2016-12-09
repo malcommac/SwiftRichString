@@ -129,6 +129,7 @@ let renderText = "Hello Man! Welcome".with(style: style_bold, range: 6..<10)
 ```
 
 Will produce:
+
 ![assets](https://raw.githubusercontent.com/malcommac/SwiftRichString/develop/assets/assets_3.png)
 
 <a name="applystyleregexp" />
@@ -162,7 +163,9 @@ let result = part1 + " " + part2.with(style: bold) + " " + part3
 ```
 
 Will produce:
+
 ![assets](https://raw.githubusercontent.com/malcommac/SwiftRichString/develop/assets/assets_4.png)
+
 ![assets](https://raw.githubusercontent.com/malcommac/SwiftRichString/develop/assets/assets_5.png)
 
 You can avoid creating new instances of `NSMutableAttributedString` and change directly your instance:
