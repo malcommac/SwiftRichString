@@ -122,8 +122,14 @@ You can also apply one or more styles to a substring by passing a valid range.
 In this example we want to apply bold style to the "Man!" substring.
 
 ```swift
-let renderText = "Hello Man! Welcome".with(style: bold, range: 6..<10)
+let style_bold = Style("bold", {
+  $0.font = FontAttribute(.Futura_CondensedExtraBold, size: 20)
+})
+let renderText = "Hello Man! Welcome".with(style: style_bold, range: 6..<10)
 ```
+
+Will produce:
+![assets](https://raw.githubusercontent.com/malcommac/SwiftRichString/develop/assets/assets_3.png)
 
 <a name="applystyleregexp" />
 
@@ -154,6 +160,10 @@ let part3 = "Welcome here!"
 // Resulting is an `NSMutableAttributedString` instance.
 let result = part1 + " " + part2.with(style: bold) + " " + part3
 ```
+
+Will produce:
+![assets](https://raw.githubusercontent.com/malcommac/SwiftRichString/develop/assets/assets_4.png)
+![assets](https://raw.githubusercontent.com/malcommac/SwiftRichString/develop/assets/assets_5.png)
 
 You can avoid creating new instances of `NSMutableAttributedString` and change directly your instance:
 

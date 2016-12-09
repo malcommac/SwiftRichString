@@ -65,27 +65,43 @@ class ViewController: UIViewController {
 //		let sourceText = RichString(sourceURL, encoding: .utf8, [bold,italic])!
 //		let renderedText = sourceText.text
 		
-		let style_bold = Style("bold", {
-			$0.font = FontAttribute(.Futura_CondensedExtraBold, size: 15)
-		})
-		let style_center = Style("center", {
-			$0.font = FontAttribute(.Menlo_Regular, size: 15)
-			$0.align = .center
-		})
-		let style_italic = Style("italic", {
-			$0.font = FontAttribute(.HelveticaNeue_LightItalic, size: 15)
-			$0.color = UIColor.red
-		})
-		let style_exteme = Style("extreme", {
-			$0.font = FontAttribute(.TimesNewRomanPS_BoldItalicMT, size: 40)
-			$0.underline = UnderlineAttribute(color: UIColor.blue, style: NSUnderlineStyle.styleSingle)
-		})
-		let s = "<center>The quick brown fox</center>\njumps over the lazy dogis an <italic>English-language</italic> pangram—a phrase that contains <italic>all</italic> of the letters of the alphabet. It is <extreme><bold>commonly</bold></extreme> used for touch-typing practice."
+//		let style_bold = Style("bold", {
+//			$0.font = FontAttribute(.Futura_CondensedExtraBold, size: 15)
+//		})
+//		let style_center = Style("center", {
+//			$0.font = FontAttribute(.Menlo_Regular, size: 15)
+//			$0.align = .center
+//		})
+//		let style_italic = Style("italic", {
+//			$0.font = FontAttribute(.HelveticaNeue_LightItalic, size: 15)
+//			$0.color = UIColor.red
+//		})
+//		let style_exteme = Style("extreme", {
+//			$0.font = FontAttribute(.TimesNewRomanPS_BoldItalicMT, size: 40)
+//			$0.underline = UnderlineAttribute(color: UIColor.blue, style: NSUnderlineStyle.styleSingle)
+//		})
+//		let s = "<center>The quick brown fox</center>\njumps over the lazy dogis an <italic>English-language</italic> pangram—a phrase that contains <italic>all</italic> of the letters of the alphabet. It is <extreme><bold>commonly</bold></extreme> used for touch-typing practice."
+//		
+//		let mk = MarkupString(s, [style_center,style_italic,style_exteme,style_bold])
+//		let att = mk.text
+//		textView?.attributedText = att
 		
-		let mk = MarkupString(s, [style_center,style_italic,style_exteme,style_bold])
-		let att = mk.text
-		textView?.attributedText = att
+		let myStyle = Style("bold", {
+			$0.font = FontAttribute(.Futura_CondensedExtraBold, size: 20)
+		})
+//		let renderText = "Hello Man! Welcome".with(style: style_bold, range: 6..<10)
+//		textView?.attributedText = renderText
+
 		
+//		let sourceText = "👿🏅the winner"
+//		let attributedString = sourceText.with(styles: myStyle, pattern: "the winner", options: .caseInsensitive)
+//		textView?.attributedText = attributedString
+
+		// another example
+		let sourceText = "prefix12 aaa3 prefix45"
+		let attributedString = sourceText.with(styles: myStyle, pattern: "fix([0-9])([0-9])", options: .caseInsensitive)
+		textView?.attributedText = attributedString
+
 		// Create and render text
 //		let text = "Hello <bold>\(userName)!</bold>, <italic>welcome here!</italic>"
 //		let renderedText = text.rich(bold,italic).text
