@@ -4,6 +4,7 @@
 
 [![Build Status](https://travis-ci.org/oarrabi/SwiftRichString.svg?branch=master)](https://travis-ci.org/oarrabi/SwiftRichString)
 [![Platform](https://img.shields.io/badge/platform-ios-lightgrey.svg)](https://travis-ci.org/oarrabi/SwiftRichString)
+[![Platform](https://img.shields.io/badge/platform-tvos-lightgrey.svg)](https://travis-ci.org/oarrabi/SwiftRichString)
 [![Language: Swift](https://img.shields.io/badge/language-swift-orange.svg)](https://travis-ci.org/oarrabi/SwiftRichString)
 [![CocoaPods](https://img.shields.io/cocoapods/v/SwiftRichString.svg)](https://cocoapods.org/pods/SwiftRichString)
 [![Carthage](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
@@ -11,6 +12,7 @@
 
 # SwiftRichString
 `SwiftRichString` is a lightweight library wich allows you to simplify your work  with attributed strings in UIKit. It provides convenient way to create and manage string with complex attributes, render tag-based string and manipulate styles at specified indexes.
+Currently it's compatible with iOS and tvOS.
 
 And, best of all, it's fully compatible with unicode (who don't love emoji?).
 
@@ -545,11 +547,7 @@ Current version is compatible with:
 
 * Swift 3.0+
 * iOS 7 or later
-* macOS 10.10 or later
-* watchOS 2.0 or later
-* tvOS 9.0 or later
-* ...and virtually any platform which is compatible with Swift 3 and implements the Swift Foundation Library
-
+* tvOS 8.0 or later
 
 <a name="credits" />
 

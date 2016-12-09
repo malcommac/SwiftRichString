@@ -13,6 +13,14 @@
 		081833131DF993FF0076E9EE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 081833121DF993FF0076E9EE /* Assets.xcassets */; };
 		081833161DF993FF0076E9EE /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 081833141DF993FF0076E9EE /* LaunchScreen.storyboard */; };
 		0818331D1DF9940D0076E9EE /* SwiftRichString.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 084347831DF982B500D4AB24 /* SwiftRichString.framework */; };
+		0818333B1DFAF4F40076E9EE /* SwiftRichString tvOS.h in Headers */ = {isa = PBXBuildFile; fileRef = 081833391DFAF4F40076E9EE /* SwiftRichString tvOS.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		0818333F1DFAF4FD0076E9EE /* SwiftStyler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08351D271DF9832C0089C025 /* SwiftStyler.swift */; };
+		081833401DFAF4FD0076E9EE /* Style.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08351D261DF9832C0089C025 /* Style.swift */; };
+		081833411DFAF4FD0076E9EE /* StringManipulation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08351D241DF9832C0089C025 /* StringManipulation.swift */; };
+		081833421DFAF4FD0076E9EE /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08351D211DF9832C0089C025 /* Colors.swift */; };
+		081833431DFAF4FD0076E9EE /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08351D221DF9832C0089C025 /* Extensions.swift */; };
+		081833441DFAF4FD0076E9EE /* FontNames.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08351D231DF9832C0089C025 /* FontNames.swift */; };
+		081833451DFAF4FD0076E9EE /* StringScanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08351D251DF9832C0089C025 /* StringScanner.swift */; };
 		08351D281DF9832C0089C025 /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08351D211DF9832C0089C025 /* Colors.swift */; };
 		08351D291DF9832C0089C025 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08351D221DF9832C0089C025 /* Extensions.swift */; };
 		08351D2A1DF9832C0089C025 /* FontNames.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08351D231DF9832C0089C025 /* FontNames.swift */; };
@@ -50,6 +58,11 @@
 		081833121DF993FF0076E9EE /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		081833151DF993FF0076E9EE /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		081833171DF993FF0076E9EE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		081833251DFAF4D40076E9EE /* SwiftRichString macoS.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "SwiftRichString macoS.h"; sourceTree = "<group>"; };
+		081833261DFAF4D40076E9EE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		081833371DFAF4F40076E9EE /* SwiftRichString.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SwiftRichString.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		081833391DFAF4F40076E9EE /* SwiftRichString tvOS.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "SwiftRichString tvOS.h"; sourceTree = "<group>"; };
+		0818333A1DFAF4F40076E9EE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		08351D211DF9832C0089C025 /* Colors.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Colors.swift; path = ../../Sources/Colors.swift; sourceTree = "<group>"; };
 		08351D221DF9832C0089C025 /* Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Extensions.swift; path = ../../Sources/Extensions.swift; sourceTree = "<group>"; };
 		08351D231DF9832C0089C025 /* FontNames.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FontNames.swift; path = ../../Sources/FontNames.swift; sourceTree = "<group>"; };
@@ -71,6 +84,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				0818331D1DF9940D0076E9EE /* SwiftRichString.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		081833331DFAF4F40076E9EE /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -105,6 +125,24 @@
 			path = DemoApp;
 			sourceTree = "<group>";
 		};
+		081833241DFAF4D40076E9EE /* SwiftRichString macoS */ = {
+			isa = PBXGroup;
+			children = (
+				081833251DFAF4D40076E9EE /* SwiftRichString macoS.h */,
+				081833261DFAF4D40076E9EE /* Info.plist */,
+			);
+			path = "SwiftRichString macoS";
+			sourceTree = "<group>";
+		};
+		081833381DFAF4F40076E9EE /* SwiftRichString tvOS */ = {
+			isa = PBXGroup;
+			children = (
+				081833391DFAF4F40076E9EE /* SwiftRichString tvOS.h */,
+				0818333A1DFAF4F40076E9EE /* Info.plist */,
+			);
+			path = "SwiftRichString tvOS";
+			sourceTree = "<group>";
+		};
 		08351D201DF983180089C025 /* Library */ = {
 			isa = PBXGroup;
 			children = (
@@ -125,6 +163,8 @@
 				084347851DF982B500D4AB24 /* SwiftRichString */,
 				084347901DF982B500D4AB24 /* SwiftRichStringTests */,
 				0818330A1DF993FF0076E9EE /* DemoApp */,
+				081833241DFAF4D40076E9EE /* SwiftRichString macoS */,
+				081833381DFAF4F40076E9EE /* SwiftRichString tvOS */,
 				084347841DF982B500D4AB24 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -135,6 +175,7 @@
 				084347831DF982B500D4AB24 /* SwiftRichString.framework */,
 				0843478C1DF982B500D4AB24 /* SwiftRichStringTests.xctest */,
 				081833091DF993FF0076E9EE /* DemoApp.app */,
+				081833371DFAF4F40076E9EE /* SwiftRichString.framework */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -161,6 +202,14 @@
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
+		081833341DFAF4F40076E9EE /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0818333B1DFAF4F40076E9EE /* SwiftRichString tvOS.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		084347801DF982B500D4AB24 /* Headers */ = {
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
@@ -189,6 +238,24 @@
 			productName = DemoApp;
 			productReference = 081833091DF993FF0076E9EE /* DemoApp.app */;
 			productType = "com.apple.product-type.application";
+		};
+		081833361DFAF4F40076E9EE /* SwiftRichString tvOS */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 0818333C1DFAF4F40076E9EE /* Build configuration list for PBXNativeTarget "SwiftRichString tvOS" */;
+			buildPhases = (
+				081833321DFAF4F40076E9EE /* Sources */,
+				081833331DFAF4F40076E9EE /* Frameworks */,
+				081833341DFAF4F40076E9EE /* Headers */,
+				081833351DFAF4F40076E9EE /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "SwiftRichString tvOS";
+			productName = "SwiftRichString tvOS";
+			productReference = 081833371DFAF4F40076E9EE /* SwiftRichString.framework */;
+			productType = "com.apple.product-type.framework";
 		};
 		084347821DF982B500D4AB24 /* SwiftRichString */ = {
 			isa = PBXNativeTarget;
@@ -241,6 +308,11 @@
 						DevelopmentTeam = E5DU3FA699;
 						ProvisioningStyle = Automatic;
 					};
+					081833361DFAF4F40076E9EE = {
+						CreatedOnToolsVersion = 8.1;
+						DevelopmentTeam = E5DU3FA699;
+						ProvisioningStyle = Automatic;
+					};
 					084347821DF982B500D4AB24 = {
 						CreatedOnToolsVersion = 8.1;
 						DevelopmentTeam = E5DU3FA699;
@@ -268,6 +340,7 @@
 			projectRoot = "";
 			targets = (
 				084347821DF982B500D4AB24 /* SwiftRichString */,
+				081833361DFAF4F40076E9EE /* SwiftRichString tvOS */,
 				0843478B1DF982B500D4AB24 /* SwiftRichStringTests */,
 				081833081DF993FF0076E9EE /* DemoApp */,
 			);
@@ -282,6 +355,13 @@
 				081833161DF993FF0076E9EE /* LaunchScreen.storyboard in Resources */,
 				081833131DF993FF0076E9EE /* Assets.xcassets in Resources */,
 				081833111DF993FF0076E9EE /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		081833351DFAF4F40076E9EE /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -308,6 +388,20 @@
 			files = (
 				0818330E1DF993FF0076E9EE /* ViewController.swift in Sources */,
 				0818330C1DF993FF0076E9EE /* AppDelegate.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		081833321DFAF4F40076E9EE /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				081833431DFAF4FD0076E9EE /* Extensions.swift in Sources */,
+				0818333F1DFAF4FD0076E9EE /* SwiftStyler.swift in Sources */,
+				081833421DFAF4FD0076E9EE /* Colors.swift in Sources */,
+				081833411DFAF4FD0076E9EE /* StringManipulation.swift in Sources */,
+				081833401DFAF4FD0076E9EE /* Style.swift in Sources */,
+				081833441DFAF4FD0076E9EE /* FontNames.swift in Sources */,
+				081833451DFAF4FD0076E9EE /* StringScanner.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -391,6 +485,50 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.danielemargutti.DemoApp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
+			};
+			name = Release;
+		};
+		0818333D1DFAF4F40076E9EE /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "";
+				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = E5DU3FA699;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = "SwiftRichString tvOS/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.danielemargutti.SwiftRichString-tvOS";
+				PRODUCT_NAME = SwiftRichString;
+				SDKROOT = appletvos;
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 3.0;
+				TARGETED_DEVICE_FAMILY = 3;
+				TVOS_DEPLOYMENT_TARGET = 9.0;
+			};
+			name = Debug;
+		};
+		0818333E1DFAF4F40076E9EE /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "";
+				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = E5DU3FA699;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = "SwiftRichString tvOS/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.danielemargutti.SwiftRichString-tvOS";
+				PRODUCT_NAME = SwiftRichString;
+				SDKROOT = appletvos;
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 3.0;
+				TARGETED_DEVICE_FAMILY = 3;
+				TVOS_DEPLOYMENT_TARGET = 9.0;
 			};
 			name = Release;
 		};
@@ -508,7 +646,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.danielemargutti.SwiftRichString;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = SwiftRichString;
 				SKIP_INSTALL = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 3.0;
@@ -530,7 +668,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.danielemargutti.SwiftRichString;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = SwiftRichString;
 				SKIP_INSTALL = YES;
 				SWIFT_VERSION = 3.0;
 			};
@@ -573,6 +711,14 @@
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
+		};
+		0818333C1DFAF4F40076E9EE /* Build configuration list for PBXNativeTarget "SwiftRichString tvOS" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				0818333D1DFAF4F40076E9EE /* Debug */,
+				0818333E1DFAF4F40076E9EE /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
 		};
 		0843477D1DF982B500D4AB24 /* Build configuration list for PBXProject "SwiftRichString" */ = {
 			isa = XCConfigurationList;

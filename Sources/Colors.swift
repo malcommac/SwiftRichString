@@ -31,6 +31,7 @@
 
 import Foundation
 
+#if os(iOS)
 public extension UIColor {
 
 	
@@ -86,3 +87,4 @@ public extension UIColor {
 	}
 	
 }
+#endif

@@ -30,6 +30,7 @@
 //	THE SOFTWARE.
 
 import Foundation
+import UIKit
 
 public enum FontName: String {
 	case Copperplate_Light = "Copperplate-Light"

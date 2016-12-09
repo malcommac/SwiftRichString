@@ -31,6 +31,12 @@
 
 import Foundation
 
+#if os(iOS) || os(tvOS)
+	import UIKit
+	typealias Font = UIFont
+	typealias Color = UIColor
+#endif
+
 //MARK: StyleType
 
 /// StyleType define the type of a style
