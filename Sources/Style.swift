@@ -113,6 +113,101 @@ public class Style: Equatable {
 		get { return self.paragraph.alignment }
 	}
 	
+	/// The mode that should be used to break lines in the receiver.
+	/// This property contains the line break mode to be used laying out the paragraph’s text.
+	public var lineBreak: NSLineBreakMode {
+		set { self.paragraph.lineBreakMode = newValue }
+		get { return self.paragraph.lineBreakMode }
+	}
+	
+	/// The space after the end of the paragraph.
+	/// This property contains the space (measured in points) added at the end of the paragraph to separate it from the following paragraph.
+	/// This value is always nonnegative. The space between paragraphs is determined by adding the previous paragraph’s paragraphSpacing
+	/// and the current paragraph’s paragraphSpacingBefore.
+	public var paragraphSpacing: Float {
+		set { self.paragraph.paragraphSpacing = CGFloat(newValue) }
+		get { return Float(self.paragraph.paragraphSpacing) }
+	}
+	
+	/// Font to apply.
+	/// This is the define as FontAttribute which allows to define typesafe font by it's name.
+	/// Custom fonts created by name are also available.
+	/// You can however extended FontAttribute to add your own custom font and make them type safe as they should be.
+	public var font: FontAttribute? {
+		set { self.set(key: NSFontAttributeName, value: newValue?.font) }
+		get { return FontAttribute(font: attributes[NSFontAttributeName] as? UIFont ) }
+	}
+	
+	/// The value of this attribute is a UIColor object. Use this attribute to specify the color of the text during rendering.
+	// If you do not specify this attribute, the text is rendered in black.
+	public var color: UIColor? {
+		didSet { self.set(key: NSForegroundColorAttributeName, value: self.color) }
+	}
+	
+	/// The value of this attribute is a UIColor object. Use this attribute to specify the color of the background area behind the text.
+	/// If you do not specify this attribute, no background color is drawn.
+	public var backColor: UIColor? {
+		didSet { self.set(key: NSBackgroundColorAttributeName, value: self.backColor) }
+	}
+	
+	/// Define stroke attributes
+	public var stroke: StrokeAttribute? {
+		set {
+			guard let stroke = newValue else {
+				self.remove(key: NSStrokeColorAttributeName)
+				self.remove(key: NSStrokeWidthAttributeName)
+				return
+			}
+			self.set(key: NSStrokeWidthAttributeName, value: stroke.width)
+			self.set(key: NSStrokeColorAttributeName, value: stroke.color)
+		}
+		get {
+			return StrokeAttribute(color: attributes[NSStrokeColorAttributeName] as? UIColor,
+			                       width: attributes[NSStrokeWidthAttributeName] as? CGFloat)
+		}
+	}
+	
+	/// Define underline attributes
+	public var underline: UnderlineAttribute? {
+		set {
+			guard let underline = newValue else {
+				self.remove(key: NSUnderlineColorAttributeName)
+				self.remove(key: NSStrokeWidthAttributeName)
+				return
+			}
+			self.set(key: NSUnderlineStyleAttributeName, value: underline.style)
+			self.set(key: NSUnderlineColorAttributeName, value: underline.color)
+		}
+		get {
+			return UnderlineAttribute(color: attributes[NSUnderlineColorAttributeName] as? UIColor,
+			                          style: attributes[NSUnderlineStyleAttributeName] as? NSUnderlineStyle)
+		}
+	}
+	
+	/// Define the underline attributes of the text
+	public var strike: StrikeAttribute? {
+		set {
+			guard let strike = newValue else {
+				self.remove(key: NSStrikethroughStyleAttributeName)
+				self.remove(key: NSStrikethroughColorAttributeName)
+				return
+			}
+			self.set(key: NSStrikethroughStyleAttributeName, value: strike.style?.rawValue)
+			self.set(key: NSStrikethroughColorAttributeName, value: strike.color)
+		}
+		get {
+			return StrikeAttribute(color: attributes[NSStrikethroughColorAttributeName] as? UIColor,
+			                       style: attributes[NSStrikethroughStyleAttributeName] as? NSUnderlineStyle)
+		}
+	}
+
+	/// The value of this attribute is an NSShadow object. The default value of this property is nil.
+	#if os(iOS) || os(macOS)
+	public var shadow: ShadowAttribute? {
+		set { self.set(key: NSShadowAttributeName, value: newValue?.shadowObj) }
+		get { return ShadowAttribute(shadow: attributes[NSShadowAttributeName] as? NSShadow) }
+	}
+	#endif
 	
 	/// The indentation of the first line of the receiver.
 	/// This property contains the distance (in points) from the leading margin of a text container to the beginning of the paragraph’s first line.
@@ -141,13 +236,6 @@ public class Style: Equatable {
 		get { return Float(self.paragraph.tailIndent) }
 	}
 	
-	/// The mode that should be used to break lines in the receiver.
-	/// This property contains the line break mode to be used laying out the paragraph’s text.
-	public var lineBreak: NSLineBreakMode {
-		set { self.paragraph.lineBreakMode = newValue }
-		get { return self.paragraph.lineBreakMode }
-	}
-	
 	/// The receiver’s maximum line height.
 	/// This property contains the maximum height in points that any line in the receiver will occupy, regardless of the font size or size of
 	/// any attached graphic. This value is always nonnegative. The default value is 0.
@@ -172,15 +260,6 @@ public class Style: Equatable {
 	public var lineSpacing: Float {
 		set { self.paragraph.lineSpacing = CGFloat(newValue) }
 		get { return Float(self.paragraph.lineSpacing) }
-	}
-	
-	/// The space after the end of the paragraph.
-	/// This property contains the space (measured in points) added at the end of the paragraph to separate it from the following paragraph.
-	/// This value is always nonnegative. The space between paragraphs is determined by adding the previous paragraph’s paragraphSpacing
-	/// and the current paragraph’s paragraphSpacingBefore.
-	public var paragraphSpacing: Float {
-		set { self.paragraph.paragraphSpacing = CGFloat(newValue) }
-		get { return Float(self.paragraph.paragraphSpacing) }
 	}
 	
 	/// The distance between the paragraph’s top and the beginning of its text content.
@@ -208,28 +287,6 @@ public class Style: Equatable {
 		get { return self.paragraph.hyphenationFactor }
 	}
 	
-	/// Font to apply.
-	/// This is the define as FontAttribute which allows to define typesafe font by it's name.
-	/// Custom fonts created by name are also available.
-	/// You can however extended FontAttribute to add your own custom font and make them type safe as they should be.
-	public var font: FontAttribute? {
-		set { self.set(key: NSFontAttributeName, value: newValue?.font) }
-		get { return FontAttribute(font: attributes[NSFontAttributeName] as? UIFont ) }
-	}
-	
-	/// The value of this attribute is a UIColor object. Use this attribute to specify the color of the text during rendering.
-	// If you do not specify this attribute, the text is rendered in black.
-	public var color: UIColor? {
-		didSet { self.set(key: NSForegroundColorAttributeName, value: self.color) }
-	}
-	
-	/// The value of this attribute is a UIColor object. Use this attribute to specify the color of the background area behind the text.
-	/// If you do not specify this attribute, no background color is drawn.
-	public var backColor: UIColor? {
-		didSet { self.set(key: NSBackgroundColorAttributeName, value: self.backColor) }
-	}
-	
-	
 	/// Ligatures cause specific character combinations to be rendered using a single custom glyph that corresponds to those characters.
 	/// The value 0 indicates no ligatures. The value 1 indicates the use of the default ligatures.
 	/// The value 2 indicates the use of all ligatures. The default value for this attribute is 1. (Value 2 is unsupported on iOS.)
@@ -243,59 +300,6 @@ public class Style: Equatable {
 	public var kern: Float? {
 		didSet { self.set(key: NSKernAttributeName, value: self.kern) }
 	}
-
-	/// This value indicates whether the text has a line through it and corresponds to one of the constants described in NSUnderlineStyle.
-	/// The default value for this attribute is styleNone.
-	public var strike: NSUnderlineStyle? {
-		didSet { self.set(key: NSStrikethroughStyleAttributeName, value: self.strike) }
-	}
-	
-	/// The value of this attribute is a UIColor object. The default value is nil, indicating same as foreground color.
-	public var strikeColor: UIColor? {
-		didSet { self.set(key: NSStrikethroughColorAttributeName, value: self.strikeColor) }
-	}
-	
-	/// Define the underline attributes of the text
-	public var underline: UnderlineAttribute? {
-		set {
-			guard let underline = newValue else {
-				self.remove(key: NSUnderlineStyleAttributeName)
-				self.remove(key: NSUnderlineColorAttributeName)
-				return
-			}
-			self.set(key: NSUnderlineStyleAttributeName, value: underline.style?.rawValue)
-			self.set(key: NSUnderlineColorAttributeName, value: underline.color)
-		}
-		get {
-			return UnderlineAttribute(color: attributes[NSUnderlineColorAttributeName] as? UIColor,
-			                          style: attributes[NSUnderlineStyleAttributeName] as? NSUnderlineStyle)
-		}
-	}
-	
-	/// Define stroke attributes
-	public var stroke: StrokeAttribute? {
-		set {
-			guard let stroke = newValue else {
-				self.remove(key: NSStrokeColorAttributeName)
-				self.remove(key: NSStrokeWidthAttributeName)
-				return
-			}
-			self.set(key: NSStrokeWidthAttributeName, value: stroke.width)
-			self.set(key: NSStrokeColorAttributeName, value: stroke.color)
-		}
-		get {
-			return StrokeAttribute(color: attributes[NSStrokeColorAttributeName] as? UIColor,
-			                       width: attributes[NSStrokeWidthAttributeName] as? CGFloat)
-		}
-	}
-	
-	/// The value of this attribute is an NSShadow object. The default value of this property is nil.
-	#if os(iOS) || os(macOS)
-	public var shadow: ShadowAttribute? {
-		set { self.set(key: NSShadowAttributeName, value: newValue?.shadowObj) }
-		get { return ShadowAttribute(shadow: attributes[NSShadowAttributeName] as? NSShadow) }
-	}
-	#endif
 	
 	/// The value of this attribute is an NSString object. Use this attribute to specify a text effect, such as NSTextEffectLetterpressStyle.
 	/// The default value of this property is nil, indicating no text effect.
@@ -402,6 +406,21 @@ public struct ShadowAttribute {
 		return self.shadow
 	}
 }
+
+public struct StrikeAttribute {
+	/// The value of this attribute is a UIColor object. The default value is nil, indicating same as foreground color.
+	public let color: UIColor?
+	
+	/// This value indicates whether the text has a line through it and corresponds to one of the constants described in NSUnderlineStyle.
+	/// The default value for this attribute is styleNone.
+	public let style: NSUnderlineStyle?
+	
+	public init(color: UIColor?, style: NSUnderlineStyle?) {
+		self.color = color
+		self.style = style
+	}
+}
+
 
 //MARK: StrokeAttribute
 
