@@ -1,6 +1,6 @@
 Pod::Spec.new do |spec|
   spec.name = 'SwiftRichString'
-  spec.version = '1.0.0'
+  spec.version = '0.9.0'
   spec.summary = 'Elegant and painless Attributed String (NSAttributedString) in Swift'
   spec.homepage = 'https://github.com/malcommac/SwiftRichString'
   spec.license = { :type => 'MIT', :file => 'LICENSE' }
