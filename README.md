@@ -16,6 +16,17 @@ And, best of all, it's fully compatible with unicode (who don't love emoji?).
 
 <p align="center" >★★ <b>Star our github repository to help us!</b> ★★</p>
 
+Other libraries you may like
+-------
+Do you like `SwiftRichString`? I'm also working on several other opensource libraries.
+
+Take a look here:
+
+* **[SwiftDate](https://github.com/malcommac/SwiftDate)** - Full features Dates & TimeZone management for iOS,macOS,tvOS and watchOS
+* **[SwiftLocation](https://github.com/malcommac/SwiftLocation)** - CoreLocation and Beacon Monitoring on steroid!
+* **[SwiftScanner](https://github.com/malcommac/SwiftScanner)** - String scanner in pure Swift with full unicode support
+* **[SwiftSimplify](https://github.com/malcommac/SwiftSimplify)** - Tiny high-performance Swift Polyline Simplification Library
+
 Features Documentation
 -------
 
@@ -82,12 +93,22 @@ Styles can be applied directly to `String` instances (by generating `NSMutableAt
 In this example we can combine simple `String` instances and apply your own set of styles:
 
 ```swift
-// Define your own Style
-let bold: Style: = // ...
-let italic: Style = // ...
-// Combine simple string and apply styles to each
-let attributedString = "Hello " + userName.with(style: bold) + ".welcome here".with(style: italic)
+// Define your own used styles
+let bold = Style("bold", {
+  $0.font = FontAttribute(.CourierNewPS_BoldItalicMT, size: 30) // font + size
+  $0.color = UIColor.red // text color 
+  $0.align = .center // align on center
+})
+
+let italic = Style("italic", {
+  $0.font = FontAttribute(.CourierNewPS_ItalicMT, size: 25)
+  $0.color = UIColor.green
+})
+
+let attributedString = ("Hello " + userName).with(style: bold) + "\nwelcome here".with(style: italic)
 ```
+
+Will produce:
 
 ![assets](https://raw.githubusercontent.com/malcommac/SwiftRichString/develop/assets/assets_2.png)
 
@@ -216,6 +237,10 @@ let parser = MarkupString(sourceTaggedString, [style_center,style_italic,style_e
 // Result is parsed only upon requested, only first time (then it will be cached).
 let att = parser.text
 ```
+
+Will produce:
+
+![assets](https://raw.githubusercontent.com/malcommac/SwiftRichString/develop/assets/assets_2.png)
 
 Clearly you can load string also from file at specified `URL`:
 

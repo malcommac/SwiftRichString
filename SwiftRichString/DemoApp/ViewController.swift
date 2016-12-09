@@ -83,7 +83,6 @@ class ViewController: UIViewController {
 		let s = "<center>The quick brown fox</center>\njumps over the lazy dogis an <italic>English-language</italic> pangram—a phrase that contains <italic>all</italic> of the letters of the alphabet. It is <extreme><bold>commonly</bold></extreme> used for touch-typing practice."
 		
 		let mk = MarkupString(s, [style_center,style_italic,style_exteme,style_bold])
-//		let mk = MarkupString(s, [style_center])
 		let att = mk.text
 		textView?.attributedText = att
 		
@@ -94,8 +93,20 @@ class ViewController: UIViewController {
 //		let c = ("Hello " + userName.add(tag: "bold") + " welcome here".add(tag: italic)).rich(bold,italic).text
 //		
 	//	let c = "<bold>Hello</bold>".rich(bold).text
-		print("")
-		
+
+//		let userName = "Daniele!"
+//		let bold = Style("bold", {
+//			$0.font = FontAttribute(.CourierNewPS_BoldItalicMT, size: 30)
+//			$0.color = UIColor.red
+//			$0.align = .center
+//		})
+//		let italic = Style("italic", {
+//			$0.font = FontAttribute(.CourierNewPS_ItalicMT, size: 25)
+//			$0.color = UIColor.green
+//		})
+//		let attributedString = ("Hello " + userName).with(style: bold) + "\nwelcome here".with(style: italic)
+//		textView?.attributedText = attributedString
+
 	}
 
 	override func didReceiveMemoryWarning() {
