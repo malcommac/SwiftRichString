@@ -146,6 +146,14 @@ let attributedString = sourceText.with(styles: myStyle, pattern: "the winner", o
 let sourceText = "prefix12 aaa3 prefix45"
 let attributedText = c.with(styles: myStyle, pattern: "fix([0-9])([0-9])", options: .caseInsensitive)
 ```
+
+Will produce:
+
+![assets](https://raw.githubusercontent.com/malcommac/SwiftRichString/develop/assets/assets_4.png)
+
+![assets](https://raw.githubusercontent.com/malcommac/SwiftRichString/develop/assets/assets_5.png)
+
+
 <a name="combinestrings" />
 
 ## Combine Strings and Attributed Strings
@@ -161,12 +169,6 @@ let part3 = "Welcome here!"
 // Resulting is an `NSMutableAttributedString` instance.
 let result = part1 + " " + part2.with(style: bold) + " " + part3
 ```
-
-Will produce:
-
-![assets](https://raw.githubusercontent.com/malcommac/SwiftRichString/develop/assets/assets_4.png)
-
-![assets](https://raw.githubusercontent.com/malcommac/SwiftRichString/develop/assets/assets_5.png)
 
 You can avoid creating new instances of `NSMutableAttributedString` and change directly your instance:
 
