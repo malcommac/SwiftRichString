@@ -719,6 +719,7 @@
 				0818333E1DFAF4F40076E9EE /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		0843477D1DF982B500D4AB24 /* Build configuration list for PBXProject "SwiftRichString" */ = {
 			isa = XCConfigurationList;

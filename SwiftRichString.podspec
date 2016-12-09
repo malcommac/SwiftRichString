@@ -1,6 +1,6 @@
 Pod::Spec.new do |spec|
   spec.name = 'SwiftRichString'
-  spec.version = '0.9.1'
+  spec.version = '0.9.2'
   spec.summary = 'Elegant and painless Attributed String (NSAttributedString) in Swift'
   spec.homepage = 'https://github.com/malcommac/SwiftRichString'
   spec.license = { :type => 'MIT', :file => 'LICENSE' }
@@ -8,8 +8,8 @@ Pod::Spec.new do |spec|
   spec.social_media_url = 'http://twitter.com/danielemargutti'
   spec.source = { :git => 'https://github.com/malcommac/SwiftRichString.git', :tag => "#{spec.version}" }
   spec.source_files = 'Sources/**/*.swift'
-  spec.ios.deployment_target = '7.0'
-  spec.tvos.deployment_target = '8.0'
+  spec.ios.deployment_target = '8.0'
+  spec.tvos.deployment_target = '9.0'
   spec.requires_arc = true
   spec.module_name = 'SwiftRichString'
 end
