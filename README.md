@@ -1,4 +1,4 @@
-<p align="center" >
+co<p align="center" >
   <img src="https://raw.githubusercontent.com/malcommac/SwiftRichString/develop/swiftrichstring.png" width=400px height=172px alt="SwiftRichString" title="SwiftRichString">
 </p>
 
@@ -546,8 +546,8 @@ Add swiftline as dependency in your `Package.swift`
 Current version is compatible with:
 
 * Swift 3.0+
-* iOS 7 or later
-* tvOS 8.0 or later
+* iOS 8.0 or later
+* tvOS 9.0 or later
 
 <a name="credits" />
 
