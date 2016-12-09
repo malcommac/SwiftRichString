@@ -563,6 +563,7 @@ The code of this library is licensed under MIT License; you can use it in commer
 The only requirement is to add a line in your Credits/About section with the text below:
 
 ```
-Portions SwiftRichString - http://github.com/malcommac/SwiftRichString
+This software uses open source SwiftRichString's library to manage rich attributed strings.
+Web: http://github.com/malcommac/SwiftRichString
 Created by Daniele Margutti and licensed under MIT License.
 ```
