@@ -1,4 +1,4 @@
-co<p align="center" >
+<p align="center" >
   <img src="https://raw.githubusercontent.com/malcommac/SwiftRichString/develop/swiftrichstring.png" width=400px height=172px alt="SwiftRichString" title="SwiftRichString">
 </p>
 
