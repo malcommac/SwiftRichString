@@ -16,8 +16,9 @@ And, best of all, it's fully compatible with unicode (who don't love emoji?).
 
 <p align="center" >★★ <b>Star our github repository to help us!</b> ★★</p>
 
-Other libraries you may like
+## You also may like
 -------
+
 Do you like `SwiftRichString`? I'm also working on several other opensource libraries.
 
 Take a look here:
@@ -27,28 +28,27 @@ Take a look here:
 * **[SwiftScanner](https://github.com/malcommac/SwiftScanner)** - String scanner in pure Swift with full unicode support
 * **[SwiftSimplify](https://github.com/malcommac/SwiftSimplify)** - Tiny high-performance Swift Polyline Simplification Library
 
-Features Documentation
+Documentation
 -------
 
 * **[Introduction](#introduction)**
 * **[Define your own `Style`](#definestyle)**
-* **[Available Text Attributes](#attributes)**
-* **[Apply Style to `String`](#applystyletostring)**
+* **[Available text attributes in `Style`](#attributes)**
+* **[Apply style to a `String`](#applystyletostring)**
 * **[Apply style on substring with `Range`](#applystylerange)**
 * **[Apply style/s on substring with `NSRegularExpression`](#applystyleregexp)**
 * **[Combine `Strings` and `Attributed Strings`](#combinestrings)**
-* **[Create Tag-Based Strings](#createtagbased)**
-* **[Render Tag-Based Strings](#rendertagbased)**
+* **[Create tagged strings](#createtagbased)**
+* **[Parse and render tag-based content](#rendertagbased)**
 
-Other
+Other Infos
 -------
 * **[Installation (via CocoaPods, Carthage or Swift PM)](#installation)**
-* **[Requirements](#requirements)**
 * **[Credits & License](#credits)**
 
 <a name="introduction" />
 
-# Introduction
+# Documentation
 
 `SwiftRichString` integrate seamlessy into UIKit by allowing you to manage, combine and apply styles directly on `NSMutableAttributedString` instances.
 Our framework define only two main entities:
@@ -92,8 +92,6 @@ let def = Style.default {
 
 You can define your text attributes in type-safe Swift way.
 This is the list of attributes you can customize:
-
-
 
 <table border=0 cellpadding=0 cellspacing=0 width=1223 style='border-collapse:
  collapse;table-layout:fixed;width:917pt'>
@@ -421,7 +419,7 @@ finalAttributed.append(markup: markUpObj)
 ```
 <a name="createtagbased" />
 
-## Create Tag-Based Strings
+## Create tagged strings
 Sometimes you may have a text you want to render with your own favorite application's styles, like HTML/CSS does with web page.
 With `SwiftRichString` it's really easy; add your favourite tags to your source string, create associated `Style` and apply them.
 Let me show an example:
@@ -447,7 +445,7 @@ let renderedText = text.parse(tStyle1,tStyle2).text
 ```
 <a name="rendertagfile" />
 
-## Render Tag-Based Strings
+## Parse and render tag-based content
 `MarkupString` allows you to load an tags-based string (even from a file, a literals or content from url) and parse it by applying with your own styles.
 
 Suppose you have this text:
@@ -521,16 +519,6 @@ Add swiftline as dependency in your `Package.swift`
       .Package(url: "https://github.com/malcommac/SwiftRichString.git", majorVersion: 0),
     ]
   )
-```
-
-<a name="tests" />
-
-## Tests
-Tests can be found [here](https://github.com/malcommac/SwiftRichString/tree/master/Tests). 
-
-Run them with 
-```
-swift test
 ```
 
 <a name="requirements" />
