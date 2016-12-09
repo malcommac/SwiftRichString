@@ -94,154 +94,245 @@ You can define your text attributes in type-safe Swift way.
 This is the list of attributes you can customize:
 
 
-**PROPERTY;DESCRIPTION;ATTRIBUTES**
-:-----:
-`.align`;Text alignment;"Any value of `NSTextAlignment`.
- 
-Example = `$0.align = .center`"
-`.lineBreak`;The mode that should be used to break lines;"Any value of NSLineBreakMode.
- 
-Example = `$0.lineBreak = .byWordWrapping`"
-`.paragraphSpacing`;The space after the end of the paragraph.;"`Float`
-Example = `$0.paragraphSpacing = 4`
- 
-Space measured in pointsadded at the end of the paragraph to separate it from the following paragraph.
-Always nonnegative. The space between paragraphs is determined by adding the previous paragraph�s paragraphSpacing."
-`.font`;Font & Font size to apply;"`FontAttribute`
- 
-`FontAttribute` is an helper enum which allows you to define in type safe Swift way font attributes.
-All system fonts are listed; you can however load a custom font from a string (classic mode) or extended `FontAttribute` enum to add your own custom font.
- 
-Example:
-* `$0.font = FontAttribute(.CourierNewPS\_BoldItalicMT, size: 30)` (from enum)
-* `$0.font = FontAttribute(""MyCustomFontFamilyName"", size: 40` (from raw string)"
-`.color`;Text color;"`UIColor`
-`SwiftRichString` also accepts UIColor from HEX string (like ""#FF4555"")
- 
-Example:
-* `$0.color = UIColor.red`
-* `$0.color = UIColor(hex: ""#FF4555"")"
-`.backColor`;Background text color;Same of `.color`
-`.stroke`;Stroke attributes of text;"`StrokeAttribute`
- 
-`StrokeAttribute` is an helper class which also allows you to define a stroke's `.color` and `.width`.
-* `.color` (`UIColor`) color of the stroke;  if not defined it is assumed to be the same as the value of color; otherwise, it describes the outline color.
-* `.width` (`CGFloat`) Amount to change the stroke width and is specified as a percentage of the font point size. Specify 0 (the default) for no additional changes."
-`.underline`;Underline attributes of text;"`UnderlineAttribute`
- 
-`UnderlineAttribute` is an helper struct which allows you to define `.color` and `.style` of the underline attribute.
-* `.color` (`UIColor`) Underline color, if missing  same as foreground color.
-* `.style` (`NSUnderlineStyle`) The style of the underline, by default is `.styleNone`"
-`.strike`;Strike attributes of text;"`StrikeAttribute`
- 
-`StrikeAttribute` is an helper struct which allows you to define strike attributes: `.color` and `.style`.
-* `.color` (`UIColor`) Underline color, if missing  same as foreground color.
-* `.style` (`NSUnderlineStyle`) This value indicates whether the text is underlined and corresponds to one of the constants described in NSUnderlineStyle."
-`.shadow`;Shadow attributes of text (only for macOS and iOS);"`ShadowAttribute`
- 
-`ShadowAttribute` defines following properties:
-* `.offset` (`CGSize`) horizontal and vertical offset values, specified using the width and height fields of the CGSize data type.
-* `.blurRadius` (`CGFloat`) This property contains the blur radius, as measured in the default user coordinate space. A value of 0 indicates no blur, while larger values produce correspondingly larger blurring. This value must not be negative. The default value is 0.
-* `.color` (`UIColor`) The default shadow color is black with an alpha of 1/3. If you set this property to nil, the shadow is not drawn."
-`.firstLineheadIntent`;The indentation of the first line.;"`Float`
-Example:
-* `$0.firstLineHeadIntent = 0.5`
- 
-The distance (in points) from the leading margin of a text container to the beginning of the paragraph�s first line."
-`.headIndent`;The indentation of lines other than the first.;"`Float`
-Example:
-* `$0.headIdent = 4`
- 
-The distance (in points) from the leading margin of a text container to the beginning of lines other than the first. This value is always nonnegative."
-`.tailIndent`;The trailing indentation.;"`Float`
-Example:
-* `$0.tailIndent = 2`
- 
-If positive, this value is the distance from the leading margin (for example, the left margin in left-to-right text).
-If 0 or negative, it�s the distance from the trailing margin."
-`.maximumLineHeight`;Maximum line height.;"`Float`
-Example:
-* `$0.maximumLineHeight = 2`
- 
-This property contains the maximum height in points that any line in the receiver will occupy, regardless of the font size or size ofany attached graphic. This value is always nonnegative. The default value is 0. Glyphs and graphics exceeding this height will overlap neighboring lines; however, a maximum height of 0 implies no line height limit.
-Although this limit applies to the line itself, line spacing adds extra space between adjacent lines."
-`.minimumLineHeight`;Minimum line height.;"`Float`
-Example:
-* `$0.minimumLineHeight = 2`
- 
-This property contains the minimum height in points that any line in the receiver will occupy, regardless of the font size or size of any attached graphic. This value is always nonnegative"
-`.lineSpacing`;Distance in points between the bottom of one line fragment and the top of the next.;"`Float`
-Example:
-* `$0.lineSpacing = 1`
- 
-The distance in points between the bottom of one line fragment and the top of the next.
-This value is always nonnegative. This value is included in the line fragment heights in the layout manager."
-`.paragraphSpacingBefore`;Distance between the paragraph�s top and the beginning of its text content.;"`Float`
-Example:
-* `$0.paragraphSpacingBefore = 1`
- 
-The space (measured in points) between the paragraph�s top and the beginning of its text content.
-The default value of this property is 0.0."
-`.lineHeightMultiple`;Line height multiple.;"`Float`
-Example:
-* `$0.lineHeightMultiple = 1`
- 
-The natural line height of the receiver is multiplied by this factor (if positive) before being constrained by minimum and maximum line height.
-The default value of this property is 0.0."
-`.hyphenationFactor`;Paragraph�s threshold for hyphenation.;"`Float`
-Example:
-* `$0.hyphenationFactor = 1`
- 
-Hyphenation is attempted when the ratio of the text width (as broken without hyphenation) to the width of the line fragment is less than
-the hyphenation factor. When the paragraph�s hyphenation factor is 0.0, the layout manager�s hyphenation factor is used instead.
-When both are 0.0, hyphenation is disabled."
-`.ligature`;Ligatures cause specific character combinations to be rendered using a single custom glyph that corresponds to those characters.;"`Int`
-Example:
-* `$0.ligature = 1`
- 
-The value 0 indicates no ligatures. The value 1 indicates the use of the default ligatures.
-The value 2 indicates the use of all ligatures. The default value for this attribute is 1. (Value 2 is unsupported on iOS.)"
-`.kern`;Number of points by which to adjust kern-pair characters.;"`Float`
-Example:
-* `$0.kern = 0.5`
- 
-Kerning prevents unwanted space from occurring between specific characters and depends on the font.
-The value 0 means kerning is disabled. The default value for this attribute is 0."
-`.textEffect`;Special text effects;"`String`
-Example:
-* `$0.textEffect = NSTextEffectLetterpressStyle`
- 
-Use this attribute to specify a text effect, such as `NSTextEffectLetterpressStyle`.
-The default value of this property is nil, indicating no text effect."
-`.attach`;Attachment to add;`NSTextAttachment` object
-`.linkURL`;Link to add;"`URL`
-Example:
-* `$0.linkURL = URL(""http://www.apple.com"")!"
-`.baselineOffset`;Character�s offset from the baseline, in points;"`Float`
-Example
-* `$0.baselineOffset = 0.5`
- 
-The default value is 0."
-`.oblique`;Skew to be applied to glyphs.;"`Float`
-Example
-* `$0.oblique = 1.5`
- 
-The default value is 0."
-`.expansion`;Log of the expansion factor to be applied to glyphs.;"`Float`
-Example
-* `$0.expansion = 1.0`
- 
-The default value is 0, indicating no expansion."
-`.direction`;Nested levels of writing direction overrides.;"`NSWritingDirection`
-Example
-* `$0.direction = .rightToLeft`
- 
-The value of this attribute is an NSArray object containing Number objects representing the nested levels of writing direction overrides,  in order from outermost to innermost."
-`.glyphForm`;Vertical text support.;"`Int`
-Example
-* `$0.glyphForm = 1`
- 
-The value 1 indicates vertical text. In iOS, horizontal text is always used and specifying a different value is undefined."
+
+<table border=0 cellpadding=0 cellspacing=0 width=1223 style='border-collapse:
+ collapse;table-layout:fixed;width:917pt'>
+ <col width=172 style='mso-width-source:userset;mso-width-alt:5504;width:129pt'>
+ <col width=387 style='mso-width-source:userset;mso-width-alt:12373;width:290pt'>
+ <col class=xl65 width=664 style='mso-width-source:userset;mso-width-alt:21248;
+ width:498pt'>
+ <tr height=21 style='height:16.0pt'>
+  <td height=21 width=172 style='height:16.0pt;width:129pt'>PROPERTY</td>
+  <td width=387 style='width:290pt'>DESCRIPTION</td>
+  <td class=xl65 width=664 style='width:498pt'>ATTRIBUTES</td>
+ </tr>
+ <tr height=64 style='height:48.0pt'>
+  <td height=64 style='height:48.0pt'>`.align`</td>
+  <td>Text alignment</td>
+  <td class=xl65 width=664 style='width:498pt'>Any value of
+  NSTextAlignment.<br>
+  <br>
+  Example = `$0.align = .center`</td>
+ </tr>
+ <tr height=64 style='height:48.0pt'>
+  <td height=64 style='height:48.0pt'>`.lineBreak`</td>
+  <td>The mode that should be used to break lines</td>
+  <td class=xl65 width=664 style='width:498pt'>Any value of
+  NSLineBreakMode.<br>
+  <br>
+  Example = `$0.lineBreak = .byWordWrapping`</td>
+ </tr>
+ <tr height=171 style='height:128.0pt'>
+  <td height=171 style='height:128.0pt'>`.paragraphSpacing`</td>
+  <td>The space after the end of the paragraph.</td>
+  <td class=xl65 width=664 style='width:498pt'>`Float`<br>
+  Example:<br>
+  * `$0.paragraphSpacing = 4`<br>
+  <br>
+  Space measured in pointsadded at the end of the paragraph to separate it
+  from the following paragraph.<br>
+  Always nonnegative. The space between paragraphs is determined by adding
+  the previous paragraph�s paragraphSpacing.</td>
+ </tr>
+ <tr height=192 style='height:144.0pt'>
+  <td height=192 style='height:144.0pt'>`.font`</td>
+  <td>Font &amp; Font size to apply</td>
+  <td class=xl65 width=664 style='width:498pt'>FontAttribute<br>
+  <br>
+  FontAttribute is an helper enum which allows you to define in type safe
+  Swift way font attributes.<br>
+  All system fonts are listed; you can however load a custom font from a
+  string (classic mode) or extended FontAttribute enum to add your own custom
+  font.<br>
+  <br>
+  Example:<br>
+  * `$0.font = FontAttribute(.CourierNewPS_BoldItalicMT, size: 30)` (from
+  enum)<br>
+  * `$0.font = FontAttribute(&quot;MyCustomFontFamilyName&quot;, size: 40`
+  (from raw string)</td>
+ </tr>
+ <tr height=107 style='height:80.0pt'>
+  <td height=107 style='height:80.0pt'>`.color`</td>
+  <td>Text color</td>
+  <td class=xl65 width=664 style='width:498pt'>Any valid UIColor instance.
+  `SwiftRichString` also accepts UIColor from HEX string (like
+  &quot;#FF4555&quot;)<br>
+  <br>
+  Example:<br>
+  * `$0.color = UIColor.red`<br>
+  * `$0.color = UIColor(hex: &quot;#FF4555&quot;)</td>
+ </tr>
+ <tr height=21 style='height:16.0pt'>
+  <td height=21 style='height:16.0pt'>`.backColor`</td>
+  <td>Background text color</td>
+  <td class=xl65 width=664 style='width:498pt'>Same of `.color`</td>
+ </tr>
+ <tr height=149 style='height:112.0pt'>
+  <td height=149 style='height:112.0pt'>`.stroke`</td>
+  <td>Stroke attributes of text</td>
+  <td class=xl65 width=664 style='width:498pt'>`StrokeAttribute`<br>
+  <br>
+  `StrokeAttribute` is an helper class which also allows you to define a
+  stroke's `.color` and `.width`.<br>
+  * `.color` (`UIColor`) color of the stroke;<span
+  style='mso-spacerun:yes'>&nbsp; </span>if not defined it is assumed to be the
+  same as the value of color; otherwise, it describes the outline color.<br>
+  * `.width` (`CGFloat`) Amount to change the stroke width and is specified as
+  a percentage of the font point size. Specify 0 (the default) for no
+  additional changes.</td>
+ </tr>
+ <tr height=128 style='height:96.0pt'>
+  <td height=128 style='height:96.0pt'>`.underline`</td>
+  <td>Underline attributes of text</td>
+  <td class=xl65 width=664 style='width:498pt'>`UnderlineAttribute`<br>
+  <br>
+  `UnderlineAttribute` is an helper struct which allows you to define `.color`
+  and `.style` of the underline attribute.<br>
+  * `.color` (`UIColor`) Underline color, if missing<span
+  style='mso-spacerun:yes'>&nbsp; </span>same as foreground color.<br>
+  * `.style` (`NSUnderlineStyle`) The style of the underline, by default is
+  `.styleNone`</td>
+ </tr>
+ <tr height=128 style='height:96.0pt'>
+  <td height=128 style='height:96.0pt'>`.strike`</td>
+  <td>Strike attributes of text</td>
+  <td class=xl65 width=664 style='width:498pt'>`StrikeAttribute`<br>
+  <br>
+  `StrikeAttribute` is an helper struct which allows you to define strike
+  attributes: `.color` and `.style`.<br>
+  * `.color` (`UIColor`) Underline color, if missing<span
+  style='mso-spacerun:yes'>&nbsp; </span>same as foreground color.<br>
+  * `.style` (`NSUnderlineStyle`) This value indicates whether the text is
+  underlined and corresponds to one of the constants described in
+  NSUnderlineStyle.</td>
+ </tr>
+ <tr height=213 style='height:160.0pt'>
+  <td height=213 style='height:160.0pt'>`.shadow`</td>
+  <td>Shadow attributes of text (only for macOS and iOS)</td>
+  <td class=xl65 width=664 style='width:498pt'>`ShadowAttribute`<br>
+  <br>
+  `ShadowAttribute` defines following properties:<br>
+  * `.offset` (`CGSize`) horizontal and vertical offset values, specified
+  using the width and height fields of the CGSize data type.<br>
+  * `.blurRadius` (`CGFloat`) This
+  property contains the blur radius, as measured in the default user coordinate
+  space. A value of 0 indicates no blur, while larger values produce
+  correspondingly larger blurring. This value must not be negative. The default
+  value is 0.<br>
+  * `.color` (`UIColor`) The default shadow color is black
+  with an alpha of 1/3. If you set this property to nil, the shadow is not
+  drawn.</td>
+ </tr>
+ <tr height=128 style='height:96.0pt'>
+  <td height=128 style='height:96.0pt'>`.firstLineheadIntent`</td>
+  <td>The indentation of the first line.</td>
+  <td class=xl65 width=664 style='width:498pt'>`Float`<br>
+  Example:<br>
+  * `$0.firstLineHeadIntent = 0.5`<br>
+  <br>
+  The distance (in points) from the leading margin of a text container to the
+  beginning of the paragraph�s first line.</td>
+ </tr>
+ <tr height=128 style='height:96.0pt'>
+  <td height=128 style='height:96.0pt'>`.headIndent`</td>
+  <td>The indentation of lines other than the first.</td>
+  <td class=xl65 width=664 style='width:498pt'>`Float`<br>
+  Example:<br>
+  * `$0.headIdent = 4`<br>
+  <br>
+  The distance (in points) from the leading margin of a text container to the
+  beginning of lines other than the first. This value is always nonnegative.</td>
+ </tr>
+ <tr height=149 style='height:112.0pt'>
+  <td height=149 style='height:112.0pt'>`.tailIndent`</td>
+  <td>The trailing indentation.</td>
+  <td class=xl65 width=664 style='width:498pt'>`Float`<br>
+  Example:<br>
+  * `$0.tailIndent = 2`<br>
+  <br>
+  If positive, this value is the distance from the leading margin (for
+  example, the left margin in left-to-right text).<br>
+  If 0 or negative, it�s the distance from the trailing margin.</td>
+ </tr>
+ <tr height=192 style='height:144.0pt'>
+  <td height=192 style='height:144.0pt'>`.maximumLineHeight`</td>
+  <td>Maximum line height.</td>
+  <td class=xl66 width=664 style='width:498pt'>`Float`<br>
+  Example:<br>
+  * `$0.maximumLineHeight = 2`<br>
+  <br>
+  This property contains the maximum height in points that any line in the
+  receiver will occupy, regardless of the font size or size ofany attached
+  graphic. This value is always nonnegative. The default value is 0. Glyphs and
+  graphics exceeding this height will overlap neighboring lines; however, a
+  maximum height of 0 implies no line height limit.<br>
+  Although this limit applies to the line itself, line spacing adds extra
+  space between adjacent lines.</td>
+ </tr>
+ <tr height=128 style='height:96.0pt'>
+  <td height=128 style='height:96.0pt'>`.minimumLineHeight`</td>
+  <td>Minimum line height.</td>
+  <td class=xl65 width=664 style='width:498pt'>`Float`<br>
+  Example:<br>
+  * `$0.minimumLineHeight = 2`<br>
+  <br>
+  This property contains the minimum height in points that any line in the
+  receiver will occupy, regardless of the font size or size of any attached
+  graphic. This value is always nonnegative</td>
+ </tr>
+ <tr height=149 style='height:112.0pt'>
+  <td height=149 style='height:112.0pt'>`.lineSpacing`</td>
+  <td>Distance in points between the bottom of one line fragmen<span
+  style='display:none'>t and the top of the next.</span></td>
+  <td class=xl65 width=664 style='width:498pt'>`Float`<br>
+  Example:<br>
+  * `$0.lineSpacing = 1`<br>
+  <br>
+  The distance in points between the bottom of one line fragment and the top
+  of the next.<br>
+  This value is always nonnegative. This value is included in the line
+  fragment heights in the layout manager.</td>
+ </tr>
+ <tr height=128 style='height:96.0pt'>
+  <td height=128 style='height:96.0pt'>`.paragraphSpacingBefore<span
+  style='display:none'>`</span></td>
+  <td>Distance between the paragraph�s top and the beginning o<span
+  style='display:none'>f its text content.</span></td>
+  <td class=xl65 width=664 style='width:498pt'>`Float`<br>
+  Example:<br>
+  * `$0.paragraphSpacingBefore = 1`<br>
+  <br>
+  The space (measured in points) between the paragraph�s top and the beginning
+  of its text content.<br>
+  The default value of this property is 0.0.</td>
+ </tr>
+ <tr height=149 style='height:112.0pt'>
+  <td height=149 style='height:112.0pt'>`.lineHeightMultiple`</td>
+  <td>Line height multiple.</td>
+  <td class=xl65 width=664 style='width:498pt'>`Float`<br>
+  Example:<br>
+  * `$0.lineHeightMultiple = 1`<br>
+  <br>
+  The natural line height of the receiver is multiplied by this factor (if
+  positive) before being constrained by minimum and maximum line height.<br>
+  The default value of this property
+  is 0.0.</td>
+ </tr>
+ <tr height=192 style='height:144.0pt'>
+  <td height=192 style='height:144.0pt'>`.hyphenationFactor`</td>
+  <td>Paragraph�s threshold for hyphenation.</td>
+  <td class=xl65 width=664 style='width:498pt'>`Float`<br>
+  Example:<br>
+  * `$0.hyphenationFactor = 1`<br>
+  <br>
+  Hyphenation is attempted when the ratio of the text width (as broken without
+  hyphenation) to the width of the line fragment is less than<br>
+  the hyphenation factor. When the paragraph�s
+  hyphenation factor is 0.0, the layout manager�s hyphenation factor is used
+  instead.<br>
+  When both are 0.0, hyphenation is disabled.</td>
+ </tr>
+</table>
 
 <a name="applystyletostring" />
 
