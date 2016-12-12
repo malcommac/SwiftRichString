@@ -47,6 +47,7 @@ import Foundation
 public enum StyleName {
 	case `default`
 	case named(String)
+	case none
 	
 	public var value: String {
 		switch self {
@@ -54,6 +55,8 @@ public enum StyleName {
 			return "#default"
 		case .named(let name):
 			return name
+		case .none:
+			return ""
 		}
 	}
 }
@@ -65,6 +68,8 @@ public func == (lhs: Style, rhs: Style) -> Bool {
 }
 
 public class Style: Equatable {
+	
+	public typealias StyleMaker = ((_ maker: Style) -> (Void))
 	
 	/// Identifier of style
 	public var name: StyleName
@@ -78,7 +83,7 @@ public class Style: Equatable {
 	///   - type: type of style
 	///   - maker: a closure which allows you to contextually define styles to apply. Use $0.<text_property> to define each property you
 	///            want to apply to style.
-	private init(_ name: StyleName, _ maker: (_ maker: Style) -> (Void) ) {
+	private init(_ name: StyleName, _ maker: StyleMaker ) {
 		self.name = name
 		maker(self)
 	}
@@ -95,8 +100,17 @@ public class Style: Equatable {
 	///			$0.font = FontAttribute(.TimesNewRomanPSMT, size: 50)
 	///			$0.color = UIColor.green
 	///		})
-	public init(_ name: String, _ maker: (_ maker: Style) -> (Void) ) {
+	public init(_ name: String, _ maker: StyleMaker ) {
 		self.name = .named(name)
+		maker(self)
+	}
+	
+	/// Create a new style without specify a name.
+	/// You can't use it to parse content in MarkupString, however you can use it to apply it into a String or AttributedString
+	///
+	/// - Parameter maker: a closure which allows you to contextually define styles to apply. Use $0.<text_property> to define each property you want to apply to style.
+	public init(_ maker: StyleMaker) {
+		self.name = .none
 		maker(self)
 	}
 	
@@ -107,7 +121,7 @@ public class Style: Equatable {
 	///   - maker: a closure which allows you to contextually define styles to apply. Use $0.<text_property> to define each property you
 	///            want to apply to style.
 	/// - Returns: a new Style instance
-	public static func `default`(_ maker: (_ maker: Style) -> (Void) ) -> Style {
+	public static func `default`(_ maker: StyleMaker ) -> Style {
 		return Style(.default, maker)
 	}
 	
