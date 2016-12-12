@@ -40,7 +40,7 @@ import Foundation
 ///   - rhs: right MarkupString
 /// - Returns: a new MarkupString with the content of both lhs and rhs strings and with merged styles
 public func + (lhs: MarkupString, rhs: MarkupString) -> MarkupString {
-	let concatenate = MarkupString(lhs.content + rhs.content, nil) // concatenate the content
+	let concatenate = MarkupString(lhs.plain + rhs.plain, nil) // concatenate the content
 	concatenate.styles = lhs.styles + rhs.styles // sum styles between lhs and rhs (rhs may replace existing lhs's styles)
 	return concatenate
 }
@@ -77,7 +77,7 @@ public extension NSMutableAttributedString {
 	///   - string: string to append
 	///   - style: style to apply to the entire string before appending it to self
 	public func append(string: String, style: Style) {
-		self.append(string.with(style: style))
+		self.append(string.add(style: style))
 	}	
 	
 	/// Append a MarkupString instance to an exesting NSMutableAttributedString (self)
@@ -85,6 +85,30 @@ public extension NSMutableAttributedString {
 	/// - Parameter string: string to append
 	public func append(markup string: MarkupString) {
 		self.append(string.text)
+	}
+	
+	/// Add a style to an existing instance of attributed string
+	///
+	/// - Parameters:
+	///   - style: style to add
+	///   - range: range of characters where add passed style
+	public func add(style: Style, range: Range<Int>? = nil) -> NSMutableAttributedString {
+		guard let range = range else { // apply to entire string
+			self.addAttributes(style.attributes, range: NSMakeRange(0, self.string.characters.count))
+			return self
+		}
+		self.addAttributes(style.attributes, range: self.string.toNSRange(from: range))
+		return self
+	}
+	
+	
+	/// Add styles to given attributed string
+	/// Note: .default Style is always applied in first place if defined
+	///
+	/// - Parameter styles: styles to apply
+	public func add(styles: Style...) -> NSMutableAttributedString {
+		self.addAttributes(styles.attributesDictionary, range: NSMakeRange(0, self.string.characters.count))
+		return self
 	}
 	
 }

@@ -36,7 +36,7 @@ import Foundation
 public class MarkupString {
 	
 	/// Raw content include plain text and given tags
-	public fileprivate(set) var content: String
+	fileprivate(set) var content: String?
 
 	/// Styles applied to MarkupString
 	public internal(set) var styles: [String : Style] = [:]
@@ -77,7 +77,12 @@ public class MarkupString {
 
 	/// Return plain string without tags
 	public var plain: String {
-		get { return content }
+		get {
+			guard let attributedString = self.cachedAttributedString else {
+				return content!
+			}
+			return attributedString.string
+		}
 	}
 	
 	/// Return NSMutableAttributed string rendered upon given tags and styles
@@ -87,8 +92,9 @@ public class MarkupString {
 		}
 		
 		do {
-			let (plainText,tags) = try MarkupString.parse(self.content)
+			let (plainText,tags) = try MarkupString.parse(self.content!)
 			let renderedString = NSMutableAttributedString(string: plainText)
+			self.content = nil
 			
 			// Apply default style if specified
 			// Default style is applied to the entire string before any other style will replace or integrate it based upon tags
