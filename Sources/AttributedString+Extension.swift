@@ -31,19 +31,6 @@
 
 import Foundation
 
-/// Sum two MarkupString and produce a new string sum of both passed.
-/// Remember: [Style] associated with lhs will be merged with [Style] associated with rhs string and
-/// may be replaced when name is the same between two Styles.
-///
-/// - Parameters:
-///   - lhs: left MarkupString
-///   - rhs: right MarkupString
-/// - Returns: a new MarkupString with the content of both lhs and rhs strings and with merged styles
-public func + (lhs: MarkupString, rhs: MarkupString) -> MarkupString {
-	let concatenate = MarkupString(lhs.content + rhs.content, nil) // concatenate the content
-	concatenate.styles = lhs.styles + rhs.styles // sum styles between lhs and rhs (rhs may replace existing lhs's styles)
-	return concatenate
-}
 
 /// Sum between two NSMutableAttributedStrings
 ///
@@ -57,12 +44,26 @@ public func + (lhs: NSMutableAttributedString, rhs: NSMutableAttributedString) -
 	return final
 }
 
+
+/// Concatenate String and NSMutableAttributedString
+///
+/// - Parameters:
+///   - lhs: simple string
+///   - rhs: attributed string to append
+/// - Returns: create a new NSMutableAttributedString sum of the two instances
 public func + (lhs: String, rhs: NSMutableAttributedString) -> NSMutableAttributedString {
 	let final = NSMutableAttributedString(string: lhs)
 	final.append(rhs)
 	return final
 }
 
+
+/// Concatenate NSMutableAttributedString and String
+///
+/// - Parameters:
+///   - lhs: source attributed string
+///   - rhs: simple string to append
+/// - Returns: a new instance of NSMutableAttributedString, sum of the two instances
 public func + (lhs: NSMutableAttributedString, rhs: String) -> NSMutableAttributedString {
 	let final = NSMutableAttributedString(attributedString: lhs)
 	final.append(NSMutableAttributedString(string: rhs))
@@ -77,14 +78,73 @@ public extension NSMutableAttributedString {
 	///   - string: string to append
 	///   - style: style to apply to the entire string before appending it to self
 	public func append(string: String, style: Style) {
-		self.append(string.with(style: style))
-	}	
+		self.append(string.set(style: style))
+	}
 	
 	/// Append a MarkupString instance to an exesting NSMutableAttributedString (self)
 	///
 	/// - Parameter string: string to append
-	public func append(markup string: MarkupString) {
-		self.append(string.text)
+	public func append(markup string: MarkupString, styles: Style...) {
+		self.append(string.render(withStyles: styles))
 	}
 	
+	/// Add a style to an existing instance of attributed string
+	///
+	/// - Parameters:
+	///   - style: style to add
+	///   - range: range of characters where add passed style
+	/// - Returns: self to allow any chain
+	public func add(style: Style, range: Range<Int>? = nil) -> NSMutableAttributedString {
+		self.addAttributes(style.attributes, range: self.string.toNSRange(from: range))
+		return self
+	}
+	
+	
+	/// Add styles to given attributed string
+	/// Note: .default Style is always applied in first place if defined
+	///
+	/// - Parameter styles: styles to apply
+	/// - Returns: self to allow any chain
+	public func add(styles: Style...) -> NSMutableAttributedString {
+		self.addAttributes(styles.attributesDictionary, range: NSMakeRange(0, self.string.characters.count))
+		return self
+	}
+	
+	
+	/// Replace any existing attribute at given range with the one passed as input
+	///
+	/// - Parameters:
+	///   - style: style to apply
+	///   - range: range to apply
+	/// - Returns: self to allow any chain
+	public func set(style: Style, range: Range<Int>? = nil) -> NSMutableAttributedString {
+		self.setAttributes(style.attributes, range: self.string.toNSRange(from: range))
+		return self
+	}
+	
+	
+	/// Replace any existing attribute into string with the list passed as input.
+	/// Note: .default Style is always applied in first place if defined
+	///
+	/// - Parameter styles: styles to apply
+	/// - Returns: self to allow any chain
+	public func set(styles: Style...) -> NSMutableAttributedString {
+		self.setAttributes(styles.attributesDictionary, range: NSMakeRange(0, self.string.characters.count))
+		return self
+	}
+	
+	
+	/// Remove any existing attribute defined inside given style from passed range
+	///
+	/// - Parameters:
+	///   - style: style to remove
+	///   - range: range to remove
+	/// - Returns: self to allow any chain
+	public func remove(style: Style, range: Range<Int>? = nil) -> NSMutableAttributedString {
+		style.attributes.keys.forEach({
+			self.removeAttribute($0, range: self.string.toNSRange(from: range))
+		})
+		return self
+	}
+
 }

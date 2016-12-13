@@ -32,6 +32,9 @@
 import Foundation
 
 #if os(iOS)
+
+import UIKit
+	
 public extension UIColor {
 
 	

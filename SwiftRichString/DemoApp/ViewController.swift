@@ -97,11 +97,59 @@ class ViewController: UIViewController {
 //		let attributedString = sourceText.with(styles: myStyle, pattern: "the winner", options: .caseInsensitive)
 //		textView?.attributedText = attributedString
 
-		// another example
-		let sourceText = "prefix12 aaa3 prefix45"
-		let attributedString = sourceText.with(styles: myStyle, pattern: "fix([0-9])([0-9])", options: .caseInsensitive)
-		textView?.attributedText = attributedString
+//		// another example
+//		let sourceText = "prefix12 aaa3 prefix45"
+//		let attributedString = sourceText.with(styles: myStyle, pattern: "fix([0-9])([0-9])", options: .caseInsensitive)
+//		textView?.attributedText = attributedString
 
+		
+		let bold = Style {
+			$0.align = .center
+			$0.color = UIColor.red
+		}
+		
+		let highlighted = Style {
+			$0.backColor = UIColor.yellow
+			$0.font = FontAttribute.system(size: 30)
+		}
+		
+		var str = "Hello, playground"
+		
+		let style = Style({
+			$0.font = FontAttribute.bold(size: 25)
+			$0.color = UIColor.green
+		})
+		
+		let str2 = str.set(style: style)
+		
+		
+		// TEST #7
+		// Parse tagged string and apply style, then get the attributed string
+		let tag_center = Style("center", {
+			$0.align = .center
+			$0.color = UIColor.blue
+		})
+		
+		let tag_italic = Style("italic", {
+			$0.font = FontAttribute(.GillSans_LightItalic, size: 14)
+			$0.color = UIColor.purple
+			$0.backColor = UIColor.yellow
+		})
+		
+		let tag_extreme = Style("extreme", {
+			$0.font = FontAttribute(.Georgia_Bold, size: 12)
+			$0.color = UIColor.red
+		})
+		
+		let tag_underline = Style("underline", {
+			$0.strike = StrikeAttribute(color: UIColor.purple, style: NSUnderlineStyle.patternDot)
+		})
+		
+		let sourceTaggedString = "<center>The quick brown fox</center>\njumps over the lazy dog is an <italic>English-language</italic> pangram—a phrase that contains <italic>all</italic> of the letters of the alphabet. It is <extreme><underline>commonly</underline></extreme> used for touch-typing practice."
+		let parser = try! MarkupString(source: sourceTaggedString)
+		// Render attributes string
+		// Result is parsed only upon requested, only first time (then it will be cached).
+		let parseredAttributedText = parser.render(withStyles: [tag_center,tag_italic,tag_extreme,tag_underline])
 		// Create and render text
 //		let text = "Hello <bold>\(userName)!</bold>, <italic>welcome here!</italic>"
 //		let renderedText = text.rich(bold,italic).text

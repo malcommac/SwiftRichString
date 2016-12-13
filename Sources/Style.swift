@@ -43,10 +43,12 @@ import Foundation
 ///
 /// - `default`: this is the default style. If added to a MarkupString, default style is applied automatically to the entire string
 ///              before any other defined style is added to given text ranges.
+/// - `none`: none allows you to specify a style without name which can be applied regardeless the tag on source string.
 /// - named: custom style with given name
 public enum StyleName {
 	case `default`
 	case named(String)
+	case none
 	
 	public var value: String {
 		switch self {
@@ -54,6 +56,8 @@ public enum StyleName {
 			return "#default"
 		case .named(let name):
 			return name
+		case .none:
+			return ""
 		}
 	}
 }
@@ -65,6 +69,8 @@ public func == (lhs: Style, rhs: Style) -> Bool {
 }
 
 public class Style: Equatable {
+	
+	public typealias StyleMaker = ((_ maker: Style) -> (Void))
 	
 	/// Identifier of style
 	public var name: StyleName
@@ -78,7 +84,7 @@ public class Style: Equatable {
 	///   - type: type of style
 	///   - maker: a closure which allows you to contextually define styles to apply. Use $0.<text_property> to define each property you
 	///            want to apply to style.
-	private init(_ name: StyleName, _ maker: (_ maker: Style) -> (Void) ) {
+	private init(_ name: StyleName, _ maker: StyleMaker ) {
 		self.name = name
 		maker(self)
 	}
@@ -95,8 +101,17 @@ public class Style: Equatable {
 	///			$0.font = FontAttribute(.TimesNewRomanPSMT, size: 50)
 	///			$0.color = UIColor.green
 	///		})
-	public init(_ name: String, _ maker: (_ maker: Style) -> (Void) ) {
+	public init(_ name: String, _ maker: StyleMaker ) {
 		self.name = .named(name)
+		maker(self)
+	}
+	
+	/// Create a new style without specify a name.
+	/// You can't use it to parse content in MarkupString, however you can use it to apply it into a String or AttributedString
+	///
+	/// - Parameter maker: a closure which allows you to contextually define styles to apply. Use $0.<text_property> to define each property you want to apply to style.
+	public init(_ maker: StyleMaker) {
+		self.name = .none
 		maker(self)
 	}
 	
@@ -107,7 +122,7 @@ public class Style: Equatable {
 	///   - maker: a closure which allows you to contextually define styles to apply. Use $0.<text_property> to define each property you
 	///            want to apply to style.
 	/// - Returns: a new Style instance
-	public static func `default`(_ maker: (_ maker: Style) -> (Void) ) -> Style {
+	public static func `default`(_ maker: StyleMaker ) -> Style {
 		return Style(.default, maker)
 	}
 	
@@ -375,168 +390,4 @@ public class Style: Equatable {
 		didSet { self.set(key: NSVerticalGlyphFormAttributeName, value: self.glyphForm) }
 	}
 	
-}
-
-//MARK: ShadowAttribute
-
-public struct ShadowAttribute {
-	
-	/// The offset values of the shadow.
-	/// This property contains the horizontal and vertical offset values, specified using the width and height fields of the CGSize data type.
-	// These offsets are measured using the default user coordinate space and are not affected by custom transformations.
-	/// This means that positive values always extend down and to the right from the user's perspective.
-	public var offset: CGSize {
-		set { self.shadow.shadowOffset = newValue }
-		get { return self.shadow.shadowOffset }
-	}
-	
-	/// The blur radius of the shadow.
-	/// This property contains the blur radius, as measured in the default user coordinate space.
-	/// A value of 0 indicates no blur, while larger values produce correspondingly larger blurring.
-	/// This value must not be negative. The default value is 0.
-	public var blurRadius: CGFloat {
-		set { self.shadow.shadowBlurRadius = newValue }
-		get { return self.shadow.shadowBlurRadius }
-	}
-	
-	/// The color of the shadow.
-	/// The default shadow color is black with an alpha of 1/3. If you set this property to nil, the shadow is not drawn.
-	/// The color you specify must be convertible to an RGBA color and may contain alpha information.
-	public var color: UIColor? {
-		set { self.shadow.shadowColor = newValue }
-		get { return self.shadow.shadowColor as? UIColor }
-	}
-	
-	/// Private cached object
-	private var shadow: NSShadow = NSShadow()
-	
-	/// Create a new shadow
-	///
-	/// - Parameters:
-	///   - color: color of the shadow
-	///   - radius: radius of the shadow
-	///   - offset: offset of the shadow
-	public init(color: UIColor, radius: CGFloat? = nil, offset: CGSize? = nil) {
-		self.color = color
-		self.blurRadius = radius ?? 0.0
-		self.offset = offset ?? CGSize.zero
-	}
-	
-	/// Init from NSShadow object
-	///
-	/// - Parameter shadow: shadow object
-	public init?(shadow: NSShadow?) {
-		guard let shadow = shadow else { return nil }
-		self.shadow = shadow
-	}
-	
-	/// Return represented NSShadow object
-	public var shadowObj: NSShadow {
-		return self.shadow
-	}
-}
-
-public struct StrikeAttribute {
-	/// The value of this attribute is a UIColor object. The default value is nil, indicating same as foreground color.
-	public let color: UIColor?
-	
-	/// This value indicates whether the text has a line through it and corresponds to one of the constants described in NSUnderlineStyle.
-	/// The default value for this attribute is styleNone.
-	public let style: NSUnderlineStyle?
-	
-	public init(color: UIColor?, style: NSUnderlineStyle?) {
-		self.color = color
-		self.style = style
-	}
-}
-
-
-//MARK: StrokeAttribute
-
-public struct StrokeAttribute {
-	
-	/// If it is not defined (which is the case by default), 
-	// it is assumed to be the same as the value of color; otherwise, it describes the outline color.
-	public let color: UIColor?
-	
-	/// This value represents the amount to change the stroke width and is specified as a percentage
-	/// of the font point size. Specify 0 (the default) for no additional changes. Specify positive values to change the 
-	/// stroke width alone. Specify negative values to stroke and fill the text. For example, a typical value for 
-	/// outlined text would be 3.0.
-	public let width: CGFloat?
-	
-	public init(color: UIColor?, width: CGFloat?) {
-		self.color = color
-		self.width = width
-	}
-
-}
-
-//MARK: UnderlineAttribute
-
-public struct UnderlineAttribute {
-	/// The value of this attribute is a UIColor object. The default value is nil, indicating same as foreground color.
-	public let color: UIColor?
-	
-	/// This value indicates whether the text is underlined and corresponds to one of the constants described in NSUnderlineStyle.
-	/// The default value for this attribute is styleNone.
-	public let style: NSUnderlineStyle?
-	
-	public init(color: UIColor?, style: NSUnderlineStyle?) {
-		self.color = color
-		self.style = style
-	}
-
-}
-
-//MARK: FontAttribute
-
-/// FontAttribute define a safe type font
-public struct FontAttribute {
-	
-	/// This define a type safe font name
-	public var name: FontName
-
-	/// Size of the font
-	public var size: Float
-	
-	/// Create a new FontAttribute with given name and size
-	///
-	/// - Parameters:
-	///   - name: name of the font (may be type safe or custom). You can extend the FontAttribute enum in order to include your own typesafe names
-	///   - size: size of the font
-	public init(_ name: FontName, size: Float) {
-		self.name = name
-		self.size = size
-	}
-	
-	/// Create a new FontAttribute name with given font name and size
-	/// - return: may return nil if name is not part of font's collection
-	public init?(_ name: String, size: Float) {
-		guard let name = FontName(rawValue: name) else {
-			return nil
-		}
-		self.name = name
-		self.size = size
-	}
-	
-	/// Create a new FontAttribute from given UIFont instance
-	/// - return: may return nil if font is not passed or not valid
-	public init?(font: UIFont?) {
-		guard let font = font else {
-			return nil
-		}
-		let rawName = (font.fontName as NSString).replacingOccurrences(of: "_", with: "-")
-		guard let fontName = FontName.fromFontName(rawName) else {
-			return nil
-		}
-		self.name = fontName
-		self.size = Float(font.pointSize)
-	}
-	
-	/// Get the cached UIFont instance
-	public var font: UIFont {
-		let font = UIFont(name: self.name.rawValue, size: CGFloat(size))!
-		return font
-	}
 }

@@ -34,6 +34,7 @@ Documentation
 -------
 
 * **[Introduction](#introduction)**
+* **[Playground](#playground)**
 * **[Define your own `Style`](#definestyle)**
 * **[Apply style to a `String`](#applystyletostring)**
 * **[Apply style on substring with `Range`](#applystylerange)**
@@ -42,6 +43,7 @@ Documentation
 * **[Create tagged strings](#createtagbased)**
 * **[Parse and render tag-based content](#rendertagbased)**
 * **[Available text attributes in `Style`](#attributes)**
+* **[API Documentation](#apidoc)**
 
 Other Infos
 -------
@@ -63,6 +65,13 @@ In fact the ideal use-case is to create your own set of styles for your app, the
 * `MarkupString` allows you to load a string which is pretty like a web page where your content can contain styles enclosed between classic html-style tags (`ie. "<bold>Hello</bold> <nameStyle>\(username)</nameStyle>`). `MarkupString` will parse data for your by generating a valid `NSMutableAttributedString` along your choosed `Styles`.
 
 * Also there are several `NSMutableAttributedString` and `String` extensions allows you to play and combine strings and styles easily without introducing extra structures to your code and by mantaing readability.
+
+<a name="playground" />
+
+## Playground
+
+If you want to play with SwiftRichString we have also made a small Playground.
+Take a look at `Playground.playground` file inside the `SwiftRichString.xcworkspace`.
 
 <a name="definestyle" />
 
@@ -110,7 +119,7 @@ let italic = Style("italic", {
   $0.color = UIColor.green
 })
 
-let attributedString = ("Hello " + userName).with(style: bold) + "\nwelcome here".with(style: italic)
+let attributedString = ("Hello " + userName).set(style: bold) + "\nwelcome here".set(style: italic)
 ```
 
 Will produce:
@@ -127,7 +136,7 @@ In this example we want to apply bold style to the "Man!" substring.
 let style_bold = Style("bold", {
   $0.font = FontAttribute(.Futura_CondensedExtraBold, size: 20)
 })
-let renderText = "Hello Man! Welcome".with(style: style_bold, range: 6..<10)
+let renderText = "Hello Man! Welcome".set(style: style_bold, range: 6..<10)
 ```
 
 Will produce:
@@ -142,11 +151,11 @@ Regular expressions are also supported; you can add your own style/s to matched 
 
 ```swift
 let sourceText = "👿🏅the winner"
-let attributedString = sourceText.with(styles: myStyle, pattern: "the winner", options: .caseInsensitive)
+let attributedString = sourceText.set(styles: myStyle, pattern: "the winner", options: .caseInsensitive)
 
 // another example
 let sourceText = "prefix12 aaa3 prefix45"
-let attributedText = c.with(styles: myStyle, pattern: "fix([0-9])([0-9])", options: .caseInsensitive)
+let attributedText = sourceText.set(styles: myStyle, pattern: "fix([0-9])([0-9])", options: .caseInsensitive)
 ```
 
 Will produce:
@@ -169,13 +178,13 @@ let part3 = "Welcome here!"
 
 // You can combine simple String and `NSMutableAttributedString`
 // Resulting is an `NSMutableAttributedString` instance.
-let result = part1 + " " + part2.with(style: bold) + " " + part3
+let result = part1 + " " + part2.set(style: bold) + " " + part3
 ```
 
 You can avoid creating new instances of `NSMutableAttributedString` and change directly your instance:
 
 ```swift
-let attributedText = "Welcome".with(style: bold)
+let attributedText = "Welcome".set(style: bold)
 // Render a simple string with given style and happend it to the previous instance
 attributedText.append(string: " mario! ", style: bold)
 ```
@@ -186,7 +195,7 @@ Is possible to append a `MarkupString` to an `NSMutableAttributedString` instanc
 let sourceURL = URL(fileURLWithPath: "...")
 let markUpObj = RichString(sourceURL, encoding: .utf8, [bold,italic])!
 
-let finalAttributed = "Welcome!".with(style: bold)
+let finalAttributed = "Welcome!".set(style: bold)
 // Create an `NSMutableAttributedString` render from markUpObj and append it to the instance
 finalAttributed.append(markup: markUpObj)
 ```
@@ -252,10 +261,10 @@ let style_exteme = Style("extreme", {
 })
 
 let sourceTaggedString = "<center>The quick brown fox ...
-let parser = MarkupString(sourceTaggedString, [style_center,style_italic,style_exteme,style_bold])
+let parser = try! MarkupString(source: sourceTaggedString, [style_center,style_italic,style_exteme,style_bold])
 // Render attributes string
 // Result is parsed only upon requested, only first time (then it will be cached).
-let att = parser.text
+let test_7 = parser.render(withStyles: [style_bold,style_center,style_italic,style_exteme])
 ```
 
 Will produce:
@@ -267,6 +276,60 @@ Clearly you can load string also from file at specified `URL`:
 ```swift
 let sourceURL = URL(fileURLWithPath: "...")
 let renderedText = RichString(sourceURL, encoding: .utf8, [bold,italic])!.text
+```
+<a name="apidoc" />
+## API Documentation
+
+### Create `NSMutableAttributedString` from `String`
+
+`func set(style: Style, range: Range<Int>? = nil) -> NSMutableAttributedString`
+Create an `NSMutableAttributedString` from a simple `String` instance by applying given `style` at specified range.
+If `range` is missing style will be applied to the entire string.
+
+`func set(styles: Style...) -> NSMutableAttributedString`
+Create an `NSMutableAttributedString` from a simple `String` instance by applying given `styles`.
+Styles are applied in sequence as passed; the only exception is the `.default` `Style` if present; in this case `.default` style is applied in first place.
+
+`func set(styles: Style..., pattern: String, options: NSRegularExpression.Options = .caseInsensitive) -> NSAttributedString`
+Create an `NSMutableAttributedString` from a simple `String` instance by applying given `styles` with specified regular expression pattern.
+Styles are applied in sequence as passed; the only exception is the `.default` `Style` if present; in this case `.default` style is applied in first place.
+
+### Manage `NSMutableAttributedString`
+
+`func append(string: String, style: Style)`
+Append a `String` instance to an existing `NSMutableAttributedString` by applying given `style`.
+
+`func append(markup string: MarkupString, styles: Style...)`
+Append a `MarkupString` instance to an existing `NSMutableAttributedString` by applying given `styles`.
+
+`func add(style: Style, range: Range<Int>? = nil) -> NSMutableAttributedString`
+Append attributes defined by `style` at given `range` of existing `NSMutableAttributedString`
+Return `self` for chain purpose.
+
+`func add(styles: Style...) -> NSMutableAttributedString`
+Append attributes defined by passed `styles` into current `NSMutableAttributedString`.
+Return `self` for chain purpose.
+
+`func set(style: Style, range: Range<Int>? = nil) -> NSMutableAttributedString`
+Replace any exiting attribute into given `range` with the one passed in `style`.
+Return `self` for chain purpose.
+
+`func set(styles: Style...) -> NSMutableAttributedString`
+Replace any existing attribute into current instance of the attributed string with styles passed.
+Styles are applied in sequence as passed; the only exception is the `.default` `Style` if present; in this case `.default` style is applied in first place.
+Return `self` for chain purpose.
+
+`func remove(style: Style, range: Range<Int>? = nil) -> NSMutableAttributedString`
+Remove attributes keys defined in passed `style` from the instance.
+
+### Combine `String` and `NSMutableAttributedString`
+
+Combine between simple `String` and `NSMutableAttributedString` is pretty straightforward using the Swift's standard `+` operator.
+Just an example:
+
+```swift
+var test_1 = "Hello".set(style: bold) + "\n" + "World!".set(style: highlighted)
+test_1.append(string: "\nHow old are you?", style: monospaced)
 ```
 
 <a name="attributes" />
