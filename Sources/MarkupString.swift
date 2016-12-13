@@ -36,86 +36,61 @@ import Foundation
 public class MarkupString {
 	
 	/// Raw content include plain text and given tags
-	fileprivate(set) var content: String?
-
-	/// Styles applied to MarkupString
-	public internal(set) var styles: [String : Style] = [:]
-
-	/// Cached attributed string, parsed one time and keep until MarkupString object still alive
-	private var cachedAttributedString: NSMutableAttributedString?
+	fileprivate(set) var string: String
+	
+	/// Parsed tags
+	private var tags: [Tag] = []
+	
+	/// Predefined styles
+	public var styles: [Style]?
 	
 	/// Initialize a new MarkupString with given string content and applicable styles
 	///
 	/// - Parameters:
 	///   - content: plain text with tags
 	///   - styles: styles to apply. Styles are applied based upon tags added to the content variabile.
-	public init(_ content: String, _ styles: [Style]? = nil) {
-		self.content = content
-		if let styles = styles {
-			// styles are transformed to dictionary in order to optimize our code
-			styles.forEach { self.styles[$0.name.value] = $0 }
-		}
+	public init(source: String, styles: [Style]? = nil) throws {
+		let (fPlain,fTags) = try MarkupString.parse(source)
+		self.tags = fTags
+		self.string = fPlain
+		self.styles = styles
 	}
 	
-	/// Create MarkupString from file at specified path
+	/// Render with set styles
 	///
-	/// - Parameters:
-	///   - path: URL to load
-	///	  - encoding: encoding to use
-	///   - styles: styles to apply. Styles are applied based upon tags added to the content variabile.
-	public init?(_ path: URL, encoding: String.Encoding = .utf8, _ styles: [Style]? = nil) {
-		do {
-			self.content = try String(contentsOf: path, encoding: encoding)
-			if let styles = styles {
-				// styles are transformed to dictionary in order to optimize our code
-				styles.forEach { self.styles[$0.name.value] = $0 }
-			}
-		} catch {
-			return nil
+	/// - Returns: rendered attributed string with styles
+	public func render() -> NSMutableAttributedString {
+		guard let styles = self.styles else {
+			return NSMutableAttributedString(string: self.string)
 		}
+		return self.render(withStyles: styles)
+	}
+	
+	/// Produce an attributed string by apply given attributes
+	///
+	/// - Parameter styles: styles to apply
+	/// - Returns: an attributed string with styles defined as passed
+	public func render(withStyles styles: [Style]) -> NSMutableAttributedString {
+		let attributedText = NSMutableAttributedString(string: self.string)
+		
+		// Apply default style in first place
+		let (_,defStyle) = styles.defaultStyle()
+		if defStyle != nil {
+			let allRange = NSRange(location: 0, length: attributedText.length)
+			attributedText.setAttributes(defStyle?.attributes, range: allRange)
+		}
+	
+		// Apply any other style defined
+		var tagsDict: [String: Style] = [:]
+		styles.forEach({ tagsDict[$0.name.value] = $0 })
+		self.tags.forEach {
+			if let style = tagsDict[$0.name] {
+				attributedText.addAttributes(style.attributes, range: NSRange($0.range!))
+			}
+		}
+		return attributedText
 	}
 
-	/// Return plain string without tags
-	public var plain: String {
-		get {
-			guard let attributedString = self.cachedAttributedString else {
-				return content!
-			}
-			return attributedString.string
-		}
-	}
-	
-	/// Return NSMutableAttributed string rendered upon given tags and styles
-	public var text: NSMutableAttributedString {
-		if let cachedAttributedString = self.cachedAttributedString {
-			return cachedAttributedString
-		}
-		
-		do {
-			let (plainText,tags) = try MarkupString.parse(self.content!)
-			let renderedString = NSMutableAttributedString(string: plainText)
-			self.content = nil
-			
-			// Apply default style if specified
-			// Default style is applied to the entire string before any other style will replace or integrate it based upon tags
-			if let defaultStyle = styles[StyleName.default.value] {
-				renderedString.addAttributes(defaultStyle.attributes, range: NSRange(location: 0, length: renderedString.length))
-			}
-			
-			// Apply any other defined style
-			tags.forEach { tag in
-				if let tagAttributes = styles[tag.name] {
-					renderedString.addAttributes(tagAttributes.attributes, range: NSRange(tag.range!))
-				}
-			}
-			
-			self.cachedAttributedString = renderedString
-		} catch {
-			self.cachedAttributedString = NSMutableAttributedString()
-		}
-		return cachedAttributedString!
-	}
-	
 	/// Custom html entities
 	fileprivate static let htmlEntities = ["quot":"\"","amp":"&","apos":"'","lt":"<","gt":">"]
 	

@@ -59,8 +59,6 @@
 		081833121DF993FF0076E9EE /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		081833151DF993FF0076E9EE /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		081833171DF993FF0076E9EE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		081833251DFAF4D40076E9EE /* SwiftRichString macoS.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "SwiftRichString macoS.h"; sourceTree = "<group>"; };
-		081833261DFAF4D40076E9EE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		081833371DFAF4F40076E9EE /* SwiftRichString.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SwiftRichString.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		081833391DFAF4F40076E9EE /* SwiftRichString tvOS.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "SwiftRichString tvOS.h"; sourceTree = "<group>"; };
 		0818333A1DFAF4F40076E9EE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -78,6 +76,7 @@
 		084347911DF982B500D4AB24 /* SwiftRichStringTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftRichStringTests.swift; sourceTree = "<group>"; };
 		084347931DF982B500D4AB24 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		087309BA1DFF424B007382A9 /* String+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "String+Extension.swift"; path = "../../Sources/String+Extension.swift"; sourceTree = "<group>"; };
+		0894FF111E004D0F00168030 /* Playground.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; name = Playground.playground; path = ../Playground.playground; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -127,15 +126,6 @@
 			path = DemoApp;
 			sourceTree = "<group>";
 		};
-		081833241DFAF4D40076E9EE /* SwiftRichString macoS */ = {
-			isa = PBXGroup;
-			children = (
-				081833251DFAF4D40076E9EE /* SwiftRichString macoS.h */,
-				081833261DFAF4D40076E9EE /* Info.plist */,
-			);
-			path = "SwiftRichString macoS";
-			sourceTree = "<group>";
-		};
 		081833381DFAF4F40076E9EE /* SwiftRichString tvOS */ = {
 			isa = PBXGroup;
 			children = (
@@ -145,28 +135,13 @@
 			path = "SwiftRichString tvOS";
 			sourceTree = "<group>";
 		};
-		08351D201DF983180089C025 /* Library */ = {
-			isa = PBXGroup;
-			children = (
-				08351D261DF9832C0089C025 /* Style.swift */,
-				08351D241DF9832C0089C025 /* AttributedString+Extension.swift */,
-				087309BA1DFF424B007382A9 /* String+Extension.swift */,
-				08351D221DF9832C0089C025 /* Extensions.swift */,
-				08351D271DF9832C0089C025 /* MarkupString.swift */,
-				08351D211DF9832C0089C025 /* Colors.swift */,
-				08351D231DF9832C0089C025 /* FontNames.swift */,
-				08351D251DF9832C0089C025 /* StringScanner.swift */,
-			);
-			name = Library;
-			sourceTree = "<group>";
-		};
 		084347791DF982B500D4AB24 = {
 			isa = PBXGroup;
 			children = (
-				084347851DF982B500D4AB24 /* SwiftRichString */,
-				084347901DF982B500D4AB24 /* SwiftRichStringTests */,
+				0894FF111E004D0F00168030 /* Playground.playground */,
+				084347851DF982B500D4AB24 /* Library */,
+				084347901DF982B500D4AB24 /* Tests */,
 				0818330A1DF993FF0076E9EE /* DemoApp */,
-				081833241DFAF4D40076E9EE /* SwiftRichString macoS */,
 				081833381DFAF4F40076E9EE /* SwiftRichString tvOS */,
 				084347841DF982B500D4AB24 /* Products */,
 			);
@@ -183,22 +158,31 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		084347851DF982B500D4AB24 /* SwiftRichString */ = {
+		084347851DF982B500D4AB24 /* Library */ = {
 			isa = PBXGroup;
 			children = (
-				08351D201DF983180089C025 /* Library */,
+				08351D261DF9832C0089C025 /* Style.swift */,
+				087309BA1DFF424B007382A9 /* String+Extension.swift */,
+				08351D241DF9832C0089C025 /* AttributedString+Extension.swift */,
+				08351D221DF9832C0089C025 /* Extensions.swift */,
+				08351D271DF9832C0089C025 /* MarkupString.swift */,
+				08351D211DF9832C0089C025 /* Colors.swift */,
+				08351D231DF9832C0089C025 /* FontNames.swift */,
+				08351D251DF9832C0089C025 /* StringScanner.swift */,
 				084347861DF982B500D4AB24 /* SwiftRichString.h */,
 				084347871DF982B500D4AB24 /* Info.plist */,
 			);
+			name = Library;
 			path = SwiftRichString;
 			sourceTree = "<group>";
 		};
-		084347901DF982B500D4AB24 /* SwiftRichStringTests */ = {
+		084347901DF982B500D4AB24 /* Tests */ = {
 			isa = PBXGroup;
 			children = (
 				084347911DF982B500D4AB24 /* SwiftRichStringTests.swift */,
 				084347931DF982B500D4AB24 /* Info.plist */,
 			);
+			name = Tests;
 			path = SwiftRichStringTests;
 			sourceTree = "<group>";
 		};
@@ -303,7 +287,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0810;
-				LastUpgradeCheck = 0810;
+				LastUpgradeCheck = 0820;
 				ORGANIZATIONNAME = "Daniele Margutti";
 				TargetAttributes = {
 					081833081DF993FF0076E9EE = {
@@ -554,6 +538,7 @@
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_SUSPICIOUS_MOVES = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
@@ -607,6 +592,7 @@
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_SUSPICIOUS_MOVES = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
