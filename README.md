@@ -30,6 +30,12 @@ Take a look here:
 * **[SwiftScanner](https://github.com/malcommac/SwiftScanner)** - String scanner in pure Swift with full unicode support
 * **[SwiftSimplify](https://github.com/malcommac/SwiftSimplify)** - Tiny high-performance Swift Polyline Simplification Library
 
+On Medium
+-------
+
+I've just wrote an article which cover the basic concepts of SwiftRichString.
+You can found it on Medium at [Attributed String in Swift: the right way](https://medium.com/breakfastcode/attributed-strings-in-swift-6d4b37db59a5#.gwdgbjzot).
+
 Documentation
 -------
 
