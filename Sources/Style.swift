@@ -219,7 +219,7 @@ public class Style: Equatable {
 				self.remove(key: NSStrokeWidthAttributeName)
 				return
 			}
-			self.set(key: NSUnderlineStyleAttributeName, value: underline.style)
+            self.set(key: NSUnderlineStyleAttributeName, value: underline.style?.rawValue)
 			self.set(key: NSUnderlineColorAttributeName, value: underline.color)
 		}
 		get {
