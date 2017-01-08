@@ -1,5 +1,5 @@
 <p align="center" >
-  <img src="https://raw.githubusercontent.com/malcommac/SwiftRichString/develop/swift_richstring_logo.png" width=195px height=128px alt="SwiftRichString" title="SwiftRichString">
+  <img src="https://raw.githubusercontent.com/malcommac/SwiftRichString/develop/logo.png" width=210px height=211px alt="SwiftRichString" title="SwiftRichString">
 </p>
 
 
