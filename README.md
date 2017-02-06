@@ -25,6 +25,7 @@ Do you like `SwiftRichString`? I'm also working on several other opensource libr
 
 Take a look here:
 
+* **[Hydra](https://github.com/malcommac/Hydra)** - Promises & Await/Async in Swift - Write better async code in Swift
 * **[SwiftDate](https://github.com/malcommac/SwiftDate)** - Full features Dates & TimeZone management for iOS,macOS,tvOS and watchOS
 * **[SwiftLocation](https://github.com/malcommac/SwiftLocation)** - CoreLocation and Beacon Monitoring on steroid!
 * **[SwiftScanner](https://github.com/malcommac/SwiftScanner)** - String scanner in pure Swift with full unicode support
