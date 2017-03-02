@@ -164,6 +164,12 @@ public class Style: Equatable {
 		get { return self.paragraph.lineBreakMode }
 	}
 	
+	/// Writing direction (may be `rightToLeft`, `leftToRight` or `natural`
+	public var writingDirection: NSWritingDirection {
+		set { self.paragraph.baseWritingDirection = newValue }
+		get { return self.paragraph.baseWritingDirection }
+	}
+	
 	/// The space after the end of the paragraph.
 	/// This property contains the space (measured in points) added at the end of the paragraph to separate it from the following paragraph.
 	/// This value is always nonnegative. The space between paragraphs is determined by adding the previous paragraph’s paragraphSpacing
