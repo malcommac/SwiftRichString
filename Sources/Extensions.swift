@@ -270,7 +270,7 @@ public struct FontAttribute {
 	}
 	
 	/// Get the cached UIFont instance
-	fileprivate(set) var font: UIFont
+	private(set) var font: UIFont
 	
 	/// Size of the font
 	public var size: Float
