@@ -42,6 +42,14 @@ public extension String {
 		return attributedString
 	}
 	
+	/// Apply attributes in order, as passed. The only exception is .default Style; it will be applied always as first style
+	///
+	/// - Parameter styles: styles to apply
+	/// - Returns: a new attributed string
+	public func set(styles: [Style]) -> NSMutableAttributedString {
+		return self.set(styles: styles)
+	}
+	
 	/// Apply style's attributes to given string with pattern matching specified
 	///
 	/// - Parameters:
