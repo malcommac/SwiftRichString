@@ -36,18 +36,18 @@ public extension String {
 	/// - Parameter styles: styles to apply
 	/// - Returns: a new attributed string
 	public func set(styles: Style...) -> NSMutableAttributedString {
-		let attributedString = NSMutableAttributedString(string: self)
-		let range = Range<String.Index>(uncheckedBounds: (self.startIndex,self.endIndex))
-		attributedString.addAttributes(styles.attributesDictionary, range: self.toNSRange(from: range))
-		return attributedString
+		return self.set(stylesArray: Array(styles))
 	}
 	
 	/// Apply attributes in order, as passed. The only exception is .default Style; it will be applied always as first style
 	///
 	/// - Parameter styles: styles to apply
 	/// - Returns: a new attributed string
-	public func set(styles: [Style]) -> NSMutableAttributedString {
-		return self.set(styles: styles)
+	public func set(stylesArray styles: [Style]) -> NSMutableAttributedString {
+		let attributedString = NSMutableAttributedString(string: self)
+		let range = Range<String.Index>(uncheckedBounds: (self.startIndex,self.endIndex))
+		attributedString.addAttributes(styles.attributesDictionary, range: self.toNSRange(from: range))
+		return attributedString
 	}
 	
 	/// Apply style's attributes to given string with pattern matching specified
