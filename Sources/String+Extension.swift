@@ -57,23 +57,34 @@ public extension String {
 	///   - pattern: pattern to search via regexp
 	///   - options: options of pattern matching
 	/// - Returns: a new attributed string instance
-	public func set(styles: Style..., pattern: String, options: NSRegularExpression.Options = .caseInsensitive) -> NSAttributedString {
-		do {
-			let attributedString = NSMutableAttributedString(string: self)
-			let regex = try NSRegularExpression(pattern: pattern, options: options)
-			let allRange = Range<String.Index>(uncheckedBounds: (self.startIndex,self.endIndex))
-			regex.enumerateMatches(in: self, options: NSRegularExpression.MatchingOptions(rawValue: 0), range: self.toNSRange(from: allRange)) {
-				(result : NSTextCheckingResult?, _, _) in
-				if let r = result {
-					attributedString.addAttributes(styles.attributesDictionary, range: r.range)
-				}
-			}
-			return attributedString
-		} catch {
+	public func set(styles: Style..., pattern: String, options: NSRegularExpression.Options = .caseInsensitive) -> NSMutableAttributedString {
+		guard let regexp = RegExpPatternStyles(pattern: pattern, opts: options, styles: styles) else {
 			return NSMutableAttributedString(string: self)
 		}
+		return self.set(regExpStyles: [regexp])
 	}
 	
+	/// Defines a set of styles to apply to a plain String by matching a set of regular expressions.
+	/// Expressions are evaluated in order, then applied to the string
+	///
+	/// - Parameters:
+	///   - regExpStyles: regular expression array to apply in order
+	///   - default: optional default style to apply in first place before evaluating all expressions
+	/// - Returns: a parsed attributed string
+	public func set(regExpStyles: [RegExpPatternStyles], default dStyle: Style? = nil) -> NSMutableAttributedString {
+		let attr_str = (dStyle != nil ? self.set(style: dStyle!) : NSMutableAttributedString(string: self))
+		let allRange = Range<String.Index>(uncheckedBounds: (self.startIndex,self.endIndex))
+		
+		regExpStyles.forEach { regExp in
+			regExp.regularExpression.enumerateMatches(in: self, options: NSRegularExpression.MatchingOptions(rawValue: 0), range: self.toNSRange(from: allRange)) {
+				(result : NSTextCheckingResult?, _, _) in
+				if let r = result {
+					attr_str.addAttributes(regExp.styles.attributesDictionary, range: r.range)
+				}
+			}
+		}
+		return attr_str
+	}
 }
 
 //MARK: String Extension (MarkupString)

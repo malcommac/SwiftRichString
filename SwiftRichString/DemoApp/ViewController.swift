@@ -148,6 +148,23 @@ class ViewController: UIViewController {
 		
 		let sourceTaggedString = "<center>The quick brown fox</center>\njumps over the lazy dog is an <italic>English-language</italic> pangram—a phrase that contains <italic>all</italic> of the letters of the alphabet. It is <extreme><underline>commonly</underline></extreme> used for touch-typing practice."
 		let _ = sourceTaggedString.renderTags(withStyles: [tag_center,tag_italic,tag_extreme,tag_underline])
+		
+		let regexp_url = "http?://([-\\w\\.]+)+(:\\d+)?(/([\\w/_\\.]*(\\?\\S+)?)?)?"
+		let regexp_email = "([A-Za-z0-9_\\-\\.\\+])+\\@([A-Za-z0-9_\\-\\.])+\\.([A-Za-z]+)"
+		
+		let text_example = "My email is hello@danielemargutti.com and my website is http://www.danielemargutti.com"
+		
+		let rule_email = RegExpPatternStyles(pattern: regexp_email) {
+			$0.color = .red
+		}!
+		
+		let rule_url = RegExpPatternStyles(pattern: regexp_url) {
+			$0.color = .blue
+		}!
+		
+		var r = text_example.set(regExpStyles: [rule_email, rule_url])
+		print("")
+		
 		// Create and render text
 //		let text = "Hello <bold>\(userName)!</bold>, <italic>welcome here!</italic>"
 //		let renderedText = text.rich(bold,italic).text

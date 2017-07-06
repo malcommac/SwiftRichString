@@ -37,6 +37,49 @@ import Foundation
 	typealias Color = UIColor
 #endif
 
+
+/// This is the struct which defines a regular expression rule and a set of styles to apply
+public struct RegExpPatternStyles {
+	
+	/// regular expression to match
+	private(set) var regularExpression: NSRegularExpression
+	
+	/// Styles to apply
+	private(set) var styles: [Style]
+	
+	
+	/// Initialize a new rule to apply a set of styles
+	///
+	/// - Parameters:
+	///   - pattern: pattern to match as regexp
+	///   - opts: options for searching
+	///   - styles: styles to apply
+	public init?(pattern: String, opts: NSRegularExpression.Options = .caseInsensitive, styles: [Style]) {
+		do {
+			self.regularExpression = try NSRegularExpression(pattern: pattern, options: opts)
+			self.styles = styles
+		} catch {
+			return nil
+		}
+	}
+	
+	/// Initialize a new regular expression matcher by defining a rule and a single style to apply when it matches
+	///
+	/// - Parameters:
+	///   - pattern: pattern to match as regexp
+	///   - opts: options for searching
+	///   - style: style to apply, defined directly as a `StyleMaker` closure
+	public init?(pattern: String, opts: NSRegularExpression.Options = .caseInsensitive, style maker: Style.StyleMaker) {
+		do {
+			self.regularExpression = try NSRegularExpression(pattern: pattern, options: opts)
+			self.styles = [Style(maker)]
+		} catch {
+			return nil
+		}
+	}
+}
+
+
 //MARK: StyleType
 
 /// StyleType define the type of a style
