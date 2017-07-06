@@ -5,7 +5,12 @@
 
 # SwiftRichString
 `SwiftRichString` is a lightweight library wich allows you to simplify your work  with attributed strings in UIKit. It provides convenient way to create and manage string with complex attributes, render tag-based string and manipulate styles at specified indexes.
-Currently it's compatible with iOS and tvOS.
+
+Supported platforms (since 0.9.9):
+* iOS 8.0+
+* tvOS 9.0+
+* macOS 10.10+
+* watchOS 2.0+
 
 And, best of all, it's fully compatible with unicode (who don't love emoji?).
 
@@ -15,6 +20,8 @@ And, best of all, it's fully compatible with unicode (who don't love emoji?).
 [![Build Status](https://travis-ci.org/oarrabi/SwiftRichString.svg?branch=master)](https://travis-ci.org/oarrabi/SwiftRichString)
 [![Platform](https://img.shields.io/badge/platform-ios-lightgrey.svg)](https://travis-ci.org/oarrabi/SwiftRichString)
 [![Platform](https://img.shields.io/badge/platform-tvos-lightgrey.svg)](https://travis-ci.org/oarrabi/SwiftRichString)
+[![Platform](https://img.shields.io/badge/platform-watchos-lightgrey.svg)](https://travis-ci.org/oarrabi/SwiftRichString)
+[![Platform](https://img.shields.io/badge/platform-macos-lightgrey.svg)](https://travis-ci.org/oarrabi/SwiftRichString)
 [![Language: Swift](https://img.shields.io/badge/language-swift-orange.svg)](https://travis-ci.org/oarrabi/SwiftRichString)
 [![CocoaPods](https://img.shields.io/cocoapods/v/SwiftRichString.svg)](https://cocoapods.org/pods/SwiftRichString)
 [![Carthage](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
