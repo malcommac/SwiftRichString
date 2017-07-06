@@ -666,11 +666,13 @@ Add swiftline as dependency in your `Package.swift`
 
 ## Requirements
 
-Current version is compatible with:
+Current version (0.9.9+) is compatible with:
 
 * Swift 3.0+
-* iOS 8.0 or later
-* tvOS 9.0 or later
+* iOS 8.0+
+* tvOS 9.0+
+* macOS 10.10+
+* watchOS 2.0+
 
 <a name="credits" />
 
