@@ -1,15 +1,16 @@
-Pod::Spec.new do |spec|
-  spec.name = 'SwiftRichString'
-  spec.version = '0.9.8'
-  spec.summary = 'Elegant and painless Attributed String (NSAttributedString) in Swift'
-  spec.homepage = 'https://github.com/malcommac/SwiftRichString'
-  spec.license = { :type => 'MIT', :file => 'LICENSE' }
-  spec.author = { 'Daniele Margutti' => 'me@danielemargutti.com' }
-  spec.social_media_url = 'http://twitter.com/danielemargutti'
-  spec.source = { :git => 'https://github.com/malcommac/SwiftRichString.git', :tag => "#{spec.version}" }
-  spec.source_files = 'Sources/**/*.swift'
-  spec.ios.deployment_target = '8.0'
-  spec.tvos.deployment_target = '9.0'
+Pod::Spec.new do |s|
+  s.name         = "SwiftRichString"
+  s.version      = "0.9.9"
+  s.summary      = "Elegant Attributed Strings (NSAttributedString) in Swift"
+  s.homepage     = "https://github.com/malcommac/SwiftRichString"
+  s.license      = { :type => "MIT", :file => "LICENSE" }
+  s.author             = { "Daniele Margutti" => "me@danielemargutti.com" }
+  s.social_media_url   = "http://twitter.com/danielemargutti"
+  s.ios.deployment_target = "8.0"
+  s.tvos.deployment_target = "9.0"
+  s.source       = { :git => "https://github.com/malcommac/SwiftRichString.git", :tag => s.version.to_s }
+  s.source_files  = "Sources/**/*.swift"
+  s.frameworks  = "Foundation"
   spec.requires_arc = true
   spec.module_name = 'SwiftRichString'
 end

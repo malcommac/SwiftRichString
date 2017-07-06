@@ -77,6 +77,13 @@ In fact the ideal use-case is to create your own set of styles for your app, the
 
 <a name="playground" />
 
+## Latest Version
+Latest version of `SwiftRichString` is:
+* Version: 0.9.9
+* Released on: 2017-07-07
+
+A complete list of changes for each release is available in the [CHANGELOG](https://github.com/malcommac/SwiftRichString/blob/master/CHANGELOG.md) file.
+
 ## Playground
 
 If you want to play with SwiftRichString we have also made a small Playground.
@@ -97,6 +104,8 @@ let big = Style("italic", {
   $0.color = UIColor.red
 })
 ```
+
+## Default `Style`
 
 This is also a special style called `.default`.
 Default - if present - is applied automatically before any other style to the entire sender string.
@@ -167,12 +176,47 @@ let sourceText = "prefix12 aaa3 prefix45"
 let attributedText = sourceText.set(styles: myStyle, pattern: "fix([0-9])([0-9])", options: .caseInsensitive)
 ```
 
+Since 0.9.9 you can also use `renderTags` function of `String`:
+
+```
+let taggedString = "<center>The quick brown fox</center>\njumps over the lazy dog is an <italic>English-language</italic> pangram—a phrase that contains <italic>all</italic> of the letters of the alphabet. It is <extreme><underline>commonly</underline></extreme> used for touch-typing practice."
+let attributed = taggedString.renderTags(withStyles: [tag_center,tag_italic,tag_extreme,tag_underline])
+```
+
 Will produce:
 
 ![assets](https://raw.githubusercontent.com/malcommac/SwiftRichString/develop/assets/assets_4.png)
 
 ![assets](https://raw.githubusercontent.com/malcommac/SwiftRichString/develop/assets/assets_5.png)
 
+## Apply Multiple Styles with Regular Expressions
+
+Sometimes you may need to apply different `Style` by matching some regular expression rules.
+In this case you can use `.set(regExpStyles:default:)` function and define your own matcher; each matcher is a `RegExpPatternStyles` struct which matches a particular regexp and apply a set of `[Style]`.
+
+In the following example we have applied two regexp to colorize email (in red) and url (in blue).
+The entire string is set to a base style (`baseStyle`) before all regexp are evaluated.
+
+```swift
+let regexp_url = "http?://([-\\w\\.]+)+(:\\d+)?(/([\\w/_\\.]*(\\?\\S+)?)?)?"
+let regexp_email = "([A-Za-z0-9_\\-\\.\\+])+\\@([A-Za-z0-9_\\-\\.])+\\.([A-Za-z]+)"
+
+let text_example = "My email is hello@danielemargutti.com and my website is http://www.danielemargutti.com"
+
+let rule_email = RegExpPatternStyles(pattern: regexp_email) {
+	$0.color = .red
+}!
+
+let rule_url = RegExpPatternStyles(pattern: regexp_url) {
+	$0.color = .blue
+}!
+
+let baseStyle = Style("base", {
+	$0.font = FontAttribute(.Georgia_Bold, size: 12)
+})
+
+var attributedString = text_example.set(regExpStyles: [rule_email, rule_url], default: baseStyle)
+```
 
 <a name="combinestrings" />
 
@@ -202,7 +246,7 @@ Is possible to append a `MarkupString` to an `NSMutableAttributedString` instanc
 
 ```swift
 let sourceURL = URL(fileURLWithPath: "...")
-let markUpObj = RichString(sourceURL, encoding: .utf8, [bold,italic])!
+let markUpObj = MarkupString(sourceURL, [bold,italic])!
 
 let finalAttributed = "Welcome!".set(style: bold)
 // Create an `NSMutableAttributedString` render from markUpObj and append it to the instance
@@ -270,7 +314,7 @@ let style_exteme = Style("extreme", {
 })
 
 let sourceTaggedString = "<center>The quick brown fox ...
-let parser = try! MarkupString(source: sourceTaggedString, [style_center,style_italic,style_exteme,style_bold])
+let parser = MarkupString(source: sourceTaggedString, [style_center,style_italic,style_exteme,style_bold])!
 // Render attributes string
 // Result is parsed only upon requested, only first time (then it will be cached).
 let test_7 = parser.render(withStyles: [style_bold,style_center,style_italic,style_exteme])
