@@ -55,6 +55,7 @@ Documentation
 * **[Apply style to a `String`](#applystyletostring)**
 * **[Apply style on substring with `Range`](#applystylerange)**
 * **[Apply style/s on substring with `NSRegularExpression`](#applystyleregexp)**
+* **[Apply Multiple Styles with a set of Regular Expressions](#multipleregexp)**
 * **[Combine `Strings` and `Attributed Strings`](#combinestrings)**
 * **[Create tagged strings](#createtagbased)**
 * **[Parse and render tag-based content](#rendertagbased)**
@@ -196,7 +197,9 @@ Will produce:
 
 ![assets](https://raw.githubusercontent.com/malcommac/SwiftRichString/develop/assets/assets_5.png)
 
-## Apply Multiple Styles with Regular Expressions
+<a name="multipleregexp" />
+
+## Apply Multiple Styles with a set of Regular Expressions
 
 Sometimes you may need to apply different `Style` by matching some regular expression rules.
 In this case you can use `.set(regExpStyles:default:)` function and define your own matcher; each matcher is a `RegExpPatternStyles` struct which matches a particular regexp and apply a set of `[Style]`.
@@ -224,6 +227,7 @@ let baseStyle = Style("base", {
 
 var attributedString = text_example.set(regExpStyles: [rule_email, rule_url], default: baseStyle)
 ```
+![assets](https://raw.githubusercontent.com/malcommac/SwiftRichString/develop/assets/assets_6.png)
 
 <a name="combinestrings" />
 
