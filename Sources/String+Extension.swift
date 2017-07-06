@@ -80,13 +80,20 @@ public extension String {
 
 public extension String {
 	
+	/// Parse an tagged style string and apply passed style by returning an attributed string
+	///
+	/// - Parameter styles: styles to apply
+	/// - Returns: attributed string, nil if parse fails
+	public func renderTags(withStyles styles: [Style]) -> NSMutableAttributedString? {
+		return MarkupString(source: self)?.render(withStyles: styles)
+	}
+	
 	/// Create a new MarkupString by parsing the content of self string and apply given styles
 	///
 	/// - Parameter styles: styles to apply
-	/// - Returns: a new MarkupString instances
-	/// - Throws: throws if parse fail
-	public func parse(andSet styles: Style...) throws -> MarkupString {
-		return try MarkupString(source: self, styles: styles)
+	/// - Returns: a new MarkupString instances, nil if parsing fails
+	public func parse(andSet styles: Style...) -> MarkupString? {
+		return MarkupString(source: self, styles: styles)
 	}
 	
 	
@@ -95,8 +102,8 @@ public extension String {
 	///
 	/// - Returns: a new instance of MarkupString
 	/// - Throws: throws if parse fail
-	public func parse() throws -> MarkupString {
-		return try MarkupString(source: self)
+	public func parse() -> MarkupString? {
+		return MarkupString(source: self)
 	}
 	
 	/// Enclose string between passed tag. Tag should not include open/end/close sign, so basically

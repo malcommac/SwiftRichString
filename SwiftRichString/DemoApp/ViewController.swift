@@ -16,6 +16,7 @@ class ViewController: UIViewController {
 	override func viewDidLoad() {
 		super.viewDidLoad()
 
+
 //		let bold = Style("bold", {
 //			$0.font = FontAttribute(.Copperplate, size: 50)
 //			$0.color = UIColor.red
@@ -146,10 +147,7 @@ class ViewController: UIViewController {
 		})
 		
 		let sourceTaggedString = "<center>The quick brown fox</center>\njumps over the lazy dog is an <italic>English-language</italic> pangram—a phrase that contains <italic>all</italic> of the letters of the alphabet. It is <extreme><underline>commonly</underline></extreme> used for touch-typing practice."
-		let parser = try! MarkupString(source: sourceTaggedString)
-		// Render attributes string
-		// Result is parsed only upon requested, only first time (then it will be cached).
-		let parseredAttributedText = parser.render(withStyles: [tag_center,tag_italic,tag_extreme,tag_underline])
+		let _ = sourceTaggedString.renderTags(withStyles: [tag_center,tag_italic,tag_extreme,tag_underline])
 		// Create and render text
 //		let text = "Hello <bold>\(userName)!</bold>, <italic>welcome here!</italic>"
 //		let renderedText = text.rich(bold,italic).text

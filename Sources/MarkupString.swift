@@ -44,16 +44,21 @@ public class MarkupString {
 	/// Predefined styles
 	public var styles: [Style]?
 	
-	/// Initialize a new MarkupString with given string content and applicable styles
+	/// Initialize a new MarkupString with given string content and applicable styles.
+	/// It will return nil if parsing fails.
 	///
 	/// - Parameters:
 	///   - content: plain text with tags
 	///   - styles: styles to apply. Styles are applied based upon tags added to the content variabile.
-	public init(source: String, styles: [Style]? = nil) throws {
-		let (fPlain,fTags) = try MarkupString.parse(source)
-		self.tags = fTags
-		self.string = fPlain
-		self.styles = styles
+	public init?(source: String, styles: [Style]? = nil) {
+		do {
+			let (fPlain,fTags) = try MarkupString.parse(source)
+			self.tags = fTags
+			self.string = fPlain
+			self.styles = styles
+		} catch {
+			return nil
+		}
 	}
 	
 	/// Render with set styles

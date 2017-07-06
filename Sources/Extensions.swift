@@ -134,8 +134,10 @@ func +<Key, Value> (lhs: [Key: Value], rhs: [Key: Value]) -> [Key: Value] {
 ///   - lhs: left MarkupString
 ///   - rhs: right MarkupString
 /// - Returns: a new MarkupString with the content of both lhs and rhs strings and with merged styles
-public func + (lhs: MarkupString, rhs: MarkupString) throws -> MarkupString {
-	let markupString = try MarkupString(source: lhs.string + rhs.string) // concatenate the content
+public func + (lhs: MarkupString, rhs: MarkupString) -> MarkupString? {
+	guard let markupString = MarkupString(source: lhs.string + rhs.string) else { // concatenate the content
+		return nil
+	}
 	// sum styles between lhs and rhs (rhs may replace existing lhs's styles)
 	markupString.styles = lhs.styles + rhs.styles
 	return markupString
