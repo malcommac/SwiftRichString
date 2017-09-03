@@ -13,6 +13,6 @@ Pod::Spec.new do |s|
   s.source       = { :git => "https://github.com/malcommac/SwiftRichString.git", :tag => s.version.to_s }
   s.source_files  = "Sources/**/*.swift"
   s.frameworks  = "Foundation"
-  spec.requires_arc = true
-  spec.module_name = 'SwiftRichString'
+  s.requires_arc = true
+  s.module_name = 'SwiftRichString'
 end

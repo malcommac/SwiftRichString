@@ -193,9 +193,9 @@ let attributed = taggedString.renderTags(withStyles: [tag_center,tag_italic,tag_
 
 Will produce:
 
-![assets](https://raw.githubusercontent.com/malcommac/SwiftRichString/develop/assets/assets_4.png)
-
 ![assets](https://raw.githubusercontent.com/malcommac/SwiftRichString/develop/assets/assets_5.png)
+
+![assets](https://raw.githubusercontent.com/malcommac/SwiftRichString/develop/assets/assets_4.png)
 
 <a name="multipleregexp" />
 
@@ -324,7 +324,7 @@ let style_exteme = Style("extreme", {
   $0.underline = UnderlineAttribute(color: UIColor.blue, style: NSUnderlineStyle.styleSingle)
 })
 
-let sourceTaggedString = "<center>The quick brown fox ...
+let sourceTaggedString = "<center>The quick brown fox ..."
 let parser = MarkupString(source: sourceTaggedString, [style_center,style_italic,style_exteme,style_bold])!
 // Render attributes string
 // Result is parsed only upon requested, only first time (then it will be cached).
@@ -651,7 +651,7 @@ You can install Swiftline using CocoaPods, carthage and Swift package manager
     pod 'SwiftRichString'
 
 ### Carthage
-    github 'malcommac/SwiftRichString'
+    github "malcommac/SwiftRichString"
 
 ### Swift Package Manager
 Add swiftline as dependency in your `Package.swift`
