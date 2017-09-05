@@ -7,6 +7,9 @@
 `SwiftRichString` is a lightweight library wich allows you to simplify your work  with attributed strings in UIKit. It provides convenient way to create and manage string with complex attributes, render tag-based string and manipulate styles at specified indexes.
 
 Supported platforms (since 0.9.9):
+* **Swift 3.x** - see master branch, current version 0.9.9
+* **Swift 4.x** - see [swift-4 branch here](https://github.com/malcommac/SwiftRichString/tree/feature/swift-4)
+
 * iOS 8.0+
 * tvOS 9.0+
 * macOS 10.10+
