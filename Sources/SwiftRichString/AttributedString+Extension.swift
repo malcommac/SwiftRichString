@@ -98,8 +98,8 @@ public extension NSMutableAttributedString {
 	///   - style: style to add
 	///   - range: range of characters where add passed style
 	/// - Returns: self to allow any chain
-	public func add(style: Style, range: Range<Int>? = nil) -> NSMutableAttributedString {
-		self.addAttributes(style.attributes, range: self.string.toNSRange(from: range))
+	public func add(style: Style, range: Range<String.Index>? = nil) -> NSMutableAttributedString {
+		self.addAttributes(style.attributes, range: self.string.nsRange(from: range))
 		return self
 	}
 	
@@ -121,8 +121,8 @@ public extension NSMutableAttributedString {
 	///   - style: style to apply
 	///   - range: range to apply
 	/// - Returns: self to allow any chain
-	public func set(style: Style, range: Range<Int>? = nil) -> NSMutableAttributedString {
-		self.setAttributes(style.attributes, range: self.string.toNSRange(from: range))
+	public func set(style: Style, range: Range<String.Index>? = nil) -> NSMutableAttributedString {
+		self.setAttributes(style.attributes, range: self.string.nsRange(from: range))
 		return self
 	}
 	
@@ -144,9 +144,9 @@ public extension NSMutableAttributedString {
 	///   - style: style to remove
 	///   - range: range to remove
 	/// - Returns: self to allow any chain
-	public func remove(style: Style, range: Range<Int>? = nil) -> NSMutableAttributedString {
+	public func remove(style: Style, range: Range<String.Index>? = nil) -> NSMutableAttributedString {
 		style.attributes.keys.forEach({
-			self.removeAttribute($0, range: self.string.toNSRange(from: range))
+			self.removeAttribute($0, range: self.string.nsRange(from: range))
 		})
 		return self
 	}

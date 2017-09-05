@@ -145,7 +145,7 @@ class ViewController: UIViewController {
 		})
 		
 		let sourceTaggedString = "<center>The quick brown fox</center>\njumps over the lazy dog is an <italic>English-language</italic> pangram—a phrase that contains <italic>all</italic> of the letters of the alphabet. It is <extreme><underline>commonly</underline></extreme> used for touch-typing practice."
-		let _ = sourceTaggedString.renderTags(withStyles: [tag_center,tag_italic,tag_extreme,tag_underline])
+		let rendered = sourceTaggedString.renderTags(withStyles: [tag_center,tag_italic,tag_extreme,tag_underline])
 		
 		let regexp_url = "http?://([-\\w\\.]+)+(:\\d+)?(/([\\w/_\\.]*(\\?\\S+)?)?)?"
 		let regexp_email = "([A-Za-z0-9_\\-\\.\\+])+\\@([A-Za-z0-9_\\-\\.])+\\.([A-Za-z]+)"

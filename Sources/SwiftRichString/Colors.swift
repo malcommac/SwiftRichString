@@ -52,7 +52,8 @@ public extension SRColor {
 			return
 		}
 		
-		let hexString: String = hex.substring(from: hex.characters.index(hex.startIndex, offsetBy: 1))
+		let hexString: String = String(hex[hex.index(hex.startIndex, offsetBy: 1)..<hex.endIndex])
+	//	let hexString: String = hex.substring(from: hex.characters.index(hex.startIndex, offsetBy: 1))
 		var hexValue:  UInt32 = 0
 		
 		guard Scanner(string: hexString).scanHexInt32(&hexValue) else {
