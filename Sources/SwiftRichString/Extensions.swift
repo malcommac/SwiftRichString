@@ -75,7 +75,7 @@ public extension Array where Element: Style {
 	/// Return the index and the instance of the first default Style defined in an array of Style
 	///
 	/// - Returns: tuple of index+instance or nil if not present
-	internal func defaultStyle() -> (index: Int?, item: Style?) {
+	internal func defaultStyle() -> (index: Int?, item: Element?) {
 		let defaultIndex = self.index(where: {
 			if case .default = $0.name { return true }
 			return false
