@@ -117,7 +117,7 @@ public class Style: Equatable {
 	public var name: StyleName
 	
 	/// Cache of attributes dictionary
-	public fileprivate(set) var attributes: [String:Any] = [NSParagraphStyleAttributeName : NSMutableParagraphStyle()]
+	public fileprivate(set) var attributes: [NSAttributedStringKey:Any] = [.paragraphStyle : NSMutableParagraphStyle()]
 	
 	/// Initialize a new style with given type
 	///
@@ -172,7 +172,7 @@ public class Style: Equatable {
 	/// - Parameters:
 	///   - key: key to assign
 	///   - value: value to assign (nil to remove key from cached dictionay, valid value to set)
-	private func set(key: String, value: Any?) {
+	private func set(key: NSAttributedStringKey, value: Any?) {
 		guard let setValue = value else {
 			attributes.removeValue(forKey: key)
 			return
@@ -180,14 +180,14 @@ public class Style: Equatable {
 		attributes[key] = setValue
 	}
 	
-	private func remove(key: String) {
+	private func remove(key: NSAttributedStringKey) {
 		attributes.removeValue(forKey: key)
 	}
 	
 	/// Private cached ParagraphStyle instance
 	private var paragraph: NSMutableParagraphStyle {
 		get {
-			return attributes[NSParagraphStyleAttributeName] as! NSMutableParagraphStyle
+			return attributes[.paragraphStyle] as! NSMutableParagraphStyle
 		}
 	}
 	
@@ -225,36 +225,36 @@ public class Style: Equatable {
 	/// Custom fonts created by name are also available.
 	/// You can however extended FontAttribute to add your own custom font and make them type safe as they should be.
 	public var font: FontAttribute? {
-		set { self.set(key: NSFontAttributeName, value: newValue?.font) }
-		get { return FontAttribute(font: attributes[NSFontAttributeName] as? SRFont ) }
+		set { self.set(key: .font, value: newValue?.font) }
+		get { return FontAttribute(font: attributes[.font] as? SRFont ) }
 	}
 	
 	/// The value of this attribute is a SRColor object. Use this attribute to specify the color of the text during rendering.
 	// If you do not specify this attribute, the text is rendered in black.
 	public var color: SRColor? {
-		didSet { self.set(key: NSForegroundColorAttributeName, value: self.color) }
+		didSet { self.set(key: .foregroundColor, value: self.color) }
 	}
 	
 	/// The value of this attribute is a SRColor object. Use this attribute to specify the color of the background area behind the text.
 	/// If you do not specify this attribute, no background color is drawn.
 	public var backColor: SRColor? {
-		didSet { self.set(key: NSBackgroundColorAttributeName, value: self.backColor) }
+		didSet { self.set(key: .backgroundColor, value: self.backColor) }
 	}
 	
 	/// Define stroke attributes
 	public var stroke: StrokeAttribute? {
 		set {
 			guard let stroke = newValue else {
-				self.remove(key: NSStrokeColorAttributeName)
-				self.remove(key: NSStrokeWidthAttributeName)
+				self.remove(key: .strokeColor)
+				self.remove(key: .strokeWidth)
 				return
 			}
-			self.set(key: NSStrokeWidthAttributeName, value: stroke.width)
-			self.set(key: NSStrokeColorAttributeName, value: stroke.color)
+			self.set(key: .strokeWidth, value: stroke.width)
+			self.set(key: .strokeColor, value: stroke.color)
 		}
 		get {
-			return StrokeAttribute(color: attributes[NSStrokeColorAttributeName] as? SRColor,
-			                       width: attributes[NSStrokeWidthAttributeName] as? CGFloat)
+			return StrokeAttribute(color: attributes[.strokeColor] as? SRColor,
+			                       width: attributes[.strokeWidth] as? CGFloat)
 		}
 	}
 	
@@ -262,16 +262,16 @@ public class Style: Equatable {
 	public var underline: UnderlineAttribute? {
 		set {
 			guard let underline = newValue else {
-				self.remove(key: NSUnderlineColorAttributeName)
-				self.remove(key: NSStrokeWidthAttributeName)
+				self.remove(key: .underlineColor)
+				self.remove(key: .underlineStyle)
 				return
 			}
-            self.set(key: NSUnderlineStyleAttributeName, value: underline.style?.rawValue)
-			self.set(key: NSUnderlineColorAttributeName, value: underline.color)
+            self.set(key: .underlineStyle, value: underline.style?.rawValue)
+			self.set(key: .underlineColor, value: underline.color)
 		}
 		get {
-			return UnderlineAttribute(color: attributes[NSUnderlineColorAttributeName] as? SRColor,
-			                          style: attributes[NSUnderlineStyleAttributeName] as? NSUnderlineStyle)
+			return UnderlineAttribute(color: attributes[.underlineColor] as? SRColor,
+			                          style: attributes[.underlineStyle] as? NSUnderlineStyle)
 		}
 	}
 	
@@ -279,24 +279,24 @@ public class Style: Equatable {
 	public var strike: StrikeAttribute? {
 		set {
 			guard let strike = newValue else {
-				self.remove(key: NSStrikethroughStyleAttributeName)
-				self.remove(key: NSStrikethroughColorAttributeName)
+				self.remove(key: .strikethroughStyle)
+				self.remove(key: .strikethroughColor)
 				return
 			}
-			self.set(key: NSStrikethroughStyleAttributeName, value: strike.style?.rawValue)
-			self.set(key: NSStrikethroughColorAttributeName, value: strike.color)
+			self.set(key: .strikethroughStyle, value: strike.style?.rawValue)
+			self.set(key: .strikethroughColor, value: strike.color)
 		}
 		get {
-			return StrikeAttribute(color: attributes[NSStrikethroughColorAttributeName] as? SRColor,
-			                       style: attributes[NSStrikethroughStyleAttributeName] as? NSUnderlineStyle)
+			return StrikeAttribute(color: attributes[.strikethroughColor] as? SRColor,
+			                       style: attributes[.strikethroughStyle] as? NSUnderlineStyle)
 		}
 	}
 
 	/// The value of this attribute is an NSShadow object. The default value of this property is nil.
 	#if os(iOS) || os(macOS) || os(tvOS)
 	public var shadow: ShadowAttribute? {
-		set { self.set(key: NSShadowAttributeName, value: newValue?.shadowObj) }
-		get { return ShadowAttribute(shadow: attributes[NSShadowAttributeName] as? NSShadow) }
+		set { self.set(key: .shadow, value: newValue?.shadowObj) }
+		get { return ShadowAttribute(shadow: attributes[.shadow] as? NSShadow) }
 	}
 	#endif
 	
@@ -382,59 +382,59 @@ public class Style: Equatable {
 	/// The value 0 indicates no ligatures. The value 1 indicates the use of the default ligatures.
 	/// The value 2 indicates the use of all ligatures. The default value for this attribute is 1. (Value 2 is unsupported on iOS.)
 	public var ligature: Int? {
-		didSet { self.set(key: NSLigatureAttributeName, value: self.ligature) }
+		didSet { self.set(key: .ligature, value: self.ligature) }
 	}
 	
 	/// This value specifies the number of points by which to adjust kern-pair characters.
 	/// Kerning prevents unwanted space from occurring between specific characters and depends on the font.
 	/// The value 0 means kerning is disabled. The default value for this attribute is 0.
 	public var kern: Float? {
-		didSet { self.set(key: NSKernAttributeName, value: self.kern) }
+		didSet { self.set(key: .kern, value: self.kern) }
 	}
 	
 	/// The value of this attribute is an NSString object. Use this attribute to specify a text effect, such as NSTextEffectLetterpressStyle.
 	/// The default value of this property is nil, indicating no text effect.
 	public var textEffect: String? {
-		didSet { self.set(key: NSTextEffectAttributeName, value: self.textEffect) }
+		didSet { self.set(key: .textEffect, value: self.textEffect) }
 	}
 	
 	/// The value of this attribute is an NSTextAttachment object. The default value of this property is nil, indicating no attachment.
 	#if os(iOS) || os(macOS)
 	public var attach: NSTextAttachment? {
-		didSet { self.set(key: NSAttachmentAttributeName, value: self.attach) }
+		didSet { self.set(key: .attachment, value: self.attach) }
 	}
 	#endif
 	
 	/// The value of this attribute is an NSURL object (preferred) or an NSString object. The default value of this property is nil, indicating no link.
 	public var linkURL: URL? {
-		didSet { self.set(key: NSLinkAttributeName, value: self.linkURL) }
+		didSet { self.set(key: .link, value: self.linkURL) }
 	}
 	
 	/// Floating point value indicating the character’s offset from the baseline, in points. The default value is 0.
 	public var baselineOffset: Float? {
-		didSet { self.set(key: NSBaselineOffsetAttributeName, value: self.baselineOffset) }
+		didSet { self.set(key: .baselineOffset, value: self.baselineOffset) }
 	}
 	
 	/// Floating point value indicating skew to be applied to glyphs. The default value is 0, indicating no skew.
 	public var oblique: Float? {
-		didSet { self.set(key: NSObliquenessAttributeName, value: self.oblique) }
+		didSet { self.set(key: .obliqueness, value: self.oblique) }
 	}
 	
 	/// Floating point value indicating the log of the expansion factor to be applied to glyphs. The default value is 0, indicating no expansion.
 	public var expansion: Float? {
-		didSet { self.set(key: NSExpansionAttributeName, value: self.expansion) }
+		didSet { self.set(key: .expansion, value: self.expansion) }
 	}
 
 	/// The value of this attribute is an NSArray object containing NSNumber objects representing the nested levels of writing direction overrides, 
 	/// in order from outermost to innermost.
 	public var direction: NSWritingDirection? {
-		didSet { self.set(key: NSWritingDirectionAttributeName, value: self.direction) }
+		didSet { self.set(key: .writingDirection, value: self.direction) }
 	}
 	
 	/// The value 0 indicates horizontal text. The value 1 indicates vertical text. In iOS, horizontal text is always used and specifying
 	/// a different value is undefined.
 	public var glyphForm: Int? {
-		didSet { self.set(key: NSVerticalGlyphFormAttributeName, value: self.glyphForm) }
+		didSet { self.set(key: .verticalGlyphForm, value: self.glyphForm) }
 	}
 	
 }

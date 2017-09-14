@@ -23,17 +23,16 @@ public extension String {
 	///   - style: style to apply
 	///   - range: range to apply (nil means entire string's range)
 	/// - Returns: an NSMutableAttributedString instance
-	public func set(style: Style, range: Range<Int>? = nil) -> NSMutableAttributedString {
+	public func set(style: Style, range: NSRange? = nil) -> NSMutableAttributedString {
 		guard let range = range else { // apply to entire string
 			return NSMutableAttributedString(string: self, attributes: style.attributes)
 		}
 		// create a new attributed string and apply attributes to given range mantaining
 		// full unicode support
 		let attributedText = NSMutableAttributedString(string: self)
-		attributedText.addAttributes(style.attributes, range: self.toNSRange(from: range))
+		attributedText.addAttributes(style.attributes, range: range)
 		return attributedText
-	}
-	
+	}	
 	
 	/// Apply attributes in order, as passed. The only exception is .default Style; it will be applied always as first style
 	///
@@ -49,8 +48,8 @@ public extension String {
 	/// - Returns: a new attributed string
 	public func set(stylesArray styles: [Style]) -> NSMutableAttributedString {
 		let attributedString = NSMutableAttributedString(string: self)
-		let range = Range<String.Index>(uncheckedBounds: (self.startIndex,self.endIndex))
-		attributedString.addAttributes(styles.attributesDictionary, range: self.toNSRange(from: range))
+		let range = NSMakeRange(0, attributedString.length)
+		attributedString.addAttributes(styles.attributesDictionary, range: range)
 		return attributedString
 	}
 	
@@ -80,7 +79,7 @@ public extension String {
 		let allRange = Range<String.Index>(uncheckedBounds: (self.startIndex,self.endIndex))
 		
 		regExpStyles.forEach { regExp in
-			regExp.regularExpression.enumerateMatches(in: self, options: NSRegularExpression.MatchingOptions(rawValue: 0), range: self.toNSRange(from: allRange)) {
+			regExp.regularExpression.enumerateMatches(in: self, options: NSRegularExpression.MatchingOptions(rawValue: 0), range: self.nsRange(from: allRange)) {
 				(result : NSTextCheckingResult?, _, _) in
 				if let r = result {
 					attr_str.addAttributes(regExp.styles.attributesDictionary, range: r.range)
@@ -152,10 +151,12 @@ public extension String {
 			var taggedString = self
 			let regex = try NSRegularExpression(pattern: pattern, options: options)
 			let allRange = Range<String.Index>(uncheckedBounds: (self.startIndex,self.endIndex))
-			let matches = regex.matches(in: self, options: NSRegularExpression.MatchingOptions(rawValue: 0), range: self.toNSRange(from: allRange))
+			let matches = regex.matches(in: self, options: NSRegularExpression.MatchingOptions(rawValue: 0),
+			                            range: self.nsRange(from: allRange))
 			matches.reversed().forEach({ r in
-				let cRg = self.toStringRange(from: r.range)!
-				let substringToEnclose = taggedString.substring(with: cRg).tagged(style)
+				let cRg = Range(r.range, in: self)!
+				let substringToEnclose = String(taggedString[cRg.upperBound..<cRg.lowerBound])
+			//	let substringToEnclose = taggedString.substring(with: cRg).tagged(style)
 				taggedString = taggedString.replacingCharacters(in: cRg, with: substringToEnclose)
 			})
 			return taggedString
@@ -165,40 +166,19 @@ public extension String {
 	}
 }
 
-//MARK: String Extensions (NSRange)
-
 public extension String {
 	
-	/// Transform a Range<Int> to NSRange based upon the content of self
+	/// Convert a `Range<Index>?` to a valid `NSRange` for the self string instance
 	///
-	/// - Parameter range: range to convert
-	/// - Returns: equivalent 
-	public func toNSRange(from range: Range<Int>?) -> NSRange {
-		guard let range = range else {
-			return self.toNSRange(from: self.toStringRange(from: NSMakeRange(0, self.characters.count))!)
+	/// - Parameter range: input range
+	/// - Returns: NSRange
+	func nsRange(from range: Range<Index>?) -> NSRange {
+		guard let r = range else {
+			return NSRange(0..<utf16.count)
 		}
-		return self.toNSRange(from: self.toStringRange(range: range))
-	}
-	
-	func toNSRange(from range: Range<String.Index>) -> NSRange {
-		let from = range.lowerBound.samePosition(in: utf16)
-		let to = range.upperBound.samePosition(in: utf16)
-		return NSRange(location: utf16.distance(from: utf16.startIndex, to: from), length: utf16.distance(from: from, to: to))
-	}
-	
-	public func toStringRange(range: Range<Int>) -> Range<String.Index> {
-		let startIndex = self.index(self.startIndex, offsetBy: range.lowerBound)
-		let endIndex = self.index(self.startIndex, offsetBy: range.upperBound)// - range.lowerBound)
-		return Range<String.Index>(uncheckedBounds: (startIndex,endIndex))
-	}
-	
-	func toStringRange(from nsRange: NSRange) -> Range<String.Index>? {
-		guard
-			let from16 = utf16.index(utf16.startIndex, offsetBy: nsRange.location, limitedBy: utf16.endIndex),
-			let to16 = utf16.index(from16, offsetBy: nsRange.length, limitedBy: utf16.endIndex),
-			let from = String.Index(from16, within: self),
-			let to = String.Index(to16, within: self)
-			else { return nil }
-		return from ..< to
-	}
+        let lower = UTF16View.Index(r.lowerBound, within: utf16)!
+        let upper = UTF16View.Index(r.upperBound, within: utf16)!
+		return NSRange(location: utf16.distance(from: utf16.startIndex, to: lower), length: utf16.distance(from: lower, to: upper))
+    }
+
 }
