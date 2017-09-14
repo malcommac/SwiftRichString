@@ -6,12 +6,7 @@
 # SwiftRichString
 `SwiftRichString` is a lightweight library wich allows you to simplify your work  with attributed strings in UIKit. It provides convenient way to create and manage string with complex attributes, render tag-based string and manipulate styles at specified indexes.
 
-Requirements:
-
-* **Swift 3.x** - see master branch, current version 0.9.9
-* **Swift 4.x** - see [swift-4 branch here](https://github.com/malcommac/SwiftRichString/tree/feature/swift-4)
-
-
+Supported platforms:
 * iOS 8.0+
 * tvOS 9.0+
 * macOS 10.10+
@@ -92,8 +87,8 @@ In fact the ideal use-case is to create your own set of styles for your app, the
 
 ## Latest Version
 Latest version of `SwiftRichString` is:
-* Version: 0.9.9
-* Released on: 2017-07-07
+* **Swift 4.x**: 1.0.0 on master branch
+* **Swift 3.x**: Up to 0.9.9 release
 
 A complete list of changes for each release is available in the [CHANGELOG](https://github.com/malcommac/SwiftRichString/blob/master/CHANGELOG.md) file.
 
@@ -198,9 +193,9 @@ let attributed = taggedString.renderTags(withStyles: [tag_center,tag_italic,tag_
 
 Will produce:
 
-![assets](https://raw.githubusercontent.com/malcommac/SwiftRichString/develop/assets/assets_4.png)
-
 ![assets](https://raw.githubusercontent.com/malcommac/SwiftRichString/develop/assets/assets_5.png)
+
+![assets](https://raw.githubusercontent.com/malcommac/SwiftRichString/develop/assets/assets_4.png)
 
 <a name="multipleregexp" />
 
@@ -329,7 +324,7 @@ let style_exteme = Style("extreme", {
   $0.underline = UnderlineAttribute(color: UIColor.blue, style: NSUnderlineStyle.styleSingle)
 })
 
-let sourceTaggedString = "<center>The quick brown fox ...
+let sourceTaggedString = "<center>The quick brown fox ..."
 let parser = MarkupString(source: sourceTaggedString, [style_center,style_italic,style_exteme,style_bold])!
 // Render attributes string
 // Result is parsed only upon requested, only first time (then it will be cached).
@@ -651,12 +646,15 @@ This is the list of attributes you can customize:
 ## Installation
 You can install Swiftline using CocoaPods, carthage and Swift package manager
 
+* **Swift 4.x**: >= 1.0.0
+* **Swift 3.x**: Up to 0.9.9 release
+
 ### CocoaPods
     use_frameworks!
     pod 'SwiftRichString'
 
 ### Carthage
-    github 'malcommac/SwiftRichString'
+    github "malcommac/SwiftRichString"
 
 ### Swift Package Manager
 Add swiftline as dependency in your `Package.swift`
