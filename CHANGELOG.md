@@ -4,9 +4,19 @@
 
 ## CHANGELOG
 
-* Version **[0.9.9](#099)**
+* Version **[1.0.0](#100)** (for Swift 4)
+* Version **[0.9.9](#099)** (Latest Swift 3.x compatible version)
 * Version **[0.9.8](#097)**
 * Version **[0.9.5](#095)**
+
+<a name="100" />
+
+## SwiftRichString 1.0.0
+---
+- **Release Date**: 2017-09-14
+- **Zipped Version**: [Download 1.0.0](https://github.com/malcommac/SwiftRichString/releases/tag/1.0.0)
+
+This is the first version compatible with Swift 4.
 
 <a name="099" />
 

@@ -6,7 +6,7 @@
 # SwiftRichString
 `SwiftRichString` is a lightweight library wich allows you to simplify your work  with attributed strings in UIKit. It provides convenient way to create and manage string with complex attributes, render tag-based string and manipulate styles at specified indexes.
 
-Supported platforms (since 0.9.9):
+Supported platforms:
 * iOS 8.0+
 * tvOS 9.0+
 * macOS 10.10+
@@ -87,8 +87,8 @@ In fact the ideal use-case is to create your own set of styles for your app, the
 
 ## Latest Version
 Latest version of `SwiftRichString` is:
-* Version: 0.9.9
-* Released on: 2017-07-07
+* **Swift 4.x**: 1.0.0 on master branch
+* **Swift 3.x**: Up to 0.9.9 release
 
 A complete list of changes for each release is available in the [CHANGELOG](https://github.com/malcommac/SwiftRichString/blob/master/CHANGELOG.md) file.
 
@@ -645,6 +645,9 @@ This is the list of attributes you can customize:
 
 ## Installation
 You can install Swiftline using CocoaPods, carthage and Swift package manager
+
+* **Swift 4.x**: >= 1.0.0
+* **Swift 3.x**: Up to 0.9.9 release
 
 ### CocoaPods
     use_frameworks!
