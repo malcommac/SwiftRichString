@@ -31,8 +31,10 @@
 
 import Foundation
 #if os(iOS) || os(tvOS) || os(watchOS)
+	public typealias LineBreakMode = NSLineBreakMode
 	import UIKit
 #elseif os(OSX)
+	public typealias LineBreakMode = NSParagraphStyle.LineBreakMode
 	import AppKit
 #endif
 
@@ -200,7 +202,7 @@ public class Style: Equatable {
 	
 	/// The mode that should be used to break lines in the receiver.
 	/// This property contains the line break mode to be used laying out the paragraph’s text.
-	public var lineBreak: NSLineBreakMode {
+	public var lineBreak: LineBreakMode {
 		set { self.paragraph.lineBreakMode = newValue }
 		get { return self.paragraph.lineBreakMode }
 	}
