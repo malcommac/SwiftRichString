@@ -4,8 +4,19 @@
 
 ## CHANGELOG
 
+* Version **[0.9.10](#0910)**
+* Version **[0.9.9](#099)**
 * Version **[0.9.8](#097)**
 * Version **[0.9.5](#095)**
+
+<a name="0910" />
+
+## SwiftRichString 0.9.10
+---
+- **Release Date**: 2017-09-18
+- **Zipped Version**: [Download 0.9.10](https://github.com/malcommac/SwiftRichString/releases/tag/0.9.10)
+
+Fixed a minor issue compiling for Xcode 9 and Swift 3.2
 
 <a name="099" />
 
