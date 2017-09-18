@@ -675,7 +675,7 @@ Add swiftline as dependency in your `Package.swift`
 
 Current version (0.9.9+) is compatible with:
 
-* Swift 3.0+
+* Swift 3.x and Swift 4.x
 * iOS 8.0+
 * tvOS 9.0+
 * macOS 10.10+
