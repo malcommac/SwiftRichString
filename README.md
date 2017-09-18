@@ -88,7 +88,7 @@ In fact the ideal use-case is to create your own set of styles for your app, the
 ## Latest Version
 Latest version of `SwiftRichString` is:
 * **Swift 4.x**: >= 1.0.1
-* **Swift 3.x**: Up to 0.9.9 release
+* **Swift 3.x**: Up to 0.9.10 release
 
 A complete list of changes for each release is available in the [CHANGELOG](https://github.com/malcommac/SwiftRichString/blob/master/CHANGELOG.md) file.
 
@@ -647,7 +647,7 @@ This is the list of attributes you can customize:
 You can install Swiftline using CocoaPods, carthage and Swift package manager
 
 * **Swift 4.x**: >= 1.0.0
-* **Swift 3.x**: Up to 0.9.9 release
+* **Swift 3.x**: Up to 0.9.10 release
 
 ### CocoaPods
     use_frameworks!
