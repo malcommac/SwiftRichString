@@ -133,7 +133,6 @@ public class MarkupString {
 					if var tag = Tag(raw: rawTag) {
 						if tag.name == "br" { // it's a return carriage, we want to translate it directly
 							plainText += "\n"
-							continue
 						}
 						let endIndex = plainText.characters.count
 						if tag.isOpenTag == true {
