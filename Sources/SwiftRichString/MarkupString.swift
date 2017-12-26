@@ -135,7 +135,7 @@ public class MarkupString {
 							plainText += "\n"
 							continue
 						}
-						let endIndex = plainText.characters.count
+						let endIndex = plainText.count
 						if tag.isOpenTag == true {
 							// it's an open tag, store the start index
 							// (the upperbund is temporary the same of the lower bound, we will update it

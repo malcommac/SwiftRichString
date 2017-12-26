@@ -61,7 +61,7 @@ public extension SRColor {
 			return
 		}
 		
-		switch (hexString.characters.count) {
+		switch (hexString.count) {
 		case 3:
 			let hex3 = UInt16(hexValue)
 			let divisor = CGFloat(15)
