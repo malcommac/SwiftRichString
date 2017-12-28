@@ -4,11 +4,22 @@
 
 ## CHANGELOG
 
+* Version **[1.1.0](#101)** (for Swift 4)
 * Version **[1.0.1](#101)** (for Swift 4)
 * Version **[0.9.10](#0910)** (Latest Swift 3.x compatible version)
 * Version **[0.9.9](#099)**
 * Version **[0.9.8](#097)**
 * Version **[0.9.5](#095)**
+
+<a name="110" />
+
+## SwiftRichString 1.1.0
+---
+- **Release Date**: 2017-12-28
+- **Zipped Version**: [Download 1.1.0](https://github.com/malcommac/SwiftRichString/releases/tag/1.1.0)
+
+* [#26](https://github.com/malcommac/SwiftRichString/issues/26) Fixed an issue when parsing `<br>` in `MarkupString` class
+* [#29](https://github.com/malcommac/SwiftRichString/issues/29) Fixed several warnings coming to Swift 4
 
 <a name="101" />
 
