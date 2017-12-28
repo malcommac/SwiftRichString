@@ -110,7 +110,7 @@ public extension NSMutableAttributedString {
 	/// - Parameter styles: styles to apply
 	/// - Returns: self to allow any chain
 	public func add(styles: Style...) -> NSMutableAttributedString {
-		self.addAttributes(styles.attributesDictionary, range: NSMakeRange(0, self.string.characters.count))
+		self.addAttributes(styles.attributesDictionary, range: NSMakeRange(0, self.string.count))
 		return self
 	}
 	
@@ -133,7 +133,7 @@ public extension NSMutableAttributedString {
 	/// - Parameter styles: styles to apply
 	/// - Returns: self to allow any chain
 	public func set(styles: Style...) -> NSMutableAttributedString {
-		self.setAttributes(styles.attributesDictionary, range: NSMakeRange(0, self.string.characters.count))
+		self.setAttributes(styles.attributesDictionary, range: NSMakeRange(0, self.string.count))
 		return self
 	}
 	

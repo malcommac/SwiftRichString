@@ -1,5 +1,5 @@
 <p align="center" >
-  <img src="https://raw.githubusercontent.com/malcommac/SwiftRichString/develop/logo.png" width=210px height=211px alt="SwiftRichString" title="SwiftRichString">
+<img src="https://raw.githubusercontent.com/malcommac/SwiftRichString/master/logo.png" width=530px alt="SwiftLocation" title="SwiftLocation">
 </p>
 
 
@@ -96,7 +96,7 @@ In fact the ideal use-case is to create your own set of styles for your app, the
 
 ## Latest Version
 Latest version of `SwiftRichString` is:
-* **Swift 4.x**: >= 1.0.1
+* **Swift 4.x**: 1.1.0
 * **Swift 3.x**: Up to 0.9.10 release
 
 A complete list of changes for each release is available in the [CHANGELOG](https://github.com/malcommac/SwiftRichString/blob/master/CHANGELOG.md) file.
@@ -655,7 +655,7 @@ This is the list of attributes you can customize:
 ## Installation
 You can install Swiftline using CocoaPods, carthage and Swift package manager
 
-* **Swift 4.x**: >= 1.0.0
+* **Swift 4.x**: 1.1.0
 * **Swift 3.x**: Up to 0.9.10 release
 
 ### CocoaPods

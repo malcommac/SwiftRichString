@@ -133,9 +133,8 @@ public class MarkupString {
 					if var tag = Tag(raw: rawTag) {
 						if tag.name == "br" { // it's a return carriage, we want to translate it directly
 							plainText += "\n"
-							continue
 						}
-						let endIndex = plainText.characters.count
+						let endIndex = plainText.count
 						if tag.isOpenTag == true {
 							// it's an open tag, store the start index
 							// (the upperbund is temporary the same of the lower bound, we will update it
