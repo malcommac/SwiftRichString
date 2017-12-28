@@ -4,19 +4,29 @@
 
 ## CHANGELOG
 
-* Version **[1.0.0](#100)** (for Swift 4)
-* Version **[0.9.9](#099)** (Latest Swift 3.x compatible version)
+* Version **[1.0.1](#101)** (for Swift 4)
+* Version **[0.9.10](#0910)** (Latest Swift 3.x compatible version)
+* Version **[0.9.9](#099)**
 * Version **[0.9.8](#097)**
 * Version **[0.9.5](#095)**
 
-<a name="100" />
+<a name="101" />
 
-## SwiftRichString 1.0.0
+## SwiftRichString 1.0.1
 ---
 - **Release Date**: 2017-09-14
 - **Zipped Version**: [Download 1.0.0](https://github.com/malcommac/SwiftRichString/releases/tag/1.0.0)
 
 This is the first version compatible with Swift 4.
+
+<a name="0910" />
+
+## SwiftRichString 0.9.10
+---
+- **Release Date**: 2017-09-18
+- **Zipped Version**: [Download 0.9.10](https://github.com/malcommac/SwiftRichString/releases/tag/0.9.10)
+
+Fix minor issue compiling with Xcode 9 and Swift 3.2
 
 <a name="099" />
 
