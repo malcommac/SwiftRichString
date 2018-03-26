@@ -1,10 +1,10 @@
 //
-//  FontNames.swift
+//  Shared+Font.swift
 //  SwiftRichString
-//  Elegant & Painless Attributed Strings Management Library in Swift
+//  Elegant Strings & Attributed Strings Toolkit for Swift
 //
 //  Created by Daniele Margutti.
-//  Copyright © 2016 Daniele Margutti. All rights reserved.
+//  Copyright © 2018 Daniele Margutti. All rights reserved.
 //
 //	Web: http://www.danielemargutti.com
 //	Email: hello@danielemargutti.com
@@ -30,13 +30,174 @@
 //	THE SOFTWARE.
 
 import Foundation
-#if os(iOS) || os(tvOS) || os(watchOS)
-	import UIKit
-#elseif os(OSX)
-	import AppKit
-#endif
+import UIKit
 
-public enum FontName: String {
+/// FontConvertible protocol allows you to define serveral types which can be conform to a protocol
+/// which transform the type instance to a valid `Font` object can be used in `Style` properties.
+public protocol FontConvertible {
+	
+	/// Convert type to a font object with given size; `nil` is returned in case type cannot be converted to font.
+	///
+	/// - Parameter size: size of the font.
+	/// - Returns: a valid font if applicable, `nil` if conversion fail.
+	func toFont(size: CGFloat?) -> Font?
+	
+	/// Return the size of the font. May return `nil` if not applicable.
+	var fontSize: CGFloat? { get }
+	
+}
+
+// MARK: - String / FontConvertible support for `String` type.
+/// Allows to pass a string as font description; `Font` instance is generated automatically if possible.
+extension String: FontConvertible {
+	
+	/// Attempt to generate a font from string.
+	///
+	/// - Parameter size: if passed font is generated with this size, `nil` to use `UIFont.systemFontSize`
+	/// - Returns: font instance if conversion succeded, `nil` otherwise.
+	public func toFont(size: CGFloat?) -> Font? {
+		return UIFont(name: self, size: size ?? UIFont.systemFontSize)
+	}
+	
+	/// Return `nil` for this type.
+	public var fontSize: CGFloat? {
+		return nil
+	}
+	
+}
+
+// MARK: - Font / FontConvertible support for `UIFont` type.
+extension Font: FontConvertible {
+	
+	/// Return the font itself with a new size if specified, just receiver if `nil` size is passed.
+	///
+	/// - Parameter size: size of the new font, `nil` to keep font's instance size.
+	/// - Returns: new font.
+	public func toFont(size: CGFloat?) -> Font? {
+		guard let size = size else { return self }
+		let font = UIFont(descriptor: self.fontDescriptor, size: size)
+		return font
+	}
+	
+	/// Return the size of the font.
+	public var fontSize: CGFloat? {
+		return self.pointSize
+	}
+	
+}
+
+/// MARK: - CustomFont / FontConvertible support for custom font generator.
+/// This class allows you to generate a variant font from a specified input font passed both as `String` or `Font`.
+public struct CustomFont: FontConvertible {
+	
+	/// Represented font instance
+	public private(set) var fontInstance: Font
+	
+	/// Traits to apply
+	public private(set) var traits: FontTraits
+	
+	/// Size to set
+	public private(set) var size: CGFloat
+	
+	/// Generate font
+	public lazy var font: Font = {
+		return self.toFont(size: self.size)!
+	}()
+	
+	/// Size of the font
+	public var fontSize: CGFloat? {
+		return self.size
+	}
+	
+	/// Get the font with styles applied.
+	///
+	/// - Parameter size: size of the font to generate.
+	/// - Returns: new font with given traits and sie.
+	public func toFont(size: CGFloat?) -> Font? {
+		guard let descriptor = self.fontInstance.fontDescriptor.withSymbolicTraits(self.traits) else {
+			debugPrint("Font \(self.fontInstance.fontName) does not have bold trait")
+			return self.fontInstance
+		}
+		let font = Font(descriptor: descriptor, size: (size ?? self.size))
+		return font
+	}
+	
+	/// Initialize a new `CustomFont` instance from a `FontConvertible` object.
+	///
+	/// - Parameters:
+	///   - font: source font.
+	///   - traits: traits to apply.
+	///   - size: size to apply.
+	public init?(font: FontConvertible, traits: FontTraits, size: CGFloat) {
+		guard let f = font.toFont(size: size) else { return nil }
+		self.fontInstance = f
+		self.traits = traits
+		self.size = size
+	}
+	
+	/// Initialize a new `CustomFont` instance from a given `Font` instance.
+	///
+	/// - Parameters:
+	///   - font: source font.
+	///   - traits: traits to apply.
+	///   - size: size to apply.
+	public init(font: Font, traits: FontTraits, size: CGFloat) {
+		self.fontInstance = font
+		self.traits = traits
+		self.size = size
+	}
+	
+	/// Generate a bold variant of the passed font.
+	///
+	/// - Parameters:
+	///   - font: source font.
+	///   - size: size.
+	/// - Returns: bold variant of the passed font.
+	public static func bold(_ font: FontConvertible, size: CGFloat) -> CustomFont? {
+		return CustomFont(font: font, traits: .traitBold, size: size)
+	}
+	
+	/// Generate a italic variant of the passed font.
+	///
+	/// - Parameters:
+	///   - font: source font.
+	///   - size: size.
+	/// - Returns: italic variant of the passed font.
+	public static func italic(_ font: FontConvertible, size: CGFloat) -> CustomFont? {
+		return CustomFont(font: font, traits: .traitItalic, size: size)
+	}
+	/// Generate an expanded variant of the passed font.
+	///
+	/// - Parameters:
+	///   - font: source font.
+	///   - size: size.
+	/// - Returns: expanded variant of the passed font.
+	public static func expanded(_ font: FontConvertible, size: CGFloat) -> CustomFont? {
+		return CustomFont(font: font, traits: .traitExpanded, size: size)
+	}
+	/// Generate a condensed variant of the passed font.
+	///
+	/// - Parameters:
+	///   - font: source font.
+	///   - size: size.
+	/// - Returns: condensed variant of the passed font.
+	public static func condensed(_ font: FontConvertible, size: CGFloat) -> CustomFont? {
+		return CustomFont(font: font, traits: .traitCondensed, size: size)
+	}
+	
+	/// Generate a monospaced variant of the passed font.
+	///
+	/// - Parameters:
+	///   - font: source font.
+	///   - size: size.
+	/// - Returns: monospaced variant of the passed font.
+	public static func monospaced(_ font: FontConvertible, size: CGFloat) -> CustomFont? {
+		return CustomFont(font: font, traits: .traitMonoSpace, size: size)
+	}
+	
+}
+
+public enum SystemFonts: String, FontConvertible {
 	case Copperplate_Light = "Copperplate-Light"
 	case Copperplate = "Copperplate"
 	case Copperplate_Bold = "Copperplate-Bold"
@@ -286,25 +447,44 @@ public enum FontName: String {
 	case BodoniSvtyTwoOSITCTT_Bold = "BodoniSvtyTwoOSITCTT-Bold"
 	case BodoniSvtyTwoOSITCTT_BookIt = "BodoniSvtyTwoOSITCTT-BookIt"
 	
-	
-	/// Create a new FontName from given font raw name
-	///
-	/// - Parameter fontName: font raw name (if nil may return nil)
-	/// - Returns: a new instance of FontName if font is valid, nil otherwise
-	public static func fromFontName(_ fontName: String) -> FontName? {
-		return FontName(rawValue: fontName)
+	/// Return a font from receiver.
+	/// - Parameter size: size of the font.
+	/// - Returns: font instance.
+	public func toFont(size: CGFloat?) -> Font? {
+		let s = (size ?? UIFont.systemFontSize)
+		guard let d = UIFont(name: self.rawValue, size: s) else {
+			return nil
+		}
+		return d
 	}
 	
+	/// Return a font from receiver.
+	///
+	/// - Parameters:
+	///   - size: size of the font.
+	///   - traits: traits to apply.
+	/// - Returns: font instance
+	public func toFont(size: CGFloat?, traits: FontTraits = []) -> Font? {
+		let s = (size ?? UIFont.systemFontSize)
+		guard let d = UIFontDescriptor.init(name: self.rawValue, size: s).withSymbolicTraits(traits) else {
+			return nil
+		}
+		return UIFont(descriptor: d, size: s)
+	}
 	
-	#if os(iOS)
+	/// Not applicable
+	public var fontSize: CGFloat? {
+		return nil
+	}
+	
 	/// This is the internal function which allows us to generate the enum above
 	///
 	/// - Returns: raw enum definitions
 	public static func generateEnumList() -> String {
-		return SRFont.familyNames
-			.flatMap { SRFont.fontNames(forFamilyName: $0) }
+		return Font.familyNames
+			.flatMap { Font.fontNames(forFamilyName: $0) }
 			.map { "case \($0.replacingOccurrences(of: "-", with: "_")) = \"\($0)\"" }
 			.joined(separator: "\n")
 	}
-	#endif
 }
+
