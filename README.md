@@ -66,9 +66,9 @@ That's the result!
 ## Documentation
 
 - What's `Style`/`StyleGroup` and how to use them
-- Properties available via `Style` class
 - How to use styles globally with `StyleManager`
-- Operation with styles
+- Derivating a `Style`
+- Properties available via `Style` class
 - Concatenation of strings & attributed strings
 - Integration with Interface Builder
 - Fonts & Colors
@@ -105,5 +105,45 @@ The following code defines a group where:
 - we have defined a base style. Base style is the style applied to the entire string and can be used to provide a base ground of styles you want to apply to the string.
 - we have defined two other styles named `h1` and `h2`; these styles are applied to the source string when parser encounter some text enclosed by these tags.
 
+## How to use styles globally with `StyleManager`
+Styles can be created as you need or registered globally to be used once you need.
+This second approach is strongly suggested because allows you to theme your app as you need and also avoid duplication of the code.
+
+To register a `Style` or a `StyleGroup` globally you need to assign an unique identifier to it and call `register()` function via `Styles` shortcut (which is equal to call `StylesManager.shared`).
+
+In order to keep your code type-safer you can use a non-instantiable struct to keep the name of your styles, then use it to register style:
+
+```swift
+// Define a struct with your styles names
+public struct StyleNames {
+	public static let body: String = "body"
+	public static let h1: String = "h1"
+	public static let h2: String = "h2"
+	
+	private init { }
+}
+```
+
+Then you can:
+
+```swift
+let bodyStyle: Style = ...
+Styles.register(StyleNames.body, bodyStyle)
+```
+
+Now you can use it everywhere inside the app; you can apply it to a text just using its name:
+
+```swift
+let text = "hello world".set(StyleNames.body)
+```
+
+or you can assign `body` string to the `styledText` via Interface Builder designable property.
+
+## Derivating a `Style`
+
+Sometimes you 
+
+## Properties available via `Style` class
+The following properties are available:
 
 
