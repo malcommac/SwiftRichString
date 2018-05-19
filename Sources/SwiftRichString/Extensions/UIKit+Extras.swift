@@ -1,5 +1,4 @@
 //
-//  GlobalStyle.swift
 //  SwiftRichString
 //  Elegant Strings & Attributed Strings Toolkit for Swift
 //
@@ -29,35 +28,52 @@
 //	OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //	THE SOFTWARE.
 
-
 import Foundation
+
+#if os(iOS) || os(tvOS)
+
 import UIKit
 
-private var _globalStyle: Style? = nil
+internal enum IBInterfaceKeys: String {
+	case styleName = "SwiftRichString.StyleName"
+	case styleObj = "SwiftRichString.StyleObj"
+}
 
-public extension RichString {
+extension UILabel {
 	
-	/// Global style is the commong base for each new `Style` instance (excluding the init methods
-	/// which explictly don't use it).
-	/// You can create a global style for your app and derivate each new additional style from the properties
-	/// set here.
-	/// By default global style has only `UIFont.systemFont` set with `UIFont.systemFontSize` point size.
-	public static var globalStyle: Style {
+	/// The name of a style in the global `NamedStyles` registry. The getter
+	/// always returns `nil`, and should not be used.
+	@IBInspectable
+	public var styleName: String? {
+		get { return getAssociatedValue(key: IBInterfaceKeys.styleName.rawValue, object: self) }
+		set {
+			set(associatedValue: newValue, key: IBInterfaceKeys.styleName.rawValue, object: self)
+			self.style = StylesManager.shared[newValue]
+		}
+	}
+	
+	public var style: StyleProtocol? {
+		set {
+			set(associatedValue: newValue, key: IBInterfaceKeys.styleObj.rawValue, object: self)
+			self.styledText = self.text
+		}
 		get {
-			if _globalStyle == nil {
-				_globalStyle = Style.init(global: false, kind: .`default`)
-				_globalStyle!.paragraph = NSMutableParagraphStyle()
-				_globalStyle!.font = UIFont.systemFont(ofSize: UIFont.systemFontSize)
+			if let innerValue: StyleProtocol? = getAssociatedValue(key: IBInterfaceKeys.styleObj.rawValue, object: self) {
+				return innerValue
 			}
-			return _globalStyle!
-			
+			return StylesManager.shared[self.styleName]
+		}
+	}
+	
+	public var styledText: String? {
+		get {
+			return attributedText?.string
 		}
 		set {
-			if newValue.paragraph == nil { newValue.paragraph = NSMutableParagraphStyle() }
-			if newValue.font == nil { newValue.font = UIFont.systemFont(ofSize: UIFont.systemFontSize) }
-			_globalStyle = newValue
-	
+			self.attributedText = self.style?.set(to: (self.text ?? ""), range: nil)
 		}
 	}
 	
 }
+
+#endif

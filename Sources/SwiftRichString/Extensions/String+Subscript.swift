@@ -1,5 +1,4 @@
 //
-//  String+Subscript.swift
 //  SwiftRichString
 //  Elegant Strings & Attributed Strings Toolkit for Swift
 //
@@ -29,16 +28,65 @@
 //	OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //	THE SOFTWARE.
 
-
 import Foundation
 
-// MARK: - String Search
-public extension String {
+public extension Array where Array.Element == Range<String.Index> {
+	
+	/// Convert an array of `String.Index` to an array of `NSRange`
+	public var nsRanges: [NSRange] {
+		return self.map({ $0.nsRange })
+	}
+	
+}
+
+public extension Range where Bound == String.Index {
+	
+	/// Return `NSRange` from standard `Range<String.Index>` range.
+	var nsRange:NSRange {
+		return NSRange(location: self.lowerBound.encodedOffset,
+					   length: self.upperBound.encodedOffset -
+						self.lowerBound.encodedOffset)
+	}
+}
+
+public extension NSRange {
+	
+	/// Convert receiver in String's `Range<String.Index>` for given string instance.
+	///
+	/// - Parameter str: source string
+	/// - Returns: range, `nil` if invalid
+	public func `in`(_ str: String) -> Range<String.Index>? {
+		return Range(self, in: str)
+	}
 	
 }
 
 // MARK: - Subrange Subscript
 public extension String {
+	
+	/// Convert an NSRange to String range.
+	///
+	/// - Parameter nsRange: origin NSRange instance.
+	/// - Returns: Range<String.Index>
+	func rangeFrom(nsRange : NSRange) -> Range<String.Index>? {
+		return Range(nsRange, in: self)
+	}
+	
+	/// Return substring from receiver starting at given index for a given length.
+	/// Return `nil` for invalid ranges.
+	///
+	///
+	/// - Parameters:
+	///   - from: starting index.
+	///   - length: length of string,
+	/// - Returns: substring
+	public func substring(from: Int?, length: Int) -> String? {
+		guard length > 0 else { return nil }
+		let start = from ?? 0
+		let end = min(count, max(0, start) + length)
+		guard start < end else { return nil }
+		return self[start..<end]?.string
+	}
 	
 	/// Allows to get a single character at index.
 	/// `String[1]`
@@ -50,7 +98,7 @@ public extension String {
 		return self[stringIndex]
 	}
 	
-
+	
 	/// Allows to get a substring at specified range.
 	/// `String[0..<1]`
 	///
@@ -98,8 +146,39 @@ public extension String {
 		return self[left...]
 	}
 	
+	/// Allows to get a substring starting for a given number of characters.
+	/// `String[...2]`
+	///
+	/// - Parameter value: substring
+	public subscript(value: PartialRangeThrough<Int>) -> Substring? {
+		guard let right = self.offset(by: value.upperBound) else { return nil }
+		return self[...right]
+	}
+	
+	
 	internal func offset(by distance: Int) -> String.Index? {
 		return index(startIndex, offsetBy: distance, limitedBy: endIndex)
+	}
+	
+	/// Return a new string by removing given prefix.
+	///
+	/// - Parameter prefix: prefix to remove.
+	/// - Returns: new instance of the string without the prefix
+	public func removing(prefix: String) -> String {
+		if hasPrefix(prefix) {
+			let start = index(startIndex, offsetBy: prefix.count)
+			//			return substring(from: start)
+			return self[start...].string
+		}
+		return self
+	}
+	
+	public func removing(suffix: String) -> String {
+		if hasSuffix(suffix) {
+			let end = index(startIndex, offsetBy: self.count-suffix.count)
+			return self[..<end].string
+		}
+		return self
 	}
 }
 

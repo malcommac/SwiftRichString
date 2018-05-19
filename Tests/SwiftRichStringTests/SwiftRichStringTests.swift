@@ -2,7 +2,7 @@
 //  SwiftRichStringTests.swift
 //  SwiftRichString
 //
-//  Created by Daniele Margutti on 21/03/2018.
+//  Created by Daniele Margutti on 05/05/2018.
 //  Copyright © 2018 SwiftRichString. All rights reserved.
 //
 

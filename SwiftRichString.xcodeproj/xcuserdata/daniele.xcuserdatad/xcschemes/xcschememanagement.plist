@@ -4,7 +4,12 @@
 <dict>
 	<key>SchemeUserState</key>
 	<dict>
-		<key>DemoApp.xcscheme</key>
+		<key>ExampleMac.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>5</integer>
+		</dict>
+		<key>ExampleiOS.xcscheme</key>
 		<dict>
 			<key>orderHint</key>
 			<integer>4</integer>

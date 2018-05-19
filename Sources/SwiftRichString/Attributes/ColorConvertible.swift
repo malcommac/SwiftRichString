@@ -1,5 +1,4 @@
 //
-//  Shared+Color.swift
 //  SwiftRichString
 //  Elegant Strings & Attributed Strings Toolkit for Swift
 //
@@ -29,50 +28,36 @@
 //	OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //	THE SOFTWARE.
 
-
 import Foundation
+#if os(OSX)
+import AppKit
+#else
 import UIKit
+#endif
 
-/// ColorConvertible is a protocol which allows type to transform itself to a valid color instance.
+// MARK: - ColorConvertible
+
+/// `ColorConvertible` protocol conformance is used to pass your own instance of a color representable object
+/// as color's attributes for several properties inside a style. Style get the color instance from your object
+/// and use it inside for string attributes.
+/// Both `String` and `UIColor`/`NSColor` already conforms this protocol.
 public protocol ColorConvertible {
-	
-	/// Convert receiver to a valid color instance.
-	///
-	/// - Returns: a valid color, `nil` if conversion fails.
-	func toColor() -> Color?
-	
+	/// Transform a instance of a `ColorConvertible` conform object to a valid `UIColor`/`NSColor`.
+	var color: Color { get }
 }
 
-// MARK: - Color / Support for ColorConvertible
+// MARK: - ColorConvertible for `UIColor`/`NSColor`
+
 extension Color: ColorConvertible {
 	
-	/// Just return receiver.
-	///
-	/// - Returns: receiver
-	public func toColor() -> Color? {
+	/// Just return itself
+	public var color: Color {
 		return self
 	}
 	
-}
-
-// MARK: - Color / Support for ColorConvertible
-extension String: ColorConvertible {
-	
-	/// Return a valid color from HEX string sequence.
+	/// Initialize a new color from HEX string representation.
 	///
-	/// - Returns: a valid color, `nil` if conversion fails.
-	public func toColor() -> Color? {
-		return Color(hexString: self)
-	}
-	
-}
-
-// MARK: - Color / HEX string converter
-public extension Color {
-	
-	/// Initialize a new color from HEX string.
-	///
-	/// - Parameter hexString: hex string.
+	/// - Parameter hexString: hex string
 	public convenience init(hexString: String) {
 		let hexString = hexString.trimmingCharacters(in: .whitespacesAndNewlines)
 		let scanner   = Scanner(string: hexString)
@@ -85,17 +70,16 @@ public extension Color {
 		
 		if scanner.scanHexInt32(&color) {
 			self.init(hex: color, useAlpha: hexString.count > 7)
-		}
-		else {
+		} else {
 			self.init(hex: 0x000000)
 		}
 	}
 	
-	/// Initialize color from hex string as `UInt32` string and alpha channel value.
+	/// Initialize a new color from HEX string as UInt32 with optional alpha chanell.
 	///
 	/// - Parameters:
 	///   - hex: hex value
-	///   - alphaChannel: alpha channel value
+	///   - alphaChannel: `true` to include alpha channel, `false` to make it opaque.
 	public convenience init(hex: UInt32, useAlpha alphaChannel: Bool = false) {
 		let mask = UInt32(0xFF)
 		
@@ -110,6 +94,17 @@ public extension Color {
 		let alpha = CGFloat(a) / 255
 		
 		self.init(red: red, green: green, blue: blue, alpha: alpha)
+	}
+	
+}
+
+// MARK: - ColorConvertible for `String`
+
+extension String: ColorConvertible {
+	
+	/// Transform a string to a color. String must be a valid HEX representation of the color.
+	public var color: Color {
+		return Color(hexString: self)
 	}
 	
 }
