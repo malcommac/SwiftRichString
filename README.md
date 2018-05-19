@@ -66,12 +66,44 @@ That's the result!
 ## Documentation
 
 - What's `Style`/`StyleGroup` and how to use them
+- Properties available via `Style` class
 - How to use styles globally with `StyleManager`
 - Operation with styles
 - Concatenation of strings & attributed strings
 - Integration with Interface Builder
-
-
+- Fonts & Colors
+- Other tips
 - Compatibility
 - Installation
 - Copyright
+
+### What's `Style`/`StyleGroup` and how to use them
+
+A `Style` is a class which encapsulate all the attributes you can apply to a string. The vast majority of the attributes of both AppKit/UIKit are currently available via type-safe properties by this class.
+
+Creating a `Style` instance is pretty simple; using a builder pattern approach the init class require a callback where the self instance is passed and allows you to configure your properties by keeping the code clean and readable:
+
+```swift
+let style = Style {
+	$0.font = SystemFonts.Helvetica_Bold.font(size: 20)
+	$0.color = UIColor.green
+	// ... set any other attribute
+}
+```
+
+`Style` instances are anonymous; if you want to use a style instance to render a tag-based plain string you need to include it inside a `StyleGroup`. You can consider a `StyleGroup` as a container of `Styles` (but, in fact, thanks to the conformance to a common `StyleProtocol`'s protocol your group may contains other sub-groups too).
+
+```swift
+let bodyStyle: Style = ...
+let h1Style: Style = ...
+let h2Style: Style = ...
+let group = StyleGroup(base: bodyStyle, ["h1": h1Style, "h2": h2Style])
+```
+
+The following code defines a group where:
+
+- we have defined a base style. Base style is the style applied to the entire string and can be used to provide a base ground of styles you want to apply to the string.
+- we have defined two other styles named `h1` and `h2`; these styles are applied to the source string when parser encounter some text enclosed by these tags.
+
+
+
