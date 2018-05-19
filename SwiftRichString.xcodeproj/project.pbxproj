@@ -62,6 +62,7 @@
 		64507EB020B056FB009455BD /* FontInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64507EAB20B056FB009455BD /* FontInfo.swift */; };
 		64507EB120B056FB009455BD /* FontInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64507EAB20B056FB009455BD /* FontInfo.swift */; };
 		64507EB320B05E5A009455BD /* UIKit+Extras.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64507E6120AEEE8D009455BD /* UIKit+Extras.swift */; };
+		64507EB520B077B4009455BD /* FiraCode-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 64507EB420B077B4009455BD /* FiraCode-Regular.ttf */; };
 		648932CA209DE194000E691A /* CommonsAttributes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 648932C9209DE194000E691A /* CommonsAttributes.swift */; };
 		648932CB209DE194000E691A /* CommonsAttributes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 648932C9209DE194000E691A /* CommonsAttributes.swift */; };
 		648932CC209DE194000E691A /* CommonsAttributes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 648932C9209DE194000E691A /* CommonsAttributes.swift */; };
@@ -159,6 +160,7 @@
 		64507E9A20AF4681009455BD /* String+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Ext.swift"; sourceTree = "<group>"; };
 		64507EA320B05015009455BD /* AttributedString+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AttributedString+Ext.swift"; sourceTree = "<group>"; };
 		64507EAB20B056FB009455BD /* FontInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FontInfo.swift; sourceTree = "<group>"; };
+		64507EB420B077B4009455BD /* FiraCode-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "FiraCode-Regular.ttf"; path = "../../../../../../../../Downloads/FiraCode-master/distr/ttf/FiraCode-Regular.ttf"; sourceTree = "<group>"; };
 		648932C9209DE194000E691A /* CommonsAttributes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonsAttributes.swift; sourceTree = "<group>"; };
 		648932D3209DE44E000E691A /* FontConvertible.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FontConvertible.swift; sourceTree = "<group>"; };
 		648932DC209DE474000E691A /* ExampleiOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ExampleiOS.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -363,6 +365,7 @@
 				648932DE209DE474000E691A /* AppDelegate.swift */,
 				648932E0209DE474000E691A /* ViewController.swift */,
 				648932E2209DE474000E691A /* Main.storyboard */,
+				64507EB420B077B4009455BD /* FiraCode-Regular.ttf */,
 				648932E5209DE476000E691A /* Assets.xcassets */,
 				648932E7209DE476000E691A /* LaunchScreen.storyboard */,
 				648932EA209DE476000E691A /* Info.plist */,
@@ -726,6 +729,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				64507EB520B077B4009455BD /* FiraCode-Regular.ttf in Resources */,
 				648932E9209DE476000E691A /* LaunchScreen.storyboard in Resources */,
 				648932E6209DE476000E691A /* Assets.xcassets in Resources */,
 				648932E4209DE474000E691A /* Main.storyboard in Resources */,

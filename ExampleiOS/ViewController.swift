@@ -9,13 +9,34 @@
 import UIKit
 
 class ViewController: UIViewController {
+	
+	@IBOutlet public var label: UILabel?
 
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		
-		let x = "<bold>ciao</bold> bello!".set(style: "mix")
-		print("")
-		// Do any additional setup after loading the view, typically from a nib.
+		
+		
+		let normal = Style {
+			$0.font = SystemFonts.Helvetica_Light.font(size: 15)
+		}
+		
+		let bold = Style {
+			$0.font = SystemFonts.Helvetica_Bold.font(size: 20)
+			$0.color = UIColor.red
+			$0.backColor = UIColor.yellow
+		}
+		
+		let italic = normal.byAdding {
+			$0.traitVariants = .italic
+		}
+		
+	
+		let str = "Hello <bold>Daniele!</bold>. You're ready to <italic>play with us!</italic>"
+		let styleGroup = StyleGroup(base: normal, ["bold": bold, "italic": italic])
+		let text = str.set(style: styleGroup)
+		self.label?.attributedText = text
+		
 	}
 
 	override func didReceiveMemoryWarning() {

@@ -30,6 +30,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 		
 		Styles.register("mix", style: StyleGroup(["bold" : bold,"normal" : normal, "red" : red]))
 
+		let style = Style {
+			$0.font = "FiraCode-Regular"
+			$0.color = "#0433FF"
+			$0.underline = (.patternDot, nil)
+			$0.alignment = .center
+			$0.headingLevel = .five
+			$0.ligatures = Ligatures.disabled
+			$0.kerning = Kerning.point(10)
+		}
+		
+		Styles.register("MyStyle", style: style)
+		
 		return true
 	}
 

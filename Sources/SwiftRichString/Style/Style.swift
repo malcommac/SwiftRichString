@@ -74,6 +74,9 @@ public class Style: StyleProtocol {
 	public var font: FontConvertible {
 		set {
 			self.fontInfo.font = newValue
+			if let f = newValue as? Font {
+				self.fontInfo.size = f.pointSize
+			}
 			self.invalidateCache()
 		}
 		get { return self.fontInfo.font }
@@ -98,34 +101,41 @@ public class Style: StyleProtocol {
 	/// This value indicates whether the text is underlined.
 	/// Value must be a tuple which define the style of the line (as `NSUnderlineStyle`)
 	/// and the optional color of the line (if `nil`, foreground color is used instead).
-	public var underline: (NSUnderlineStyle?, Color?)? {
+	public var underline: (style: NSUnderlineStyle?, color: ColorConvertible?)? {
 		set {
-			self.set(attribute: underline?.0, forKey: .underlineStyle)
-			self.set(attribute: underline?.1, forKey: .underlineColor)
+			self.set(attribute: NSNumber.from(underlineStyle: newValue?.style), forKey: .underlineStyle)
+			self.set(attribute: newValue?.color?.color, forKey: .underlineColor)
 		}
 		get {
-			return (self.get(attributeForKey: .underlineStyle),self.get(attributeForKey: .underlineColor))
+			let style: NSNumber? = self.get(attributeForKey: .underlineStyle)
+			let color: UIColor? = self.get(attributeForKey: .underlineColor)
+			return (style?.toUnderlineStyle(),color)
 		}
 	}
 	
 	/// This value indicates whether the text has a line through it.
 	/// Value must be a tuple which define the style of the line (as `NSUnderlineStyle`)
 	/// and the optional color of the line (if `nil`, foreground color is used instead).
-	public var strikethrough: (NSUnderlineStyle?, Color?)? {
+	public var strikethrough: (style: NSUnderlineStyle?, color: ColorConvertible?)? {
 		set {
-			self.set(attribute: strikethrough?.0, forKey: .strikethroughStyle)
-			self.set(attribute: strikethrough?.1, forKey: .strikethroughColor)
+			self.set(attribute: NSNumber.from(underlineStyle: newValue?.style), forKey: .strikethroughStyle)
+			self.set(attribute: newValue?.color?.color, forKey: .strikethroughColor)
 		}
 		get {
-			return (self.get(attributeForKey: .strikethroughStyle),self.get(attributeForKey: .strikethroughColor))
+			let style: NSNumber? = self.get(attributeForKey: .strikethroughStyle)
+			let color: UIColor? = self.get(attributeForKey: .strikethroughColor)
+			return (style?.toUnderlineStyle(),color)
 		}
 	}
 	
 	/// Floating point value indicating the character’s offset from the baseline, in points.
 	/// Default value when not set is 0.
-	public var baselineOffset: CGFloat? {
-		set { self.set(attribute: newValue, forKey: .baselineOffset) }
-		get { return self.get(attributeForKey: .baselineOffset) }
+	public var baselineOffset: Float? {
+		set { self.set(attribute: NSNumber.from(float: newValue), forKey: .baselineOffset) }
+		get {
+			let value: NSNumber? = self.get(attributeForKey: .baselineOffset)
+			return value?.floatValue
+		}
 	}
 	
 	/// Allows to set a default paragraph style to the content.
@@ -136,7 +146,14 @@ public class Style: StyleProtocol {
 			self.invalidateCache()
 			self.set(attribute: newValue, forKey: .paragraphStyle)
 		}
-		get { return self.get(attributeForKey: .paragraphStyle) ?? NSMutableParagraphStyle() }
+		get {
+			if let paragraph: NSMutableParagraphStyle = self.get(attributeForKey: .paragraphStyle) {
+				return paragraph
+			}
+			let paragraph = NSMutableParagraphStyle()
+			self.set(attribute: paragraph, forKey: .paragraphStyle)
+			return paragraph
+		}
 	}
 	
 	/// The distance in points between the bottom of one line fragment and the top of the next.
@@ -275,8 +292,13 @@ public class Style: StyleProtocol {
 	/// 
 	/// The default value for this attribute is `defaults`. (Value `all` is unsupported on iOS.)
 	public var ligatures: Ligatures? {
-		set { self.set(attribute: newValue, forKey: .ligature) }
-		get { return self.get(attributeForKey: .ligature) }
+		set {
+			self.set(attribute: NSNumber.from(int: newValue?.rawValue), forKey: .ligature)
+		}
+		get {
+			guard let value: NSNumber = self.get(attributeForKey: .ligature) else { return nil }
+			return Ligatures(rawValue: value.intValue)
+		}
 	}
 	
 	#if os(iOS) || os(tvOS) || os(watchOS)

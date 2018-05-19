@@ -235,7 +235,6 @@ public class StyleGroup: StyleProtocol {
 						
 						let location = tag.range.location
 						let length = closingTag.range.location-location
-						print(location, length)
 						attrStr.addAttributes(attribute.attributes, range: NSRange(location: location, length: length))
 					}
 				}
