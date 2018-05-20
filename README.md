@@ -424,9 +424,15 @@ Now you can use your style to render, for example, a tag based text into an `UIL
 <a name="ib"/>
 
 ## Assign style using Interface Builder
-SwiftRichString can be used also via Interface Builder; `UILabel`, `UITextView` and `UIButton` has three different properties:
+SwiftRichString can be used also via Interface Builder.
 
-- `styleName: String`: you can set it to render the text already set via Interface Builder with a style registered globally before the parent view of the UI control is loaded.
+- `UILabel`
+- `UITextView`
+- `UITextField`
+
+has three additional properties:
+
+- `styleName: String` (available via IB): you can set it to render the text already set via Interface Builder with a style registered globally before the parent view of the UI control is loaded.
 - `style: StyleProtocol`: you can set it to render the text of the control with an instance of style instance.
 - `styledText: String`: use this property, instead of `attributedText` to set a new text for the control and render it with already set style. You can continue to use `attributedText` and set the value using `.set()` functions of `String`/`AttributedString`.
 
@@ -436,20 +442,22 @@ Assigned style can be a `Style`, `StyleGroup` or `StyleRegEx`:
 - if style is a `StyleGroup` a base attribute is set (if `base` is valid) and other attributes are applied once each tag is found.
 - if style is a `StyleRegEx` a base attribute is set (if `base` is valid) and the attribute is applied only for matches of the specified pattern.
 
-You can also assign the same property via code:
+Typically you will set the style of a label via `Style Name` (`styleName`) property in IB and update the content of the control by setting the `styledText`:
 
 ```swift
-self.label?.styleName = "MyStyle"
+// use `styleName` set value to update a text with the style
+self.label?.styledText = "Another text to render" // text is rendered using specified `styleName` value.
 ```
 
-or render the text manually:
+Otherwise you can set values manually:
 
 ```swift
 // manually set the an attributed string
 self.label?.attributedText = (self.label?.text ?? "").set(myStyle)
 
-// use `styleName` set value to update a text with the style
-self.label?.styledText = "Another text to render" // text is rendered using specified `styleName` value.
+// manually set the style via instance
+self.label?.style = myStyle
+self.label?.styledText = "Updated text"
 ```
 
 <a name="props"/>
