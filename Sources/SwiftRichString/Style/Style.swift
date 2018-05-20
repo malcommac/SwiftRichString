@@ -108,7 +108,7 @@ public class Style: StyleProtocol {
 		}
 		get {
 			let style: NSNumber? = self.get(attributeForKey: .underlineStyle)
-			let color: UIColor? = self.get(attributeForKey: .underlineColor)
+			let color: Color? = self.get(attributeForKey: .underlineColor)
 			return (style?.toUnderlineStyle(),color)
 		}
 	}
@@ -123,7 +123,7 @@ public class Style: StyleProtocol {
 		}
 		get {
 			let style: NSNumber? = self.get(attributeForKey: .strikethroughStyle)
-			let color: UIColor? = self.get(attributeForKey: .strikethroughColor)
+			let color: Color? = self.get(attributeForKey: .strikethroughColor)
 			return (style?.toUnderlineStyle(),color)
 		}
 	}
@@ -450,8 +450,6 @@ public class Style: StyleProtocol {
 		get { return self.fontInfo.contextualAlternates }
 	}
 	
-	#endif
-	
 	/// Tracking to apply.
 	public var kerning: Kerning? {
 		set { self.fontInfo.kerning = newValue }
@@ -464,6 +462,8 @@ public class Style: StyleProtocol {
 		get { return self.fontInfo.traitVariants }
 	}
 
+	#endif
+
 	//MARK: - INIT
 	
 	/// Initialize a new style with optional configuration handler callback.
@@ -471,7 +471,13 @@ public class Style: StyleProtocol {
 	/// - Parameter handler: configuration handler callback.
 	public init(_ handler: StyleInitHandler? = nil) {
 		self.fontInfo.style = self
+		#if os(tvOS)
+		self.set(attribute: Font.systemFont(ofSize: TVOS_SYSTEMFONT_SIZE), forKey: .font)
+		#elseif os(watchOS)
+		self.set(attribute: Font.systemFont(ofSize: WATCHOS_SYSTEMFONT_SIZE), forKey: .font)
+		#else
 		self.set(attribute: Font.systemFont(ofSize: Font.systemFontSize), forKey: .font)
+		#endif
 		handler?(self)
 	}
 	

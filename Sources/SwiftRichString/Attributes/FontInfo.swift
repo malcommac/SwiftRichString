@@ -14,6 +14,8 @@ import AppKit
 import UIKit
 #endif
 
+internal let TVOS_SYSTEMFONT_SIZE: CGFloat = 29.0
+internal let WATCHOS_SYSTEMFONT_SIZE: CGFloat = 12.0
 
 /// FontInfo is an internal struct which describe the inner attributes related to a font instance.
 /// User don't interact with this object directly but via `Style`'s properties.
@@ -66,15 +68,23 @@ internal struct FontInfo {
 	/// Tracking to apply.
 	var kerning: Kerning? { didSet { self.style?.invalidateCache() } }
 	
+	#endif
+	
 	/// Reference to parent style (used to invalidate cache; we can do better).
 	weak var style: Style?
 	
-	#endif
-	
 	/// Initialize a new `FontInfo` instance with system font with system font size.
 	init() {
+		#if os(tvOS)
+		self.font = Font.systemFont(ofSize: TVOS_SYSTEMFONT_SIZE)
+		self.size = TVOS_SYSTEMFONT_SIZE
+		#elseif os(watchOS)
+		self.font = Font.systemFont(ofSize: WATCHOS_SYSTEMFONT_SIZE)
+		self.size = WATCHOS_SYSTEMFONT_SIZE
+		#else
 		self.font = Font.systemFont(ofSize: Font.systemFontSize)
 		self.size = Font.systemFontSize
+		#endif
 	}
 	
 	/// Return a font with all attributes set.
@@ -82,7 +92,6 @@ internal struct FontInfo {
 	/// - Parameter size: ignored. It will be overriden by `fontSize` property.
 	/// - Returns: instance of the font
 	var attributes: [NSAttributedStringKey:Any] {
-		var attributes: [FontInfoAttribute] = []
 		var finalAttributes: [NSAttributedStringKey:Any] = [:]
 		
 		// generate an initial font from passed FontConvertible instance
@@ -90,7 +99,8 @@ internal struct FontInfo {
 		
 		// compose the attributes
 		#if os(iOS) || os(tvOS) || os(OSX)
-		
+		var attributes: [FontInfoAttribute] = []
+
 		attributes += [self.numberCase].compactMap { $0 }
 		attributes += [self.fractions].compactMap { $0 }
 		attributes += [self.superscript].compactMap { $0 }.map { ($0 == true ? VerticalPosition.superscript : VerticalPosition.normal) } as [FontInfoAttribute]
@@ -103,7 +113,6 @@ internal struct FontInfo {
 		
 		finalFont = finalFont.withAttributes(attributes)
 		
-		#endif
 		
 		if let traitVariants = self.traitVariants { // manage emphasis
 			let descriptor = finalFont.fontDescriptor
@@ -125,6 +134,7 @@ internal struct FontInfo {
 		if let tracking = self.kerning { // manage kerning attributes
 			finalAttributes[.kern] = tracking.kerning(for: finalFont)
 		}
+		#endif
 		
 		finalAttributes[.font] = finalFont // assign composed font
 		return finalAttributes
