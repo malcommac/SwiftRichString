@@ -186,7 +186,7 @@ let attrString = "My email is hello@danielemargutti.com and my website is http:/
 
 The result is this:
 
-
+<img src="Documentation_Assests/image_4.png" alt="" style="width: 400px;"/>
 
 <a name="concatenation"/>
 
