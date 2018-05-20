@@ -79,17 +79,6 @@ Latest version of SwiftRichString is [2.0.0](https://github.com/malcommac/SwiftR
 
 Full changelog is available in [CHANGELOG.md](CHANGELOG.md) file.
 
-## Migration from 1.x
-SwiftRichString is a complete rewrite of the library. While some inner concept are the same, in order to keep the code cleaner and simpler I've made some important changes.
-
-- A `StyleProtocol` is now a common entry point for every style definition; both `Style` and `StyleGroup` are conform to this protocol which is the central repository to make actions on text (in 1.x `String` and `AttributedString` act directly to parse text).
-- `Style` some properties of the class has a different (but quite equal) name, changed to better reflect the purpose of the attribute. Some attributes like `underline` or `striketought` are now tuple of elements instead of different properties.
-- `Style` are now anonymous; you don't need to assign a name to a style; only if you need to parse tag-based text you need to group used styles in a `StyleGroup` instance where you define the name/id of each tag.
-- There is not any `parseTag` function; just pass the `StyleGroup` as parameter to render a text and the tag-based parsing will be done automatically.
-- There is not any default style; `StyleGroup` implements a `base` style used to render common attributes of your text. You can also use `Styles` to register globally available `StyleProtocol` instances and use them in your app.
-- In order to simplify our APIs some init methods of `Style` are now removed. You should not miss them, but let me know via PR in case.
-
-
 ## Documentation
 
 - [`Style` & `StyleGroup`](#stylestylegroup)
@@ -106,6 +95,7 @@ SwiftRichString is a complete rewrite of the library. While some inner concept a
 
 Other info:
 
+- [Migration from 1.x]
 - [Requirements](#requirements)
 - [Installation](#installation)
 - [Contributing](#contributing)
@@ -447,6 +437,18 @@ The following properties are available:
 | contextualAlternates          | `ContextualAlternates`                  | Different contextual alternates available for customizing a font.                                                                          | 
 | kerning                       | `Kerning`                               | Tracking to apply.                                                                                                                         | 
 | traitVariants                 | `TraitVariant`                          | Describe trait variants to apply to the font                                                                                               | 
+
+<a name="migration"/>
+
+## Migration from 1.x
+SwiftRichString is a complete rewrite of the library. While some inner concept are the same, in order to keep the code cleaner and simpler I've made some important changes.
+
+- A `StyleProtocol` is now a common entry point for every style definition; both `Style` and `StyleGroup` are conform to this protocol which is the central repository to make actions on text (in 1.x `String` and `AttributedString` act directly to parse text).
+- `Style` some properties of the class has a different (but quite equal) name, changed to better reflect the purpose of the attribute. Some attributes like `underline` or `striketought` are now tuple of elements instead of different properties.
+- `Style` are now anonymous; you don't need to assign a name to a style; only if you need to parse tag-based text you need to group used styles in a `StyleGroup` instance where you define the name/id of each tag.
+- There is not any `parseTag` function; just pass the `StyleGroup` as parameter to render a text and the tag-based parsing will be done automatically.
+- There is not any default style; `StyleGroup` implements a `base` style used to render common attributes of your text. You can also use `Styles` to register globally available `StyleProtocol` instances and use them in your app.
+- In order to simplify our APIs some init methods of `Style` are now removed. You should not miss them, but let me know via PR in case.
 
 <a name="requirements"/>
 
