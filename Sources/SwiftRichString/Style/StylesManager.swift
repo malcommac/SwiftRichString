@@ -40,6 +40,12 @@ public class StylesManager {
 	/// Singleton instance.
 	public static let shared: StylesManager = StylesManager()
 	
+	/// You can defeer the creation of a style to the first time its required.
+	/// Implementing this method you will receive a call with the name of the style
+	/// you are about to provide and you have a chance to make and return it.
+	/// Once returned the style is automatically cached.
+	public var onDeferStyle: ((String) -> (StyleProtocol?, Bool))? = nil
+	
 	/// Registered styles.
 	public var styles: [String: StyleProtocol] = [:]
 	
@@ -57,7 +63,18 @@ public class StylesManager {
 	/// - Parameter name: name of the style
 	public subscript(name: String?) -> StyleProtocol? {
 		guard let name = name else { return nil }
-		return self.styles[name]
+		
+		if let cachedStyle = self.styles[name] { // style is cached
+			return cachedStyle
+		} else {
+			// check if user can provide a deferred creation for this style
+			if let (deferredStyle,canCache) = self.onDeferStyle?(name) {
+				// cache if requested
+				if canCache, let dStyle = deferredStyle { self.styles[name] = dStyle }
+				return deferredStyle
+			}
+			return nil // nothing
+		}
 	}
 	
 	/// Return a list of styles registered with given names.

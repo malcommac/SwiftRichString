@@ -1,3 +1,7 @@
+<p align="center" >
+<img src="https://raw.githubusercontent.com/malcommac/SwiftRichString/master/logo.png" width=300px alt="SwiftRichString" title="SwiftRichString">
+</p>
+
 [![Version](https://img.shields.io/cocoapods/v/SwiftRichString.svg?style=flat)](http://cocoadocs.org/docsets/SwiftRichString) [![License](https://img.shields.io/cocoapods/l/SwiftRichString.svg?style=flat)](http://cocoadocs.org/docsets/SwiftRichString) [![Platform](https://img.shields.io/cocoapods/p/SwiftRichString.svg?style=flat)](http://cocoadocs.org/docsets/SwiftRichString)
 [![CocoaPods Compatible](https://img.shields.io/cocoapods/v/SwiftRichString.svg)](https://img.shields.io/cocoapods/v/SwiftRichString.svg)
 [![Carthage Compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
