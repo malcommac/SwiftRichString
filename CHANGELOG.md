@@ -4,7 +4,7 @@
 
 ## CHANGELOG
 
-* Version **[2.0.0](#200)**
+* Version **[2.0.1](#201)**
 
 * Version **[1.1.0](#101)** (for Swift 4)
 * Version **[1.0.1](#101)** (for Swift 4)
@@ -15,10 +15,10 @@
 
 <a name="200" />
 
-## SwiftRichString 2.0.0
+## SwiftRichString 2.0.1
 ---
 - **Release Date**: 2018-05-20
-- **Zipped Version**: [Download 2.0.0](https://github.com/malcommac/SwiftRichString/releases/tag/2.0.0)
+- **Zipped Version**: [Download 2.0.1](https://github.com/malcommac/SwiftRichString/releases/tag/2.0.1)
 
 This is a total rewrite of the library to simplify and consolidate the APIs functionalities. See documentation in README for detailed informations.
 
