@@ -101,13 +101,15 @@ Take a look below:
 
 ## Documentation
 
-Latest version of SwiftRichString is [2.0.0](https://github.com/malcommac/SwiftRichString/releases/tag/2.0.0).
+**Are you using SwiftRichString 1.x in your project? Don't miss to take a look at [Migration section of the documentation](#migration).**
+You can still use the 1.x release by using tagged version 1.1.0.
 
 **Table Of Contents**
 
 Full changelog is available in [CHANGELOG.md](CHANGELOG.md) file.
 
-- [`Style`, `StyleGroup` & `StyleRegEx`](#stylestylegroup)
+- [Versions (1.x, 2.x and old Swift 3.x branch)](#versions)
+- [Introduction to `Style`, `StyleGroup` & `StyleRegEx`](#stylestylegroup)
 	- [Introduction](#introduction)
 	- [String & Attributed String concatenation](#concatenation)
 	- [Apply styles to `String` & `Attributed String`](#manualstyling)
@@ -127,13 +129,27 @@ Other info:
 - [Contributing](#contributing)
 - [Copyright](#copyright)
 
+<a name="versions"/>
+
+### Versions
+
+- **SwiftRichString 2.x branch (current)**. The latest version is [2.0.0](https://github.com/malcommac/SwiftRichString/releases/tag/2.0.0).
+- **SwiftRichString 1.x branch (supported)**. Use [1.1.0 tag](https://github.com/malcommac/SwiftRichString/releases/tag/1.1.0). Its compatible with Swift 4.x.
+- **Swift 3.x (no longer mantained)**. Use [0.9.1 release](https://github.com/malcommac/SwiftRichString/releases/tag/0.9.10).
+
 <a name="stylestylegroup"/>
 
-## `Style`, `StyleGroup`, `StyleRegEx`
+## Introduction to `Style`, `StyleGroup`, `StyleRegEx`
 
 <a name="introduction"/>
 
 ### Introduction
+
+The main concept behind SwiftRichString is the use of `StyleProtocol` as generic container of the attributes you can apply to both `String` and `NSMutableAttributedString`.
+Concrete classes derivated by `StyleProtocol` are: `Style`, `StyleGroup` and `StyleRegEx`.
+
+Each of these classes can be used as source for styles you can apply to a string, substring or attributed string.
+
 
 #### `Style`: apply style to strings or attributed strings
 
