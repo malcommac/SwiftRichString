@@ -39,6 +39,8 @@ import UIKit
 /// matches are found in source string or attributed string.
 public class StyleRegEx: StyleProtocol {
 	
+	//MARK: - PROPERTIES
+	
 	/// Regular expression
 	public private(set) var regex: NSRegularExpression
 	
@@ -52,6 +54,8 @@ public class StyleRegEx: StyleProtocol {
 	public var attributes: [NSAttributedStringKey : Any] {
 		return self.style.attributes
 	}
+	
+	//MARK: - INIT
 	
 	/// Initialize a new regular expression style matcher.
 	///
@@ -72,6 +76,8 @@ public class StyleRegEx: StyleProtocol {
 		}
 	}
 	
+	//MARK: - METHOD OVERRIDES
+	
 	public func set(to source: String, range: NSRange?) -> AttributedString {
 		let attributed = NSMutableAttributedString(string: source, attributes: (self.baseStyle?.attributes ?? [:]))
 		return self.applyStyle(to: attributed, add: false, range: range)
@@ -90,6 +96,8 @@ public class StyleRegEx: StyleProtocol {
 		}
 		return self.applyStyle(to: source, add: false, range: range)
 	}
+	
+	//MARK: - INTERNAL FUNCTIONS
 	
 	/// Regular expression matcher.
 	///

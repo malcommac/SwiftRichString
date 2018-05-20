@@ -29,52 +29,31 @@
 //	THE SOFTWARE.
 
 import Foundation
-
-#if os(iOS) || os(tvOS)
-
+#if os(OSX)
+import AppKit
+#else
 import UIKit
-
-internal enum IBInterfaceKeys: String {
-	case styleName = "SwiftRichString.StyleName"
-	case styleObj = "SwiftRichString.StyleObj"
-}
-
-extension UILabel {
-	
-	/// The name of a style in the global `NamedStyles` registry. The getter
-	/// always returns `nil`, and should not be used.
-	@IBInspectable
-	public var styleName: String? {
-		get { return getAssociatedValue(key: IBInterfaceKeys.styleName.rawValue, object: self) }
-		set {
-			set(associatedValue: newValue, key: IBInterfaceKeys.styleName.rawValue, object: self)
-			self.style = StylesManager.shared[newValue]
-		}
-	}
-	
-	public var style: StyleProtocol? {
-		set {
-			set(associatedValue: newValue, key: IBInterfaceKeys.styleObj.rawValue, object: self)
-			self.styledText = self.text
-		}
-		get {
-			if let innerValue: StyleProtocol? = getAssociatedValue(key: IBInterfaceKeys.styleObj.rawValue, object: self) {
-				return innerValue
-			}
-			return StylesManager.shared[self.styleName]
-		}
-	}
-	
-	public var styledText: String? {
-		get {
-			return attributedText?.string
-		}
-		set {
-			guard let text = newValue else { return }
-			self.attributedText = self.style?.set(to: text, range: nil)
-		}
-	}
-	
-}
-
 #endif
+
+extension NSNumber {
+	
+	internal static func from(float: Float?) -> NSNumber? {
+		guard let float = float else { return nil }
+		return NSNumber(value: float)
+	}
+	
+	internal static func from(int: Int?) -> NSNumber? {
+		guard let int = int else { return nil }
+		return NSNumber(value: int)
+	}
+	
+	internal static func from(underlineStyle: NSUnderlineStyle?) -> NSNumber? {
+		guard let v = underlineStyle?.rawValue else { return nil }
+		return NSNumber(value: v)
+	}
+	
+	internal func toUnderlineStyle() -> NSUnderlineStyle? {
+		return NSUnderlineStyle.init(rawValue: self.intValue)
+	}
+	
+}

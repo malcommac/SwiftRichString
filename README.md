@@ -424,12 +424,17 @@ Now you can use your style to render, for example, a tag based text into an `UIL
 <a name="ib"/>
 
 ## Assign style using Interface Builder
-SwiftRichString can be used also via Interface Builder; `UILabel`, `UITextView` and `UIButton` has a `styleName` property you can set with a globally registered style.
+SwiftRichString can be used also via Interface Builder; `UILabel`, `UITextView` and `UIButton` has three different properties:
 
-Assigned style can be a `Style` or a `StyleGroup`:
+- `styleName: String`: you can set it to render the text already set via Interface Builder with a style registered globally before the parent view of the UI control is loaded.
+- `style: StyleProtocol`: you can set it to render the text of the control with an instance of style instance.
+- `styledText: String`: use this property, instead of `attributedText` to set a new text for the control and render it with already set style. You can continue to use `attributedText` and set the value using `.set()` functions of `String`/`AttributedString`.
+
+Assigned style can be a `Style`, `StyleGroup` or `StyleRegEx`:
 
 - if style is a `Style` the entire text of the control is set with the attributes defined by the style.
-- if style is a `StyleGroup` a base attribute is set (if `base` is set) and other attributes are applied once each tag is found.
+- if style is a `StyleGroup` a base attribute is set (if `base` is valid) and other attributes are applied once each tag is found.
+- if style is a `StyleRegEx` a base attribute is set (if `base` is valid) and the attribute is applied only for matches of the specified pattern.
 
 You can also assign the same property via code:
 
@@ -440,7 +445,11 @@ self.label?.styleName = "MyStyle"
 or render the text manually:
 
 ```swift
+// manually set the an attributed string
 self.label?.attributedText = (self.label?.text ?? "").set(myStyle)
+
+// use `styleName` set value to update a text with the style
+self.label?.styledText = "Another text to render" // text is rendered using specified `styleName` value.
 ```
 
 <a name="props"/>

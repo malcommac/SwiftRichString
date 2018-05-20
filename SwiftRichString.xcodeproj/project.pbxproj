@@ -62,7 +62,18 @@
 		64507EB020B056FB009455BD /* FontInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64507EAB20B056FB009455BD /* FontInfo.swift */; };
 		64507EB120B056FB009455BD /* FontInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64507EAB20B056FB009455BD /* FontInfo.swift */; };
 		64507EB320B05E5A009455BD /* UIKit+Extras.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64507E6120AEEE8D009455BD /* UIKit+Extras.swift */; };
-		64507EB520B077B4009455BD /* FiraCode-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 64507EB420B077B4009455BD /* FiraCode-Regular.ttf */; };
+		64507EB720B1766D009455BD /* StyleRegEx.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64507EB620B1766D009455BD /* StyleRegEx.swift */; };
+		64507EB820B1766D009455BD /* StyleRegEx.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64507EB620B1766D009455BD /* StyleRegEx.swift */; };
+		64507EB920B1766D009455BD /* StyleRegEx.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64507EB620B1766D009455BD /* StyleRegEx.swift */; };
+		64507EBA20B1766D009455BD /* StyleRegEx.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64507EB620B1766D009455BD /* StyleRegEx.swift */; };
+		64507EBB20B1766D009455BD /* StyleRegEx.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64507EB620B1766D009455BD /* StyleRegEx.swift */; };
+		64507EBC20B1766D009455BD /* StyleRegEx.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64507EB620B1766D009455BD /* StyleRegEx.swift */; };
+		64507EBE20B18489009455BD /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64507EBD20B18489009455BD /* Extensions.swift */; };
+		64507EBF20B18489009455BD /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64507EBD20B18489009455BD /* Extensions.swift */; };
+		64507EC020B18489009455BD /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64507EBD20B18489009455BD /* Extensions.swift */; };
+		64507EC120B18489009455BD /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64507EBD20B18489009455BD /* Extensions.swift */; };
+		64507EC220B18489009455BD /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64507EBD20B18489009455BD /* Extensions.swift */; };
+		64507EC320B18489009455BD /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64507EBD20B18489009455BD /* Extensions.swift */; };
 		648932CA209DE194000E691A /* CommonsAttributes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 648932C9209DE194000E691A /* CommonsAttributes.swift */; };
 		648932CB209DE194000E691A /* CommonsAttributes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 648932C9209DE194000E691A /* CommonsAttributes.swift */; };
 		648932CC209DE194000E691A /* CommonsAttributes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 648932C9209DE194000E691A /* CommonsAttributes.swift */; };
@@ -160,7 +171,8 @@
 		64507E9A20AF4681009455BD /* String+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Ext.swift"; sourceTree = "<group>"; };
 		64507EA320B05015009455BD /* AttributedString+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AttributedString+Ext.swift"; sourceTree = "<group>"; };
 		64507EAB20B056FB009455BD /* FontInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FontInfo.swift; sourceTree = "<group>"; };
-		64507EB420B077B4009455BD /* FiraCode-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "FiraCode-Regular.ttf"; path = "../../../../../../../../Downloads/FiraCode-master/distr/ttf/FiraCode-Regular.ttf"; sourceTree = "<group>"; };
+		64507EB620B1766D009455BD /* StyleRegEx.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StyleRegEx.swift; sourceTree = "<group>"; };
+		64507EBD20B18489009455BD /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		648932C9209DE194000E691A /* CommonsAttributes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonsAttributes.swift; sourceTree = "<group>"; };
 		648932D3209DE44E000E691A /* FontConvertible.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FontConvertible.swift; sourceTree = "<group>"; };
 		648932DC209DE474000E691A /* ExampleiOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ExampleiOS.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -303,6 +315,7 @@
 				64507E8C20AF3A9C009455BD /* StyleProtocol.swift */,
 				64893316209DEAFF000E691A /* Style.swift */,
 				6489331D209DED04000E691A /* StyleGroup.swift */,
+				64507EB620B1766D009455BD /* StyleRegEx.swift */,
 				64507E5A20AEEB36009455BD /* StylesManager.swift */,
 			);
 			path = Style;
@@ -337,6 +350,7 @@
 			children = (
 				64507E7020AEF12C009455BD /* AssociatedValues.swift */,
 				64507E7720AEF611009455BD /* OrderedDictionary.swift */,
+				64507EBD20B18489009455BD /* Extensions.swift */,
 			);
 			path = Support;
 			sourceTree = "<group>";
@@ -365,7 +379,6 @@
 				648932DE209DE474000E691A /* AppDelegate.swift */,
 				648932E0209DE474000E691A /* ViewController.swift */,
 				648932E2209DE474000E691A /* Main.storyboard */,
-				64507EB420B077B4009455BD /* FiraCode-Regular.ttf */,
 				648932E5209DE476000E691A /* Assets.xcassets */,
 				648932E7209DE476000E691A /* LaunchScreen.storyboard */,
 				648932EA209DE476000E691A /* Info.plist */,
@@ -729,7 +742,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				64507EB520B077B4009455BD /* FiraCode-Regular.ttf in Resources */,
 				648932E9209DE476000E691A /* LaunchScreen.storyboard in Resources */,
 				648932E6209DE476000E691A /* Assets.xcassets in Resources */,
 				648932E4209DE474000E691A /* Main.storyboard in Resources */,
@@ -767,6 +779,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				648932CA209DE194000E691A /* CommonsAttributes.swift in Sources */,
+				64507EBE20B18489009455BD /* Extensions.swift in Sources */,
 				64507E8D20AF3A9C009455BD /* StyleProtocol.swift in Sources */,
 				64507EA420B05015009455BD /* AttributedString+Ext.swift in Sources */,
 				64893309209DE7C5000E691A /* ColorConvertible.swift in Sources */,
@@ -775,6 +788,7 @@
 				648932D4209DE44E000E691A /* FontConvertible.swift in Sources */,
 				64507E7120AEF12C009455BD /* AssociatedValues.swift in Sources */,
 				64893310209DE87D000E691A /* SystemFonts.swift in Sources */,
+				64507EB720B1766D009455BD /* StyleRegEx.swift in Sources */,
 				6489332520A0CA76000E691A /* FontInfoAttribute.swift in Sources */,
 				64507E5B20AEEB36009455BD /* StylesManager.swift in Sources */,
 				64893317209DEAFF000E691A /* Style.swift in Sources */,
@@ -798,6 +812,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				648932CC209DE194000E691A /* CommonsAttributes.swift in Sources */,
+				64507EC020B18489009455BD /* Extensions.swift in Sources */,
 				64507E8F20AF3A9C009455BD /* StyleProtocol.swift in Sources */,
 				64507EA620B05015009455BD /* AttributedString+Ext.swift in Sources */,
 				6489330B209DE7C5000E691A /* ColorConvertible.swift in Sources */,
@@ -806,6 +821,7 @@
 				648932D6209DE44E000E691A /* FontConvertible.swift in Sources */,
 				64507E7320AEF12C009455BD /* AssociatedValues.swift in Sources */,
 				64893312209DE87D000E691A /* SystemFonts.swift in Sources */,
+				64507EB920B1766D009455BD /* StyleRegEx.swift in Sources */,
 				6489332720A0CA76000E691A /* FontInfoAttribute.swift in Sources */,
 				64507E5D20AEEB36009455BD /* StylesManager.swift in Sources */,
 				64893319209DEAFF000E691A /* Style.swift in Sources */,
@@ -821,6 +837,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				648932CD209DE194000E691A /* CommonsAttributes.swift in Sources */,
+				64507EC120B18489009455BD /* Extensions.swift in Sources */,
 				64507E9020AF3A9C009455BD /* StyleProtocol.swift in Sources */,
 				64507EA720B05015009455BD /* AttributedString+Ext.swift in Sources */,
 				6489330C209DE7C5000E691A /* ColorConvertible.swift in Sources */,
@@ -829,6 +846,7 @@
 				648932D7209DE44E000E691A /* FontConvertible.swift in Sources */,
 				64507E7420AEF12C009455BD /* AssociatedValues.swift in Sources */,
 				64893313209DE87D000E691A /* SystemFonts.swift in Sources */,
+				64507EBA20B1766D009455BD /* StyleRegEx.swift in Sources */,
 				6489332820A0CA76000E691A /* FontInfoAttribute.swift in Sources */,
 				64507E5E20AEEB36009455BD /* StylesManager.swift in Sources */,
 				6489331A209DEAFF000E691A /* Style.swift in Sources */,
@@ -844,6 +862,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				648932CB209DE194000E691A /* CommonsAttributes.swift in Sources */,
+				64507EBF20B18489009455BD /* Extensions.swift in Sources */,
 				64507E8E20AF3A9C009455BD /* StyleProtocol.swift in Sources */,
 				64507EA520B05015009455BD /* AttributedString+Ext.swift in Sources */,
 				6489330A209DE7C5000E691A /* ColorConvertible.swift in Sources */,
@@ -852,6 +871,7 @@
 				648932D5209DE44E000E691A /* FontConvertible.swift in Sources */,
 				64507E7220AEF12C009455BD /* AssociatedValues.swift in Sources */,
 				64893311209DE87D000E691A /* SystemFonts.swift in Sources */,
+				64507EB820B1766D009455BD /* StyleRegEx.swift in Sources */,
 				6489332620A0CA76000E691A /* FontInfoAttribute.swift in Sources */,
 				64507E5C20AEEB36009455BD /* StylesManager.swift in Sources */,
 				64893318209DEAFF000E691A /* Style.swift in Sources */,
@@ -870,6 +890,7 @@
 				648932EE209DE47C000E691A /* CommonsAttributes.swift in Sources */,
 				64507E9120AF3A9C009455BD /* StyleProtocol.swift in Sources */,
 				64893322209DED04000E691A /* StyleGroup.swift in Sources */,
+				64507EBB20B1766D009455BD /* StyleRegEx.swift in Sources */,
 				64507E7C20AEF611009455BD /* OrderedDictionary.swift in Sources */,
 				64507E8A20AF3609009455BD /* String+Subscript.swift in Sources */,
 				648932E1209DE474000E691A /* ViewController.swift in Sources */,
@@ -880,6 +901,7 @@
 				64893314209DE8AA000E691A /* SystemFonts.swift in Sources */,
 				6489332920A0CA76000E691A /* FontInfoAttribute.swift in Sources */,
 				6489330D209DE7E3000E691A /* ColorConvertible.swift in Sources */,
+				64507EC220B18489009455BD /* Extensions.swift in Sources */,
 				6489331B209DEAFF000E691A /* Style.swift in Sources */,
 				648932F0209DE47C000E691A /* FontConvertible.swift in Sources */,
 				64507E9F20AF4681009455BD /* String+Ext.swift in Sources */,
@@ -895,6 +917,7 @@
 				64893323209DED04000E691A /* StyleGroup.swift in Sources */,
 				64507E7620AEF12C009455BD /* AssociatedValues.swift in Sources */,
 				648932FA209DE6C5000E691A /* ViewController.swift in Sources */,
+				64507EBC20B1766D009455BD /* StyleRegEx.swift in Sources */,
 				64507EA020AF4681009455BD /* String+Ext.swift in Sources */,
 				64507E9220AF3A9C009455BD /* StyleProtocol.swift in Sources */,
 				64507E6020AEEC19009455BD /* StylesManager.swift in Sources */,
@@ -905,6 +928,7 @@
 				6489330E209DE7E3000E691A /* ColorConvertible.swift in Sources */,
 				64507EA920B05015009455BD /* AttributedString+Ext.swift in Sources */,
 				64507E7D20AEF611009455BD /* OrderedDictionary.swift in Sources */,
+				64507EC320B18489009455BD /* Extensions.swift in Sources */,
 				64507EB120B056FB009455BD /* FontInfo.swift in Sources */,
 				6489331C209DEAFF000E691A /* Style.swift in Sources */,
 				64507E8B20AF3609009455BD /* String+Subscript.swift in Sources */,

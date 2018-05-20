@@ -47,7 +47,7 @@ public class StylesManager {
 	public var onDeferStyle: ((String) -> (StyleProtocol?, Bool))? = nil
 	
 	/// Registered styles.
-	public var styles: [String: StyleProtocol] = [:]
+	public private(set) var styles: [String: StyleProtocol] = [:]
 	
 	/// Register a new style with given name.
 	///
