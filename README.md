@@ -73,13 +73,33 @@ That's the result!
 
 <img src="Documentation_Assests/image_2.png" alt="" style="width: 300px;"/>
 
-## Latest Version
+-- 
+
+## Other Libraries You May Like
+
+I'm also working on several other projects you may like.
+Take a look below:
+
+
+| Library         | Description                                      |
+|-----------------|--------------------------------------------------|
+| [**SwiftDate**](https://github.com/malcommac/SwiftDate)       | The best way to manage date/timezones in Swift   |
+| [**Hydra**](https://github.com/malcommac/Hydra)           | Write better async code: async/await & promises  |
+| [**FlowKit**](https://github.com/malcommac/FlowKit) | A new declarative approach to table/collection managment. Forget datasource & delegates. |
+| [**SwiftRichString**](https://github.com/malcommac/SwiftRichString) | Elegant & Painless NSAttributedString in Swift   |
+| [**SwiftLocation**](https://github.com/malcommac/SwiftLocation)   | Efficient location manager                       |
+| [**SwiftMsgPack**](https://github.com/malcommac/SwiftMsgPack)    | Fast/efficient msgPack encoder/decoder           |
+</p>
+
+--
+
+## Documentation
 
 Latest version of SwiftRichString is [2.0.0](https://github.com/malcommac/SwiftRichString/releases/tag/2.0.0).
 
-Full changelog is available in [CHANGELOG.md](CHANGELOG.md) file.
+**Table Of Contents**
 
-## Documentation
+Full changelog is available in [CHANGELOG.md](CHANGELOG.md) file.
 
 - [`Style` & `StyleGroup`](#stylestylegroup)
 	- [Introduction](#introduction)
