@@ -147,6 +147,8 @@ let style = Style {
 	$0.color = UIColor.green
 	// ... set any other attribute
 }
+
+let attrString = "Some text".set(style: style) // attributed string
 ```
 
 #### `StyleGroup`: Apply styles for tag-based complex string
@@ -158,6 +160,8 @@ let bodyStyle: Style = ...
 let h1Style: Style = ...
 let h2Style: Style = ...
 let group = StyleGroup(base: bodyStyle, ["h1": h1Style, "h2": h2Style])
+
+let attrString = "Some <h1>text</h1>, <h2>welcome here</h2>".set(style: group)
 ```
 
 The following code defines a group where:
@@ -177,7 +181,7 @@ let style = StyleRegEx(pattern: emailPattern) {
 	$0.backColor = UIColor.yellow
 }
 		
-let attributedString = "My email is hello@danielemargutti.com and my website is http://www.danielemargutti.com".(style: style!)
+let attrString = "My email is hello@danielemargutti.com and my website is http://www.danielemargutti.com".(style: style!)
 ```
 
 The result is this:
