@@ -328,6 +328,7 @@ public class Style: StyleProtocol {
 
 	/// No overview available.
 	/// Note: available only from iOS 11, tvOS 11 and watchOS 4.
+	@available(tvOS 11.0, *)
 	@available(iOS 11.0, *)
 	@available(iOSApplicationExtension 11.0, *)
 	public var speakingPronunciation: String? {
@@ -341,6 +342,7 @@ public class Style: StyleProtocol {
 	///
 	/// The default behavior is to interrupt existing speech.
 	@available(iOS 11.0, *)
+	@available(tvOS 11.0, *)
 	@available(iOSApplicationExtension 11.0, *)
 	public var shouldQueueSpeechAnnouncement: Bool? {
 		set {
@@ -362,8 +364,9 @@ public class Style: StyleProtocol {
 	/// Specify the heading level of the text.
 	/// Value is a number in the range 0 to 6.
 	/// Use 0 to indicate the absence of a specific heading level and use other numbers to indicate the heading level.
-	@available(iOSApplicationExtension 11.0, *)
 	@available(iOS 11.0, *)
+	@available(tvOS 11.0, *)
+	@available(iOSApplicationExtension 11.0, *)
 	public var headingLevel: HeadingLevel? {
 		set {
 			let key = NSAttributedStringKey(UIAccessibilityTextAttributeHeadingLevel)
