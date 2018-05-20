@@ -1,3 +1,13 @@
+[![Version](https://img.shields.io/cocoapods/v/SwiftRichString.svg?style=flat)](http://cocoadocs.org/docsets/SwiftRichString) [![License](https://img.shields.io/cocoapods/l/SwiftRichString.svg?style=flat)](http://cocoadocs.org/docsets/SwiftRichString) [![Platform](https://img.shields.io/cocoapods/p/SwiftRichString.svg?style=flat)](http://cocoadocs.org/docsets/SwiftRichString)
+[![CocoaPods Compatible](https://img.shields.io/cocoapods/v/SwiftRichString.svg)](https://img.shields.io/cocoapods/v/SwiftRichString.svg)
+[![Carthage Compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
+[![Twitter](https://img.shields.io/badge/twitter-@danielemargutti-blue.svg?style=flat)](http://twitter.com/danielemargutti)
+
+<p align="center" >★★ <b>Star me to follow the project! </b> ★★<br>
+Created by <b>Daniele Margutti</b> - <a href="http://www.danielemargutti.com">danielemargutti.com</a>
+</p>
+
+
 SwiftRichString is a lightweight library which allows to create and manipulate attributed strings easily both in iOS, macOS, tvOS and even watchOS.
 It provides convenient way to store styles you can reuse in your app's UI lements, allows complex tag-based strings rendering and also includes integration with Interface Builder.
 
@@ -66,31 +76,46 @@ That's the result!
 ## Latest Version
 
 Latest version of SwiftRichString is [2.0.0](https://github.com/malcommac/SwiftRichString/releases/tag/2.0.0).
+
 Full changelog is available in [CHANGELOG.md](CHANGELOG.md) file.
 
 ## Migration from 1.x
+SwiftRichString is a complete rewrite of the library. While some inner concept are the same, in order to keep the code cleaner and simpler I've made some important changes.
+
+- A `StyleProtocol` is now a common entry point for every style definition; both `Style` and `StyleGroup` are conform to this protocol which is the central repository to make actions on text (in 1.x `String` and `AttributedString` act directly to parse text).
+- `Style` some properties of the class has a different (but quite equal) name, changed to better reflect the purpose of the attribute. Some attributes like `underline` or `striketought` are now tuple of elements instead of different properties.
+- `Style` are now anonymous; you don't need to assign a name to a style; only if you need to parse tag-based text you need to group used styles in a `StyleGroup` instance where you define the name/id of each tag.
+- There is not any `parseTag` function; just pass the `StyleGroup` as parameter to render a text and the tag-based parsing will be done automatically.
+- There is not any default style; `StyleGroup` implements a `base` style used to render common attributes of your text. You can also use `Styles` to register globally available `StyleProtocol` instances and use them in your app.
+- In order to simplify our APIs some init methods of `Style` are now removed. You should not miss them, but let me know via PR in case.
 
 
 ## Documentation
 
-- `Style` & `StyleGroup`
-	- Introduction
-	- String & Attributed String concatenation
-	- Fonts & Colors in `Style`
-	- Derivating a `Style`
-- The `StyleManager`
-	- Register globally available styles
-	- Defer style creation on demand
-- Assign style using Interface Builder
-- All properties of `Style`
+- [`Style` & `StyleGroup`](#stylestylegroup)
+	- [Introduction](#introduction)
+	- [String & Attributed String concatenation](#concatenation)
+	- [Apply styles to `String` & `Attributed String`](#manualstyling)
+	- [Fonts & Colors in `Style`](#fontscolors)
+	- [Derivating a `Style`](#derivatingstyle)
+- [The `StyleManager`](#stylemanager)
+	- [Register globally available styles](#globalregister)
+	- [Defer style creation on demand](#defer)
+- [Assign style using Interface Builder](#ib)
+- [All properties of `Style`](#props)
 
 Other info:
 
-- Requirements
-- Installation
-- Copyright
+- [Requirements](#requirements)
+- [Installation](#installation)
+- [Contributing](#contributing)
+- [Copyright](#copyright)
+
+<a name="stylestylegroup"/>
 
 ## `Style` & `StyleGroup`
+
+<a name="introduction"/>
 
 ### Introduction
 
@@ -120,6 +145,8 @@ The following code defines a group where:
 - we have defined a base style. Base style is the style applied to the entire string and can be used to provide a base ground of styles you want to apply to the string.
 - we have defined two other styles named `h1` and `h2`; these styles are applied to the source string when parser encounter some text enclosed by these tags.
 
+<a name="concatenation"/>
+
 ### String & Attributed String concatenation
 SwiftRichString allows you to simplify string concatenation by providing custom `+` operator between `String`,`AttributedString` (typealias of `NSMutableAttributedString`) and `Style`.
 
@@ -145,7 +172,9 @@ You can also use `+` operator to add a style to a plain or attributed string:
 let attStr = "Hello" + ("\(username)" + big)
 ```
 
-### Manually apply style to `String` and `Attributed String`
+<a name="manualstyling"/>
+
+### Apply styles to `String` & `Attributed String`
 
 Both `String` and `Attributed String` (aka `NSMutableAttributedString`) has a come convenience methods you can use to create an manipulate attributed text easily via code:
 
@@ -213,94 +242,7 @@ let b = "world!".set(style: styleB)
 let ab = (a + b).add(styles: [coupondStyleA,coupondStyleB]).remove([.foregroundColor,.font])
 ```
 
-### Derivating a `Style`
-
-Sometimes you may need to infer properties of a new style from an existing one. In this case you can use `byAdding()` function of `Style` to produce a new style with all the properties of the receiver and the chance to configure additional/replacing attributes.
-
-```swift
-let initialStyle = Style {
-	$0.font = SystemFonts.Helvetica_Light.font(size: 15)
-	$0.alignment = right
-}
-
-// The following style contains all the attributes of initialStyle
-// but also override the alignment and add a different foreground color.
-let subStyle = bold.byAdding {
-	$0.alignment = center
-	$0.color = UIColor.red
-}
-``` 
-
-## The `StyleManager`
-
-### Register globally available styles
-Styles can be created as you need or registered globally to be used once you need.
-This second approach is strongly suggested because allows you to theme your app as you need and also avoid duplication of the code.
-
-To register a `Style` or a `StyleGroup` globally you need to assign an unique identifier to it and call `register()` function via `Styles` shortcut (which is equal to call `StylesManager.shared`).
-
-In order to keep your code type-safer you can use a non-instantiable struct to keep the name of your styles, then use it to register style:
-
-```swift
-// Define a struct with your styles names
-public struct StyleNames {
-	public static let body: String = "body"
-	public static let h1: String = "h1"
-	public static let h2: String = "h2"
-	
-	private init { }
-}
-```
-
-Then you can:
-
-```swift
-let bodyStyle: Style = ...
-Styles.register(StyleNames.body, bodyStyle)
-```
-
-Now you can use it everywhere inside the app; you can apply it to a text just using its name:
-
-```swift
-let text = "hello world".set(StyleNames.body)
-```
-
-or you can assign `body` string to the `styledText` via Interface Builder designable property.
-
-### Defer style creation on demand
-Sometimes you may need to return a particular style used only in small portion of your app; while you can still set it directly you can also defer its creation in `StylesManager`.
-
-By implementing `onDeferStyle()` callback you have an option to create a new style once required: you will receive the identifier of the style.
-
-```swift
-Styles.onDeferStyle = { name in
-			
-	if name == "MyStyle" {
-		let normal = Style {
-			$0.font = SystemFonts.Helvetica_Light.font(size: 15)
-		}
-				
-		let bold = Style {
-			$0.font = SystemFonts.Helvetica_Bold.font(size: 20)
-			$0.color = UIColor.red
-			$0.backColor = UIColor.yellow
-		}
-				
-		let italic = normal.byAdding {
-			$0.traitVariants = .italic
-		}
-				
-		return (StyleGroup(base: normal, ["bold": bold, "italic": italic]), true)
-	}
-			
-	return (nil,false)
-}
-```
-The following code return a valid style for `myStyle` identifier and cache it; if you don't want to cache it just return `false` along with style instance.
-
-Now you can use your style to render, for example, a tag based text into an `UILabel`: just set the name of the style to use.
-
-<img src="Documentation_Assests/image_3.png" alt="" style="width: 400px;"/>
+<a name="fontscolors"/>
 
 ## Fonts & Colors in `Style`
 All colors and fonts you can set for a `Style` are wrapped by `FontConvertible` and `ColorConvertible` protocols.
@@ -340,6 +282,103 @@ let style = Style {
 
 Clearly you can still pass instances of both colors/fonts.
 
+<a name="derivatingstyle"/>
+
+### Derivating a `Style`
+
+Sometimes you may need to infer properties of a new style from an existing one. In this case you can use `byAdding()` function of `Style` to produce a new style with all the properties of the receiver and the chance to configure additional/replacing attributes.
+
+```swift
+let initialStyle = Style {
+	$0.font = SystemFonts.Helvetica_Light.font(size: 15)
+	$0.alignment = right
+}
+
+// The following style contains all the attributes of initialStyle
+// but also override the alignment and add a different foreground color.
+let subStyle = bold.byAdding {
+	$0.alignment = center
+	$0.color = UIColor.red
+}
+``` 
+<a name="stylemanager"/>
+
+## The `StyleManager`
+
+<a name="globalregister"/>
+
+### Register globally available styles
+Styles can be created as you need or registered globally to be used once you need.
+This second approach is strongly suggested because allows you to theme your app as you need and also avoid duplication of the code.
+
+To register a `Style` or a `StyleGroup` globally you need to assign an unique identifier to it and call `register()` function via `Styles` shortcut (which is equal to call `StylesManager.shared`).
+
+In order to keep your code type-safer you can use a non-instantiable struct to keep the name of your styles, then use it to register style:
+
+```swift
+// Define a struct with your styles names
+public struct StyleNames {
+	public static let body: String = "body"
+	public static let h1: String = "h1"
+	public static let h2: String = "h2"
+	
+	private init { }
+}
+```
+
+Then you can:
+
+```swift
+let bodyStyle: Style = ...
+Styles.register(StyleNames.body, bodyStyle)
+```
+
+Now you can use it everywhere inside the app; you can apply it to a text just using its name:
+
+```swift
+let text = "hello world".set(StyleNames.body)
+```
+
+or you can assign `body` string to the `styledText` via Interface Builder designable property.
+
+<a name="defer"/>
+
+### Defer style creation on demand
+Sometimes you may need to return a particular style used only in small portion of your app; while you can still set it directly you can also defer its creation in `StylesManager`.
+
+By implementing `onDeferStyle()` callback you have an option to create a new style once required: you will receive the identifier of the style.
+
+```swift
+Styles.onDeferStyle = { name in
+			
+	if name == "MyStyle" {
+		let normal = Style {
+			$0.font = SystemFonts.Helvetica_Light.font(size: 15)
+		}
+				
+		let bold = Style {
+			$0.font = SystemFonts.Helvetica_Bold.font(size: 20)
+			$0.color = UIColor.red
+			$0.backColor = UIColor.yellow
+		}
+				
+		let italic = normal.byAdding {
+			$0.traitVariants = .italic
+		}
+				
+		return (StyleGroup(base: normal, ["bold": bold, "italic": italic]), true)
+	}
+			
+	return (nil,false)
+}
+```
+The following code return a valid style for `myStyle` identifier and cache it; if you don't want to cache it just return `false` along with style instance.
+
+Now you can use your style to render, for example, a tag based text into an `UILabel`: just set the name of the style to use.
+
+<img src="Documentation_Assests/image_3.png" alt="" style="width: 400px;"/>
+
+<a name="ib"/>
 
 ## Assign style using Interface Builder
 SwiftRichString can be used also via Interface Builder; `UILabel`, `UITextView` and `UIButton` has a `styleName` property you can set with a globally registered style.
@@ -349,56 +388,71 @@ Assigned style can be a `Style` or a `StyleGroup`:
 - if style is a `Style` the entire text of the control is set with the attributes defined by the style.
 - if style is a `StyleGroup` a base attribute is set (if `base` is set) and other attributes are applied once each tag is found.
 
+You can also assign the same property via code:
+
+```swift
+self.label?.styleName = "MyStyle"
+```
+
+or render the text manually:
+
+```swift
+self.label?.attributedText = (self.label?.text ?? "").set(myStyle)
+```
+
+<a name="props"/>
+
 ## Properties available via `Style` class
 The following properties are available:
 
 | PROPERTY                      | TYPE                                  | DESCRIPTION                                                                                                                                | 
 |-------------------------------|---------------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------| 
-| size                          | CGFloat                               | font size in points                                                                                                                        | 
-| font                          | FontConvertible                       | font used in text                                                                                                                          | 
-| color                         | ColorConvertible                      | foreground color of the text                                                                                                               | 
-| backColor                     | ColorConvertible                      | background color of the text                                                                                                               | 
-| underline                     | (NSUnderlineStyle?,ColorConvertible?) | underline style and color (if color is nil foreground is used)                                                                             | 
-| strikethrough                 | (NSUnderlineStyle?,ColorConvertible?) | strikethrough style and color (if color is nil foreground is used)                                                                         | 
-| baselineOffset                | Float                                 | character’s offset from the baseline, in point                                                                                             | 
-| paragraph                     | NSMutableParagraphStyle               | paragraph attributes                                                                                                                       | 
-| lineSpacing                   | CGFloat                               | distance in points between the bottom of one line fragment and the top of the next                                                         | 
-| paragraphSpacingBefore        | CGFloat                               | distance between the paragraph’s top and the beginning of its text content                                                                 | 
-| paragraphSpacingAfter         | CGFloat                               | space (measured in points) added at the end of the paragraph                                                                               | 
-| alignment                     | NSTextAlignment                       | text alignment of the receiver                                                                                                             | 
-| firstLineHeadIndent           | CGFloat                               | distance (in points) from the leading margin of a text container to the beginning of the paragraph’s first line.                           | 
-| headIndent                    | CGFloat                               | The distance (in points) from the leading margin of a text container to the beginning of lines other than the first.                       | 
-| tailIndent                    | CGFloat                               | this value is the distance from the leading margin, If 0 or negative, it’s the distance from the trailing margin.                          | 
-| lineBreakMode                 | LineBreak                             | mode that should be used to break lines                                                                                                    | 
-| minimumLineHeight             | CGFloat                               | minimum height in points that any line in the receiver will occupy regardless of the font size or size of any attached graphic             | 
-| maximumLineHeight             | CGFloat                               | maximum height in points that any line in the receiver will occupy regardless of the font size or size of any attached graphic             | 
-| baseWritingDirection          | NSWritingDirection                    | initial writing direction used to determine the actual writing direction for text                                                          | 
-| lineHeightMultiple            | CGFloat                               | natural line height of the receiver is multiplied by this factor (if positive) before being constrained by minimum and maximum line height | 
-| hyphenationFactor             | Float                                 | threshold controlling when hyphenation is attempted                                                                                        | 
-| ligatures                     | Ligatures                             | Ligatures cause specific character combinations to be rendered using a single custom glyph that corresponds to those characters            | 
-| speaksPunctuation             | Bool                                  | Enable spoken of all punctuation in the text                                                                                               | 
-| speakingLanguage              | String                                | The language to use when speaking a string (value is a BCP 47 language code string).                                                       | 
-| speakingPitch                 | Double                                | Pitch to apply to spoken content                                                                                                           | 
-| speakingPronunciation         | String                                |                                                                                                                                            | 
-| shouldQueueSpeechAnnouncement | Bool                                  | Spoken text is queued behind, or interrupts, existing spoken content                                                                       | 
-| headingLevel                  | HeadingLevel                          | Specify the heading level of the text                                                                                                      | 
-| numberCase                    | NumberCase                            | "Configuration for the number case, also known as ""figure style"""                                                                        | 
-| numberSpacing                 | NumberSpacing                         | "Configuration for number spacing, also known as ""figure spacing"""                                                                       | 
-| fractions                     | Fractions                             | Configuration for displyaing a fraction                                                                                                    | 
-| superscript                   | Bool                                  | Superscript (superior) glpyh variants are used, as in footnotes_.                                                                          | 
-| `subscript`                   | Bool                                  | Subscript (inferior) glyph variants are used: v_.                                                                                          | 
-| ordinals                      | Bool                                  | Ordinal glyph variants are used, as in the common typesetting of 4th.                                                                      | 
-| scientificInferiors           | Bool                                  | Scientific inferior glyph variants are used: H_O                                                                                           | 
-| smallCaps                     | Set<SmallCaps>                        | Configure small caps behavior.                                                                                                             | 
-| stylisticAlternates           | StylisticAlternates                   | Different stylistic alternates available for customizing a font.                                                                           | 
-| contextualAlternates          | ContextualAlternates                  | Different contextual alternates available for customizing a font.                                                                          | 
-| kerning                       | Kerning                               | Tracking to apply.                                                                                                                         | 
-| traitVariants                 | TraitVariant                          | Describe trait variants to apply to the font                                                                                               | 
+| size                          | `CGFloat`                               | font size in points                                                                                                                        | 
+| font                          | `FontConvertible`                       | font used in text                                                                                                                          | 
+| color                         | `ColorConvertible`                      | foreground color of the text                                                                                                               | 
+| backColor                     | `ColorConvertible`                      | background color of the text                                                                                                               | 
+| underline                     | `(NSUnderlineStyle?,ColorConvertible?)` | underline style and color (if color is nil foreground is used)                                                                             | 
+| strikethrough                 | `(NSUnderlineStyle?,ColorConvertible?)` | strikethrough style and color (if color is nil foreground is used)                                                                         | 
+| baselineOffset                | `Float`                                 | character’s offset from the baseline, in point                                                                                             | 
+| paragraph                     | `NSMutableParagraphStyle`               | paragraph attributes                                                                                                                       | 
+| lineSpacing                   | `CGFloat`                               | distance in points between the bottom of one line fragment and the top of the next                                                         | 
+| paragraphSpacingBefore        | `CGFloat`                               | distance between the paragraph’s top and the beginning of its text content                                                                 | 
+| paragraphSpacingAfter         | `CGFloat`                               | space (measured in points) added at the end of the paragraph                                                                               | 
+| alignment                     | `NSTextAlignment`                       | text alignment of the receiver                                                                                                             | 
+| firstLineHeadIndent           | `CGFloat`                               | distance (in points) from the leading margin of a text container to the beginning of the paragraph’s first line.                           | 
+| headIndent                    | `CGFloat`                               | The distance (in points) from the leading margin of a text container to the beginning of lines other than the first.                       | 
+| tailIndent                    | `CGFloat`                               | this value is the distance from the leading margin, If 0 or negative, it’s the distance from the trailing margin.                          | 
+| lineBreakMode                 | `LineBreak`                             | mode that should be used to break lines                                                                                                    | 
+| minimumLineHeight             | `CGFloat`                               | minimum height in points that any line in the receiver will occupy regardless of the font size or size of any attached graphic             | 
+| maximumLineHeight             | `CGFloat`                               | maximum height in points that any line in the receiver will occupy regardless of the font size or size of any attached graphic             | 
+| baseWritingDirection          | `NSWritingDirection`                    | initial writing direction used to determine the actual writing direction for text                                                          | 
+| lineHeightMultiple            | `CGFloat`                               | natural line height of the receiver is multiplied by this factor (if positive) before being constrained by minimum and maximum line height | 
+| hyphenationFactor             | `Float`                                 | threshold controlling when hyphenation is attempted                                                                                        | 
+| ligatures                     | `Ligatures`                             | Ligatures cause specific character combinations to be rendered using a single custom glyph that corresponds to those characters            | 
+| speaksPunctuation             | `Bool`                                  | Enable spoken of all punctuation in the text                                                                                               | 
+| speakingLanguage              | `String`                                | The language to use when speaking a string (value is a BCP 47 language code string).                                                       | 
+| speakingPitch                 | `Double`                                | Pitch to apply to spoken content                                                                                                           | 
+| speakingPronunciation         | `String`                                |                                                                                                                                            | 
+| shouldQueueSpeechAnnouncement | `Bool`                                  | Spoken text is queued behind, or interrupts, existing spoken content                                                                       | 
+| headingLevel                  | `HeadingLevel`                          | Specify the heading level of the text                                                                                                      | 
+| numberCase                    | `NumberCase`                            | "Configuration for the number case, also known as ""figure style"""                                                                        | 
+| numberSpacing                 | `NumberSpacing`                         | "Configuration for number spacing, also known as ""figure spacing"""                                                                       | 
+| fractions                     | `Fractions`                             | Configuration for displyaing a fraction                                                                                                    | 
+| superscript                   | `Bool`                                  | Superscript (superior) glpyh variants are used, as in footnotes_.                                                                          | 
+| `subscript`                   | `Bool`                                  | Subscript (inferior) glyph variants are used: v_.                                                                                          | 
+| ordinals                      | `Bool`                                  | Ordinal glyph variants are used, as in the common typesetting of 4th.                                                                      | 
+| scientificInferiors           | `Bool`                                  | Scientific inferior glyph variants are used: H_O                                                                                           | 
+| smallCaps                     | `Set<SmallCaps>`                       | Configure small caps behavior.                                                                                                             | 
+| stylisticAlternates           | `StylisticAlternates`                   | Different stylistic alternates available for customizing a font.                                                                           | 
+| contextualAlternates          | `ContextualAlternates`                  | Different contextual alternates available for customizing a font.                                                                          | 
+| kerning                       | `Kerning`                               | Tracking to apply.                                                                                                                         | 
+| traitVariants                 | `TraitVariant`                          | Describe trait variants to apply to the font                                                                                               | 
 
+<a name="requirements"/>
 
 ## Requirements
 
-Repeat is compatible with Swift 4.x.
+SwiftRichString is compatible with Swift 4.x.
 All Apple platforms are supported:
 
 * iOS 8.0+
@@ -406,23 +460,25 @@ All Apple platforms are supported:
 * watchOS 2.0+
 * tvOS 9.0+
 
+<a name="installation"/>
+
 ## Installation
 
 <a name="cocoapods" />
 
 ### Install via CocoaPods
 
-[CocoaPods](http://cocoapods.org) is a dependency manager for Objective-C, which automates and simplifies the process of using 3rd-party libraries like Repeat in your projects. You can install it with the following command:
+[CocoaPods](http://cocoapods.org) is a dependency manager for Objective-C, which automates and simplifies the process of using 3rd-party libraries like SwiftRichString in your projects. You can install it with the following command:
 
 ```bash
 $ sudo gem install cocoapods
 ```
 
-> CocoaPods 1.0.1+ is required to build Repeat.
+> CocoaPods 1.0.1+ is required to build SwiftRichString.
 
 #### Install via Podfile
 
-To integrate Repeat into your Xcode project using CocoaPods, specify it in your `Podfile`:
+To integrate SwiftRichString into your Xcode project using CocoaPods, specify it in your `Podfile`:
 
 ```ruby
 source 'https://github.com/CocoaPods/Specs.git'
@@ -461,6 +517,17 @@ github "malcommac/SwiftRichString"
 
 Run `carthage` to build the framework and drag the built `SwiftRichString.framework` into your Xcode project.
 
+<a name="contributing" />
 
+## Contributing
+
+Issues and pull requests are welcome!
+Contributors are expected to abide by the [Contributor Covenant Code of Conduct](https://github.com/malcommac/SwiftRichString/blob/master/CONTRIBUTING.md).
+
+## Copyright
+
+SwiftRichString is available under the MIT license. See the LICENSE file for more info.
+
+Daniele Margutti: [hello@danielemargutti.com](mailto:hello@danielemargutti.com), [@danielemargutti](https://twitter.com/danielemargutti)
 
 
