@@ -107,7 +107,7 @@ Latest version of SwiftRichString is [2.0.0](https://github.com/malcommac/SwiftR
 
 Full changelog is available in [CHANGELOG.md](CHANGELOG.md) file.
 
-- [`Style` & `StyleGroup`](#stylestylegroup)
+- [`Style`, `StyleGroup` & `StyleRegEx`](#stylestylegroup)
 	- [Introduction](#introduction)
 	- [String & Attributed String concatenation](#concatenation)
 	- [Apply styles to `String` & `Attributed String`](#manualstyling)
@@ -129,11 +129,13 @@ Other info:
 
 <a name="stylestylegroup"/>
 
-## `Style` & `StyleGroup`
+## `Style`, `StyleGroup`, `StyleRegEx`
 
 <a name="introduction"/>
 
 ### Introduction
+
+#### `Style`: apply style to strings or attributed strings
 
 A `Style` is a class which encapsulate all the attributes you can apply to a string. The vast majority of the attributes of both AppKit/UIKit are currently available via type-safe properties by this class.
 
@@ -146,6 +148,8 @@ let style = Style {
 	// ... set any other attribute
 }
 ```
+
+#### `StyleGroup`: Apply styles for tag-based complex string
 
 `Style` instances are anonymous; if you want to use a style instance to render a tag-based plain string you need to include it inside a `StyleGroup`. You can consider a `StyleGroup` as a container of `Styles` (but, in fact, thanks to the conformance to a common `StyleProtocol`'s protocol your group may contains other sub-groups too).
 
@@ -160,6 +164,25 @@ The following code defines a group where:
 
 - we have defined a base style. Base style is the style applied to the entire string and can be used to provide a base ground of styles you want to apply to the string.
 - we have defined two other styles named `h1` and `h2`; these styles are applied to the source string when parser encounter some text enclosed by these tags.
+
+
+#### `StyleRegEx`: Apply styles via regular expressions
+
+`StyleRegEx` allows you to define a style which is applied when certain regular expression is matched inside the target string/attributed string.
+
+```swift
+let emailPattern = "([A-Za-z0-9_\\-\\.\\+])+\\@([A-Za-z0-9_\\-\\.])+\\.([A-Za-z]+)"
+let style = StyleRegEx(pattern: emailPattern) {
+	$0.color = UIColor.red
+	$0.backColor = UIColor.yellow
+}
+		
+let attributedString = "My email is hello@danielemargutti.com and my website is http://www.danielemargutti.com".(style: style!)
+```
+
+The result is this:
+
+
 
 <a name="concatenation"/>
 
