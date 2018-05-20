@@ -14,6 +14,10 @@
         <scene sceneID="tne-QT-ifu">
             <objects>
                 <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="ExampleiOS" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="W24-AA-bsh"/>
+                        <viewControllerLayoutGuide type="bottom" id="rLU-7s-8uZ"/>
+                    </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -30,11 +34,11 @@
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="O4i-ta-tn6" secondAttribute="trailing" constant="15" id="n1t-VD-qAb"/>
-                            <constraint firstItem="O4i-ta-tn6" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="15" id="qh4-kV-ULG"/>
-                            <constraint firstItem="O4i-ta-tn6" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="15" id="rLN-3M-CG5"/>
+                            <constraint firstAttribute="trailing" secondItem="O4i-ta-tn6" secondAttribute="trailing" constant="15" id="n1t-VD-qAb"/>
+                            <constraint firstItem="O4i-ta-tn6" firstAttribute="top" secondItem="W24-AA-bsh" secondAttribute="bottom" constant="15" id="qh4-kV-ULG"/>
+                            <constraint firstItem="O4i-ta-tn6" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" constant="15" id="rLN-3M-CG5"/>
                         </constraints>
-                        <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
+                        <viewLayoutGuide key="safeArea" id="KdN-DI-2Ar"/>
                     </view>
                     <connections>
                         <outlet property="label" destination="O4i-ta-tn6" id="DUC-Oc-2VZ"/>
