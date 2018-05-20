@@ -95,7 +95,7 @@ Full changelog is available in [CHANGELOG.md](CHANGELOG.md) file.
 
 Other info:
 
-- [Migration from 1.x]
+- [Migration from SwiftRichString 1.x](#migration)
 - [Requirements](#requirements)
 - [Installation](#installation)
 - [Contributing](#contributing)
