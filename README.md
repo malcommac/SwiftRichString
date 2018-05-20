@@ -1,5 +1,5 @@
 <p align="center" >
-<img src="https://raw.githubusercontent.com/malcommac/SwiftRichString/master/logo.png" width=300px alt="SwiftRichString" title="SwiftRichString">
+<img src="https://raw.githubusercontent.com/malcommac/SwiftRichString/master/SwiftRichString.png" width=300px alt="SwiftRichString" title="SwiftRichString">
 </p>
 
 [![Version](https://img.shields.io/cocoapods/v/SwiftRichString.svg?style=flat)](http://cocoadocs.org/docsets/SwiftRichString) [![License](https://img.shields.io/cocoapods/l/SwiftRichString.svg?style=flat)](http://cocoadocs.org/docsets/SwiftRichString) [![Platform](https://img.shields.io/cocoapods/p/SwiftRichString.svg?style=flat)](http://cocoadocs.org/docsets/SwiftRichString)
@@ -19,7 +19,9 @@ If you manipulate `NSAttributedString` in Swift, SwiftRichString allows you to k
 
 ## Features Highlights
 
-### Easy Styling
+Want to know what SwiftRichString can do in your app? Lets take a look to these feature highlights!
+
+### 1. Easy Styling
 The main concept behind this lib is the `Style`: a style is just a collection of text attributes you can apply to a string. The following example show how to create a style an produce an attributed string with it:
 
 ```swift
@@ -32,7 +34,7 @@ let style = Style {
 let attributedText = "Hello World!".set(style: style) // et voilà!
 ```
 
-### Global Styles & Interface Builder Integration
+### 2. Global Styles & Interface Builder Integration
 Styles can be also registered globally and reused in your app.
 Just define your own style and register using `Styles.register()` function:
 
@@ -45,7 +47,7 @@ Now you can reuse it everything in your app; SwiftRichString exposes a `styleNam
 
 <img src="Documentation_Assests/image_1.png" alt="" style="width: 500px;"/>
 
-### Complex Rendering with tag-based strings
+### 3. Complex Rendering with tag-based strings
 SwiftRichString allows you to render complex strings by parsing text's tags: each style will be identified by an unique name (used inside the tag) and you can create a `StyleGroup` which allows you to encapsulate all of them and reuse as you need (clearly you can register it globally).
 
 ```swift
