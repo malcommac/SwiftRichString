@@ -306,7 +306,13 @@ public enum SystemFonts: String, FontConvertible {
 	/// - Parameter size: size of the font in points; `nil` to use system font size.
 	/// - Returns: instance of the font.
 	public func font(size: CGFloat?) -> Font {
+		#if os(tvOS)
+		return Font(name: self.rawValue, size: (size ?? TVOS_SYSTEMFONT_SIZE))!
+		#elseif os(watchOS)
+		return Font(name: self.rawValue, size: (size ?? WATCHOS_SYSTEMFONT_SIZE))!
+		#else
 		return Font(name: self.rawValue, size: (size ?? Font.systemFontSize))!
+		#endif
 	}
 
 }

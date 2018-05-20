@@ -57,7 +57,13 @@ extension Font: FontConvertible {
 	/// - Parameter size: size of the font in points. If size is `nil`, `Font.systemFontSize` is used.
 	/// - Returns: instance of the font.
 	public func font(size: CGFloat?) -> Font {
+		#if os(tvOS)
+		return Font(name: self.fontName, size: (size ?? TVOS_SYSTEMFONT_SIZE))!
+		#elseif os(watchOS)
+		return Font(name: self.fontName, size: (size ?? WATCHOS_SYSTEMFONT_SIZE))!
+		#else
 		return Font(name: self.fontName, size: (size ?? Font.systemFontSize))!
+		#endif
 	}
 	
 }
@@ -71,7 +77,13 @@ extension String: FontConvertible {
 	/// - Parameter size: size of the font.
 	/// - Returns: instance of the font.
 	public func font(size: CGFloat?) -> Font {
-		return Font(name: self, size:  (size ?? Font.systemFontSize))!
+		#if os(tvOS)
+		return Font(name: self, size:  (size ?? TVOS_SYSTEMFONT_SIZE))!
+		#elseif os(watchOS)
+		return Font(name: self, size:  (size ?? WATCHOS_SYSTEMFONT_SIZE))!
+		#else
+		return Font(name: self, size: (size ?? Font.systemFontSize))!
+		#endif
 	}
 	
 }
