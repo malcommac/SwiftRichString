@@ -1,708 +1,621 @@
 <p align="center" >
-<img src="https://raw.githubusercontent.com/malcommac/SwiftRichString/master/logo.png" width=530px alt="SwiftLocation" title="SwiftLocation">
+<img src="https://raw.githubusercontent.com/malcommac/SwiftRichString/release/2.0.0/SwiftRichString.png" width=300px alt="SwiftRichString" title="SwiftRichString">
+</p>
+
+[![Version](https://img.shields.io/cocoapods/v/SwiftRichString.svg?style=flat)](http://cocoadocs.org/docsets/SwiftRichString) [![License](https://img.shields.io/cocoapods/l/SwiftRichString.svg?style=flat)](http://cocoadocs.org/docsets/SwiftRichString) [![Platform](https://img.shields.io/cocoapods/p/SwiftRichString.svg?style=flat)](http://cocoadocs.org/docsets/SwiftRichString)
+[![CocoaPods Compatible](https://img.shields.io/cocoapods/v/SwiftRichString.svg)](https://img.shields.io/cocoapods/v/SwiftRichString.svg)
+[![Carthage Compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
+[![Twitter](https://img.shields.io/badge/twitter-@danielemargutti-blue.svg?style=flat)](http://twitter.com/danielemargutti)
+
+<p align="center" >★★ <b>Star me to follow the project! </b> ★★<br>
+Created by <b>Daniele Margutti</b> - <a href="http://www.danielemargutti.com">danielemargutti.com</a>
 </p>
 
 
-# SwiftRichString
-`SwiftRichString` is a lightweight library wich allows you to simplify your work  with attributed strings in UIKit. It provides convenient way to create and manage string with complex attributes, render tag-based string and manipulate styles at specified indexes.
+SwiftRichString is a lightweight library which allows to create and manipulate attributed strings easily both in iOS, macOS, tvOS and even watchOS.
+It provides convenient way to store styles you can reuse in your app's UI lements, allows complex tag-based strings rendering and also includes integration with Interface Builder.
 
-Supported platforms:
-* iOS 8.0+
-* tvOS 9.0+
-* macOS 10.10+
-* watchOS 2.0+
+If you manipulate `NSAttributedString` in Swift, SwiftRichString allows you to keep your code manteniable, readable and easy to evolve.
 
-And, best of all, it's fully compatible with unicode (who don't love emoji?).
+## Features Highlights
 
-<p align="center" >★★ <b>Star our github repository to help us!</b> ★★</p>
+Want to know what SwiftRichString can do in your app? Lets take a look to these feature highlights!
 
+### 1. Easy Styling
+The main concept behind this lib is the `Style`: a style is just a collection of text attributes you can apply to a string. The following example show how to create a style an produce an attributed string with it:
 
-[![Build Status](https://travis-ci.org/oarrabi/SwiftRichString.svg?branch=master)](https://travis-ci.org/oarrabi/SwiftRichString)
-[![Platform](https://img.shields.io/badge/platform-ios-lightgrey.svg)](https://travis-ci.org/oarrabi/SwiftRichString)
-[![Platform](https://img.shields.io/badge/platform-tvos-lightgrey.svg)](https://travis-ci.org/oarrabi/SwiftRichString)
-[![Platform](https://img.shields.io/badge/platform-watchos-lightgrey.svg)](https://travis-ci.org/oarrabi/SwiftRichString)
-[![Platform](https://img.shields.io/badge/platform-macos-lightgrey.svg)](https://travis-ci.org/oarrabi/SwiftRichString)
-[![Language: Swift](https://img.shields.io/badge/language-swift-orange.svg)](https://travis-ci.org/oarrabi/SwiftRichString)
-[![CocoaPods](https://img.shields.io/cocoapods/v/SwiftRichString.svg)](https://cocoapods.org/pods/SwiftRichString)
-[![Carthage](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
-## You also may like
--------
+```swift
+let style = Style {
+	$0.font = SystemFonts.AmericanTypewriter.font(size: 25) // just pass a string, one of the SystemFonts or an UIFont
+	$0.color = "#0433FF" // you can use UIColor or HEX string!
+	$0.underline = (.patternDot, UIColor.red)
+	$0.alignment = .center
+}
+let attributedText = "Hello World!".set(style: style) // et voilà!
+```
 
-Do you like `SwiftRichString`? I'm also working on several other opensource libraries.
+### 2. Global Styles & Interface Builder Integration
+Styles can be also registered globally and reused in your app.
+Just define your own style and register using `Styles.register()` function:
 
-Take a look here:
+```swift
+let myStyle = Style { // define style's attributes... }
+Styles.register("MyStyle", style: style)
+```
 
-## OTHER LIBRARIES YOU MAY LIKE
+Now you can reuse it everything in your app; SwiftRichString exposes a `styleName` property for the most common text containers and you can set it directly in Interface Builder:
+
+<img src="Documentation_Assests/image_1.png" alt="" style="width: 500px;"/>
+
+### 3. Complex Rendering with tag-based strings
+SwiftRichString allows you to render complex strings by parsing text's tags: each style will be identified by an unique name (used inside the tag) and you can create a `StyleGroup` which allows you to encapsulate all of them and reuse as you need (clearly you can register it globally).
+
+```swift
+// Create your own styles
+
+let normal = Style {
+	$0.font = SystemFonts.Helvetica_Light.font(size: 15)
+}
+		
+let bold = Style {
+	$0.font = SystemFonts.Helvetica_Bold.font(size: 20)
+	$0.color = UIColor.red
+	$0.backColor = UIColor.yellow
+}
+		
+let italic = normal.byAdding {
+	$0.traitVariants = .italic
+}
+
+// Create a group which contains your style, each identified by a tag.
+let myGroup = StyleGroup(base: normal, ["bold": bold, "italic": italic])
+		
+// Use tags in your plain string	
+let str = "Hello <bold>Daniele!</bold>. You're ready to <italic>play with us!</italic>"
+self.label?.attributedText = str.set(style: myGroup)
+```
+
+That's the result!
+
+<img src="Documentation_Assests/image_2.png" alt="" style="width: 300px;"/>
+
+-- 
+
+## Other Libraries You May Like
 
 I'm also working on several other projects you may like.
 Take a look below:
 
-<p align="center" >
 
 | Library         | Description                                      |
 |-----------------|--------------------------------------------------|
 | [**SwiftDate**](https://github.com/malcommac/SwiftDate)       | The best way to manage date/timezones in Swift   |
 | [**Hydra**](https://github.com/malcommac/Hydra)           | Write better async code: async/await & promises  |
-| [**Flow**](https://github.com/malcommac/Flow) | A new declarative approach to table managment. Forget datasource & delegates. |
+| [**FlowKit**](https://github.com/malcommac/FlowKit) | A new declarative approach to table/collection managment. Forget datasource & delegates. |
 | [**SwiftRichString**](https://github.com/malcommac/SwiftRichString) | Elegant & Painless NSAttributedString in Swift   |
 | [**SwiftLocation**](https://github.com/malcommac/SwiftLocation)   | Efficient location manager                       |
 | [**SwiftMsgPack**](https://github.com/malcommac/SwiftMsgPack)    | Fast/efficient msgPack encoder/decoder           |
 </p>
 
-On Medium
--------
+--
 
-I've just wrote an article which cover the basic concepts of SwiftRichString.
-You can found it on Medium at [Attributed String in Swift: the right way](https://medium.com/breakfastcode/attributed-strings-in-swift-6d4b37db59a5#.gwdgbjzot).
+## Documentation
 
-Documentation
--------
+**Are you using SwiftRichString 1.x in your project? Don't miss to take a look at [Migration section of the documentation](#migration).**
+You can still use the 1.x release by using tagged version 1.1.0.
 
-* **[Introduction](#introduction)**
-* **[Playground](#playground)**
-* **[Define your own `Style`](#definestyle)**
-* **[Apply style to a `String`](#applystyletostring)**
-* **[Apply style on substring with `Range`](#applystylerange)**
-* **[Apply style/s on substring with `NSRegularExpression`](#applystyleregexp)**
-* **[Apply Multiple Styles with a set of Regular Expressions](#multipleregexp)**
-* **[Combine `Strings` and `Attributed Strings`](#combinestrings)**
-* **[Create tagged strings](#createtagbased)**
-* **[Parse and render tag-based content](#rendertagbased)**
-* **[Available text attributes in `Style`](#attributes)**
-* **[API Documentation](#apidoc)**
+**Table Of Contents**
 
-Other Infos
--------
-* **[Installation (via CocoaPods, Carthage or Swift PM)](#installation)**
-* **[Credits & License](#credits)**
+Full changelog is available in [CHANGELOG.md](CHANGELOG.md) file.
 
-# Documentation
+- [Versions (1.x, 2.x and old Swift 3.x branch)](#versions)
+- [Introduction to `Style`, `StyleGroup` & `StyleRegEx`](#stylestylegroup)
+	- [Introduction](#introduction)
+	- [String & Attributed String concatenation](#concatenation)
+	- [Apply styles to `String` & `Attributed String`](#manualstyling)
+	- [Fonts & Colors in `Style`](#fontscolors)
+	- [Derivating a `Style`](#derivatingstyle)
+- [The `StyleManager`](#stylemanager)
+	- [Register globally available styles](#globalregister)
+	- [Defer style creation on demand](#defer)
+- [Assign style using Interface Builder](#ib)
+- [All properties of `Style`](#props)
 
-<a name="introduction" />
+Other info:
 
-## Introduction
+- [Migration from SwiftRichString 1.x](#migration)
+- [Requirements](#requirements)
+- [Installation](#installation)
+- [Contributing](#contributing)
+- [Copyright](#copyright)
 
-`SwiftRichString` integrate seamlessy into UIKit/AppKit by allowing you to manage, combine and apply styles directly on `NSMutableAttributedString` instances.
-This library define only two main entities:
+<a name="versions"/>
 
-* `Style` is the central point of `SwiftRichString`: this class allows you to create easily and safety a collection of styles (align, text color, ligature, font etc.).
-In fact the ideal use-case is to create your own set of styles for your app, then apply to your strings.
+### Versions
 
-* `MarkupString` allows you to load a string which is pretty like a web page where your content can contain styles enclosed between classic html-style tags (`ie. "<bold>Hello</bold> <nameStyle>\(username)</nameStyle>`). `MarkupString` will parse data for your by generating a valid `NSMutableAttributedString` along your choosed `Styles`.
+- **SwiftRichString 2.x branch (current)**. The latest version is [2.0.0](https://github.com/malcommac/SwiftRichString/releases/tag/2.0.0).
+- **SwiftRichString 1.x branch (supported)**. Use [1.1.0 tag](https://github.com/malcommac/SwiftRichString/releases/tag/1.1.0). Its compatible with Swift 4.x.
+- **Swift 3.x (no longer mantained)**. Use [0.9.1 release](https://github.com/malcommac/SwiftRichString/releases/tag/0.9.10).
 
-* Also there are several `NSMutableAttributedString` and `String` extensions allows you to play and combine strings and styles easily without introducing extra structures to your code and by mantaing readability.
+<a name="stylestylegroup"/>
 
-<a name="playground" />
+## Introduction to `Style`, `StyleGroup`, `StyleRegEx`
 
-## Latest Version
-Latest version of `SwiftRichString` is:
-* **Swift 4.x**: 1.1.0
-* **Swift 3.x**: Up to 0.9.10 release
+<a name="introduction"/>
 
-A complete list of changes for each release is available in the [CHANGELOG](https://github.com/malcommac/SwiftRichString/blob/master/CHANGELOG.md) file.
+### Introduction
 
-## Playground
+The main concept behind SwiftRichString is the use of `StyleProtocol` as generic container of the attributes you can apply to both `String` and `NSMutableAttributedString`.
+Concrete classes derivated by `StyleProtocol` are: `Style`, `StyleGroup` and `StyleRegEx`.
 
-If you want to play with SwiftRichString we have also made a small Playground.
-Take a look at `Playground.playground` file inside the `SwiftRichString.xcworkspace`.
+Each of these classes can be used as source for styles you can apply to a string, substring or attributed string.
 
-<a name="definestyle" />
 
-## Define your own `Style`
-`Style` is a class which define attributes you can apply to strings in a type-safe swifty way.
-Each style has a name and a set of attributes you can set.
+#### `Style`: apply style to strings or attributed strings
 
-Creating `Style` is pretty easy.
-In this example we create a style which set a particular font with given size and color.
+A `Style` is a class which encapsulate all the attributes you can apply to a string. The vast majority of the attributes of both AppKit/UIKit are currently available via type-safe properties by this class.
 
-```swift 
-let big = Style("italic", {
-  $0.font = FontAttribute(.CourierNewPS_ItalicMT, size: 25)
-  $0.color = UIColor.red
-})
-```
-
-## Default `Style`
-
-This is also a special style called `.default`.
-Default - if present - is applied automatically before any other style to the entire sender string.
-Other styles are applied in order just after it.
+Creating a `Style` instance is pretty simple; using a builder pattern approach the init class require a callback where the self instance is passed and allows you to configure your properties by keeping the code clean and readable:
 
 ```swift
-let def = Style.default {
-  $0.font = FontAttribute(.GillSans_Italic, size: 20)
+let style = Style {
+	$0.font = SystemFonts.Helvetica_Bold.font(size: 20)
+	$0.color = UIColor.green
+	// ... set any other attribute
+}
+
+let attrString = "Some text".set(style: style) // attributed string
+```
+
+#### `StyleGroup`: Apply styles for tag-based complex string
+
+`Style` instances are anonymous; if you want to use a style instance to render a tag-based plain string you need to include it inside a `StyleGroup`. You can consider a `StyleGroup` as a container of `Styles` (but, in fact, thanks to the conformance to a common `StyleProtocol`'s protocol your group may contains other sub-groups too).
+
+```swift
+let bodyStyle: Style = ...
+let h1Style: Style = ...
+let h2Style: Style = ...
+let group = StyleGroup(base: bodyStyle, ["h1": h1Style, "h2": h2Style])
+
+let attrString = "Some <h1>text</h1>, <h2>welcome here</h2>".set(style: group)
+```
+
+The following code defines a group where:
+
+- we have defined a base style. Base style is the style applied to the entire string and can be used to provide a base ground of styles you want to apply to the string.
+- we have defined two other styles named `h1` and `h2`; these styles are applied to the source string when parser encounter some text enclosed by these tags.
+
+
+#### `StyleRegEx`: Apply styles via regular expressions
+
+`StyleRegEx` allows you to define a style which is applied when certain regular expression is matched inside the target string/attributed string.
+
+```swift
+let emailPattern = "([A-Za-z0-9_\\-\\.\\+])+\\@([A-Za-z0-9_\\-\\.])+\\.([A-Za-z]+)"
+let style = StyleRegEx(pattern: emailPattern) {
+	$0.color = UIColor.red
+	$0.backColor = UIColor.yellow
+}
+		
+let attrString = "My email is hello@danielemargutti.com and my website is http://www.danielemargutti.com".(style: style!)
+```
+
+The result is this:
+
+<img src="Documentation_Assests/image_4.png" alt="" style="width: 400px;"/>
+
+<a name="concatenation"/>
+
+### String & Attributed String concatenation
+SwiftRichString allows you to simplify string concatenation by providing custom `+` operator between `String`,`AttributedString` (typealias of `NSMutableAttributedString`) and `Style`.
+
+This a an example:
+
+```swift
+let body: Style = Style { ... }
+let big: Style = Style { ... }
+let attributed: AttributedString = "hello ".set(style: body)
+
+// the following code produce an attributed string by
+// concatenating an attributed string and two plain string
+// (one styled and another plain).
+let attStr = attributed + "\(username)!".set(style:big) + ". You are welcome!"
+```
+
+You can also use `+` operator to add a style to a plain or attributed string:
+
+```swift
+// This produce an attributed string concatenating a plain
+// string with an attributed string created via + operator
+// between a plain string and a style
+let attStr = "Hello" + ("\(username)" + big)
+```
+
+<a name="manualstyling"/>
+
+### Apply styles to `String` & `Attributed String`
+
+Both `String` and `Attributed String` (aka `NSMutableAttributedString`) has a come convenience methods you can use to create an manipulate attributed text easily via code:
+
+#### Strings Instance Methods
+
+- `set(style: String, range: NSRange? = nil)`: apply a globally registered style to the string (or a substring) by producing an attributed string.
+- `set(styles: [String], range: NSRange? = nil)`: apply an ordered sequence of globally registered styles to the string (or a substring) by producing an attributed string.
+- `set(style: StyleProtocol, range: NSRange? = nil)`: apply an instance of `Style` or `StyleGroup` (to render tag-based text) to the string (or a substring) by producting an attributed string.
+- `set(styles: [StyleProtocol], range: NSRange? = nil)`: apply a sequence of `Style`/`StyleGroup` instance in order to produce a single attributes collection which will be applied to the string (or substring) to produce an attributed string.
+
+Some examples:
+
+```swift
+// apply a globally registered style named MyStyle to the entire string
+let a1: AttributedString = "Hello world".set(style: "MyStyle")
+
+// apply a style group to the entire string
+// commonStyle will be applied to the entire string as base style
+// styleH1 and styleH2 will be applied only for text inside that tags.
+let styleH1: Style = ...
+let styleH2: Style = ...
+let styleGroup = StyleGroup(base: commonStyle, ["h1" : styleH1, "h2" : styleH2])
+let a2: AttributedString = "Hello <h1>world</h1>, <h2>welcome here</h2>".set(style: styleGroup)
+
+// Apply a style defined via closure to a portion of the string
+let a3 = "Hello Guys!".set(Style({ $0.font = SystemFonts.Helvetica_Bold.font(size: 20) }), range: NSMakeRange(0,4))
+```
+
+#### AttributedString Instance Methods
+
+Similar methods are also available to attributed strings.
+
+There are three categories of methods:
+
+- `set` methods replace any existing attributes already set on target.
+- `add` add attributes defined by style/styles list to the target
+- `remove` remove attributes defined from the receiver string.
+
+Each of this method alter the receiver instance of the attributed string and also return the same instance in output (so chaining is allowed).
+
+**Add**
+
+- `add(style: String, range: NSRange? = nil)`: add to existing style of string/substring a globally registered style with given name.
+- `add(styles: [String], range: NSRange? = nil)`: add to the existing style of string/substring a style which is the sum of ordered sequences of globally registered styles with given names.
+- `add(style: StyleProtocol, range: NSRange? = nil)`: append passed style instance to string/substring by altering the receiver attributed string.
+- `add(styles: [StyleProtocol], range: NSRange? = nil)`: append passed styles ordered sequence to string/substring by altering the receiver attributed string.
+
+**Set**
+
+- `set(style: String, range: NSRange? = nil)`: replace any existing style inside string/substring with the attributes defined inside the globally registered style with given name.
+- `set(styles: [String], range: NSRange? = nil)`: replace any existing style inside string/substring with the attributes merge of the ordered sequences of globally registered style with given names.
+- `set(style: StyleProtocol, range: NSRange? = nil)`: replace any existing style inside string/substring with the attributes of the passed style instance.
+- `set(styles: [StyleProtocol], range: NSRange? = nil)`: replace any existing style inside string/substring with the attributes of the passed ordered sequence of styles.
+
+**Remove**
+
+- `removeAttributes(_ keys: [NSAttributedStringKey], range: NSRange)`: remove attributes specified by passed keys from string/substring.
+- `remove(_ style: StyleProtocol)`: remove attributes specified by the style from string/substring.
+
+Example:
+
+```swift
+let a = "hello".set(style: styleA)
+let b = "world!".set(style: styleB)
+let ab = (a + b).add(styles: [coupondStyleA,coupondStyleB]).remove([.foregroundColor,.font])
+```
+
+<a name="fontscolors"/>
+
+## Fonts & Colors in `Style`
+All colors and fonts you can set for a `Style` are wrapped by `FontConvertible` and `ColorConvertible` protocols.
+
+SwiftRichString obviously implements these protocols for `UIColor`/`NSColor`, `UIFont`/`NSFont` but also for `String`.
+For Fonts this mean you can assign a font by providing directly its PostScript name and it will be translated automatically to a valid instance:
+
+```swift
+let firaLight: UIFont = "FiraCode-Light".font(ofSize: 14)
+...
+...
+let style = Style {
+	$0.font = "Jura-Bold"
+	$0.size = 24
+	...
 }
 ```
 
-<a name="applystyletostring" />
-
-## Apply Style to `String`
-Styles can be applied directly to `String` instances (by generating `NSMutableAttributedString` automatically) or on existing `NSMutableAttributedString`.
-
-In this example we can combine simple `String` instances and apply your own set of styles:
+On UIKit you can also use the `SystemFonts` enum to pick from a type-safe auto-complete list of all available iOS fonts:
 
 ```swift
-// Define your own used styles
-let bold = Style("bold", {
-  $0.font = FontAttribute(.CourierNewPS_BoldItalicMT, size: 30) // font + size
-  $0.color = UIColor.red // text color 
-  $0.align = .center // align on center
-})
-
-let italic = Style("italic", {
-  $0.font = FontAttribute(.CourierNewPS_ItalicMT, size: 25)
-  $0.color = UIColor.green
-})
-
-let attributedString = ("Hello " + userName).set(style: bold) + "\nwelcome here".set(style: italic)
+let font1 = SystemFonts.Helvetica_Light.font(size: 15)
+let font2 = SystemFonts.Avenir_Black.font(size: 24)
 ```
 
-Will produce:
-
-![assets](https://raw.githubusercontent.com/malcommac/SwiftRichString/develop/assets/assets_1.png)
-
-<a name="applystylerange" />
-
-## Apply style on substring with `Range`
-You can also apply one or more styles to a substring by passing a valid range.
-In this example we want to apply bold style to the "Man!" substring.
+For Color this mean you can create valid color instance from HEX strings:
 
 ```swift
-let style_bold = Style("bold", {
-  $0.font = FontAttribute(.Futura_CondensedExtraBold, size: 20)
-})
-let renderText = "Hello Man! Welcome".set(style: style_bold, range: 6..<10)
+let color: UIColor = "#0433FF".color
+...
+...
+let style = Style {
+	$0.color = "#0433FF"
+	...
+}
 ```
 
-Will produce:
+Clearly you can still pass instances of both colors/fonts.
 
-![assets](https://raw.githubusercontent.com/malcommac/SwiftRichString/develop/assets/assets_3.png)
+<a name="derivatingstyle"/>
 
-<a name="applystyleregexp" />
+### Derivating a `Style`
 
-## Apply style/s on substring with `NSRegularExpression`
-Regular expressions are also supported; you can add your own style/s to matched strings.
-`SwiftRichString` has fully unicode support.
+Sometimes you may need to infer properties of a new style from an existing one. In this case you can use `byAdding()` function of `Style` to produce a new style with all the properties of the receiver and the chance to configure additional/replacing attributes.
 
 ```swift
-let sourceText = "👿🏅the winner"
-let attributedString = sourceText.set(styles: myStyle, pattern: "the winner", options: .caseInsensitive)
+let initialStyle = Style {
+	$0.font = SystemFonts.Helvetica_Light.font(size: 15)
+	$0.alignment = right
+}
 
-// another example
-let sourceText = "prefix12 aaa3 prefix45"
-let attributedText = sourceText.set(styles: myStyle, pattern: "fix([0-9])([0-9])", options: .caseInsensitive)
-```
+// The following style contains all the attributes of initialStyle
+// but also override the alignment and add a different foreground color.
+let subStyle = bold.byAdding {
+	$0.alignment = center
+	$0.color = UIColor.red
+}
+``` 
+<a name="stylemanager"/>
 
-Since 0.9.9 you can also use `renderTags` function of `String`:
+## The `StyleManager`
 
-```
-let taggedString = "<center>The quick brown fox</center>\njumps over the lazy dog is an <italic>English-language</italic> pangram—a phrase that contains <italic>all</italic> of the letters of the alphabet. It is <extreme><underline>commonly</underline></extreme> used for touch-typing practice."
-let attributed = taggedString.renderTags(withStyles: [tag_center,tag_italic,tag_extreme,tag_underline])
-```
+<a name="globalregister"/>
 
-Will produce:
+### Register globally available styles
+Styles can be created as you need or registered globally to be used once you need.
+This second approach is strongly suggested because allows you to theme your app as you need and also avoid duplication of the code.
 
-![assets](https://raw.githubusercontent.com/malcommac/SwiftRichString/develop/assets/assets_5.png)
+To register a `Style` or a `StyleGroup` globally you need to assign an unique identifier to it and call `register()` function via `Styles` shortcut (which is equal to call `StylesManager.shared`).
 
-![assets](https://raw.githubusercontent.com/malcommac/SwiftRichString/develop/assets/assets_4.png)
-
-<a name="multipleregexp" />
-
-## Apply Multiple Styles with a set of Regular Expressions
-
-Sometimes you may need to apply different `Style` by matching some regular expression rules.
-In this case you can use `.set(regExpStyles:default:)` function and define your own matcher; each matcher is a `RegExpPatternStyles` struct which matches a particular regexp and apply a set of `[Style]`.
-
-In the following example we have applied two regexp to colorize email (in red) and url (in blue).
-The entire string is set to a base style (`baseStyle`) before all regexp are evaluated.
+In order to keep your code type-safer you can use a non-instantiable struct to keep the name of your styles, then use it to register style:
 
 ```swift
-let regexp_url = "http?://([-\\w\\.]+)+(:\\d+)?(/([\\w/_\\.]*(\\?\\S+)?)?)?"
-let regexp_email = "([A-Za-z0-9_\\-\\.\\+])+\\@([A-Za-z0-9_\\-\\.])+\\.([A-Za-z]+)"
-
-let text_example = "My email is hello@danielemargutti.com and my website is http://www.danielemargutti.com"
-
-let rule_email = RegExpPatternStyles(pattern: regexp_email) {
-	$0.color = .red
-}!
-
-let rule_url = RegExpPatternStyles(pattern: regexp_url) {
-	$0.color = .blue
-}!
-
-let baseStyle = Style("base", {
-	$0.font = FontAttribute(.Georgia_Bold, size: 12)
-})
-
-var attributedString = text_example.set(regExpStyles: [rule_email, rule_url], default: baseStyle)
-```
-![assets](https://raw.githubusercontent.com/malcommac/SwiftRichString/develop/assets/assets_6.png)
-
-<a name="combinestrings" />
-
-## Combine Strings and Attributed Strings
-You can combine `String` and `NSMutableAttributedString` easily with `+` operator.
-
-For example:
-```swift
-let part1 = "Hello"
-let part2 = "Mario"
-let part3 = "Welcome here!"
-
-// You can combine simple String and `NSMutableAttributedString`
-// Resulting is an `NSMutableAttributedString` instance.
-let result = part1 + " " + part2.set(style: bold) + " " + part3
+// Define a struct with your styles names
+public struct StyleNames {
+	public static let body: String = "body"
+	public static let h1: String = "h1"
+	public static let h2: String = "h2"
+	
+	private init { }
+}
 ```
 
-You can avoid creating new instances of `NSMutableAttributedString` and change directly your instance:
+Then you can:
 
 ```swift
-let attributedText = "Welcome".set(style: bold)
-// Render a simple string with given style and happend it to the previous instance
-attributedText.append(string: " mario! ", style: bold)
+let bodyStyle: Style = ...
+Styles.register(StyleNames.body, bodyStyle)
 ```
 
-Is possible to append a `MarkupString` to an `NSMutableAttributedString` instance:
+Now you can use it everywhere inside the app; you can apply it to a text just using its name:
 
 ```swift
-let sourceURL = URL(fileURLWithPath: "...")
-let markUpObj = MarkupString(sourceURL, [bold,italic])!
-
-let finalAttributed = "Welcome!".set(style: bold)
-// Create an `NSMutableAttributedString` render from markUpObj and append it to the instance
-finalAttributed.append(markup: markUpObj)
+let text = "hello world".set(StyleNames.body)
 ```
-<a name="createtagbased" />
 
-## Create tagged strings
-Sometimes you may have a text you want to render with your own favorite application's styles, like HTML/CSS does with web page.
-With `SwiftRichString` it's really easy; add your favourite tags to your source string, create associated `Style` and apply them.
-Let me show an example:
+or you can assign `body` string to the `styledText` via Interface Builder designable property.
+
+<a name="defer"/>
+
+### Defer style creation on demand
+Sometimes you may need to return a particular style used only in small portion of your app; while you can still set it directly you can also defer its creation in `StylesManager`.
+
+By implementing `onDeferStyle()` callback you have an option to create a new style once required: you will receive the identifier of the style.
 
 ```swift
-// First of all we want to define all `Style` you want to use in your
-// source string.
-// Each style has its own name (any letter-based identifier) you should use in your source string
-let tStyle1 = Style("style1", {
-  $0.font = FontAttribute(.AvenirNextCondensed_Medium, size: 50)
-  $0.color = UIColor.red
-})
-
-let tStyle2 = Style("style2", {
-  $0.font = FontAttribute(.HelveticaNeue_LightItalic, size: 20)
-  $0.color = UIColor.green
-  $0.backColor = UIColor.yellow
-})
-		
-// Create and render text
-let text = "Hello <style1>\(userName)!</style1>, <style2>welcome here!</style2>"
-let renderedText = text.parse(tStyle1,tStyle2).text
+Styles.onDeferStyle = { name in
+			
+	if name == "MyStyle" {
+		let normal = Style {
+			$0.font = SystemFonts.Helvetica_Light.font(size: 15)
+		}
+				
+		let bold = Style {
+			$0.font = SystemFonts.Helvetica_Bold.font(size: 20)
+			$0.color = UIColor.red
+			$0.backColor = UIColor.yellow
+		}
+				
+		let italic = normal.byAdding {
+			$0.traitVariants = .italic
+		}
+				
+		return (StyleGroup(base: normal, ["bold": bold, "italic": italic]), true)
+	}
+			
+	return (nil,false)
+}
 ```
-<a name="rendertagfile" />
+The following code return a valid style for `myStyle` identifier and cache it; if you don't want to cache it just return `false` along with style instance.
 
-## Parse and render tag-based content
-`MarkupString` allows you to load an tags-based string (even from a file, a literals or content from url) and parse it by applying with your own styles.
+Now you can use your style to render, for example, a tag based text into an `UILabel`: just set the name of the style to use.
 
-Suppose you have this text:
+<img src="Documentation_Assests/image_3.png" alt="" style="width: 400px;"/>
 
-```html
-<center>The quick brown fox</center>\njumps over the lazy dogis an <italic>English-language</italic> pangram—a phrase that contains <italic>all</italic> of the letters of the alphabet. It is <extreme><bold>commonly</bold></extreme> used for touch-typing practice.
-```
+<a name="ib"/>
 
-This text defines following styles: `"center", "bold", "italic" and "extreme"`.
+## Assign style using Interface Builder
+SwiftRichString can be used also via Interface Builder.
 
-So, in order to render your text you may want create `Style` instances which represent these tags:
+- `UILabel`
+- `UITextView`
+- `UITextField`
+
+has three additional properties:
+
+- `styleName: String` (available via IB): you can set it to render the text already set via Interface Builder with a style registered globally before the parent view of the UI control is loaded.
+- `style: StyleProtocol`: you can set it to render the text of the control with an instance of style instance.
+- `styledText: String`: use this property, instead of `attributedText` to set a new text for the control and render it with already set style. You can continue to use `attributedText` and set the value using `.set()` functions of `String`/`AttributedString`.
+
+Assigned style can be a `Style`, `StyleGroup` or `StyleRegEx`:
+
+- if style is a `Style` the entire text of the control is set with the attributes defined by the style.
+- if style is a `StyleGroup` a base attribute is set (if `base` is valid) and other attributes are applied once each tag is found.
+- if style is a `StyleRegEx` a base attribute is set (if `base` is valid) and the attribute is applied only for matches of the specified pattern.
+
+Typically you will set the style of a label via `Style Name` (`styleName`) property in IB and update the content of the control by setting the `styledText`:
 
 ```swift
-let style_bold = Style("bold", {
-  $0.font = FontAttribute(.Futura_CondensedExtraBold, size: 15)
-})
-
-let style_center = Style("center", {
-  $0.font = FontAttribute(.Menlo_Regular, size: 15)
-  $0.align = .center
-})
-
-let style_italic = Style("italic", {
-  $0.font = FontAttribute(.HelveticaNeue_LightItalic, size: 15)
-  $0.color = UIColor.red
-})
-
-let style_exteme = Style("extreme", {
-  $0.font = FontAttribute(.TimesNewRomanPS_BoldItalicMT, size: 40)
-  $0.underline = UnderlineAttribute(color: UIColor.blue, style: NSUnderlineStyle.styleSingle)
-})
-
-let sourceTaggedString = "<center>The quick brown fox ..."
-let parser = MarkupString(source: sourceTaggedString, [style_center,style_italic,style_exteme,style_bold])!
-// Render attributes string
-// Result is parsed only upon requested, only first time (then it will be cached).
-let test_7 = parser.render(withStyles: [style_bold,style_center,style_italic,style_exteme])
+// use `styleName` set value to update a text with the style
+self.label?.styledText = "Another text to render" // text is rendered using specified `styleName` value.
 ```
 
-Will produce:
-
-![assets](https://raw.githubusercontent.com/malcommac/SwiftRichString/develop/assets/assets_2.png)
-
-Clearly you can load string also from file at specified `URL`:
+Otherwise you can set values manually:
 
 ```swift
-let sourceURL = URL(fileURLWithPath: "...")
-let renderedText = RichString(sourceURL, encoding: .utf8, [bold,italic])!.text
-```
-<a name="apidoc" />
-## API Documentation
+// manually set the an attributed string
+self.label?.attributedText = (self.label?.text ?? "").set(myStyle)
 
-### Create `NSMutableAttributedString` from `String`
-
-`func set(style: Style, range: Range<Int>? = nil) -> NSMutableAttributedString`
-Create an `NSMutableAttributedString` from a simple `String` instance by applying given `style` at specified range.
-If `range` is missing style will be applied to the entire string.
-
-`func set(styles: Style...) -> NSMutableAttributedString`
-Create an `NSMutableAttributedString` from a simple `String` instance by applying given `styles`.
-Styles are applied in sequence as passed; the only exception is the `.default` `Style` if present; in this case `.default` style is applied in first place.
-
-`func set(styles: Style..., pattern: String, options: NSRegularExpression.Options = .caseInsensitive) -> NSAttributedString`
-Create an `NSMutableAttributedString` from a simple `String` instance by applying given `styles` with specified regular expression pattern.
-Styles are applied in sequence as passed; the only exception is the `.default` `Style` if present; in this case `.default` style is applied in first place.
-
-### Manage `NSMutableAttributedString`
-
-`func append(string: String, style: Style)`
-Append a `String` instance to an existing `NSMutableAttributedString` by applying given `style`.
-
-`func append(markup string: MarkupString, styles: Style...)`
-Append a `MarkupString` instance to an existing `NSMutableAttributedString` by applying given `styles`.
-
-`func add(style: Style, range: Range<Int>? = nil) -> NSMutableAttributedString`
-Append attributes defined by `style` at given `range` of existing `NSMutableAttributedString`
-Return `self` for chain purpose.
-
-`func add(styles: Style...) -> NSMutableAttributedString`
-Append attributes defined by passed `styles` into current `NSMutableAttributedString`.
-Return `self` for chain purpose.
-
-`func set(style: Style, range: Range<Int>? = nil) -> NSMutableAttributedString`
-Replace any exiting attribute into given `range` with the one passed in `style`.
-Return `self` for chain purpose.
-
-`func set(styles: Style...) -> NSMutableAttributedString`
-Replace any existing attribute into current instance of the attributed string with styles passed.
-Styles are applied in sequence as passed; the only exception is the `.default` `Style` if present; in this case `.default` style is applied in first place.
-Return `self` for chain purpose.
-
-`func remove(style: Style, range: Range<Int>? = nil) -> NSMutableAttributedString`
-Remove attributes keys defined in passed `style` from the instance.
-
-### Combine `String` and `NSMutableAttributedString`
-
-Combine between simple `String` and `NSMutableAttributedString` is pretty straightforward using the Swift's standard `+` operator.
-Just an example:
-
-```swift
-var test_1 = "Hello".set(style: bold) + "\n" + "World!".set(style: highlighted)
-test_1.append(string: "\nHow old are you?", style: monospaced)
+// manually set the style via instance
+self.label?.style = myStyle
+self.label?.styledText = "Updated text"
 ```
 
-<a name="attributes" />
-## Available Text Attributes
+<a name="props"/>
 
-You can define your text attributes in type-safe Swift way.
-This is the list of attributes you can customize:
+## Properties available via `Style` class
+The following properties are available:
 
-<table border=0 cellpadding=0 cellspacing=0 width=1223 style='border-collapse:
- collapse;table-layout:fixed;width:917pt'>
- <col width=172 style='mso-width-source:userset;mso-width-alt:5504;width:129pt'>
- <col width=387 style='mso-width-source:userset;mso-width-alt:12373;width:290pt'>
- <col class=xl65 width=664 style='mso-width-source:userset;mso-width-alt:21248;
- width:498pt'>
- <tr height=21 style='height:16.0pt'>
-  <td height=21 width=172 style='height:16.0pt;width:129pt'>PROPERTY</td>
-  <td width=387 style='width:290pt'>DESCRIPTION</td>
-  <td class=xl65 width=664 style='width:498pt'>ATTRIBUTES</td>
- </tr>
- <tr height=64 style='height:48.0pt'>
-  <td height=64 style='height:48.0pt'>`.align`</td>
-  <td>Text alignment</td>
-  <td class=xl65 width=664 style='width:498pt'>Any value of
-  NSTextAlignment.<br>
-  <br>
-  Example = `$0.align = .center`</td>
- </tr>
- <tr height=64 style='height:48.0pt'>
-  <td height=64 style='height:48.0pt'>`.lineBreak`</td>
-  <td>The mode that should be used to break lines</td>
-  <td class=xl65 width=664 style='width:498pt'>Any value of
-  NSLineBreakMode.<br>
-  <br>
-  Example = `$0.lineBreak = .byWordWrapping`</td>
- </tr>
- <tr height=171 style='height:128.0pt'>
-  <td height=171 style='height:128.0pt'>`.paragraphSpacing`</td>
-  <td>The space after the end of the paragraph.</td>
-  <td class=xl65 width=664 style='width:498pt'>`Float`<br>
-  Example:<br>
-  * `$0.paragraphSpacing = 4`<br>
-  <br>
-  Space measured in pointsadded at the end of the paragraph to separate it
-  from the following paragraph.<br>
-  Always nonnegative. The space between paragraphs is determined by adding
-  the previous paragraph�s paragraphSpacing.</td>
- </tr>
- <tr height=192 style='height:144.0pt'>
-  <td height=192 style='height:144.0pt'>`.font`</td>
-  <td>Font &amp; Font size to apply</td>
-  <td class=xl65 width=664 style='width:498pt'>FontAttribute<br>
-  <br>
-  FontAttribute is an helper enum which allows you to define in type safe
-  Swift way font attributes.<br>
-  All system fonts are listed; you can however load a custom font from a
-  string (classic mode) or extended FontAttribute enum to add your own custom
-  font.<br>
-  <br>
-  Example:<br>
-  * `$0.font = FontAttribute(.CourierNewPS_BoldItalicMT, size: 30)` (from
-  enum)<br>
-  * `$0.font = FontAttribute(&quot;MyCustomFontFamilyName&quot;, size: 40`
-  (from raw string)</td>
- </tr>
- <tr height=107 style='height:80.0pt'>
-  <td height=107 style='height:80.0pt'>`.color`</td>
-  <td>Text color</td>
-  <td class=xl65 width=664 style='width:498pt'>Any valid UIColor instance.
-  `SwiftRichString` also accepts UIColor from HEX string (like
-  &quot;#FF4555&quot;)<br>
-  <br>
-  Example:<br>
-  * `$0.color = UIColor.red`<br>
-  * `$0.color = UIColor(hex: &quot;#FF4555&quot;)</td>
- </tr>
- <tr height=21 style='height:16.0pt'>
-  <td height=21 style='height:16.0pt'>`.backColor`</td>
-  <td>Background text color</td>
-  <td class=xl65 width=664 style='width:498pt'>Same of `.color`</td>
- </tr>
- <tr height=149 style='height:112.0pt'>
-  <td height=149 style='height:112.0pt'>`.stroke`</td>
-  <td>Stroke attributes of text</td>
-  <td class=xl65 width=664 style='width:498pt'>`StrokeAttribute`<br>
-  <br>
-  `StrokeAttribute` is an helper class which also allows you to define a
-  stroke's `.color` and `.width`.<br>
-  * `.color` (`UIColor`) color of the stroke;<span
-  style='mso-spacerun:yes'>&nbsp; </span>if not defined it is assumed to be the
-  same as the value of color; otherwise, it describes the outline color.<br>
-  * `.width` (`CGFloat`) Amount to change the stroke width and is specified as
-  a percentage of the font point size. Specify 0 (the default) for no
-  additional changes.</td>
- </tr>
- <tr height=128 style='height:96.0pt'>
-  <td height=128 style='height:96.0pt'>`.underline`</td>
-  <td>Underline attributes of text</td>
-  <td class=xl65 width=664 style='width:498pt'>`UnderlineAttribute`<br>
-  <br>
-  `UnderlineAttribute` is an helper struct which allows you to define `.color`
-  and `.style` of the underline attribute.<br>
-  * `.color` (`UIColor`) Underline color, if missing<span
-  style='mso-spacerun:yes'>&nbsp; </span>same as foreground color.<br>
-  * `.style` (`NSUnderlineStyle`) The style of the underline, by default is
-  `.styleNone`</td>
- </tr>
- <tr height=128 style='height:96.0pt'>
-  <td height=128 style='height:96.0pt'>`.strike`</td>
-  <td>Strike attributes of text</td>
-  <td class=xl65 width=664 style='width:498pt'>`StrikeAttribute`<br>
-  <br>
-  `StrikeAttribute` is an helper struct which allows you to define strike
-  attributes: `.color` and `.style`.<br>
-  * `.color` (`UIColor`) Underline color, if missing<span
-  style='mso-spacerun:yes'>&nbsp; </span>same as foreground color.<br>
-  * `.style` (`NSUnderlineStyle`) This value indicates whether the text is
-  underlined and corresponds to one of the constants described in
-  NSUnderlineStyle.</td>
- </tr>
- <tr height=213 style='height:160.0pt'>
-  <td height=213 style='height:160.0pt'>`.shadow`</td>
-  <td>Shadow attributes of text (only for macOS and iOS)</td>
-  <td class=xl65 width=664 style='width:498pt'>`ShadowAttribute`<br>
-  <br>
-  `ShadowAttribute` defines following properties:<br>
-  * `.offset` (`CGSize`) horizontal and vertical offset values, specified
-  using the width and height fields of the CGSize data type.<br>
-  * `.blurRadius` (`CGFloat`) This
-  property contains the blur radius, as measured in the default user coordinate
-  space. A value of 0 indicates no blur, while larger values produce
-  correspondingly larger blurring. This value must not be negative. The default
-  value is 0.<br>
-  * `.color` (`UIColor`) The default shadow color is black
-  with an alpha of 1/3. If you set this property to nil, the shadow is not
-  drawn.</td>
- </tr>
- <tr height=128 style='height:96.0pt'>
-  <td height=128 style='height:96.0pt'>`.firstLineheadIntent`</td>
-  <td>The indentation of the first line.</td>
-  <td class=xl65 width=664 style='width:498pt'>`Float`<br>
-  Example:<br>
-  * `$0.firstLineHeadIntent = 0.5`<br>
-  <br>
-  The distance (in points) from the leading margin of a text container to the
-  beginning of the paragraph�s first line.</td>
- </tr>
- <tr height=128 style='height:96.0pt'>
-  <td height=128 style='height:96.0pt'>`.headIndent`</td>
-  <td>The indentation of lines other than the first.</td>
-  <td class=xl65 width=664 style='width:498pt'>`Float`<br>
-  Example:<br>
-  * `$0.headIdent = 4`<br>
-  <br>
-  The distance (in points) from the leading margin of a text container to the
-  beginning of lines other than the first. This value is always nonnegative.</td>
- </tr>
- <tr height=149 style='height:112.0pt'>
-  <td height=149 style='height:112.0pt'>`.tailIndent`</td>
-  <td>The trailing indentation.</td>
-  <td class=xl65 width=664 style='width:498pt'>`Float`<br>
-  Example:<br>
-  * `$0.tailIndent = 2`<br>
-  <br>
-  If positive, this value is the distance from the leading margin (for
-  example, the left margin in left-to-right text).<br>
-  If 0 or negative, it�s the distance from the trailing margin.</td>
- </tr>
- <tr height=192 style='height:144.0pt'>
-  <td height=192 style='height:144.0pt'>`.maximumLineHeight`</td>
-  <td>Maximum line height.</td>
-  <td class=xl66 width=664 style='width:498pt'>`Float`<br>
-  Example:<br>
-  * `$0.maximumLineHeight = 2`<br>
-  <br>
-  This property contains the maximum height in points that any line in the
-  receiver will occupy, regardless of the font size or size ofany attached
-  graphic. This value is always nonnegative. The default value is 0. Glyphs and
-  graphics exceeding this height will overlap neighboring lines; however, a
-  maximum height of 0 implies no line height limit.<br>
-  Although this limit applies to the line itself, line spacing adds extra
-  space between adjacent lines.</td>
- </tr>
- <tr height=128 style='height:96.0pt'>
-  <td height=128 style='height:96.0pt'>`.minimumLineHeight`</td>
-  <td>Minimum line height.</td>
-  <td class=xl65 width=664 style='width:498pt'>`Float`<br>
-  Example:<br>
-  * `$0.minimumLineHeight = 2`<br>
-  <br>
-  This property contains the minimum height in points that any line in the
-  receiver will occupy, regardless of the font size or size of any attached
-  graphic. This value is always nonnegative</td>
- </tr>
- <tr height=149 style='height:112.0pt'>
-  <td height=149 style='height:112.0pt'>`.lineSpacing`</td>
-  <td>Distance in points between the bottom of one line fragmen<span
-  style='display:none'>t and the top of the next.</span></td>
-  <td class=xl65 width=664 style='width:498pt'>`Float`<br>
-  Example:<br>
-  * `$0.lineSpacing = 1`<br>
-  <br>
-  The distance in points between the bottom of one line fragment and the top
-  of the next.<br>
-  This value is always nonnegative. This value is included in the line
-  fragment heights in the layout manager.</td>
- </tr>
- <tr height=128 style='height:96.0pt'>
-  <td height=128 style='height:96.0pt'>`.paragraphSpacingBefore<span
-  style='display:none'>`</span></td>
-  <td>Distance between the paragraph�s top and the beginning o<span
-  style='display:none'>f its text content.</span></td>
-  <td class=xl65 width=664 style='width:498pt'>`Float`<br>
-  Example:<br>
-  * `$0.paragraphSpacingBefore = 1`<br>
-  <br>
-  The space (measured in points) between the paragraph�s top and the beginning
-  of its text content.<br>
-  The default value of this property is 0.0.</td>
- </tr>
- <tr height=149 style='height:112.0pt'>
-  <td height=149 style='height:112.0pt'>`.lineHeightMultiple`</td>
-  <td>Line height multiple.</td>
-  <td class=xl65 width=664 style='width:498pt'>`Float`<br>
-  Example:<br>
-  * `$0.lineHeightMultiple = 1`<br>
-  <br>
-  The natural line height of the receiver is multiplied by this factor (if
-  positive) before being constrained by minimum and maximum line height.<br>
-  The default value of this property
-  is 0.0.</td>
- </tr>
- <tr height=192 style='height:144.0pt'>
-  <td height=192 style='height:144.0pt'>`.hyphenationFactor`</td>
-  <td>Paragraph�s threshold for hyphenation.</td>
-  <td class=xl65 width=664 style='width:498pt'>`Float`<br>
-  Example:<br>
-  * `$0.hyphenationFactor = 1`<br>
-  <br>
-  Hyphenation is attempted when the ratio of the text width (as broken without
-  hyphenation) to the width of the line fragment is less than<br>
-  the hyphenation factor. When the paragraph�s
-  hyphenation factor is 0.0, the layout manager�s hyphenation factor is used
-  instead.<br>
-  When both are 0.0, hyphenation is disabled.</td>
- </tr>
-</table>
+| PROPERTY                      | TYPE                                  | DESCRIPTION                                                                                                                                | 
+|-------------------------------|---------------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------| 
+| size                          | `CGFloat`                               | font size in points                                                                                                                        | 
+| font                          | `FontConvertible`                       | font used in text                                                                                                                          | 
+| color                         | `ColorConvertible`                      | foreground color of the text                                                                                                               | 
+| backColor                     | `ColorConvertible`                      | background color of the text                                                                                                               | 
+| underline                     | `(NSUnderlineStyle?,ColorConvertible?)` | underline style and color (if color is nil foreground is used)                                                                             | 
+| strikethrough                 | `(NSUnderlineStyle?,ColorConvertible?)` | strikethrough style and color (if color is nil foreground is used)                                                                         | 
+| baselineOffset                | `Float`                                 | character’s offset from the baseline, in point                                                                                             | 
+| paragraph                     | `NSMutableParagraphStyle`               | paragraph attributes                                                                                                                       | 
+| lineSpacing                   | `CGFloat`                               | distance in points between the bottom of one line fragment and the top of the next                                                         | 
+| paragraphSpacingBefore        | `CGFloat`                               | distance between the paragraph’s top and the beginning of its text content                                                                 | 
+| paragraphSpacingAfter         | `CGFloat`                               | space (measured in points) added at the end of the paragraph                                                                               | 
+| alignment                     | `NSTextAlignment`                       | text alignment of the receiver                                                                                                             | 
+| firstLineHeadIndent           | `CGFloat`                               | distance (in points) from the leading margin of a text container to the beginning of the paragraph’s first line.                           | 
+| headIndent                    | `CGFloat`                               | The distance (in points) from the leading margin of a text container to the beginning of lines other than the first.                       | 
+| tailIndent                    | `CGFloat`                               | this value is the distance from the leading margin, If 0 or negative, it’s the distance from the trailing margin.                          | 
+| lineBreakMode                 | `LineBreak`                             | mode that should be used to break lines                                                                                                    | 
+| minimumLineHeight             | `CGFloat`                               | minimum height in points that any line in the receiver will occupy regardless of the font size or size of any attached graphic             | 
+| maximumLineHeight             | `CGFloat`                               | maximum height in points that any line in the receiver will occupy regardless of the font size or size of any attached graphic             | 
+| baseWritingDirection          | `NSWritingDirection`                    | initial writing direction used to determine the actual writing direction for text                                                          | 
+| lineHeightMultiple            | `CGFloat`                               | natural line height of the receiver is multiplied by this factor (if positive) before being constrained by minimum and maximum line height | 
+| hyphenationFactor             | `Float`                                 | threshold controlling when hyphenation is attempted                                                                                        | 
+| ligatures                     | `Ligatures`                             | Ligatures cause specific character combinations to be rendered using a single custom glyph that corresponds to those characters            | 
+| speaksPunctuation             | `Bool`                                  | Enable spoken of all punctuation in the text                                                                                               | 
+| speakingLanguage              | `String`                                | The language to use when speaking a string (value is a BCP 47 language code string).                                                       | 
+| speakingPitch                 | `Double`                                | Pitch to apply to spoken content                                                                                                           | 
+| speakingPronunciation         | `String`                                |                                                                                                                                            | 
+| shouldQueueSpeechAnnouncement | `Bool`                                  | Spoken text is queued behind, or interrupts, existing spoken content                                                                       | 
+| headingLevel                  | `HeadingLevel`                          | Specify the heading level of the text                                                                                                      | 
+| numberCase                    | `NumberCase`                            | "Configuration for the number case, also known as ""figure style"""                                                                        | 
+| numberSpacing                 | `NumberSpacing`                         | "Configuration for number spacing, also known as ""figure spacing"""                                                                       | 
+| fractions                     | `Fractions`                             | Configuration for displyaing a fraction                                                                                                    | 
+| superscript                   | `Bool`                                  | Superscript (superior) glpyh variants are used, as in footnotes_.                                                                          | 
+| `subscript`                   | `Bool`                                  | Subscript (inferior) glyph variants are used: v_.                                                                                          | 
+| ordinals                      | `Bool`                                  | Ordinal glyph variants are used, as in the common typesetting of 4th.                                                                      | 
+| scientificInferiors           | `Bool`                                  | Scientific inferior glyph variants are used: H_O                                                                                           | 
+| smallCaps                     | `Set<SmallCaps>`                       | Configure small caps behavior.                                                                                                             | 
+| stylisticAlternates           | `StylisticAlternates`                   | Different stylistic alternates available for customizing a font.                                                                           | 
+| contextualAlternates          | `ContextualAlternates`                  | Different contextual alternates available for customizing a font.                                                                          | 
+| kerning                       | `Kerning`                               | Tracking to apply.                                                                                                                         | 
+| traitVariants                 | `TraitVariant`                          | Describe trait variants to apply to the font                                                                                               | 
 
-<a name="installation" />
+<a name="migration"/>
 
-## Installation
-You can install Swiftline using CocoaPods, carthage and Swift package manager
+## Migration from 1.x
+SwiftRichString is a complete rewrite of the library. While some inner concept are the same, in order to keep the code cleaner and simpler I've made some important changes.
 
-* **Swift 4.x**: 1.1.0
-* **Swift 3.x**: Up to 0.9.10 release
+- A `StyleProtocol` is now a common entry point for every style definition; both `Style` and `StyleGroup` are conform to this protocol which is the central repository to make actions on text (in 1.x `String` and `AttributedString` act directly to parse text).
+- `Style` some properties of the class has a different (but quite equal) name, changed to better reflect the purpose of the attribute. Some attributes like `underline` or `striketought` are now tuple of elements instead of different properties.
+- `Style` are now anonymous; you don't need to assign a name to a style; only if you need to parse tag-based text you need to group used styles in a `StyleGroup` instance where you define the name/id of each tag.
+- There is not any `parseTag` function; just pass the `StyleGroup` as parameter to render a text and the tag-based parsing will be done automatically.
+- There is not any default style; `StyleGroup` implements a `base` style used to render common attributes of your text. You can also use `Styles` to register globally available `StyleProtocol` instances and use them in your app.
+- In order to simplify our APIs some init methods of `Style` are now removed. You should not miss them, but let me know via PR in case.
 
-### CocoaPods
-    use_frameworks!
-    pod 'SwiftRichString'
-
-### Carthage
-    github "malcommac/SwiftRichString"
-
-### Swift Package Manager
-Add swiftline as dependency in your `Package.swift`
-
-```
-  import PackageDescription
-
-  let package = Package(name: "YourPackage",
-    dependencies: [
-      .Package(url: "https://github.com/malcommac/SwiftRichString.git", majorVersion: 0),
-    ]
-  )
-```
-
-<a name="requirements" />
+<a name="requirements"/>
 
 ## Requirements
 
-Current version (0.9.9+) is compatible with:
+SwiftRichString is compatible with Swift 4.x.
+All Apple platforms are supported:
 
-* Swift 3.x and Swift 4.x
 * iOS 8.0+
-* tvOS 9.0+
-* macOS 10.10+
+* macOS 10.9+
 * watchOS 2.0+
+* tvOS 9.0+
 
-<a name="credits" />
+<a name="installation"/>
 
-## Credits & License
-SwiftRichString is owned and maintained by [Daniele Margutti](http://www.danielemargutti.com/).
+## Installation
 
-As open source creation any help is welcome!
+<a name="cocoapods" />
 
-The code of this library is licensed under MIT License; you can use it in commercial products without any limitation.
+### Install via CocoaPods
 
-The only requirement is to add a line in your Credits/About section with the text below:
+[CocoaPods](http://cocoapods.org) is a dependency manager for Objective-C, which automates and simplifies the process of using 3rd-party libraries like SwiftRichString in your projects. You can install it with the following command:
 
+```bash
+$ sudo gem install cocoapods
 ```
-This software uses open source SwiftRichString's library to manage rich attributed strings.
-Web: http://github.com/malcommac/SwiftRichString
-Created by Daniele Margutti and licensed under MIT License.
+
+> CocoaPods 1.0.1+ is required to build SwiftRichString.
+
+#### Install via Podfile
+
+To integrate SwiftRichString into your Xcode project using CocoaPods, specify it in your `Podfile`:
+
+```ruby
+source 'https://github.com/CocoaPods/Specs.git'
+platform :ios, '8.0'
+
+target 'TargetName' do
+use_frameworks!
+pod 'SwiftRichString'
+end
 ```
+
+Then, run the following command:
+
+```bash
+$ pod install
+```
+
+<a name="carthage" />
+
+### Carthage
+
+[Carthage](https://github.com/Carthage/Carthage) is a decentralized dependency manager that builds your dependencies and provides you with binary frameworks.
+
+You can install Carthage with [Homebrew](http://brew.sh/) using the following command:
+
+```bash
+$ brew update
+$ brew install carthage
+```
+
+To integrate SwiftRichString into your Xcode project using Carthage, specify it in your `Cartfile`:
+
+```ogdl
+github "malcommac/SwiftRichString"
+```
+
+Run `carthage` to build the framework and drag the built `SwiftRichString.framework` into your Xcode project.
+
+<a name="contributing" />
+
+## Contributing
+
+Issues and pull requests are welcome!
+Contributors are expected to abide by the [Contributor Covenant Code of Conduct](https://github.com/malcommac/SwiftRichString/blob/master/CONTRIBUTING.md).
+
+## Copyright
+
+SwiftRichString is available under the MIT license. See the LICENSE file for more info.
+
+Daniele Margutti: [hello@danielemargutti.com](mailto:hello@danielemargutti.com), [@danielemargutti](https://twitter.com/danielemargutti)
+
+

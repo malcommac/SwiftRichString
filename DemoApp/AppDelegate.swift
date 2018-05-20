@@ -2,8 +2,8 @@
 //  AppDelegate.swift
 //  DemoApp
 //
-//  Created by dan on 07/07/2017.
-//  Copyright © 2017 SwiftRichString. All rights reserved.
+//  Created by Daniele Margutti on 21/03/2018.
+//  Copyright © 2018 SwiftRichString. All rights reserved.
 //
 
 import UIKit
