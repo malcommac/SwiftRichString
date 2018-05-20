@@ -328,9 +328,7 @@ public class Style: StyleProtocol {
 
 	/// No overview available.
 	/// Note: available only from iOS 11, tvOS 11 and watchOS 4.
-	@available(tvOS 11.0, *)
-	@available(iOS 11.0, *)
-	@available(iOSApplicationExtension 11.0, *)
+	@available(iOS 11.0, tvOS 11.0, iOSApplicationExtension 11.0, watchOS 4, *)
 	public var speakingPronunciation: String? {
 		set { self.set(attribute: newValue, forKey: NSAttributedStringKey(UIAccessibilitySpeechAttributeIPANotation)) }
 		get { return self.get(attributeForKey: NSAttributedStringKey(UIAccessibilitySpeechAttributeIPANotation)) }
@@ -341,9 +339,7 @@ public class Style: StyleProtocol {
 	/// When the value is false, the announcement interrupts the existing speech.
 	///
 	/// The default behavior is to interrupt existing speech.
-	@available(iOS 11.0, *)
-	@available(tvOS 11.0, *)
-	@available(iOSApplicationExtension 11.0, *)
+	@available(iOS 11.0, tvOS 11.0, iOSApplicationExtension 11.0, watchOS 4, *)
 	public var shouldQueueSpeechAnnouncement: Bool? {
 		set {
 			let key = NSAttributedStringKey(UIAccessibilitySpeechAttributeQueueAnnouncement)
@@ -364,9 +360,7 @@ public class Style: StyleProtocol {
 	/// Specify the heading level of the text.
 	/// Value is a number in the range 0 to 6.
 	/// Use 0 to indicate the absence of a specific heading level and use other numbers to indicate the heading level.
-	@available(iOS 11.0, *)
-	@available(tvOS 11.0, *)
-	@available(iOSApplicationExtension 11.0, *)
+	@available(iOS 11.0, tvOS 11.0, iOSApplicationExtension 11.0, watchOS 4, *)
 	public var headingLevel: HeadingLevel? {
 		set {
 			let key = NSAttributedStringKey(UIAccessibilityTextAttributeHeadingLevel)
