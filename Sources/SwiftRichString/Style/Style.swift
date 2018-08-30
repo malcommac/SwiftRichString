@@ -59,7 +59,8 @@ public class Style: StyleProtocol {
 	//MARK: - PROPERTIES
 
 	/// Alter the size of the currently set font to the specified value (expressed in point)
-	public var size: CGFloat {
+	/// **Note**: in order to be used you must also set the `.font` attribute of the style.
+	public var size: CGFloat? {
 		set {
 			self.fontInfo.size = newValue
 			self.invalidateCache()
@@ -71,7 +72,7 @@ public class Style: StyleProtocol {
 	/// You can pass any `FontConvertible` conform object, it will be transformed to a valid `UIFont`/`NSFont``
 	/// and used by the style itself. Both `String`, `SystemFonts` and `UIFont`/`NSFont` are conform to this protocol yet
 	/// so you are able to pass a valid font as a string, from predefined list or directly as an instance.
-	public var font: FontConvertible {
+	public var font: FontConvertible? {
 		set {
 			self.fontInfo.font = newValue
 			if let f = newValue as? Font {
@@ -406,42 +407,49 @@ public class Style: StyleProtocol {
 	#if os(OSX) || os(iOS) || os(tvOS)
 	
 	///  Configuration for the number case, also known as "figure style".
+	/// **Note**: in order to be used you must also set the `.font`/`.size` attribute of the style.
 	public var numberCase: NumberCase? {
 		set { self.fontInfo.numberCase = newValue }
 		get { return self.fontInfo.numberCase }
 	}
 	
 	/// Configuration for number spacing, also known as "figure spacing".
+	/// **Note**: in order to be used you must also set the `.font`/`.size` attribute of the style.
 	public var numberSpacing: NumberSpacing? {
 		set { self.fontInfo.numberSpacing = newValue }
 		get { return self.fontInfo.numberSpacing }
 	}
 	
 	/// Configuration for displyaing a fraction.
+	/// **Note**: in order to be used you must also set the `.font`/`.size` attribute of the style.
 	public var fractions: Fractions? {
 		set { self.fontInfo.fractions = newValue }
 		get { return self.fontInfo.fractions }
 	}
 	
 	/// Superscript (superior) glpyh variants are used, as in footnotes¹.
+	/// **Note**: in order to be used you must also set the `.font`/`.size` attribute of the style.
 	public var superscript: Bool? {
 		set { self.fontInfo.superscript = newValue }
 		get { return self.fontInfo.superscript }
 	}
 	
 	/// Subscript (inferior) glyph variants are used: vₑ.
+	/// **Note**: in order to be used you must also set the `.font`/`.size` attribute of the style.
 	public var `subscript`: Bool? {
 		set { self.fontInfo.subscript = newValue }
 		get { return self.fontInfo.subscript }
 	}
 
 	/// Ordinal glyph variants are used, as in the common typesetting of 4th.
+	/// **Note**: in order to be used you must also set the `.font`/`.size` attribute of the style.
 	public var ordinals: Bool? {
 		set { self.fontInfo.ordinals = newValue }
 		get { return self.fontInfo.ordinals }
 	}
 	
 	/// Scientific inferior glyph variants are used: H₂O
+	/// **Note**: in order to be used you must also set the `.font`/`.size` attribute of the style.
 	public var scientificInferiors: Bool? {
 		set { self.fontInfo.scientificInferiors = newValue }
 		get { return self.fontInfo.scientificInferiors }
@@ -449,6 +457,7 @@ public class Style: StyleProtocol {
 	
 	/// Configure small caps behavior.
 	/// `fromUppercase` and `fromLowercase` can be combined: they are not mutually exclusive.
+	/// **Note**: in order to be used you must also set the `.font`/`.size` attribute of the style.
 	public var smallCaps: Set<SmallCaps> {
 		set { self.fontInfo.smallCaps = newValue }
 		get { return self.fontInfo.smallCaps }
@@ -461,6 +470,7 @@ public class Style: StyleProtocol {
 	///
 	/// For example, in Apple's San Francisco font, turn on alternate set "six" to
 	/// enable high-legibility alternates for ambiguous characters like: 0lI164.
+	/// **Note**: in order to be used you must also set the `.font`/`.size` attribute of the style.
 	public var stylisticAlternates: StylisticAlternates {
 		set { self.fontInfo.stylisticAlternates = newValue }
 		get { return self.fontInfo.stylisticAlternates }
@@ -468,18 +478,21 @@ public class Style: StyleProtocol {
 	
 	/// Different contextual alternates available for customizing a font.
 	/// Note: Not all fonts support all (or any) of these options.
+	/// **Note**: in order to be used you must also set the `.font`/`.size` attribute of the style.
 	public var contextualAlternates: ContextualAlternates {
 		set { self.fontInfo.contextualAlternates = newValue }
 		get { return self.fontInfo.contextualAlternates }
 	}
 	
 	/// Tracking to apply.
+	/// **Note**: in order to be used you must also set the `.font`/`.size` attribute of the style.
 	public var kerning: Kerning? {
 		set { self.fontInfo.kerning = newValue }
 		get { return self.fontInfo.kerning }
 	}
 	
 	/// Describe trait variants to apply to the font.
+	/// **Note**: in order to be used you must also set the `.font`/`.size` attribute of the style.
 	public var traitVariants: TraitVariant? {
 		set { self.fontInfo.traitVariants = newValue }
 		get { return self.fontInfo.traitVariants }
@@ -494,13 +507,13 @@ public class Style: StyleProtocol {
 	/// - Parameter handler: configuration handler callback.
 	public init(_ handler: StyleInitHandler? = nil) {
 		self.fontInfo.style = self
-		#if os(tvOS)
+		/*#if os(tvOS)
 		self.set(attribute: Font.systemFont(ofSize: TVOS_SYSTEMFONT_SIZE), forKey: .font)
 		#elseif os(watchOS)
 		self.set(attribute: Font.systemFont(ofSize: WATCHOS_SYSTEMFONT_SIZE), forKey: .font)
 		#else
 		self.set(attribute: Font.systemFont(ofSize: Font.systemFontSize), forKey: .font)
-		#endif
+		#endif*/
 		handler?(self)
 	}
 	

@@ -24,10 +24,10 @@ internal let WATCHOS_SYSTEMFONT_SIZE: CGFloat = 12.0
 internal struct FontInfo {
 	
 	/// Font object
-	var font: FontConvertible { didSet { self.style?.invalidateCache() } }
+	var font: FontConvertible? { didSet { self.style?.invalidateCache() } }
 	
 	/// Size of the font
-	var size: CGFloat { didSet { self.style?.invalidateCache() } }
+	var size: CGFloat? { didSet { self.style?.invalidateCache() } }
 	
 	#if os(OSX) || os(iOS) || os(tvOS)
 	
@@ -75,7 +75,9 @@ internal struct FontInfo {
 	
 	/// Initialize a new `FontInfo` instance with system font with system font size.
 	init() {
-		#if os(tvOS)
+		self.font = nil
+		self.size = nil
+		/*#if os(tvOS)
 		self.font = Font.systemFont(ofSize: TVOS_SYSTEMFONT_SIZE)
 		self.size = TVOS_SYSTEMFONT_SIZE
 		#elseif os(watchOS)
@@ -84,18 +86,22 @@ internal struct FontInfo {
 		#else
 		self.font = Font.systemFont(ofSize: Font.systemFontSize)
 		self.size = Font.systemFontSize
-		#endif
+		#endif*/
 	}
 	
 	/// Return a font with all attributes set.
 	///
 	/// - Parameter size: ignored. It will be overriden by `fontSize` property.
 	/// - Returns: instance of the font
+	
 	var attributes: [NSAttributedStringKey:Any] {
 		var finalAttributes: [NSAttributedStringKey:Any] = [:]
-		
+
 		// generate an initial font from passed FontConvertible instance
-		var finalFont = self.font.font(size: self.size)
+		guard let size = self.size, var finalFont = self.font?.font(size: size) else {
+			// All font specific attributes are ignored if no font is explicitly set for this style
+			return [:]
+		}
 		
 		// compose the attributes
 		#if os(iOS) || os(tvOS) || os(OSX)
@@ -112,7 +118,6 @@ internal struct FontInfo {
 		attributes += [self.contextualAlternates as FontInfoAttribute]
 		
 		finalFont = finalFont.withAttributes(attributes)
-		
 		
 		if let traitVariants = self.traitVariants { // manage emphasis
 			let descriptor = finalFont.fontDescriptor
