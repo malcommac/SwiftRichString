@@ -113,6 +113,29 @@ public class Style: StyleProtocol {
 		}
 	}
 	
+	/// Define stroke attributes
+	/// Value must be a tuple which defines the color of the line and the width.
+	///
+	/// If `color` it is not defined it is assumed to be the same as the value of color;
+	/// otherwise, it describes the outline color.
+	///
+	/// The `width` value represents the amount to change the stroke width and is specified as a percentage
+	/// of the font point size. Specify 0 (the default) for no additional changes.
+	/// Specify positive values to change the stroke width alone.
+	/// Specify negative values to stroke and fill the text. For example, a typical value for
+	/// outlined text would be 3.0.
+	public var stroke: (color: ColorConvertible?, width: Float?)? {
+		set {
+			self.set(attribute: newValue?.color?.color, forKey: .strokeColor)
+			self.set(attribute: NSNumber.from(float: newValue?.width), forKey: .strokeWidth)
+		}
+		get {
+			let color: Color? = self.get(attributeForKey: .strokeColor)
+			let width: NSNumber? = self.get(attributeForKey: .strokeWidth)
+			return (color,width?.floatValue)
+		}
+	}
+	
 	/// This value indicates whether the text has a line through it.
 	/// Value must be a tuple which define the style of the line (as `NSUnderlineStyle`)
 	/// and the optional color of the line (if `nil`, foreground color is used instead).
