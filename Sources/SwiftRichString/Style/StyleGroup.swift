@@ -210,9 +210,9 @@ public class StyleGroup: StyleProtocol {
 				}
 			}
 			
-			func removeTag(index: Int) {
+			func removeTag(index: Int, with str: String = "") {
 				let tag = tagQueue[index]
-				attrStr.replaceCharacters(in: tag.range, with: NSAttributedString())
+				attrStr.replaceCharacters(in: tag.range, with: NSAttributedString(string: str))
 				let nextIndex = index+1
 				if nextIndex < tagQueue.count {
 					for tIndex in nextIndex..<tagQueue.count {
@@ -225,6 +225,10 @@ public class StyleGroup: StyleProtocol {
 			for index in 0..<tagQueue.count {
 				let tag = tagQueue[index]
 				if tag.isOpeningTag {
+					guard tag.name != "br" else {
+						removeTag(index: index, with: "\n")
+						continue
+					}
 					guard let attribute = self.styles[tag.name] else { continue }
 					
 					removeTag(index: index)
