@@ -487,6 +487,7 @@ The following properties are available:
 | font                          | `FontConvertible`                       | font used in text                                                                                                                          | 
 | color                         | `ColorConvertible`                      | foreground color of the text                                                                                                               | 
 | backColor                     | `ColorConvertible`                      | background color of the text                                                                                                               | 
+| shadow                     | `NSShadow`                      | shadow effect of the text                                                                                                             | 
 | underline                     | `(NSUnderlineStyle?,ColorConvertible?)` | underline style and color (if color is nil foreground is used)                                                                             | 
 | strikethrough                 | `(NSUnderlineStyle?,ColorConvertible?)` | strikethrough style and color (if color is nil foreground is used)                                                                         | 
 | baselineOffset                | `Float`                                 | character’s offset from the baseline, in point                                                                                             | 
