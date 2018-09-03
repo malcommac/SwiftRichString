@@ -422,6 +422,13 @@ public class Style: StyleProtocol {
 	
 	#endif
 	
+	/// The value of this attribute is an NSURL object (preferred) or an NSString object.
+	/// The default value of this property is nil, indicating no link.
+	public var linkURL: URL? {
+		set { self.set(attribute: newValue, forKey: .link) }
+		get { return self.get(attributeForKey: .link) }
+	}
+	
 	#if os(OSX) || os(iOS) || os(tvOS)
 	
 	///  Configuration for the number case, also known as "figure style".
