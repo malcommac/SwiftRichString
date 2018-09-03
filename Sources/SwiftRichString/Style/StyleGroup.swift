@@ -38,6 +38,9 @@ import UIKit
 /// `StyleGroup` is a container for named `Style` instances.
 /// You need of it to render a text using html-style tags.
 public class StyleGroup: StyleProtocol {
+	
+	/// Does not return anything for groups.
+	public var fontData: FontData? = nil
 
 	/// TagAttribute represent a single tag in a source string after the text is parsed.
 	private class TagAttribute {

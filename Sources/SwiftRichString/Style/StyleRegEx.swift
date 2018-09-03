@@ -55,6 +55,11 @@ public class StyleRegEx: StyleProtocol {
 		return self.style.attributes
 	}
 	
+	/// Font attributes
+	public var fontData: FontData? {
+		return self.style.fontData
+	}
+	
 	//MARK: - INIT
 	
 	/// Initialize a new regular expression style matcher.
