@@ -334,7 +334,7 @@ public class Style: StyleProtocol {
 	/// The value of this attribute is an `NSShadow` object. The default value of this property is nil.
 	public var shadow: NSShadow? {
 		set {
-			self.set(attribute: shadow, forKey: .shadow)
+			self.set(attribute: newValue, forKey: .shadow)
 		}
 		get {
 			return self.get(attributeForKey: .shadow)
