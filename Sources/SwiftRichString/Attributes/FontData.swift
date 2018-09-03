@@ -91,12 +91,19 @@ public class FontData {
 		#endif*/
 	}
 	
+	/// Has font explicit value for font name or size
+	var explicitFont: Bool {
+		return (self.font != nil || self.size != nil)
+	}
 	
 	/// Return a font with all attributes set.
 	///
 	/// - Parameter size: ignored. It will be overriden by `fontSize` property.
 	/// - Returns: instance of the font
 	var attributes: [NSAttributedStringKey:Any] {
+		guard !self.explicitFont else {
+			return [:]
+		}
 		return attributes(currentFont: self.font, size: self.size)
 	}
 	
@@ -111,8 +118,7 @@ public class FontData {
 	internal func addAttributes(to source: AttributedString, range: NSRange?) {
 		// This method does nothing if a fixed value for font attributes is set.
 		// This becuause font attributes will be set along with the remaining attributes from `.attributes` dictionary.
-		let fixedFont = (self.font != nil || self.size != nil)
-		guard fixedFont else {
+		guard self.explicitFont else {
 			return
 		}
 		

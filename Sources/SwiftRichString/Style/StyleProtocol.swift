@@ -51,7 +51,7 @@ public extension StyleProtocol {
 	func set(to source: String, range: NSRange?) -> AttributedString {
 		let attributedText = NSMutableAttributedString(string: source)
 		self.fontData?.addAttributes(to: attributedText, range: nil)
-		attributedText.setAttributes(self.attributes, range: (range ?? NSMakeRange(0, source.count)))
+		attributedText.addAttributes(self.attributes, range: (range ?? NSMakeRange(0, source.count)))
 		return attributedText
 	}
 	
@@ -63,7 +63,7 @@ public extension StyleProtocol {
 	
 	func set(to source: AttributedString, range: NSRange?) -> AttributedString {
 		self.fontData?.addAttributes(to: source, range: range)
-		source.setAttributes(self.attributes, range: (range ?? NSMakeRange(0, source.length)))
+		source.addAttributes(self.attributes, range: (range ?? NSMakeRange(0, source.length)))
 		return source
 	}
 	

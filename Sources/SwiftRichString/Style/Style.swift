@@ -128,7 +128,7 @@ public class Style: StyleProtocol {
 	/// of the font point size. Specify 0 (the default) for no additional changes.
 	/// Specify positive values to change the stroke width alone.
 	/// Specify negative values to stroke and fill the text. For example, a typical value for
-	/// outlined text would be 3.0.
+	/// outlined text would be -3.0.
 	public var stroke: (color: ColorConvertible?, width: Float?)? {
 		set {
 			self.set(attribute: newValue?.color?.color, forKey: .strokeColor)
@@ -602,7 +602,8 @@ public class Style: StyleProtocol {
 		}
 		// generate font from `fontInfo` attributes collection, then merge it with the inner attributes of the
 		// string to generate a single attributes dictionary for `NSAttributedString`.
-		self.cachedAttributes = self.innerAttributes.merging(self.fontData?.attributes ?? [:]) { (_, new) in return new }
+		let fontAttributes = self.fontData?.attributes ?? [:]
+		self.cachedAttributes = self.innerAttributes.merging(fontAttributes) { (_, new) in return new }
 		return self.cachedAttributes!
 	}
 	
