@@ -46,7 +46,7 @@ public class Style: StyleProtocol {
 	/// Contains font description and size along with all other additional
 	/// attributes to render the text. You should not need to modify this object;
 	/// configurable attributes are exposed at `Style` level.
-	private var fontInfo: FontInfo = FontInfo()
+	public var fontData: FontData? = FontData()
 	
 	/// Attributes defined by the style. This is the dictionary modified when you
 	/// set a style attributed.
@@ -59,27 +59,32 @@ public class Style: StyleProtocol {
 	//MARK: - PROPERTIES
 
 	/// Alter the size of the currently set font to the specified value (expressed in point)
-	public var size: CGFloat {
+	/// **Note**: in order to be used you must also set the `.font` attribute of the style.
+	public var size: CGFloat? {
 		set {
-			self.fontInfo.size = newValue
+			self.fontData?.size = newValue
 			self.invalidateCache()
 		}
-		get { return self.fontInfo.size }
+		get {
+			return self.fontData?.size
+		}
 	}
 	
 	/// Set the font of the style.
 	/// You can pass any `FontConvertible` conform object, it will be transformed to a valid `UIFont`/`NSFont``
 	/// and used by the style itself. Both `String`, `SystemFonts` and `UIFont`/`NSFont` are conform to this protocol yet
 	/// so you are able to pass a valid font as a string, from predefined list or directly as an instance.
-	public var font: FontConvertible {
+	public var font: FontConvertible? {
 		set {
-			self.fontInfo.font = newValue
+			self.fontData?.font = newValue
 			if let f = newValue as? Font {
-				self.fontInfo.size = f.pointSize
+				self.fontData?.size = f.pointSize
 			}
 			self.invalidateCache()
 		}
-		get { return self.fontInfo.font }
+		get {
+			return self.fontData?.font
+		}
 	}
 
 	/// Set the text color of the style.
@@ -110,6 +115,29 @@ public class Style: StyleProtocol {
 			let style: NSNumber? = self.get(attributeForKey: .underlineStyle)
 			let color: Color? = self.get(attributeForKey: .underlineColor)
 			return (style?.toUnderlineStyle(),color)
+		}
+	}
+	
+	/// Define stroke attributes
+	/// Value must be a tuple which defines the color of the line and the width.
+	///
+	/// If `color` it is not defined it is assumed to be the same as the value of color;
+	/// otherwise, it describes the outline color.
+	///
+	/// The `width` value represents the amount to change the stroke width and is specified as a percentage
+	/// of the font point size. Specify 0 (the default) for no additional changes.
+	/// Specify positive values to change the stroke width alone.
+	/// Specify negative values to stroke and fill the text. For example, a typical value for
+	/// outlined text would be -3.0.
+	public var stroke: (color: ColorConvertible?, width: Float?)? {
+		set {
+			self.set(attribute: newValue?.color?.color, forKey: .strokeColor)
+			self.set(attribute: NSNumber.from(float: newValue?.width), forKey: .strokeWidth)
+		}
+		get {
+			let color: Color? = self.get(attributeForKey: .strokeColor)
+			let width: NSNumber? = self.get(attributeForKey: .strokeWidth)
+			return (color,width?.floatValue)
 		}
 	}
 	
@@ -301,6 +329,20 @@ public class Style: StyleProtocol {
 		}
 	}
 	
+	#if os(iOS) || os(tvOS) || os(macOS)
+
+	/// The value of this attribute is an `NSShadow` object. The default value of this property is nil.
+	public var shadow: NSShadow? {
+		set {
+			self.set(attribute: newValue, forKey: .shadow)
+		}
+		get {
+			return self.get(attributeForKey: .shadow)
+		}
+	}
+
+	#endif
+	
 	#if os(iOS) || os(tvOS) || os(watchOS)
 	
 	/// Enable spoken of all punctuation in the text.
@@ -380,55 +422,70 @@ public class Style: StyleProtocol {
 	
 	#endif
 	
+	/// The value of this attribute is an NSURL object (preferred) or an NSString object.
+	/// The default value of this property is nil, indicating no link.
+	public var linkURL: URL? {
+		set { self.set(attribute: newValue, forKey: .link) }
+		get { return self.get(attributeForKey: .link) }
+	}
+	
 	#if os(OSX) || os(iOS) || os(tvOS)
 	
 	///  Configuration for the number case, also known as "figure style".
+	/// **Note**: in order to be used you must also set the `.font`/`.size` attribute of the style.
 	public var numberCase: NumberCase? {
-		set { self.fontInfo.numberCase = newValue }
-		get { return self.fontInfo.numberCase }
+		set { self.fontData?.numberCase = newValue }
+		get { return self.fontData?.numberCase }
 	}
 	
 	/// Configuration for number spacing, also known as "figure spacing".
+	/// **Note**: in order to be used you must also set the `.font`/`.size` attribute of the style.
 	public var numberSpacing: NumberSpacing? {
-		set { self.fontInfo.numberSpacing = newValue }
-		get { return self.fontInfo.numberSpacing }
+		set { self.fontData?.numberSpacing = newValue }
+		get { return self.fontData?.numberSpacing }
 	}
 	
 	/// Configuration for displyaing a fraction.
+	/// **Note**: in order to be used you must also set the `.font`/`.size` attribute of the style.
 	public var fractions: Fractions? {
-		set { self.fontInfo.fractions = newValue }
-		get { return self.fontInfo.fractions }
+		set { self.fontData?.fractions = newValue }
+		get { return self.fontData?.fractions }
 	}
 	
 	/// Superscript (superior) glpyh variants are used, as in footnotes¹.
+	/// **Note**: in order to be used you must also set the `.font`/`.size` attribute of the style.
 	public var superscript: Bool? {
-		set { self.fontInfo.superscript = newValue }
-		get { return self.fontInfo.superscript }
+		set { self.fontData?.superscript = newValue }
+		get { return self.fontData?.superscript }
 	}
 	
 	/// Subscript (inferior) glyph variants are used: vₑ.
+	/// **Note**: in order to be used you must also set the `.font`/`.size` attribute of the style.
 	public var `subscript`: Bool? {
-		set { self.fontInfo.subscript = newValue }
-		get { return self.fontInfo.subscript }
+		set { self.fontData?.subscript = newValue }
+		get { return self.fontData?.subscript }
 	}
 
 	/// Ordinal glyph variants are used, as in the common typesetting of 4th.
+	/// **Note**: in order to be used you must also set the `.font`/`.size` attribute of the style.
 	public var ordinals: Bool? {
-		set { self.fontInfo.ordinals = newValue }
-		get { return self.fontInfo.ordinals }
+		set { self.fontData?.ordinals = newValue }
+		get { return self.fontData?.ordinals }
 	}
 	
 	/// Scientific inferior glyph variants are used: H₂O
+	/// **Note**: in order to be used you must also set the `.font`/`.size` attribute of the style.
 	public var scientificInferiors: Bool? {
-		set { self.fontInfo.scientificInferiors = newValue }
-		get { return self.fontInfo.scientificInferiors }
+		set { self.fontData?.scientificInferiors = newValue }
+		get { return self.fontData?.scientificInferiors }
 	}
 	
 	/// Configure small caps behavior.
 	/// `fromUppercase` and `fromLowercase` can be combined: they are not mutually exclusive.
+	/// **Note**: in order to be used you must also set the `.font`/`.size` attribute of the style.
 	public var smallCaps: Set<SmallCaps> {
-		set { self.fontInfo.smallCaps = newValue }
-		get { return self.fontInfo.smallCaps }
+		set { self.fontData?.smallCaps = newValue }
+		get { return self.fontData?.smallCaps ?? Set() }
 	}
 
 	/// Different stylistic alternates available for customizing a font.
@@ -438,28 +495,32 @@ public class Style: StyleProtocol {
 	///
 	/// For example, in Apple's San Francisco font, turn on alternate set "six" to
 	/// enable high-legibility alternates for ambiguous characters like: 0lI164.
+	/// **Note**: in order to be used you must also set the `.font`/`.size` attribute of the style.
 	public var stylisticAlternates: StylisticAlternates {
-		set { self.fontInfo.stylisticAlternates = newValue }
-		get { return self.fontInfo.stylisticAlternates }
+		set { self.fontData?.stylisticAlternates = newValue }
+		get { return self.fontData?.stylisticAlternates ?? StylisticAlternates() }
 	}
 	
 	/// Different contextual alternates available for customizing a font.
 	/// Note: Not all fonts support all (or any) of these options.
+	/// **Note**: in order to be used you must also set the `.font`/`.size` attribute of the style.
 	public var contextualAlternates: ContextualAlternates {
-		set { self.fontInfo.contextualAlternates = newValue }
-		get { return self.fontInfo.contextualAlternates }
+		set { self.fontData?.contextualAlternates = newValue }
+		get { return self.fontData?.contextualAlternates ?? ContextualAlternates() }
 	}
 	
 	/// Tracking to apply.
+	/// **Note**: in order to be used you must also set the `.font`/`.size` attribute of the style.
 	public var kerning: Kerning? {
-		set { self.fontInfo.kerning = newValue }
-		get { return self.fontInfo.kerning }
+		set { self.fontData?.kerning = newValue }
+		get { return self.fontData?.kerning }
 	}
 	
 	/// Describe trait variants to apply to the font.
+	/// **Note**: in order to be used you must also set the `.font`/`.size` attribute of the style.
 	public var traitVariants: TraitVariant? {
-		set { self.fontInfo.traitVariants = newValue }
-		get { return self.fontInfo.traitVariants }
+		set { self.fontData?.traitVariants = newValue }
+		get { return self.fontData?.traitVariants }
 	}
 
 	#endif
@@ -470,14 +531,14 @@ public class Style: StyleProtocol {
 	///
 	/// - Parameter handler: configuration handler callback.
 	public init(_ handler: StyleInitHandler? = nil) {
-		self.fontInfo.style = self
-		#if os(tvOS)
+		self.fontData?.style = self
+		/*#if os(tvOS)
 		self.set(attribute: Font.systemFont(ofSize: TVOS_SYSTEMFONT_SIZE), forKey: .font)
 		#elseif os(watchOS)
 		self.set(attribute: Font.systemFont(ofSize: WATCHOS_SYSTEMFONT_SIZE), forKey: .font)
 		#else
 		self.set(attribute: Font.systemFont(ofSize: Font.systemFontSize), forKey: .font)
-		#endif
+		#endif*/
 		handler?(self)
 	}
 	
@@ -486,10 +547,10 @@ public class Style: StyleProtocol {
 	///
 	/// - Parameter dictionary: dictionary to set
 	public init(dictionary: [NSAttributedStringKey: Any]?) {
-		self.fontInfo.style = self
+		self.fontData?.style = self
 		if let font = dictionary?[.font] as? Font {
-			self.fontInfo.font = font
-			self.fontInfo.size = font.pointSize
+			self.fontData?.font = font
+			self.fontData?.size = font.pointSize
 		}
 		self.innerAttributes = (dictionary ?? [:])
 	}
@@ -498,9 +559,9 @@ public class Style: StyleProtocol {
 	///
 	/// - Parameter style: style to clone
 	public init(style: Style) {
-		self.fontInfo.style = self
+		self.fontData?.style = self
 		self.innerAttributes = style.innerAttributes
-		self.fontInfo = style.fontInfo
+		self.fontData = style.fontData
 	}
 	
 	//MARK: - INTERNAL METHODS
@@ -541,7 +602,8 @@ public class Style: StyleProtocol {
 		}
 		// generate font from `fontInfo` attributes collection, then merge it with the inner attributes of the
 		// string to generate a single attributes dictionary for `NSAttributedString`.
-		self.cachedAttributes = self.innerAttributes.merging(self.fontInfo.attributes) { (_, new) in return new }
+		let fontAttributes = self.fontData?.attributes ?? [:]
+		self.cachedAttributes = self.innerAttributes.merging(fontAttributes) { (_, new) in return new }
 		return self.cachedAttributes!
 	}
 	

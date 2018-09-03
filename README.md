@@ -133,7 +133,7 @@ Other info:
 
 ### Versions
 
-- **SwiftRichString 2.x branch (current)**. The latest version is [2.0.1](https://github.com/malcommac/SwiftRichString/releases/tag/2.0.1).
+- **SwiftRichString 2.x branch (current)**. The latest version is [2.0.2](https://github.com/malcommac/SwiftRichString/releases/tag/2.0.2).
 - **SwiftRichString 1.x branch (supported)**. Use [1.1.0 tag](https://github.com/malcommac/SwiftRichString/releases/tag/1.1.0). Its compatible with Swift 4.x.
 - **Swift 3.x (no longer mantained)**. Use [0.9.1 release](https://github.com/malcommac/SwiftRichString/releases/tag/0.9.10).
 
@@ -487,6 +487,7 @@ The following properties are available:
 | font                          | `FontConvertible`                       | font used in text                                                                                                                          | 
 | color                         | `ColorConvertible`                      | foreground color of the text                                                                                                               | 
 | backColor                     | `ColorConvertible`                      | background color of the text                                                                                                               | 
+| shadow                     | `NSShadow`                      | shadow effect of the text                                                                                                             | 
 | underline                     | `(NSUnderlineStyle?,ColorConvertible?)` | underline style and color (if color is nil foreground is used)                                                                             | 
 | strikethrough                 | `(NSUnderlineStyle?,ColorConvertible?)` | strikethrough style and color (if color is nil foreground is used)                                                                         | 
 | baselineOffset                | `Float`                                 | character’s offset from the baseline, in point                                                                                             | 

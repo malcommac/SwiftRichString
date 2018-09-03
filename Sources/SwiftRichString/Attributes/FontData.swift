@@ -21,13 +21,15 @@ internal let WATCHOS_SYSTEMFONT_SIZE: CGFloat = 12.0
 /// User don't interact with this object directly but via `Style`'s properties.
 /// Using the `attributes` property this object return a valid instance of the attributes to describe
 /// required behaviour.
-internal struct FontInfo {
+public class FontData {
+	
+	private static var DefaultFont = Font.systemFont(ofSize: 12.0)
 	
 	/// Font object
-	var font: FontConvertible { didSet { self.style?.invalidateCache() } }
+	var font: FontConvertible? { didSet { self.style?.invalidateCache() } }
 	
 	/// Size of the font
-	var size: CGFloat { didSet { self.style?.invalidateCache() } }
+	var size: CGFloat? { didSet { self.style?.invalidateCache() } }
 	
 	#if os(OSX) || os(iOS) || os(tvOS)
 	
@@ -75,7 +77,9 @@ internal struct FontInfo {
 	
 	/// Initialize a new `FontInfo` instance with system font with system font size.
 	init() {
-		#if os(tvOS)
+		self.font = nil
+		self.size = nil
+		/*#if os(tvOS)
 		self.font = Font.systemFont(ofSize: TVOS_SYSTEMFONT_SIZE)
 		self.size = TVOS_SYSTEMFONT_SIZE
 		#elseif os(watchOS)
@@ -84,7 +88,12 @@ internal struct FontInfo {
 		#else
 		self.font = Font.systemFont(ofSize: Font.systemFontSize)
 		self.size = Font.systemFontSize
-		#endif
+		#endif*/
+	}
+	
+	/// Has font explicit value for font name or size
+	var explicitFont: Bool {
+		return (self.font != nil || self.size != nil)
 	}
 	
 	/// Return a font with all attributes set.
@@ -92,10 +101,50 @@ internal struct FontInfo {
 	/// - Parameter size: ignored. It will be overriden by `fontSize` property.
 	/// - Returns: instance of the font
 	var attributes: [NSAttributedStringKey:Any] {
-		var finalAttributes: [NSAttributedStringKey:Any] = [:]
+		guard !self.explicitFont else {
+			return [:]
+		}
+		return attributes(currentFont: self.font, size: self.size)
+	}
+	
+	/// Apply font attributes to the selected range.
+	/// It's used to support ineriths from current font of an attributed string.
+	/// Note: this method does nothing if a fixed font is set because the entire font attributes are replaced
+	/// by default's `.attributes` of the Style.
+	///
+	/// - Parameters:
+	///   - source: source of the attributed string.
+	///   - range: range of application, `nil` means the entire string.
+	internal func addAttributes(to source: AttributedString, range: NSRange?) {
+		// This method does nothing if a fixed value for font attributes is set.
+		// This becuause font attributes will be set along with the remaining attributes from `.attributes` dictionary.
+		guard self.explicitFont else {
+			return
+		}
 		
+		/// Enumerate fonts in string and attach the attributes
+		let scanRange = (range ?? NSMakeRange(0, source.length))
+		source.enumerateAttribute(.font, in: scanRange, options: []) { (fontValue, fontRange, shouldStop) in
+			let currentFont = ((fontValue ?? FontData.DefaultFont) as? FontConvertible)
+			let currentSize = (fontValue as? Font)?.pointSize
+			let fontAttributes = self.attributes(currentFont: currentFont, size: currentSize)
+			source.addAttributes(fontAttributes, range: fontRange)
+		}
+	}
+	
+	/// Return the attributes by sending an already set font/size.
+	/// If no fixed font/size is already set on self the current font/size is used instead, along with the additional font attributes.
+	///
+	/// - Parameters:
+	///   - currentFont: current font.
+	///   - currentSize: current font size.
+	/// - Returns: attributes
+	public func attributes(currentFont: FontConvertible?, size currentSize: CGFloat?) -> [NSAttributedStringKey:Any] {
+		var finalAttributes: [NSAttributedStringKey:Any] = [:]
+
 		// generate an initial font from passed FontConvertible instance
-		var finalFont = self.font.font(size: self.size)
+		guard let size = (self.size ?? currentSize) else { return [:] }
+		guard var finalFont = (self.font ?? currentFont)?.font(size: size) else { return [:] }
 		
 		// compose the attributes
 		#if os(iOS) || os(tvOS) || os(OSX)
@@ -112,7 +161,6 @@ internal struct FontInfo {
 		attributes += [self.contextualAlternates as FontInfoAttribute]
 		
 		finalFont = finalFont.withAttributes(attributes)
-		
 		
 		if let traitVariants = self.traitVariants { // manage emphasis
 			let descriptor = finalFont.fontDescriptor

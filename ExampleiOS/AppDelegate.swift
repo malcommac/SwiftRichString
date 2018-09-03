@@ -16,20 +16,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 	func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
 		// Override point for customization after application launch.
-		
-		let bold = Style {
-			$0.font = SystemFonts.Helvetica_Bold.font(size: 20)
-		}
-		let normal = Style {
-			$0.font = SystemFonts.Helvetica_Light.font(size: 15)
-		}
-		let red = normal.byAdding {
-			$0.color = UIColor.red
-			$0.traitVariants = [TraitVariant.bold,TraitVariant.tightLineSpacing]
-		}
-		
-		Styles.register("MyStyle", style: StyleGroup(base: normal, ["bold" : bold, "red" : red]))
-		
 		return true
 	}
 

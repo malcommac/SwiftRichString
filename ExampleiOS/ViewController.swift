@@ -14,8 +14,6 @@ class ViewController: UIViewController {
 
 	override func viewDidLoad() {
 		super.viewDidLoad()
-		
-		self.label?.styledText = "Hello <red>MERDA</red>"
 	}
 
 	override func didReceiveMemoryWarning() {
