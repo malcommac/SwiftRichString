@@ -180,13 +180,7 @@ public class StyleGroup: StyleProtocol {
 		let str = attrStr.string
 		
 		// Apply default base style if specified
-		if let baseStyle = self.baseStyle {
-			if adding {
-				attrStr.addAttributes(baseStyle.attributes, range: NSMakeRange(0, attrStr.length))
-			} else {
-				attrStr.setAttributes(baseStyle.attributes, range: NSMakeRange(0, attrStr.length))
-			}
-		}
+		self.baseStyle?.set(to: attrStr, range: nil)
 		
 		// Parse tags
 		if let regex = try? NSRegularExpression(pattern: tagRegex, options: .dotMatchesLineSeparators) {

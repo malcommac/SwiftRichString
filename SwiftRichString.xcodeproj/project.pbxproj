@@ -122,6 +122,7 @@
 		64507F3320B1912B009455BD /* AssociatedValues.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64507E7020AEF12C009455BD /* AssociatedValues.swift */; };
 		64507F3420B1912B009455BD /* OrderedDictionary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64507E7720AEF611009455BD /* OrderedDictionary.swift */; };
 		64507F3520B1912B009455BD /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64507EBD20B18489009455BD /* Extensions.swift */; };
+		64774AD3213E91B9008F8DC3 /* file.txt in Resources */ = {isa = PBXBuildFile; fileRef = 64774AD2213E91B9008F8DC3 /* file.txt */; };
 		648932CA209DE194000E691A /* CommonsAttributes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 648932C9209DE194000E691A /* CommonsAttributes.swift */; };
 		648932CB209DE194000E691A /* CommonsAttributes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 648932C9209DE194000E691A /* CommonsAttributes.swift */; };
 		648932CC209DE194000E691A /* CommonsAttributes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 648932C9209DE194000E691A /* CommonsAttributes.swift */; };
@@ -277,6 +278,7 @@
 		64507F1520B1911B009455BD /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		64507F1720B1911B009455BD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		64507F1820B1911B009455BD /* PushNotificationPayload.apns */ = {isa = PBXFileReference; lastKnownFileType = text; path = PushNotificationPayload.apns; sourceTree = "<group>"; };
+		64774AD2213E91B9008F8DC3 /* file.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = file.txt; sourceTree = "<group>"; };
 		648932C9209DE194000E691A /* CommonsAttributes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonsAttributes.swift; sourceTree = "<group>"; };
 		648932D3209DE44E000E691A /* FontConvertible.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FontConvertible.swift; sourceTree = "<group>"; };
 		648932DC209DE474000E691A /* ExampleiOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ExampleiOS.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -538,6 +540,7 @@
 				648932DE209DE474000E691A /* AppDelegate.swift */,
 				648932E0209DE474000E691A /* ViewController.swift */,
 				648932E2209DE474000E691A /* Main.storyboard */,
+				64774AD2213E91B9008F8DC3 /* file.txt */,
 				648932E5209DE476000E691A /* Assets.xcassets */,
 				648932E7209DE476000E691A /* LaunchScreen.storyboard */,
 				648932EA209DE476000E691A /* Info.plist */,
@@ -1000,6 +1003,7 @@
 			files = (
 				648932E9209DE476000E691A /* LaunchScreen.storyboard in Resources */,
 				648932E6209DE476000E691A /* Assets.xcassets in Resources */,
+				64774AD3213E91B9008F8DC3 /* file.txt in Resources */,
 				648932E4209DE474000E691A /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
