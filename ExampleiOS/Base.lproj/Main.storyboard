@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14313.13.2" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14283.9"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -22,26 +22,25 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Hello &lt;bold&gt;Daniele!&lt;/bold&gt;. You're ready to &lt;red&gt;play with us!&lt;/red&gt;" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="O4i-ta-tn6">
-                                <rect key="frame" x="15" y="35" width="345" height="41"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                                <userDefinedRuntimeAttributes>
-                                    <userDefinedRuntimeAttribute type="string" keyPath="styleName" value="MyStyle"/>
-                                </userDefinedRuntimeAttributes>
-                            </label>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="M2v-v6-dEE">
+                                <rect key="frame" x="10" y="30" width="355" height="627"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstAttribute="trailing" secondItem="O4i-ta-tn6" secondAttribute="trailing" constant="15" id="n1t-VD-qAb"/>
-                            <constraint firstItem="O4i-ta-tn6" firstAttribute="top" secondItem="W24-AA-bsh" secondAttribute="bottom" constant="15" id="qh4-kV-ULG"/>
-                            <constraint firstItem="O4i-ta-tn6" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" constant="15" id="rLN-3M-CG5"/>
+                            <constraint firstItem="M2v-v6-dEE" firstAttribute="top" secondItem="W24-AA-bsh" secondAttribute="bottom" constant="10" id="2dY-QZ-gnJ"/>
+                            <constraint firstItem="M2v-v6-dEE" firstAttribute="leading" secondItem="KdN-DI-2Ar" secondAttribute="leading" constant="10" id="WyS-va-4aK"/>
+                            <constraint firstItem="rLU-7s-8uZ" firstAttribute="top" secondItem="M2v-v6-dEE" secondAttribute="bottom" constant="10" id="iOv-kK-yJx"/>
+                            <constraint firstItem="KdN-DI-2Ar" firstAttribute="trailing" secondItem="M2v-v6-dEE" secondAttribute="trailing" constant="10" id="tlk-Hm-QJ8"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="KdN-DI-2Ar"/>
                     </view>
                     <connections>
-                        <outlet property="label" destination="O4i-ta-tn6" id="DUC-Oc-2VZ"/>
+                        <outlet property="textView" destination="M2v-v6-dEE" id="9WS-vx-fka"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
