@@ -242,7 +242,9 @@ public class StyleGroup: StyleProtocol {
 						
 						let location = tag.range.location
 						let length = closingTag.range.location-location
-						attrStr.addAttributes(attribute.attributes, range: NSRange(location: location, length: length))
+						let range = NSRange(location: location, length: length)
+						attribute.fontData?.addAttributes(to: attrStr, range: range)
+						attrStr.addAttributes(attribute.attributes, range: range)
 					}
 				}
 				
