@@ -100,7 +100,7 @@ public class FontData {
 	///
 	/// - Parameter size: ignored. It will be overriden by `fontSize` property.
 	/// - Returns: instance of the font
-	var attributes: [NSAttributedStringKey:Any] {
+	var attributes: [NSAttributedString.Key:Any] {
 		guard !self.explicitFont else {
 			return [:]
 		}
@@ -139,8 +139,8 @@ public class FontData {
 	///   - currentFont: current font.
 	///   - currentSize: current font size.
 	/// - Returns: attributes
-	public func attributes(currentFont: FontConvertible?, size currentSize: CGFloat?) -> [NSAttributedStringKey:Any] {
-		var finalAttributes: [NSAttributedStringKey:Any] = [:]
+	public func attributes(currentFont: FontConvertible?, size currentSize: CGFloat?) -> [NSAttributedString.Key:Any] {
+		var finalAttributes: [NSAttributedString.Key:Any] = [:]
 
 		// generate an initial font from passed FontConvertible instance
 		guard let size = (self.size ?? currentSize) else { return [:] }
