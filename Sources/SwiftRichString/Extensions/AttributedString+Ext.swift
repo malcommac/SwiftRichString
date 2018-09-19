@@ -146,7 +146,7 @@ public extension AttributedString {
 	///   - range: 	range of substring where style will be removed, `nil` to use the entire string.
 	/// - Returns: 	same instance of the receiver with - eventually - modified attributes.
 	@discardableResult
-	public func removeAttributes(_ keys: [NSAttributedStringKey], range: NSRange) -> Self {
+	public func removeAttributes(_ keys: [NSAttributedString.Key], range: NSRange) -> Self {
 		keys.forEach { self.removeAttribute($0, range: range) }
 		return self
 	}

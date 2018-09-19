@@ -51,7 +51,7 @@ public class StyleRegEx: StyleProtocol {
 	private var style: StyleProtocol
 	
 	/// Style attributes
-	public var attributes: [NSAttributedStringKey : Any] {
+	public var attributes: [NSAttributedString.Key : Any] {
 		return self.style.attributes
 	}
 	

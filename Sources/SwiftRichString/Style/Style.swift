@@ -50,11 +50,11 @@ public class Style: StyleProtocol {
 	
 	/// Attributes defined by the style. This is the dictionary modified when you
 	/// set a style attributed.
-	private var innerAttributes: [NSAttributedStringKey : Any] = [:]
+	private var innerAttributes: [NSAttributedString.Key : Any] = [:]
 	
 	/// This is a cache array used to avoid the evaluation of font description and other
 	/// sensitive data. Cache is invalidated automatically when needed.
-	private var cachedAttributes: [NSAttributedStringKey : Any]? = nil
+	private var cachedAttributes: [NSAttributedString.Key : Any]? = nil
 	
 	//MARK: - PROPERTIES
 
@@ -347,14 +347,14 @@ public class Style: StyleProtocol {
 	
 	/// Enable spoken of all punctuation in the text.
 	public var speaksPunctuation: Bool? {
-		set { self.set(attribute: newValue, forKey: NSAttributedStringKey(UIAccessibilitySpeechAttributePunctuation)) }
-		get { return self.get(attributeForKey: NSAttributedStringKey(UIAccessibilitySpeechAttributePunctuation)) }
+		set { self.set(attribute: newValue, forKey: NSAttributedString.Key(convertFromNSAttributedStringKey(NSAttributedString.Key.accessibilitySpeechPunctuation))) }
+		get { return self.get(attributeForKey: NSAttributedString.Key(convertFromNSAttributedStringKey(NSAttributedString.Key.accessibilitySpeechPunctuation))) }
 	}
 	
 	/// The language to use when speaking a string (value is a BCP 47 language code string).
 	public var speakingLanguage: String? {
-		set { self.set(attribute: newValue, forKey: NSAttributedStringKey(UIAccessibilitySpeechAttributeLanguage)) }
-		get { return self.get(attributeForKey: NSAttributedStringKey(UIAccessibilitySpeechAttributeLanguage)) }
+		set { self.set(attribute: newValue, forKey: NSAttributedString.Key(convertFromNSAttributedStringKey(NSAttributedString.Key.accessibilitySpeechLanguage))) }
+		get { return self.get(attributeForKey: NSAttributedString.Key(convertFromNSAttributedStringKey(NSAttributedString.Key.accessibilitySpeechLanguage))) }
 	}
 	
 	/// Pitch to apply to spoken content. Value must be in range range 0.0 to 2.0.
@@ -364,16 +364,16 @@ public class Style: StyleProtocol {
 	///
 	/// The default value for this attribute is 1.0, which indicates a normal pitch.
 	public var speakingPitch: Double? {
-		set { self.set(attribute: newValue, forKey: NSAttributedStringKey(UIAccessibilitySpeechAttributePitch)) }
-		get { return self.get(attributeForKey: NSAttributedStringKey(UIAccessibilitySpeechAttributePitch)) }
+		set { self.set(attribute: newValue, forKey: NSAttributedString.Key(convertFromNSAttributedStringKey(NSAttributedString.Key.accessibilitySpeechPitch))) }
+		get { return self.get(attributeForKey: NSAttributedString.Key(convertFromNSAttributedStringKey(NSAttributedString.Key.accessibilitySpeechPitch))) }
 	}
 
 	/// No overview available.
 	/// Note: available only from iOS 11, tvOS 11 and watchOS 4.
 	@available(iOS 11.0, tvOS 11.0, iOSApplicationExtension 11.0, watchOS 4, *)
 	public var speakingPronunciation: String? {
-		set { self.set(attribute: newValue, forKey: NSAttributedStringKey(UIAccessibilitySpeechAttributeIPANotation)) }
-		get { return self.get(attributeForKey: NSAttributedStringKey(UIAccessibilitySpeechAttributeIPANotation)) }
+		set { self.set(attribute: newValue, forKey: NSAttributedString.Key(convertFromNSAttributedStringKey(NSAttributedString.Key.accessibilitySpeechIPANotation))) }
+		get { return self.get(attributeForKey: NSAttributedString.Key(convertFromNSAttributedStringKey(NSAttributedString.Key.accessibilitySpeechIPANotation))) }
 	}
 	
 	/// Spoken text is queued behind, or interrupts, existing spoken content.
@@ -384,7 +384,7 @@ public class Style: StyleProtocol {
 	@available(iOS 11.0, tvOS 11.0, iOSApplicationExtension 11.0, watchOS 4, *)
 	public var shouldQueueSpeechAnnouncement: Bool? {
 		set {
-			let key = NSAttributedStringKey(UIAccessibilitySpeechAttributeQueueAnnouncement)
+			let key = NSAttributedString.Key(convertFromNSAttributedStringKey(NSAttributedString.Key.accessibilitySpeechQueueAnnouncement))
 			guard let v = newValue else {
 				self.innerAttributes.removeValue(forKey: key)
 				return
@@ -392,7 +392,7 @@ public class Style: StyleProtocol {
 			self.set(attribute: NSNumber.init(value: v), forKey: key)
 		}
 		get {
-			let key = NSAttributedStringKey(UIAccessibilitySpeechAttributeQueueAnnouncement)
+			let key = NSAttributedString.Key(convertFromNSAttributedStringKey(NSAttributedString.Key.accessibilitySpeechQueueAnnouncement))
 			if let n: NSNumber = self.get(attributeForKey: key) {
 				return n.boolValue
 			} else { return false }
@@ -405,7 +405,7 @@ public class Style: StyleProtocol {
 	@available(iOS 11.0, tvOS 11.0, iOSApplicationExtension 11.0, watchOS 4, *)
 	public var headingLevel: HeadingLevel? {
 		set {
-			let key = NSAttributedStringKey(UIAccessibilityTextAttributeHeadingLevel)
+			let key = NSAttributedString.Key(convertFromNSAttributedStringKey(NSAttributedString.Key.accessibilityTextHeadingLevel))
 			guard let v = newValue else {
 				self.innerAttributes.removeValue(forKey: key)
 				return
@@ -413,7 +413,7 @@ public class Style: StyleProtocol {
 			self.set(attribute: v.rawValue, forKey: key)
 		}
 		get {
-			let key = NSAttributedStringKey(UIAccessibilityTextAttributeHeadingLevel)
+			let key = NSAttributedString.Key(convertFromNSAttributedStringKey(NSAttributedString.Key.accessibilityTextHeadingLevel))
 			if let n: Int = self.get(attributeForKey: key) {
 				return HeadingLevel(rawValue: n)
 			} else { return nil }
@@ -546,7 +546,7 @@ public class Style: StyleProtocol {
 	/// Font related attributes are not set automatically but are encapsulasted to the font object itself.
 	///
 	/// - Parameter dictionary: dictionary to set
-	public init(dictionary: [NSAttributedStringKey: Any]?) {
+	public init(dictionary: [NSAttributedString.Key: Any]?) {
 		self.fontData?.style = self
 		if let font = dictionary?[.font] as? Font {
 			self.fontData?.font = font
@@ -578,7 +578,7 @@ public class Style: StyleProtocol {
 	/// - Parameters:
 	///   - value: valid value to set, `nil` to remove exiting value for given key.
 	///   - key: key to set
-	public func set<T>(attribute value: T?, forKey key: NSAttributedStringKey) {
+	public func set<T>(attribute value: T?, forKey key: NSAttributedString.Key) {
 		guard let value = value else {
 			self.innerAttributes.removeValue(forKey: key)
 			return
@@ -591,12 +591,12 @@ public class Style: StyleProtocol {
 	///
 	/// - Parameter key: key to read.
 	/// - Returns: value or `nil` if value is not set.
-	public func get<T>(attributeForKey key: NSAttributedStringKey) -> T? {
+	public func get<T>(attributeForKey key: NSAttributedString.Key) -> T? {
 		return (self.innerAttributes[key] as? T)
 	}
 	
 	/// Return all attributes defined by the style.
-	public var attributes: [NSAttributedStringKey : Any] {
+	public var attributes: [NSAttributedString.Key : Any] {
 		if let cachedAttributes = self.cachedAttributes {
 			return cachedAttributes
 		}
@@ -616,4 +616,9 @@ public class Style: StyleProtocol {
 		handler(styleCopy)
 		return styleCopy
 	}
+}
+
+// Helper function inserted by Swift 4.2 migrator.
+fileprivate func convertFromNSAttributedStringKey(_ input: NSAttributedString.Key) -> String {
+	return input.rawValue
 }

@@ -35,7 +35,7 @@ public typealias AttributedString = NSMutableAttributedString
 public protocol StyleProtocol: class {
 	
 	/// Return the attributes of the style in form of dictionary `NSAttributedStringKey`/`Any`.
-	var attributes: [NSAttributedStringKey : Any] { get }
+	var attributes: [NSAttributedString.Key : Any] { get }
 	
 	/// Font unique attributes dictionary.
 	var fontData: FontData? { get }
