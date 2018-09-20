@@ -146,7 +146,7 @@ public extension AttributedString {
 	///   - range: 	range of substring where style will be removed, `nil` to use the entire string.
 	/// - Returns: 	same instance of the receiver with - eventually - modified attributes.
 	@discardableResult
-	public func removeAttributes(_ keys: [NSAttributedStringKey], range: NSRange) -> Self {
+	public func removeAttributes(_ keys: [NSAttributedString.Key], range: NSRange) -> Self {
 		keys.forEach { self.removeAttribute($0, range: range) }
 		return self
 	}
@@ -156,7 +156,7 @@ public extension AttributedString {
 	/// - Parameter style: style to use.
 	/// - Returns: 	same instance of the receiver with - eventually - modified attributes.
 	public func remove(_ style: StyleProtocol) -> Self {
-		self.removeAttributes(Array(style.attributes.keys), range: NSMakeRange(0, self.string.count))
+		self.removeAttributes(Array(style.attributes.keys), range: NSMakeRange(0, self.length))
 		return self
 	}
 	

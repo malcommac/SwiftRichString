@@ -51,7 +51,7 @@ public class StyleRegEx: StyleProtocol {
 	private var style: StyleProtocol
 	
 	/// Style attributes
-	public var attributes: [NSAttributedStringKey : Any] {
+	public var attributes: [NSAttributedString.Key : Any] {
 		return self.style.attributes
 	}
 	
@@ -90,14 +90,14 @@ public class StyleRegEx: StyleProtocol {
 	
 	public func add(to source: AttributedString, range: NSRange?) -> AttributedString {
 		if let base = self.baseStyle {
-			source.addAttributes(base.attributes, range: (range ?? NSMakeRange(0, source.string.count)))
+			source.addAttributes(base.attributes, range: (range ?? NSMakeRange(0, source.length)))
 		}
 		return self.applyStyle(to: source, add: true, range: range)
 	}
 	
 	public func set(to source: AttributedString, range: NSRange?) -> AttributedString {
 		if let base = self.baseStyle {
-			source.setAttributes(base.attributes, range: (range ?? NSMakeRange(0, source.string.count)))
+			source.setAttributes(base.attributes, range: (range ?? NSMakeRange(0, source.length)))
 		}
 		return self.applyStyle(to: source, add: false, range: range)
 	}
@@ -112,7 +112,7 @@ public class StyleRegEx: StyleProtocol {
 	///   - range: range, `nil` to apply the style to entire string.
 	/// - Returns: modified attributed string
 	private func applyStyle(to str: AttributedString, add: Bool, range: NSRange?) -> AttributedString {
-		let rangeValue = (range ?? NSMakeRange(0, str.string.count))
+		let rangeValue = (range ?? NSMakeRange(0, str.length))
 		
 		let matchOpts = NSRegularExpression.MatchingOptions(rawValue: 0)
 		self.regex.enumerateMatches(in: str.string, options: matchOpts, range: rangeValue) {
