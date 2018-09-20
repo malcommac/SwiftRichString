@@ -8,6 +8,14 @@
 
 /* Begin PBXBuildFile section */
 		52D6D9871BEFF229002C0205 /* SwiftRichString.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 52D6D97C1BEFF229002C0205 /* SwiftRichString.framework */; };
+		643565F42153883B00CEEE9F /* Compatibility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 643565F32153883B00CEEE9F /* Compatibility.swift */; };
+		643565F52153883B00CEEE9F /* Compatibility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 643565F32153883B00CEEE9F /* Compatibility.swift */; };
+		643565F62153883B00CEEE9F /* Compatibility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 643565F32153883B00CEEE9F /* Compatibility.swift */; };
+		643565F72153883B00CEEE9F /* Compatibility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 643565F32153883B00CEEE9F /* Compatibility.swift */; };
+		643565F82153884B00CEEE9F /* Compatibility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 643565F32153883B00CEEE9F /* Compatibility.swift */; };
+		643565F92153884B00CEEE9F /* Compatibility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 643565F32153883B00CEEE9F /* Compatibility.swift */; };
+		643565FA2153884C00CEEE9F /* Compatibility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 643565F32153883B00CEEE9F /* Compatibility.swift */; };
+		643565FB2153884C00CEEE9F /* Compatibility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 643565F32153883B00CEEE9F /* Compatibility.swift */; };
 		64507E5B20AEEB36009455BD /* StylesManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64507E5A20AEEB36009455BD /* StylesManager.swift */; };
 		64507E5C20AEEB36009455BD /* StylesManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64507E5A20AEEB36009455BD /* StylesManager.swift */; };
 		64507E5D20AEEB36009455BD /* StylesManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64507E5A20AEEB36009455BD /* StylesManager.swift */; };
@@ -250,6 +258,7 @@
 		52D6D9E21BEFFF6E002C0205 /* SwiftRichString.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SwiftRichString.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		52D6D9F01BEFFFBE002C0205 /* SwiftRichString.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SwiftRichString.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		52D6DA0F1BF000BD002C0205 /* SwiftRichString.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SwiftRichString.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		643565F32153883B00CEEE9F /* Compatibility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Compatibility.swift; sourceTree = "<group>"; };
 		64507E5A20AEEB36009455BD /* StylesManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StylesManager.swift; sourceTree = "<group>"; };
 		64507E6120AEEE8D009455BD /* UIKit+Extras.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIKit+Extras.swift"; sourceTree = "<group>"; };
 		64507E7020AEF12C009455BD /* AssociatedValues.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssociatedValues.swift; sourceTree = "<group>"; };
@@ -477,6 +486,7 @@
 				64507E7020AEF12C009455BD /* AssociatedValues.swift */,
 				64507E7720AEF611009455BD /* OrderedDictionary.swift */,
 				64507EBD20B18489009455BD /* Extensions.swift */,
+				643565F32153883B00CEEE9F /* Compatibility.swift */,
 			);
 			path = Support;
 			sourceTree = "<group>";
@@ -1055,6 +1065,7 @@
 				64507E9B20AF4681009455BD /* String+Ext.swift in Sources */,
 				6489331E209DED04000E691A /* StyleGroup.swift in Sources */,
 				64507E7820AEF611009455BD /* OrderedDictionary.swift in Sources */,
+				643565F42153883B00CEEE9F /* Compatibility.swift in Sources */,
 				64507E6220AEEE8D009455BD /* UIKit+Extras.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1088,6 +1099,7 @@
 				64507E9D20AF4681009455BD /* String+Ext.swift in Sources */,
 				64893320209DED04000E691A /* StyleGroup.swift in Sources */,
 				64507E7A20AEF611009455BD /* OrderedDictionary.swift in Sources */,
+				643565F62153883B00CEEE9F /* Compatibility.swift in Sources */,
 				64507E6420AEEE8D009455BD /* UIKit+Extras.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1113,6 +1125,7 @@
 				64507E9E20AF4681009455BD /* String+Ext.swift in Sources */,
 				64893321209DED04000E691A /* StyleGroup.swift in Sources */,
 				64507E7B20AEF611009455BD /* OrderedDictionary.swift in Sources */,
+				643565F72153883B00CEEE9F /* Compatibility.swift in Sources */,
 				64507E6520AEEE8D009455BD /* UIKit+Extras.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1138,6 +1151,7 @@
 				64507E9C20AF4681009455BD /* String+Ext.swift in Sources */,
 				6489331F209DED04000E691A /* StyleGroup.swift in Sources */,
 				64507E7920AEF611009455BD /* OrderedDictionary.swift in Sources */,
+				643565F52153883B00CEEE9F /* Compatibility.swift in Sources */,
 				64507E6320AEEE8D009455BD /* UIKit+Extras.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1166,6 +1180,7 @@
 				64507EF720B18F20009455BD /* ColorConvertible.swift in Sources */,
 				64507EEE20B18F20009455BD /* StylesManager.swift in Sources */,
 				64507EF420B18F20009455BD /* FontData.swift in Sources */,
+				643565FA2153884C00CEEE9F /* Compatibility.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1189,6 +1204,7 @@
 				64507F3520B1912B009455BD /* Extensions.swift in Sources */,
 				64507F2B20B1912B009455BD /* AttributedString+Ext.swift in Sources */,
 				64507F2520B1912B009455BD /* Style.swift in Sources */,
+				643565FB2153884C00CEEE9F /* Compatibility.swift in Sources */,
 				64507F2820B1912B009455BD /* StylesManager.swift in Sources */,
 				64507F2720B1912B009455BD /* StyleRegEx.swift in Sources */,
 				64507F3420B1912B009455BD /* OrderedDictionary.swift in Sources */,
@@ -1221,6 +1237,7 @@
 				648932F0209DE47C000E691A /* FontConvertible.swift in Sources */,
 				64507E9F20AF4681009455BD /* String+Ext.swift in Sources */,
 				64507EB020B056FB009455BD /* FontData.swift in Sources */,
+				643565F82153884B00CEEE9F /* Compatibility.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1248,6 +1265,7 @@
 				6489331C209DEAFF000E691A /* Style.swift in Sources */,
 				64507E8B20AF3609009455BD /* String+Subscript.swift in Sources */,
 				64893307209DE6CD000E691A /* FontConvertible.swift in Sources */,
+				643565F92153884B00CEEE9F /* Compatibility.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1586,7 +1604,7 @@
 				SKIP_INSTALL = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				TARGETED_DEVICE_FAMILY = 3;
-				TVOS_DEPLOYMENT_TARGET = 9.0;
+				TVOS_DEPLOYMENT_TARGET = 9.2;
 			};
 			name = Debug;
 		};
@@ -1609,7 +1627,7 @@
 				SKIP_INSTALL = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
 				TARGETED_DEVICE_FAMILY = 3;
-				TVOS_DEPLOYMENT_TARGET = 9.0;
+				TVOS_DEPLOYMENT_TARGET = 9.2;
 			};
 			name = Release;
 		};
