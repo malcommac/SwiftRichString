@@ -21,18 +21,22 @@ class ViewController: UIViewController {
 		
 		let headerStyle = Style {
 			$0.font = UIFont.boldSystemFont(ofSize: self.baseFontSize * 1.15)
+            $0.adjustsToDynamicSize = true
 			$0.lineSpacing = 1
 			$0.kerning = Kerning.adobe(-20)
 		}
 		let boldStyle = Style {
 			$0.font = UIFont.boldSystemFont(ofSize: self.baseFontSize)
+            $0.adjustsToDynamicSize = true
 		}
 		let italicStyle = Style {
 			$0.font = UIFont.italicSystemFont(ofSize: self.baseFontSize)
+            $0.adjustsToDynamicSize = true
 		}
 		
 		let style = StyleGroup(base: Style {
 			$0.font = UIFont.systemFont(ofSize: self.baseFontSize)
+            $0.adjustsToDynamicSize = true
 			$0.lineSpacing = 2
 			$0.kerning = Kerning.adobe(-15)
 			}, [
@@ -50,17 +54,13 @@ class ViewController: UIViewController {
 				},
 				"sup": Style {
 					$0.font = UIFont.systemFont(ofSize: self.baseFontSize / 1.2)
+                    $0.adjustsToDynamicSize = true
 					$0.baselineOffset = Float(self.baseFontSize) / 3.5
 				}])
 		
 		self.textView?.attributedText = bodyHTML.set(style: style)
+        if #available(iOS 10.0, *) {
+            self.textView?.adjustsFontForContentSizeCategory = true
+        }
 	}
-
-	override func didReceiveMemoryWarning() {
-		super.didReceiveMemoryWarning()
-		// Dispose of any resources that can be recreated.
-	}
-
-
 }
-

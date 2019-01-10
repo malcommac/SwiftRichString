@@ -86,6 +86,11 @@ public class Style: StyleProtocol {
 			return self.fontData?.font
 		}
 	}
+    
+    public var adjustsToDynamicSize: Bool? {
+        set { self.fontData?.adjustsToDynamicSize = newValue }
+        get { return self.fontData?.adjustsToDynamicSize }
+    }
 
 	/// Set the text color of the style.
 	/// You can pass any `ColorConvertible` conform object, it will be transformed to a valid `UIColor`/`NSColor`

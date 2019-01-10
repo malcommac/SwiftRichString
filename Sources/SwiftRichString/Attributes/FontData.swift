@@ -27,6 +27,9 @@ public class FontData {
 	
 	/// Font object
 	var font: FontConvertible? { didSet { self.style?.invalidateCache() } }
+    
+    /// Adjusts to dynamic font
+    var adjustsToDynamicSize: Bool? { didSet { self.style?.invalidateCache() } }
 	
 	/// Size of the font
 	var size: CGFloat? { didSet { self.style?.invalidateCache() } }
@@ -184,7 +187,11 @@ public class FontData {
 		}
 		#endif
 		
-		finalAttributes[.font] = finalFont // assign composed font
+        if #available(iOS 11.0, *), adjustsToDynamicSize == true {
+            finalAttributes[.font] = UIFontMetrics.default.scaledFont(for: finalFont)
+        } else {
+            finalAttributes[.font] = finalFont // assign composed font
+        }
 		return finalAttributes
 	}
 	
