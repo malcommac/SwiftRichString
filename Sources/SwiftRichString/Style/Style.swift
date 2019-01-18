@@ -87,16 +87,10 @@ public class Style: StyleProtocol {
 		}
 	}
     
-    /// Define if the font adjusts to user dynamic size settings.
-    public var adjustsToDynamicSize: Bool? {
-        set { self.fontData?.adjustsToDynamicSize = newValue }
-        get { return self.fontData?.adjustsToDynamicSize }
-    }
-    
-    /// Set the font preferred text style
-    public var textStyle: UIFont.TextStyle? {
-        set { self.fontData?.textStyle = newValue }
-        get { return self.fontData?.textStyle }
+    /// Set the dynamic text size attributes to adapt the font/text to the current Dynamic Type settings.
+    public var dynamicTextSize: DynamicTextSize? {
+        set { self.fontData?.dynamicTextSize = newValue }
+        get { return self.fontData?.dynamicTextSize }
     }
 
 	/// Set the text color of the style.
