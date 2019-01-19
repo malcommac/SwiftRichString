@@ -27,13 +27,15 @@ public class FontData {
 	
 	/// Font object
 	var font: FontConvertible? { didSet { self.style?.invalidateCache() } }
-    
+
+	#if os(tvOS) || os(watchOS) || os(iOS)
     // Dynamic text atributes
     public var dynamicText: DynamicText? { didSet { self.style?.invalidateCache() } }
-    
+
     /// Returns if font should adapt to dynamic type
     private var adpatsToDynamicType: Bool? { return dynamicText != nil }
-	
+	#endif
+
 	/// Size of the font
 	var size: CGFloat? { didSet { self.style?.invalidateCache() } }
 	
@@ -189,17 +191,22 @@ public class FontData {
 			finalAttributes[.kern] = tracking.kerning(for: finalFont)
 		}
 		#endif
-        
+
+		#if os(tvOS) || os(watchOS) || os(iOS)
         // set scalable custom font if adapts to dynamic type
         if #available(iOS 11.0, watchOS 4.0, tvOS 11.0, *), adpatsToDynamicType == true {
             finalAttributes[.font] = scalableFont(from: finalFont)
         } else {
             finalAttributes[.font] = finalFont
         }
+		#else
+		finalAttributes[.font] = finalFont
+		#endif
         
 		return finalAttributes
 	}
-    
+
+	#if os(tvOS) || os(watchOS) || os(iOS)
     /// Returns a custom scalable font based on the received font
     ///
     /// - Parameter font: font in which the custom font will be based
@@ -217,4 +224,6 @@ public class FontData {
         return (fontMetrics ?? UIFontMetrics.default).scaledFont(for: font, maximumPointSize: dynamicText?.maximumSize ?? 0.0)
         #endif
     }
+	#endif
+	
 }

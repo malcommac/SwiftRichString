@@ -6,6 +6,7 @@
 //  Copyright © 2019 SwiftRichString. All rights reserved.
 //
 
+#if os(tvOS) || os(watchOS) || os(iOS)
 import UIKit
 
 /// DynamicText encapsulate the attributes for fonts to automatically scale to match the current Dynamic Type settings. It uses UIFontMetrics.
@@ -38,3 +39,5 @@ public class DynamicText {
         handler?(self)
     }
 }
+
+#endif

@@ -86,7 +86,8 @@ public class Style: StyleProtocol {
 			return self.fontData?.font
 		}
 	}
-    
+
+	#if os(tvOS) || os(watchOS) || os(iOS)
     /// Set the dynamic text attributes to adapt the font/text to the current Dynamic Type settings.
     /// **Note**: in order to be used you must also set the `.font`/`.size` attribute of the style.
     @available(iOS 11.0, tvOS 11.0, iOSApplicationExtension 11.0, watchOS 4, *)
@@ -94,6 +95,7 @@ public class Style: StyleProtocol {
         set { self.fontData?.dynamicText = newValue }
         get { return self.fontData?.dynamicText }
     }
+	#endif
 
 	/// Set the text color of the style.
 	/// You can pass any `ColorConvertible` conform object, it will be transformed to a valid `UIColor`/`NSColor`
