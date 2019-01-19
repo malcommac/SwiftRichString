@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name         = "SwiftRichString"
-  s.version      = "2.0.6"
+  s.version      = "2.1.0"
   s.summary      = "Elegant Strings & Attributed Strings Toolkit for Swift"
   s.description  = <<-DESC
     SwiftRichString is the best toolkit to work easily with Strings and Attributed Strings.

@@ -156,7 +156,7 @@ public extension AttributedString {
 	/// - Parameter style: style to use.
 	/// - Returns: 	same instance of the receiver with - eventually - modified attributes.
 	public func remove(_ style: StyleProtocol) -> Self {
-		self.removeAttributes(Array(style.attributes.keys), range: NSMakeRange(0, self.length))
+		self.removeAttributes(Array(style.renderingAttributes.keys), range: NSMakeRange(0, self.length))
 		return self
 	}
 	

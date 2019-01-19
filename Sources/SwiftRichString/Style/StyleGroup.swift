@@ -83,12 +83,12 @@ public class StyleGroup: StyleProtocol {
 	
 	/// Return all attributes merge of each single `Style` of the group.
 	/// Attributes are reported in order of the insertion regardeless the associated name.
-	public var attributes: [NSAttributedString.Key : Any] {
+	public var renderingAttributes: [NSAttributedString.Key : Any] {
 		var composedAttributes: [NSAttributedString.Key: Any] = [:]
 		self.styles.enumerated().forEach { (arg) in
 			
 			let (_, style) = arg
-			composedAttributes.merge(style.attributes, uniquingKeysWith: { (_, new) in return new })
+			composedAttributes.merge(style.renderingAttributes, uniquingKeysWith: { (_, new) in return new })
 		}
 		return composedAttributes
 	}
@@ -240,7 +240,7 @@ public class StyleGroup: StyleProtocol {
 						let length = closingTag.range.location-location
 						let range = NSRange(location: location, length: length)
 						attribute.fontData?.addAttributes(to: attrStr, range: range)
-						attrStr.addAttributes(attribute.attributes, range: range)
+						attrStr.addAttributes(attribute.renderingAttributes, range: range)
 					}
 				}
 				
@@ -260,7 +260,7 @@ public extension Array where Array.Element == StyleProtocol {
 	/// - Returns: merged style
 	public func mergeStyle() -> Style {
 		var attributes: [NSAttributedString.Key:Any] = [:]
-		self.forEach { attributes.merge($0.attributes, uniquingKeysWith: { (_, new) in return new }) }
+		self.forEach { attributes.merge($0.renderingAttributes, uniquingKeysWith: { (_, new) in return new }) }
 		return Style(dictionary: attributes)
 	}
 	

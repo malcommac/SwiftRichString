@@ -35,7 +35,7 @@ public typealias AttributedString = NSMutableAttributedString
 public protocol StyleProtocol: class {
 	
 	/// Return the attributes of the style in form of dictionary `NSAttributedStringKey`/`Any`.
-	var attributes: [NSAttributedString.Key : Any] { get }
+	var renderingAttributes: [NSAttributedString.Key : Any] { get }
 	
 	/// Font unique attributes dictionary.
 	var fontData: FontData? { get }
@@ -56,26 +56,26 @@ public extension StyleProtocol {
 	func set(to source: String, range: NSRange?) -> AttributedString {
 		let attributedText = NSMutableAttributedString(string: source)
 		self.fontData?.addAttributes(to: attributedText, range: nil)
-		attributedText.addAttributes(self.attributes, range: (range ?? NSMakeRange(0, attributedText.length)))
+		attributedText.addAttributes(self.renderingAttributes, range: (range ?? NSMakeRange(0, attributedText.length)))
 		return attributedText
 	}
 	
 	func add(to source: AttributedString, range: NSRange?) -> AttributedString {
 		self.fontData?.addAttributes(to: source, range: range)
-		source.addAttributes(self.attributes, range: (range ?? NSMakeRange(0, source.length)))
+		source.addAttributes(self.renderingAttributes, range: (range ?? NSMakeRange(0, source.length)))
 		return source
 	}
 	
 	@discardableResult
 	func set(to source: AttributedString, range: NSRange?) -> AttributedString {
 		self.fontData?.addAttributes(to: source, range: range)
-		source.addAttributes(self.attributes, range: (range ?? NSMakeRange(0, source.length)))
+		source.addAttributes(self.renderingAttributes, range: (range ?? NSMakeRange(0, source.length)))
 		return source
 	}
 	
 	@discardableResult
 	func remove(from source: AttributedString, range: NSRange?) -> AttributedString {
-		self.attributes.keys.forEach({
+		self.renderingAttributes.keys.forEach({
 			source.removeAttribute($0, range: (range ?? NSMakeRange(0, source.length)))
 		})
 		return source
