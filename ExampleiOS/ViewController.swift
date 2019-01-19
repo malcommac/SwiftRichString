@@ -17,21 +17,7 @@ class ViewController: UIViewController {
 	override func viewDidLoad() {
 		super.viewDidLoad()
 
-		let patternText = "[A-Z0-9a-z._%+]+@[A-Za-z0-9.]+\\.[A-Za-z]{2,4}"
-		let bodyHTML = "daniele hello@danielemargutti.com ciao ciao"
-
-		let baseStyle = Style {
-			$0.font = UIFont.boldSystemFont(ofSize: 12)
-		}
-
-		let highlightedStyle: StyleRegEx = StyleRegEx(base: baseStyle, pattern: patternText) {
-			$0.font = UIFont.systemFont(ofSize: 40, weight: .bold)
-			$0.color = UIColor.red
-		}!
-		self.textView?.attributedText = bodyHTML.set(style: highlightedStyle)
-
-		
-		/*let bodyHTML = try! String(contentsOfFile: Bundle.main.path(forResource: "file", ofType: "txt")!)
+		let bodyHTML = try! String(contentsOfFile: Bundle.main.path(forResource: "file", ofType: "txt")!)
 		
 		let headerStyle = Style {
 			$0.font = UIFont.boldSystemFont(ofSize: self.baseFontSize * 1.15)
@@ -77,6 +63,6 @@ class ViewController: UIViewController {
 		self.textView?.attributedText = bodyHTML.set(style: style)
         if #available(iOS 10.0, *) {
             self.textView?.adjustsFontForContentSizeCategory = true
-        }*/
+        }
 	}
 }

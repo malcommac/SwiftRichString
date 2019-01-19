@@ -434,7 +434,7 @@ public class Style: StyleProtocol {
 	
 	/// The value of this attribute is an NSURL object (preferred) or an NSString object.
 	/// The default value of this property is nil, indicating no link.
-	public var linkURL: URL? {
+	public var linkURL: URLRepresentable? {
 		set { self.set(attribute: newValue, forKey: .link) }
 		get { return self.get(attributeForKey: .link) }
 	}

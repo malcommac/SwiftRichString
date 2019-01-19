@@ -46,10 +46,15 @@ public class StyleGroup: StyleProtocol {
 	public class TagAttribute {
 		let wholeTag: String
 		var range: NSRange
-		
-		private(set) var isOpeningTag: Bool = false
+
+		/// Tag identifier
 		private(set) var name: String = ""
 		private(set) var paramString: String?
+
+		/// Is opened tag
+		private(set) var isOpeningTag: Bool = false
+
+		/// Discovered parameters inside the tag
 		private(set) var parameters: [String: String]?
 
 		// Should only be set to opening tags
@@ -80,7 +85,7 @@ public class StyleGroup: StyleProtocol {
 		/// - Returns: dictionary of found paramters with their values.
 		private func extractParametersFromTags(_ string: String) -> [String: String]? {
 			guard let _ = string.firstIndex(of: " ") else { return nil } // no tags
-			
+
 			let pattern = "\\w*\\s*=\\s*\"?\\s*([\\w\\s%#\\/\\.;:_-]*)\\s*\"?.*?" // maybe shorter?
 			guard let regex = try? NSRegularExpression(pattern: pattern, options: .dotMatchesLineSeparators) else {
 				return nil
@@ -271,7 +276,10 @@ public class StyleGroup: StyleProtocol {
 						let length = closingTag.range.location-location
 						let range = NSRange(location: location, length: length)
 						attribute.fontData?.addAttributes(to: attrStr, range: range)
-						attrStr.addAttributes(attribute.attributes, range: range)
+
+						var attributes = attribute.attributes
+						resolveDynamicAttributes(&attributes, forTag: tag)
+						attrStr.addAttributes(attributes, range: range)
 					}
 				}
 				
@@ -279,6 +287,21 @@ public class StyleGroup: StyleProtocol {
 		}
 		
 		return attrStr
+	}
+
+	/// Resolve only attributes which needs to have dynamic value extracted from html-styled tag.
+	///
+	/// - Parameters:
+	///   - attributes: attributes to be applied.
+	///   - tag: tag to apply.
+	private func resolveDynamicAttributes(_ attributes: inout [NSAttributedString.Key : Any], forTag tag: TagAttribute) {
+		// only specific attribute keys can contain dynamic attributes
+		let supportedDynamicKeys: Set<NSAttributedString.Key> = [NSAttributedString.Key.link]
+		supportedDynamicKeys.forEach { key in
+			if let composableValue = attributes[key] as? DynamicTagComposable {
+				attributes[key] = composableValue.dynamicValueFromTag(tag)
+			}
+		}
 	}
 	
 }
