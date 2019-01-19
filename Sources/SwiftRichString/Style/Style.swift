@@ -87,10 +87,11 @@ public class Style: StyleProtocol {
 		}
 	}
     
-    /// Set the dynamic text size attributes to adapt the font/text to the current Dynamic Type settings.
-    public var dynamicTextSize: DynamicTextSize? {
-        set { self.fontData?.dynamicTextSize = newValue }
-        get { return self.fontData?.dynamicTextSize }
+    /// Set the dynamic text attributes to adapt the font/text to the current Dynamic Type settings.
+    /// **Note**: in order to be used you must also set the `.font`/`.size` attribute of the style.
+    public var dynamicText: DynamicText? {
+        set { self.fontData?.dynamicText = newValue }
+        get { return self.fontData?.dynamicText }
     }
 
 	/// Set the text color of the style.

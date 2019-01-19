@@ -29,10 +29,10 @@ public class FontData {
 	var font: FontConvertible? { didSet { self.style?.invalidateCache() } }
     
     // Dynamic text atributes
-    public var dynamicTextSize: DynamicTextSize? { didSet { self.style?.invalidateCache() } }
+    public var dynamicText: DynamicText? { didSet { self.style?.invalidateCache() } }
     
     /// Returns if font should adapt to dynamic type
-    private var adpatsToDynamicType: Bool? { return dynamicTextSize != nil }
+    private var adpatsToDynamicType: Bool? { return dynamicText != nil }
 	
 	/// Size of the font
 	var size: CGFloat? { didSet { self.style?.invalidateCache() } }
@@ -190,24 +190,6 @@ public class FontData {
 		}
 		#endif
         
-        /// Returns a custom scalable font based on the received font
-        ///
-        /// - Parameter font: font in which the custom font will be based
-        /// - Returns: dynamic scalable font
-        @available(iOS 11.0, tvOS 11.0, iOSApplicationExtension 11.0, watchOS 4, *)
-        func scalableFont(from font: Font) -> Font {
-            var fontMetrics: UIFontMetrics?
-            if let textStyle = dynamicTextSize?.textStyle {
-                fontMetrics = UIFontMetrics(forTextStyle: textStyle)
-            }
-            
-            #if os(OSX) || os(iOS) || os(tvOS)
-            return (fontMetrics ?? UIFontMetrics.default).scaledFont(for: font, maximumPointSize: dynamicTextSize?.maximumSize ?? 0.0, compatibleWith: dynamicTextSize?.traitCollection)
-            #else
-            return (fontMetrics ?? UIFontMetrics.default).scaledFont(for: font, maximumPointSize: dynamicTextSize?.maximumSize ?? 0.0)
-            #endif
-        }
-		
         // set scalable custom font if adapts to dynamic type
         if #available(iOS 11.0, *), adpatsToDynamicType == true {
             finalAttributes[.font] = scalableFont(from: finalFont)
@@ -217,4 +199,22 @@ public class FontData {
         
 		return finalAttributes
 	}
+    
+    /// Returns a custom scalable font based on the received font
+    ///
+    /// - Parameter font: font in which the custom font will be based
+    /// - Returns: dynamic scalable font
+    @available(iOS 11.0, tvOS 11.0, iOSApplicationExtension 11.0, watchOS 4, *)
+    private func scalableFont(from font: Font) -> Font {
+        var fontMetrics: UIFontMetrics?
+        if let textStyle = dynamicText?.style {
+            fontMetrics = UIFontMetrics(forTextStyle: textStyle)
+        }
+        
+        #if os(OSX) || os(iOS) || os(tvOS)
+        return (fontMetrics ?? UIFontMetrics.default).scaledFont(for: font, maximumPointSize: dynamicText?.maximumSize ?? 0.0, compatibleWith: dynamicText?.traitCollection)
+        #else
+        return (fontMetrics ?? UIFontMetrics.default).scaledFont(for: font, maximumPointSize: dynamicText?.maximumSize ?? 0.0)
+        #endif
+    }
 }
