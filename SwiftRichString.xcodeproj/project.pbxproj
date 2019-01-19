@@ -131,6 +131,14 @@
 		64507F3420B1912B009455BD /* OrderedDictionary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64507E7720AEF611009455BD /* OrderedDictionary.swift */; };
 		64507F3520B1912B009455BD /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64507EBD20B18489009455BD /* Extensions.swift */; };
 		64774AD3213E91B9008F8DC3 /* file.txt in Resources */ = {isa = PBXBuildFile; fileRef = 64774AD2213E91B9008F8DC3 /* file.txt */; };
+		647AD64D21F3898400CF787E /* URLRepresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 647AD64C21F3898400CF787E /* URLRepresentable.swift */; };
+		647AD64E21F3898400CF787E /* URLRepresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 647AD64C21F3898400CF787E /* URLRepresentable.swift */; };
+		647AD64F21F3898400CF787E /* URLRepresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 647AD64C21F3898400CF787E /* URLRepresentable.swift */; };
+		647AD65021F3898400CF787E /* URLRepresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 647AD64C21F3898400CF787E /* URLRepresentable.swift */; };
+		647AD65121F389A400CF787E /* URLRepresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 647AD64C21F3898400CF787E /* URLRepresentable.swift */; };
+		647AD65221F389A400CF787E /* URLRepresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 647AD64C21F3898400CF787E /* URLRepresentable.swift */; };
+		647AD65321F389A400CF787E /* URLRepresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 647AD64C21F3898400CF787E /* URLRepresentable.swift */; };
+		647AD65421F389A800CF787E /* URLRepresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 647AD64C21F3898400CF787E /* URLRepresentable.swift */; };
 		648932CA209DE194000E691A /* CommonsAttributes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 648932C9209DE194000E691A /* CommonsAttributes.swift */; };
 		648932CB209DE194000E691A /* CommonsAttributes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 648932C9209DE194000E691A /* CommonsAttributes.swift */; };
 		648932CC209DE194000E691A /* CommonsAttributes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 648932C9209DE194000E691A /* CommonsAttributes.swift */; };
@@ -185,6 +193,14 @@
 		8933C78E1EB5B82C000D00A4 /* SwiftRichStringTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8933C7891EB5B82A000D00A4 /* SwiftRichStringTests.swift */; };
 		8933C78F1EB5B82C000D00A4 /* SwiftRichStringTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8933C7891EB5B82A000D00A4 /* SwiftRichStringTests.swift */; };
 		8933C7901EB5B82D000D00A4 /* SwiftRichStringTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8933C7891EB5B82A000D00A4 /* SwiftRichStringTests.swift */; };
+		D53F4E7B21F03E690085D26F /* DynamicText.swift in Sources */ = {isa = PBXBuildFile; fileRef = D53F4E7A21F03E690085D26F /* DynamicText.swift */; };
+		D53F4E7C21F03EEE0085D26F /* DynamicText.swift in Sources */ = {isa = PBXBuildFile; fileRef = D53F4E7A21F03E690085D26F /* DynamicText.swift */; };
+		D53F4E7D21F03EEF0085D26F /* DynamicText.swift in Sources */ = {isa = PBXBuildFile; fileRef = D53F4E7A21F03E690085D26F /* DynamicText.swift */; };
+		D53F4E7E21F03EEF0085D26F /* DynamicText.swift in Sources */ = {isa = PBXBuildFile; fileRef = D53F4E7A21F03E690085D26F /* DynamicText.swift */; };
+		D53F4E7F21F03F230085D26F /* DynamicText.swift in Sources */ = {isa = PBXBuildFile; fileRef = D53F4E7A21F03E690085D26F /* DynamicText.swift */; };
+		D53F4E8021F03F240085D26F /* DynamicText.swift in Sources */ = {isa = PBXBuildFile; fileRef = D53F4E7A21F03E690085D26F /* DynamicText.swift */; };
+		D53F4E8121F03F240085D26F /* DynamicText.swift in Sources */ = {isa = PBXBuildFile; fileRef = D53F4E7A21F03E690085D26F /* DynamicText.swift */; };
+		D53F4E8221F03F250085D26F /* DynamicText.swift in Sources */ = {isa = PBXBuildFile; fileRef = D53F4E7A21F03E690085D26F /* DynamicText.swift */; };
 		DD7502881C68FEDE006590AF /* SwiftRichString.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 52D6DA0F1BF000BD002C0205 /* SwiftRichString.framework */; };
 		DD7502921C690C7A006590AF /* SwiftRichString.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 52D6D9F01BEFFFBE002C0205 /* SwiftRichString.framework */; };
 /* End PBXBuildFile section */
@@ -288,6 +304,7 @@
 		64507F1720B1911B009455BD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		64507F1820B1911B009455BD /* PushNotificationPayload.apns */ = {isa = PBXFileReference; lastKnownFileType = text; path = PushNotificationPayload.apns; sourceTree = "<group>"; };
 		64774AD2213E91B9008F8DC3 /* file.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = file.txt; sourceTree = "<group>"; };
+		647AD64C21F3898400CF787E /* URLRepresentable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLRepresentable.swift; sourceTree = "<group>"; };
 		648932C9209DE194000E691A /* CommonsAttributes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonsAttributes.swift; sourceTree = "<group>"; };
 		648932D3209DE44E000E691A /* FontConvertible.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FontConvertible.swift; sourceTree = "<group>"; };
 		648932DC209DE474000E691A /* ExampleiOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ExampleiOS.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -312,6 +329,7 @@
 		8933C7891EB5B82A000D00A4 /* SwiftRichStringTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftRichStringTests.swift; sourceTree = "<group>"; };
 		AD2FAA261CD0B6D800659CF4 /* SwiftRichString.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = SwiftRichString.plist; sourceTree = "<group>"; };
 		AD2FAA281CD0B6E100659CF4 /* SwiftRichStringTests.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = SwiftRichStringTests.plist; sourceTree = "<group>"; };
+		D53F4E7A21F03E690085D26F /* DynamicText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DynamicText.swift; sourceTree = "<group>"; };
 		DD75027A1C68FCFC006590AF /* SwiftRichString-macOS Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "SwiftRichString-macOS Tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		DD75028D1C690C7A006590AF /* SwiftRichString-tvOS Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "SwiftRichString-tvOS Tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -476,6 +494,8 @@
 				648932D3209DE44E000E691A /* FontConvertible.swift */,
 				64893308209DE7C5000E691A /* ColorConvertible.swift */,
 				6489332420A0CA76000E691A /* FontInfoAttribute.swift */,
+				D53F4E7A21F03E690085D26F /* DynamicText.swift */,
+				647AD64C21F3898400CF787E /* URLRepresentable.swift */,
 			);
 			path = Attributes;
 			sourceTree = "<group>";
@@ -1048,12 +1068,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D53F4E7B21F03E690085D26F /* DynamicText.swift in Sources */,
 				648932CA209DE194000E691A /* CommonsAttributes.swift in Sources */,
 				64507EBE20B18489009455BD /* Extensions.swift in Sources */,
 				64507E8D20AF3A9C009455BD /* StyleProtocol.swift in Sources */,
 				64507EA420B05015009455BD /* AttributedString+Ext.swift in Sources */,
 				64893309209DE7C5000E691A /* ColorConvertible.swift in Sources */,
 				64507E8620AF3609009455BD /* String+Subscript.swift in Sources */,
+				647AD64D21F3898400CF787E /* URLRepresentable.swift in Sources */,
 				64507EAC20B056FB009455BD /* FontData.swift in Sources */,
 				648932D4209DE44E000E691A /* FontConvertible.swift in Sources */,
 				64507E7120AEF12C009455BD /* AssociatedValues.swift in Sources */,
@@ -1082,12 +1104,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D53F4E7D21F03EEF0085D26F /* DynamicText.swift in Sources */,
 				648932CC209DE194000E691A /* CommonsAttributes.swift in Sources */,
 				64507EC020B18489009455BD /* Extensions.swift in Sources */,
 				64507E8F20AF3A9C009455BD /* StyleProtocol.swift in Sources */,
 				64507EA620B05015009455BD /* AttributedString+Ext.swift in Sources */,
 				6489330B209DE7C5000E691A /* ColorConvertible.swift in Sources */,
 				64507E8820AF3609009455BD /* String+Subscript.swift in Sources */,
+				647AD64F21F3898400CF787E /* URLRepresentable.swift in Sources */,
 				64507EAE20B056FB009455BD /* FontData.swift in Sources */,
 				648932D6209DE44E000E691A /* FontConvertible.swift in Sources */,
 				64507E7320AEF12C009455BD /* AssociatedValues.swift in Sources */,
@@ -1108,12 +1132,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D53F4E7E21F03EEF0085D26F /* DynamicText.swift in Sources */,
 				648932CD209DE194000E691A /* CommonsAttributes.swift in Sources */,
 				64507EC120B18489009455BD /* Extensions.swift in Sources */,
 				64507E9020AF3A9C009455BD /* StyleProtocol.swift in Sources */,
 				64507EA720B05015009455BD /* AttributedString+Ext.swift in Sources */,
 				6489330C209DE7C5000E691A /* ColorConvertible.swift in Sources */,
 				64507E8920AF3609009455BD /* String+Subscript.swift in Sources */,
+				647AD65021F3898400CF787E /* URLRepresentable.swift in Sources */,
 				64507EAF20B056FB009455BD /* FontData.swift in Sources */,
 				648932D7209DE44E000E691A /* FontConvertible.swift in Sources */,
 				64507E7420AEF12C009455BD /* AssociatedValues.swift in Sources */,
@@ -1134,12 +1160,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D53F4E7C21F03EEE0085D26F /* DynamicText.swift in Sources */,
 				648932CB209DE194000E691A /* CommonsAttributes.swift in Sources */,
 				64507EBF20B18489009455BD /* Extensions.swift in Sources */,
 				64507E8E20AF3A9C009455BD /* StyleProtocol.swift in Sources */,
 				64507EA520B05015009455BD /* AttributedString+Ext.swift in Sources */,
 				6489330A209DE7C5000E691A /* ColorConvertible.swift in Sources */,
 				64507E8720AF3609009455BD /* String+Subscript.swift in Sources */,
+				647AD64E21F3898400CF787E /* URLRepresentable.swift in Sources */,
 				64507EAD20B056FB009455BD /* FontData.swift in Sources */,
 				648932D5209DE44E000E691A /* FontConvertible.swift in Sources */,
 				64507E7220AEF12C009455BD /* AssociatedValues.swift in Sources */,
@@ -1162,8 +1190,10 @@
 			files = (
 				64507EE020B18F0F009455BD /* ViewController.swift in Sources */,
 				64507EEA20B18F20009455BD /* StyleProtocol.swift in Sources */,
+				647AD65321F389A400CF787E /* URLRepresentable.swift in Sources */,
 				64507EF120B18F20009455BD /* AttributedString+Ext.swift in Sources */,
 				64507EDE20B18F0F009455BD /* AppDelegate.swift in Sources */,
+				D53F4E8021F03F240085D26F /* DynamicText.swift in Sources */,
 				64507EEC20B18F20009455BD /* StyleGroup.swift in Sources */,
 				64507EF920B18F20009455BD /* AssociatedValues.swift in Sources */,
 				64507EF320B18F20009455BD /* UIKit+Extras.swift in Sources */,
@@ -1191,9 +1221,11 @@
 				64507F2920B1912B009455BD /* String+Ext.swift in Sources */,
 				64507F1420B1911B009455BD /* NotificationController.swift in Sources */,
 				64507F3320B1912B009455BD /* AssociatedValues.swift in Sources */,
+				D53F4E7F21F03F230085D26F /* DynamicText.swift in Sources */,
 				64507F2420B1912B009455BD /* StyleProtocol.swift in Sources */,
 				64507F3220B1912B009455BD /* FontInfoAttribute.swift in Sources */,
 				64507F2D20B1912B009455BD /* UIKit+Extras.swift in Sources */,
+				647AD65421F389A800CF787E /* URLRepresentable.swift in Sources */,
 				64507F3020B1912B009455BD /* FontConvertible.swift in Sources */,
 				64507F2E20B1912B009455BD /* FontData.swift in Sources */,
 				64507F2F20B1912B009455BD /* CommonsAttributes.swift in Sources */,
@@ -1219,8 +1251,10 @@
 			files = (
 				64507EA820B05015009455BD /* AttributedString+Ext.swift in Sources */,
 				648932EE209DE47C000E691A /* CommonsAttributes.swift in Sources */,
+				647AD65121F389A400CF787E /* URLRepresentable.swift in Sources */,
 				64507E9120AF3A9C009455BD /* StyleProtocol.swift in Sources */,
 				64893322209DED04000E691A /* StyleGroup.swift in Sources */,
+				D53F4E8221F03F250085D26F /* DynamicText.swift in Sources */,
 				64507EBB20B1766D009455BD /* StyleRegEx.swift in Sources */,
 				64507E7C20AEF611009455BD /* OrderedDictionary.swift in Sources */,
 				64507E8A20AF3609009455BD /* String+Subscript.swift in Sources */,
@@ -1247,8 +1281,10 @@
 			files = (
 				64893305209DE6CD000E691A /* CommonsAttributes.swift in Sources */,
 				64893323209DED04000E691A /* StyleGroup.swift in Sources */,
+				647AD65221F389A400CF787E /* URLRepresentable.swift in Sources */,
 				64507E7620AEF12C009455BD /* AssociatedValues.swift in Sources */,
 				648932FA209DE6C5000E691A /* ViewController.swift in Sources */,
+				D53F4E8121F03F240085D26F /* DynamicText.swift in Sources */,
 				64507EBC20B1766D009455BD /* StyleRegEx.swift in Sources */,
 				64507EA020AF4681009455BD /* String+Ext.swift in Sources */,
 				64507E9220AF3A9C009455BD /* StyleProtocol.swift in Sources */,

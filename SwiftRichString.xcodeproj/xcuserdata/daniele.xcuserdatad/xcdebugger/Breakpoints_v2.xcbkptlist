@@ -10,13 +10,13 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Sources/SwiftRichString/Style/Style.swift"
-            timestampString = "548505331.301"
+            timestampString = "569615006.0644979"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "300"
-            endingLineNumber = "300"
-            landmarkName = "baseWritingDirection"
-            landmarkType = "24">
+            startingLineNumber = "302"
+            endingLineNumber = "302"
+            landmarkName = "Style"
+            landmarkType = "3">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy

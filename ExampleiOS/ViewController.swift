@@ -16,7 +16,7 @@ class ViewController: UIViewController {
 
 	override func viewDidLoad() {
 		super.viewDidLoad()
-		
+
 		let bodyHTML = try! String(contentsOfFile: Bundle.main.path(forResource: "file", ofType: "txt")!)
 		
 		let headerStyle = Style {
@@ -26,6 +26,13 @@ class ViewController: UIViewController {
 		}
 		let boldStyle = Style {
 			$0.font = UIFont.boldSystemFont(ofSize: self.baseFontSize)
+            if #available(iOS 11.0, *) {
+                $0.dynamicText = DynamicText {
+                    $0.style = .body
+                    $0.maximumSize = 35.0
+                    $0.traitCollection = UITraitCollection(userInterfaceIdiom: .phone)
+                }
+            }
 		}
 		let italicStyle = Style {
 			$0.font = UIFont.italicSystemFont(ofSize: self.baseFontSize)
@@ -54,13 +61,8 @@ class ViewController: UIViewController {
 				}])
 		
 		self.textView?.attributedText = bodyHTML.set(style: style)
+        if #available(iOS 10.0, *) {
+            self.textView?.adjustsFontForContentSizeCategory = true
+        }
 	}
-
-	override func didReceiveMemoryWarning() {
-		super.didReceiveMemoryWarning()
-		// Dispose of any resources that can be recreated.
-	}
-
-
 }
-

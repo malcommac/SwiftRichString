@@ -87,6 +87,16 @@ public class Style: StyleProtocol {
 		}
 	}
 
+	#if os(tvOS) || os(watchOS) || os(iOS)
+    /// Set the dynamic text attributes to adapt the font/text to the current Dynamic Type settings.
+    /// **Note**: in order to be used you must also set the `.font`/`.size` attribute of the style.
+    @available(iOS 11.0, tvOS 11.0, iOSApplicationExtension 11.0, watchOS 4, *)
+    public var dynamicText: DynamicText? {
+        set { self.fontData?.dynamicText = newValue }
+        get { return self.fontData?.dynamicText }
+    }
+	#endif
+
 	/// Set the text color of the style.
 	/// You can pass any `ColorConvertible` conform object, it will be transformed to a valid `UIColor`/`NSColor`
 	/// automatically. Both `UIColor`/`NSColor` and `String` are conform to this protocol.
@@ -424,7 +434,7 @@ public class Style: StyleProtocol {
 	
 	/// The value of this attribute is an NSURL object (preferred) or an NSString object.
 	/// The default value of this property is nil, indicating no link.
-	public var linkURL: URL? {
+	public var linkURL: URLRepresentable? {
 		set { self.set(attribute: newValue, forKey: .link) }
 		get { return self.get(attributeForKey: .link) }
 	}
@@ -595,7 +605,9 @@ public class Style: StyleProtocol {
 		return (self.innerAttributes[key] as? T)
 	}
 	
-	/// Return all attributes defined by the style.
+	/// Return attributes defined by the style.
+	/// Not all attributes are returned, fonts attributes may be omitted.
+	/// Refer to `attributes` to get the complete list.
 	public var attributes: [NSAttributedString.Key : Any] {
 		if let cachedAttributes = self.cachedAttributes {
 			return cachedAttributes
