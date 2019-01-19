@@ -115,6 +115,7 @@ Full changelog is available in [CHANGELOG.md](CHANGELOG.md) file.
 	- [Apply styles to `String` & `Attributed String`](#manualstyling)
 	- [Fonts & Colors in `Style`](#fontscolors)
 	- [Derivating a `Style`](#derivatingstyle)
+	- [Conforming to `Dynamic Type`](#dynamictype)
 - [The `StyleManager`](#stylemanager)
 	- [Register globally available styles](#globalregister)
 	- [Defer style creation on demand](#defer)
@@ -359,7 +360,26 @@ let subStyle = bold.byAdding {
 	$0.alignment = center
 	$0.color = UIColor.red
 }
+```
+
+<a name="dynamictype"/>
+
+### Conforming to `Dynamic Type`
+
+To support your fonts/text to dynammically scale based on the users preffered content size, you can implement style's `dynamicText` property. UIFontMetrics properties are wrapped inside `DynamicText` class.
+
+
+```swift
+let style = Style {
+	$0.font = UIFont.boldSystemFont(ofSize: 16.0)
+	$0.dynamicText = DynamicText {
+		$0.style = .body
+		$0.maximumSize = 35.0
+		$0.traitCollection = UITraitCollection(userInterfaceIdiom: .phone)
+    }
+}
 ``` 
+
 <a name="stylemanager"/>
 
 ## The `StyleManager`
