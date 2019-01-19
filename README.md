@@ -13,7 +13,7 @@ Created by <b>Daniele Margutti</b> - <a href="http://www.danielemargutti.com">da
 
 
 SwiftRichString is a lightweight library which allows to create and manipulate attributed strings easily both in iOS, macOS, tvOS and even watchOS.
-It provides convenient way to store styles you can reuse in your app's UI lements, allows complex tag-based strings rendering and also includes integration with Interface Builder.
+It provides convenient way to store styles you can reuse in your app's UI elements, allows complex tag-based strings rendering and also includes integration with Interface Builder.
 
 If you manipulate `NSAttributedString` in Swift, SwiftRichString allows you to keep your code manteniable, readable and easy to evolve.
 
