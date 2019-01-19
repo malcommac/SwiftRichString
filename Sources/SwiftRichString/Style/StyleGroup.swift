@@ -43,14 +43,15 @@ public class StyleGroup: StyleProtocol {
 	public var fontData: FontData? = nil
 
 	/// TagAttribute represent a single tag in a source string after the text is parsed.
-	private class TagAttribute {
+	public class TagAttribute {
 		let wholeTag: String
 		var range: NSRange
 		
 		private(set) var isOpeningTag: Bool = false
 		private(set) var name: String = ""
 		private(set) var paramString: String?
-		
+		private(set) var parameters: [String: String]?
+
 		// Should only be set to opening tags
 		var endingTagIndex: Int?
 		
@@ -63,12 +64,42 @@ public class StyleGroup: StyleProtocol {
 				paramString = strippedTag.removing(prefix: name).trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
 				if paramString?.count == 0 { paramString = nil }
 			}
+
+			self.parameters = extractParametersFromTags(wholeTag)
 		}
 		
 		init(wholeTag: String, range: NSRange) {
 			self.wholeTag = wholeTag
 			self.range = range
 			processWholeTag()
+		}
+
+		/// Extract parameters from each tag.
+		///
+		/// - Parameter string: whole tag string.
+		/// - Returns: dictionary of found paramters with their values.
+		private func extractParametersFromTags(_ string: String) -> [String: String]? {
+			guard let _ = string.firstIndex(of: " ") else { return nil } // no tags
+			
+			let pattern = "\\w*\\s*=\\s*\"?\\s*([\\w\\s%#\\/\\.;:_-]*)\\s*\"?.*?" // maybe shorter?
+			guard let regex = try? NSRegularExpression(pattern: pattern, options: .dotMatchesLineSeparators) else {
+				return nil
+			}
+
+			let matches = regex.matches(in: string,
+										options: NSRegularExpression.MatchingOptions.reportCompletion,
+										range: NSRange(location: 0, length: (string as NSString).length))
+
+			return matches.reduce([:]) { (paramDict, match) in
+				var paramDict = paramDict
+				let block = (wholeTag as NSString).substring(with: match.range)
+				if let dividerIndex = block.firstIndex(of: "=") {
+					let key = String(block[block.startIndex..<dividerIndex])
+					let value = String(block[block.index(dividerIndex, offsetBy: 2)..<block.index(block.endIndex, offsetBy: -1)])
+					paramDict?[key] = value
+				}
+				return paramDict
+			}
 		}
 	}
 	
