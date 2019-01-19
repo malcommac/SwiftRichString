@@ -21,7 +21,7 @@ internal let WATCHOS_SYSTEMFONT_SIZE: CGFloat = 12.0
 /// User don't interact with this object directly but via `Style`'s properties.
 /// Using the `attributes` property this object return a valid instance of the attributes to describe
 /// required behaviour.
-public class FontData {
+public struct FontData {
 	
 	private static var DefaultFont = Font.systemFont(ofSize: 12.0)
 	
