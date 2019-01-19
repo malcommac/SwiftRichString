@@ -191,7 +191,7 @@ public class FontData {
 		#endif
         
         // set scalable custom font if adapts to dynamic type
-        if #available(iOS 11.0, *), adpatsToDynamicType == true {
+        if #available(iOS 11.0, watchOS 4.0, *), adpatsToDynamicType == true {
             finalAttributes[.font] = scalableFont(from: finalFont)
         } else {
             finalAttributes[.font] = finalFont
