@@ -207,6 +207,25 @@ The result is this:
 
 <a name="concatenation"/>
 
+### Dynamic Attributes from Source Text
+
+SwiftRichString also support some dynamic element in style applied by reading specific attributes from html-tagged string.
+The following example render the `linkURL` property by reading the value from the source string inside `href` tag (like in real HTML text):
+
+```
+  let normal = Style {
+	$0.color = UIColor.black
+  }
+  let link = Style {
+	  $0.color = UIColor.red
+	  $0.linkURL = URLRepresentable.tagAttribute("href")
+  }
+  let group = StyleGroup.init(base: normal, ["a" : link])
+
+  let bodyHTML = "Go to <a href=\"http://www.apple.com\">Apple</a> web site!"
+  self.textView?.attributedText = bodyHTML.set(style: group)
+```
+
 ### String & Attributed String concatenation
 SwiftRichString allows you to simplify string concatenation by providing custom `+` operator between `String`,`AttributedString` (typealias of `NSMutableAttributedString`) and `Style`.
 

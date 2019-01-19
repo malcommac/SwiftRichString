@@ -38,6 +38,4 @@ public enum URLRepresentable: DynamicTagComposable {
 		}
 	}
 
-
-
 }
