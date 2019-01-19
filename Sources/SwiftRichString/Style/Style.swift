@@ -608,7 +608,7 @@ public class Style: StyleProtocol {
 	/// Return attributes defined by the style.
 	/// Not all attributes are returned, fonts attributes may be omitted.
 	/// Refer to `attributes` to get the complete list.
-	public var renderingAttributes: [NSAttributedString.Key : Any] {
+	public var attributes: [NSAttributedString.Key : Any] {
 		if let cachedAttributes = self.cachedAttributes {
 			return cachedAttributes
 		}
@@ -617,15 +617,6 @@ public class Style: StyleProtocol {
 		let fontAttributes = self.fontData?.attributes ?? [:]
 		self.cachedAttributes = self.innerAttributes.merging(fontAttributes) { (_, new) in return new }
 		return self.cachedAttributes!
-	}
-
-	/// Return attributes defined by the style.
-	public var attributes: [NSAttributedString.Key : Any] {
-		var allAttributes = self.renderingAttributes
-		if let fontRawAttributes = self.fontData?.attributes(currentFont: self.fontData?.font, size: self.fontData?.size) {
-			allAttributes.merge(fontRawAttributes, uniquingKeysWith: { (_, new) in return new })
-		}
-		return allAttributes
 	}
 	
 	/// Create a new style copy of `self` with the opportunity to configure it via configuration callback.

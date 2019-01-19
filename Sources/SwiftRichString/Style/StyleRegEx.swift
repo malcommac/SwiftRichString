@@ -51,8 +51,8 @@ public class StyleRegEx: StyleProtocol {
 	private var style: StyleProtocol
 	
 	/// Style attributes
-	public var renderingAttributes: [NSAttributedString.Key : Any] {
-		return self.style.renderingAttributes
+	public var attributes: [NSAttributedString.Key : Any] {
+		return self.style.attributes
 	}
 	
 	/// Font attributes
@@ -84,20 +84,20 @@ public class StyleRegEx: StyleProtocol {
 	//MARK: - METHOD OVERRIDES
 	
 	public func set(to source: String, range: NSRange?) -> AttributedString {
-		let attributed = NSMutableAttributedString(string: source, attributes: (self.baseStyle?.renderingAttributes ?? [:]))
+		let attributed = NSMutableAttributedString(string: source, attributes: (self.baseStyle?.attributes ?? [:]))
 		return self.applyStyle(to: attributed, add: false, range: range)
 	}
 	
 	public func add(to source: AttributedString, range: NSRange?) -> AttributedString {
 		if let base = self.baseStyle {
-			source.addAttributes(base.renderingAttributes, range: (range ?? NSMakeRange(0, source.length)))
+			source.addAttributes(base.attributes, range: (range ?? NSMakeRange(0, source.length)))
 		}
 		return self.applyStyle(to: source, add: true, range: range)
 	}
 	
 	public func set(to source: AttributedString, range: NSRange?) -> AttributedString {
 		if let base = self.baseStyle {
-			source.setAttributes(base.renderingAttributes, range: (range ?? NSMakeRange(0, source.length)))
+			source.setAttributes(base.attributes, range: (range ?? NSMakeRange(0, source.length)))
 		}
 		return self.applyStyle(to: source, add: false, range: range)
 	}
@@ -119,9 +119,9 @@ public class StyleRegEx: StyleProtocol {
 			(result : NSTextCheckingResult?, _, _) in
 			if let r = result {
 				if add {
-					str.addAttributes(self.renderingAttributes, range: r.range)
+					str.addAttributes(self.attributes, range: r.range)
 				} else {
-					str.setAttributes(self.renderingAttributes, range: r.range)
+					str.setAttributes(self.attributes, range: r.range)
 				}
 			}
 		}

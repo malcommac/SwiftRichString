@@ -109,7 +109,7 @@ public class FontData {
 	/// - Parameter size: ignored. It will be overriden by `fontSize` property.
 	/// - Returns: instance of the font
 	var attributes: [NSAttributedString.Key:Any] {
-		guard !self.explicitFont else {
+		guard self.explicitFont == true else {
 			return [:]
 		}
 		return attributes(currentFont: self.font, size: self.size)
