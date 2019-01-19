@@ -1,5 +1,5 @@
 <p align="center" >
-<img src="https://raw.githubusercontent.com/malcommac/SwiftRichString/master/SwiftRichString.png" width=300px alt="SwiftRichString" title="SwiftRichString">
+<img src="https://raw.githubusercontent.com/malcommac/SwiftRichString/master/swiftrichstring.png" width=450px alt="SwiftRichString" title="SwiftRichString">
 </p>
 
 [![Version](https://img.shields.io/cocoapods/v/SwiftRichString.svg?style=flat)](http://cocoadocs.org/docsets/SwiftRichString) [![License](https://img.shields.io/cocoapods/l/SwiftRichString.svg?style=flat)](http://cocoadocs.org/docsets/SwiftRichString) [![Platform](https://img.shields.io/cocoapods/p/SwiftRichString.svg?style=flat)](http://cocoadocs.org/docsets/SwiftRichString)
@@ -7,13 +7,11 @@
 [![Carthage Compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
 [![Twitter](https://img.shields.io/badge/twitter-@danielemargutti-blue.svg?style=flat)](http://twitter.com/danielemargutti)
 
-<p align="center" >★★ <b>Star me to follow the project! </b> ★★<br>
-Created by <b>Daniele Margutti</b> - <a href="http://www.danielemargutti.com">danielemargutti.com</a>
-</p>
-
 
 SwiftRichString is a lightweight library which allows to create and manipulate attributed strings easily both in iOS, macOS, tvOS and even watchOS.
-It provides convenient way to store styles you can reuse in your app's UI lements, allows complex tag-based strings rendering and also includes integration with Interface Builder.
+It provides convenient way to store styles you can reuse in your app's UI elements, allows complex tag-based strings rendering and also includes integration with Interface Builder.
+
+It even support **iOS 11's Dynamic Type**!
 
 If you manipulate `NSAttributedString` in Swift, SwiftRichString allows you to keep your code manteniable, readable and easy to evolve.
 
@@ -79,24 +77,6 @@ That's the result!
 
 <img src="Documentation_Assests/image_2.png" alt="" style="width: 300px;"/>
 
--- 
-
-## Other Libraries You May Like
-
-I'm also working on several other projects you may like.
-Take a look below:
-
-
-| Library         | Description                                      |
-|-----------------|--------------------------------------------------|
-| [**SwiftDate**](https://github.com/malcommac/SwiftDate)       | The best way to manage date/timezones in Swift   |
-| [**Hydra**](https://github.com/malcommac/Hydra)           | Write better async code: async/await & promises  |
-| [**FlowKit**](https://github.com/malcommac/FlowKit) | A new declarative approach to table/collection managment. Forget datasource & delegates. |
-| [**SwiftRichString**](https://github.com/malcommac/SwiftRichString) | Elegant & Painless NSAttributedString in Swift   |
-| [**SwiftLocation**](https://github.com/malcommac/SwiftLocation)   | Efficient location manager                       |
-| [**SwiftMsgPack**](https://github.com/malcommac/SwiftMsgPack)    | Fast/efficient msgPack encoder/decoder           |
-</p>
-
 --
 
 ## Documentation
@@ -115,6 +95,8 @@ Full changelog is available in [CHANGELOG.md](CHANGELOG.md) file.
 	- [Apply styles to `String` & `Attributed String`](#manualstyling)
 	- [Fonts & Colors in `Style`](#fontscolors)
 	- [Derivating a `Style`](#derivatingstyle)
+	- [Support iOS's `Dynamic Type`](#dynamictype)
+	- [Dynamic Attributes from Tag's Params](#dynamicattributes)
 - [The `StyleManager`](#stylemanager)
 	- [Register globally available styles](#globalregister)
 	- [Defer style creation on demand](#defer)
@@ -359,7 +341,47 @@ let subStyle = bold.byAdding {
 	$0.alignment = center
 	$0.color = UIColor.red
 }
+```
+
+<a name="dynamictype"/>
+
+### Conforming to `Dynamic Type`
+
+To support your fonts/text to dynammically scale based on the users preffered content size, you can implement style's `dynamicText` property. UIFontMetrics properties are wrapped inside `DynamicText` class.
+
+
+```swift
+let style = Style {
+	$0.font = UIFont.boldSystemFont(ofSize: 16.0)
+	$0.dynamicText = DynamicText {
+		$0.style = .body
+		$0.maximumSize = 35.0
+		$0.traitCollection = UITraitCollection(userInterfaceIdiom: .phone)
+    }
+}
 ``` 
+
+<a name="dynamicattributes"/>
+
+### Dynamic Attributes from Tag's Params
+
+SwiftRichString also support some dynamic elements in style applied by reading specific tag parameter's value.
+The following example render the `linkURL` property by reading the value from the source string inside `href` tag (like in real HTML text):
+
+```
+  let normal = Style {
+	$0.color = UIColor.black
+  }
+  let link = Style {
+	  $0.color = UIColor.red
+	  $0.linkURL = URLRepresentable.tagAttribute("href")
+  }
+  let group = StyleGroup.init(base: normal, ["a" : link])
+
+  let bodyHTML = "Go to <a href=\"http://www.apple.com\">Apple</a> web site!"
+  self.textView?.attributedText = bodyHTML.set(style: group)
+```
+
 <a name="stylemanager"/>
 
 ## The `StyleManager`
@@ -618,5 +640,21 @@ Contributors are expected to abide by the [Contributor Covenant Code of Conduct]
 SwiftRichString is available under the MIT license. See the LICENSE file for more info.
 
 Daniele Margutti: [hello@danielemargutti.com](mailto:hello@danielemargutti.com), [@danielemargutti](https://twitter.com/danielemargutti)
+
+## Other Libraries You May Like
+
+I'm also working on several other projects you may like.
+Take a look below:
+
+
+| Library         | Description                                      |
+|-----------------|--------------------------------------------------|
+| [**SwiftDate**](https://github.com/malcommac/SwiftDate)       | The best way to manage date/timezones in Swift   |
+| [**Hydra**](https://github.com/malcommac/Hydra)           | Write better async code: async/await & promises  |
+| [**FlowKit**](https://github.com/malcommac/FlowKit) | A new declarative approach to table/collection managment. Forget datasource & delegates. |
+| [**SwiftRichString**](https://github.com/malcommac/SwiftRichString) | Elegant & Painless NSAttributedString in Swift   |
+| [**SwiftLocation**](https://github.com/malcommac/SwiftLocation)   | Efficient location manager                       |
+| [**SwiftMsgPack**](https://github.com/malcommac/SwiftMsgPack)    | Fast/efficient msgPack encoder/decoder           |
+</p>
 
 

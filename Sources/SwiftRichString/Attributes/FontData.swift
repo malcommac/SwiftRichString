@@ -21,13 +21,21 @@ internal let WATCHOS_SYSTEMFONT_SIZE: CGFloat = 12.0
 /// User don't interact with this object directly but via `Style`'s properties.
 /// Using the `attributes` property this object return a valid instance of the attributes to describe
 /// required behaviour.
-public class FontData {
+public struct FontData {
 	
 	private static var DefaultFont = Font.systemFont(ofSize: 12.0)
 	
 	/// Font object
 	var font: FontConvertible? { didSet { self.style?.invalidateCache() } }
-	
+
+	#if os(tvOS) || os(watchOS) || os(iOS)
+    // Dynamic text atributes
+    public var dynamicText: DynamicText? { didSet { self.style?.invalidateCache() } }
+
+    /// Returns if font should adapt to dynamic type
+    private var adpatsToDynamicType: Bool? { return dynamicText != nil }
+	#endif
+
 	/// Size of the font
 	var size: CGFloat? { didSet { self.style?.invalidateCache() } }
 	
@@ -101,7 +109,7 @@ public class FontData {
 	/// - Parameter size: ignored. It will be overriden by `fontSize` property.
 	/// - Returns: instance of the font
 	var attributes: [NSAttributedString.Key:Any] {
-		guard !self.explicitFont else {
+		guard self.explicitFont == true else {
 			return [:]
 		}
 		return attributes(currentFont: self.font, size: self.size)
@@ -121,7 +129,7 @@ public class FontData {
 		guard self.explicitFont else {
 			return
 		}
-		
+        
 		/// Enumerate fonts in string and attach the attributes
 		let scanRange = (range ?? NSMakeRange(0, source.length))
 		source.enumerateAttribute(.font, in: scanRange, options: []) { (fontValue, fontRange, shouldStop) in
@@ -183,9 +191,39 @@ public class FontData {
 			finalAttributes[.kern] = tracking.kerning(for: finalFont)
 		}
 		#endif
-		
-		finalAttributes[.font] = finalFont // assign composed font
+
+		#if os(tvOS) || os(watchOS) || os(iOS)
+        // set scalable custom font if adapts to dynamic type
+        if #available(iOS 11.0, watchOS 4.0, tvOS 11.0, *), adpatsToDynamicType == true {
+            finalAttributes[.font] = scalableFont(from: finalFont)
+        } else {
+            finalAttributes[.font] = finalFont
+        }
+		#else
+		finalAttributes[.font] = finalFont
+		#endif
+        
 		return finalAttributes
 	}
+
+	#if os(tvOS) || os(watchOS) || os(iOS)
+    /// Returns a custom scalable font based on the received font
+    ///
+    /// - Parameter font: font in which the custom font will be based
+    /// - Returns: dynamic scalable font
+    @available(iOS 11.0, tvOS 11.0, iOSApplicationExtension 11.0, watchOS 4, *)
+    private func scalableFont(from font: Font) -> Font {
+        var fontMetrics: UIFontMetrics?
+        if let textStyle = dynamicText?.style {
+            fontMetrics = UIFontMetrics(forTextStyle: textStyle)
+        }
+        
+        #if os(OSX) || os(iOS) || os(tvOS)
+        return (fontMetrics ?? UIFontMetrics.default).scaledFont(for: font, maximumPointSize: dynamicText?.maximumSize ?? 0.0, compatibleWith: dynamicText?.traitCollection)
+        #else
+        return (fontMetrics ?? UIFontMetrics.default).scaledFont(for: font, maximumPointSize: dynamicText?.maximumSize ?? 0.0)
+        #endif
+    }
+	#endif
 	
 }
