@@ -47,12 +47,15 @@ public protocol ColorConvertible  {
 }
 
 
-struct DynamicColorRepresenatble:ColorConvertible{
+public struct DynamicColorRepresenatble:ColorConvertible{
     public var color: Color {
         return defaultColor.color
     }
-    var tagKey:String
-    var defaultColor:String
+    public var tagKey: String
+    
+    // Default color property
+    public var defaultColor: String
+    
     public func dynamicValueFromTag(_ tag: StyleGroup.TagAttribute?) -> Any? {
         guard let value = tag?.parameters?[tagKey] else {
             return nil
