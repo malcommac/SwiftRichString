@@ -41,9 +41,24 @@ import UIKit
 /// as color's attributes for several properties inside a style. Style get the color instance from your object
 /// and use it inside for string attributes.
 /// Both `String` and `UIColor`/`NSColor` already conforms this protocol.
-public protocol ColorConvertible {
+public protocol ColorConvertible  {
 	/// Transform a instance of a `ColorConvertible` conform object to a valid `UIColor`/`NSColor`.
 	var color: Color { get }
+}
+
+
+struct DynamicColorRepresenatble:ColorConvertible{
+    public var color: Color {
+        return defaultColor.color
+    }
+    var tagKey:String
+    var defaultColor:String
+    public func dynamicValueFromTag(_ tag: StyleGroup.TagAttribute?) -> Any? {
+        guard let value = tag?.parameters?[tagKey] else {
+            return nil
+        }
+        return value.color
+    }
 }
 
 // MARK: - ColorConvertible for `UIColor`/`NSColor`
