@@ -56,6 +56,11 @@ public struct DynamicColorRepresenatble:ColorConvertible{
     // Default color property
     public var defaultColor: String
     
+    init(tagKey:String,defaultColor:String) {
+        self.tagKey = tagKey
+        self.defaultColor = defaultColor
+    }
+    
     public func dynamicValueFromTag(_ tag: StyleGroup.TagAttribute?) -> Any? {
         guard let value = tag?.parameters?[tagKey] else {
             return nil
