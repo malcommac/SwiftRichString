@@ -54,6 +54,7 @@ class ViewController: UIViewController {
 					$0.paragraphSpacingBefore = self.baseFontSize / 2
 					$0.firstLineHeadIndent = self.baseFontSize
 					$0.headIndent = self.baseFontSize * 1.71
+                    $0.color = DynamicColorRepresentable(tagKey: "color", defaultColor:"#000000")
 				},
 				"sup": Style {
 					$0.font = UIFont.systemFont(ofSize: self.baseFontSize / 1.2)

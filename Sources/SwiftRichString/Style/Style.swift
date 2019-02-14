@@ -101,7 +101,14 @@ public class Style: StyleProtocol {
 	/// You can pass any `ColorConvertible` conform object, it will be transformed to a valid `UIColor`/`NSColor`
 	/// automatically. Both `UIColor`/`NSColor` and `String` are conform to this protocol.
 	public var color: ColorConvertible? {
-		set { self.set(attribute: newValue?.color, forKey: .foregroundColor) }
+		set {
+            if let dynamicColor = newValue as? DynamicTagComposable {
+                self.set(attribute:dynamicColor, forKey: .foregroundColor)
+            }
+            else {
+                self.set(attribute: newValue?.color, forKey: .foregroundColor)
+            }
+        }
 		get { return self.get(attributeForKey: .foregroundColor) }
 	}
 	
@@ -109,8 +116,15 @@ public class Style: StyleProtocol {
 	/// You can pass any `ColorConvertible` conform object, it will be transformed to a valid `UIColor`/`NSColor`
 	/// automatically. Both `UIColor`/`NSColor` and `String` are conform to this protocol.
 	public var backColor: ColorConvertible? {
-		set { self.set(attribute: newValue?.color, forKey: .backgroundColor) }
-		get { return self.get(attributeForKey: .backgroundColor) }
+        set {
+            if let dynamicColor = newValue as? DynamicTagComposable {
+                self.set(attribute:dynamicColor, forKey: .backgroundColor)
+            }
+            else {
+                self.set(attribute: newValue?.color, forKey: .backgroundColor)
+            }
+        }
+        get { return self.get(attributeForKey: .backgroundColor) }
 	}
 	
 	/// This value indicates whether the text is underlined.

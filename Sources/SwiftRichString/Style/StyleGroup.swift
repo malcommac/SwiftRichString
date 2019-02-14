@@ -296,7 +296,7 @@ public class StyleGroup: StyleProtocol {
 	///   - tag: tag to apply.
 	private func resolveDynamicAttributes(_ attributes: inout [NSAttributedString.Key : Any], forTag tag: TagAttribute) {
 		// only specific attribute keys can contain dynamic attributes
-		let supportedDynamicKeys: Set<NSAttributedString.Key> = [NSAttributedString.Key.link]
+		let supportedDynamicKeys: Set<NSAttributedString.Key> = [NSAttributedString.Key.link,NSAttributedString.Key.foregroundColor,NSAttributedString.Key.backgroundColor]
 		supportedDynamicKeys.forEach { key in
 			if let composableValue = attributes[key] as? DynamicTagComposable {
 				attributes[key] = composableValue.dynamicValueFromTag(tag)

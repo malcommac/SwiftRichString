@@ -47,7 +47,7 @@ public protocol ColorConvertible  {
 }
 
 
-public struct DynamicColorRepresenatble:ColorConvertible{
+public struct DynamicColorRepresentable:ColorConvertible,DynamicTagComposable{
     public var color: Color {
         return defaultColor.color
     }
@@ -56,7 +56,7 @@ public struct DynamicColorRepresenatble:ColorConvertible{
     // Default color property
     public var defaultColor: String
     
-    init(tagKey:String,defaultColor:String) {
+    public init(tagKey:String,defaultColor:String) {
         self.tagKey = tagKey
         self.defaultColor = defaultColor
     }

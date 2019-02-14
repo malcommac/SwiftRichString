@@ -9,7 +9,7 @@ Depuis, de nombreuses actions entreprises par le SPF Santé publique viennent re
 <strong>Objectifs poursuivis</strong>
 
 Les objectifs principaux de cette campagne sont:
-<li style="text-align: justify;">• d’améliorer la sensibilisation au don auprès des différents groupes auxquels les messages s’adressent,</li>
-<li style="text-align: justify;">• d’inviter les citoyens à «oser» en parler en famille, entre amis, entre collègues. Aborder la mort – sa propre mort – reste relativement tabou pour beaucoup.</li>
+<li style="text-align: justify;",color="#25883d">• d’améliorer la sensibilisation au don auprès des différents groupes auxquels les messages s’adressent,</li>
+<li style="text-align: justify;",color="#25883d">• d’inviter les citoyens à «oser» en parler en famille, entre amis, entre collègues. Aborder la mort – sa propre mort – reste relativement tabou pour beaucoup.</li>
 
 <strong>Pour en savoir plus... <a href="http://www.health.belgium.be/fr/sante/prenez-soin-de-vous/debut-et-fin-de-vie/don-dorganes" target="_blank">www.health.belgium.be/fr/sante/prenez-soin-de-vous/debut-et-fin-de-vie/don-dorganes</a></strong>
