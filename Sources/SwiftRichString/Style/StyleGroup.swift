@@ -251,7 +251,7 @@ public class StyleGroup: StyleProtocol {
 				let nextIndex = index+1
 				if nextIndex < tagQueue.count {
 					for tIndex in nextIndex..<tagQueue.count {
-						tagQueue[tIndex].range.location -= tag.range.length
+						tagQueue[tIndex].range.location -= (tag.range.length - str.count)
 					}
 				}
 			}
@@ -260,7 +260,7 @@ public class StyleGroup: StyleProtocol {
 			for index in 0..<tagQueue.count {
 				let tag = tagQueue[index]
 				if tag.isOpeningTag {
-					guard tag.name != "br" else {
+					guard tag.name != "br" && tag.name != "br/" else {
 						removeTag(index: index, with: "\n")
 						continue
 					}
