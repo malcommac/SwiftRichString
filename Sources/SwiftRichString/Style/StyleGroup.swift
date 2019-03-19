@@ -86,7 +86,7 @@ public class StyleGroup: StyleProtocol {
 		private func extractParametersFromTags(_ string: String) -> [String: String]? {
 			guard let _ = string.firstIndex(of: " ") else { return nil } // no tags
 
-			let pattern = "\\w*\\s*=\\s*\"?\\s*([\\w\\s%#\\/\\.;:_-]*)\\s*\"?.*?" // maybe shorter?
+			let pattern = "\\w*\\s*=\\s*\"?\\s*([^\"]*)\\s*\"?.*?" // maybe shorter?
 			guard let regex = try? NSRegularExpression(pattern: pattern, options: .dotMatchesLineSeparators) else {
 				return nil
 			}
