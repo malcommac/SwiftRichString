@@ -312,7 +312,7 @@ public extension Array where Array.Element == StyleProtocol {
 	/// Merge is made in order where each n+1 elements may replace existing keys defined by n-1 elements.
 	///
 	/// - Returns: merged style
-	public func mergeStyle() -> Style {
+	func mergeStyle() -> Style {
 		var attributes: [NSAttributedString.Key:Any] = [:]
 		self.forEach { attributes.merge($0.attributes, uniquingKeysWith: { (_, new) in return new }) }
 		return Style(dictionary: attributes)
