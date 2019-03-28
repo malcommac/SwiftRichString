@@ -67,7 +67,7 @@ extension UILabel {
 		}
 	}
 	
-	/// Use this to render automatically the texct with the currently set style instance or styleName.
+	/// Use this to render automatically the text with the currently set style instance or styleName.
 	public var styledText: String? {
 		get {
 			return attributedText?.string
