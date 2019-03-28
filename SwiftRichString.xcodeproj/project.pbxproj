@@ -914,11 +914,13 @@
 					64507F0920B1911A009455BD = {
 						CreatedOnToolsVersion = 9.3.1;
 						DevelopmentTeam = E5DU3FA699;
+						LastSwiftMigration = 1020;
 						ProvisioningStyle = Automatic;
 					};
 					648932DB209DE474000E691A = {
 						CreatedOnToolsVersion = 9.3;
 						DevelopmentTeam = E5DU3FA699;
+						LastSwiftMigration = 1020;
 						ProvisioningStyle = Automatic;
 					};
 					648932F4209DE6C5000E691A = {
@@ -1789,6 +1791,7 @@
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 4;
 				WATCHOS_DEPLOYMENT_TARGET = 4.3;
 			};
@@ -1814,6 +1817,7 @@
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 4;
 				WATCHOS_DEPLOYMENT_TARGET = 4.3;
 			};
@@ -1897,6 +1901,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.swiftrichstring.ExampleiOS;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				URLSERVIZI = "";
 			};
@@ -1924,6 +1929,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.swiftrichstring.ExampleiOS;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				URLSERVIZI = "";
 			};
