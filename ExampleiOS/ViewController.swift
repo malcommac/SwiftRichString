@@ -17,6 +17,21 @@ class ViewController: UIViewController {
 	override func viewDidLoad() {
 		super.viewDidLoad()
 
+		/*let baseStyle = Style {
+			$0.font = UIFont.systemFont(ofSize: self.baseFontSize)
+			$0.lineSpacing = 2
+		}
+
+		let linkStyle = Style {
+			$0.font = UIFont.boldSystemFont(ofSize: self.baseFontSize)
+			$0.linkURL = URLRepresentable.tagAttribute("href")
+		}
+
+		let text = "Stile <a href=\"www.facebook.com/agencearcantide/photos/a.346501409312886/346503839312643/?type=3&theater\">link</a>"
+		let s = StyleGroup(base: baseStyle, ["a" : linkStyle])
+		self.textView?.attributedText = text.set(style: s)
+	*/
+
 		let bodyHTML = try! String(contentsOfFile: Bundle.main.path(forResource: "file", ofType: "txt")!)
 		
 		let headerStyle = Style {

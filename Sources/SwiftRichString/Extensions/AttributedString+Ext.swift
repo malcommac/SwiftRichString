@@ -48,7 +48,7 @@ public extension AttributedString {
 	///   - range: 	range of substring where style is applied, `nil` to use the entire string.
 	/// - Returns: 	same instance of the receiver with - eventually - modified attributes.
 	@discardableResult
-	public func add(style: String, range: NSRange? = nil) -> AttributedString {
+	func add(style: String, range: NSRange? = nil) -> AttributedString {
 		guard let style = Styles[style] else { return self }
 		return style.add(to: self, range: range)
 	}
@@ -61,7 +61,7 @@ public extension AttributedString {
 	///   - range: 	range of substring where style is applied, `nil` to use the entire string.
 	/// - Returns: 	same instance of the receiver with - eventually - modified attributes.
 	@discardableResult
-	public func add(styles: [String], range: NSRange? = nil) -> AttributedString {
+	func add(styles: [String], range: NSRange? = nil) -> AttributedString {
 		guard let styles = Styles[styles] else { return self }
 		return styles.mergeStyle().set(to: self, range: range)
 	}
@@ -74,7 +74,7 @@ public extension AttributedString {
 	///   - range: 	range of substring where style is applied, `nil` to use the entire string.
 	/// - Returns: 	same instance of the receiver with - eventually - modified attributes.
 	@discardableResult
-	public func set(style: String, range: NSRange? = nil) -> AttributedString {
+	func set(style: String, range: NSRange? = nil) -> AttributedString {
 		guard let style = Styles[style] else { return self }
 		return style.set(to: self, range: range)
 	}
@@ -88,7 +88,7 @@ public extension AttributedString {
 	///   - range: 	range of substring where style is applied, `nil` to use the entire string.
 	/// - Returns: 	same instance of the receiver with - eventually - modified attributes.
 	@discardableResult
-	public func set(styles: [String], range: NSRange? = nil) -> AttributedString {
+	func set(styles: [String], range: NSRange? = nil) -> AttributedString {
 		guard let styles = Styles[styles] else { return self }
 		return styles.mergeStyle().set(to: self, range: range)
 	}
@@ -100,7 +100,7 @@ public extension AttributedString {
 	///   - range: 	range of substring where style is applied, `nil` to use the entire string.
 	/// - Returns: 	same instance of the receiver with - eventually - modified attributes.
 	@discardableResult
-	public func add(style: StyleProtocol, range: NSRange? = nil) -> AttributedString {
+	func add(style: StyleProtocol, range: NSRange? = nil) -> AttributedString {
 		return style.add(to: self, range: range)
 	}
 	
@@ -112,7 +112,7 @@ public extension AttributedString {
 	///   - range: 	range of substring where style is applied, `nil` to use the entire string.
 	/// - Returns: 	same instance of the receiver with - eventually - modified attributes.
 	@discardableResult
-	public func add(styles: [StyleProtocol], range: NSRange? = nil) -> AttributedString {
+	func add(styles: [StyleProtocol], range: NSRange? = nil) -> AttributedString {
 		return styles.mergeStyle().add(to: self, range: range)
 	}
 	
@@ -123,7 +123,7 @@ public extension AttributedString {
 	///   - range: 	range of substring where style is applied, `nil` to use the entire string.
 	/// - Returns: 	same instance of the receiver with - eventually - modified attributes.
 	@discardableResult
-	public func set(style: StyleProtocol, range: NSRange? = nil) -> AttributedString {
+	func set(style: StyleProtocol, range: NSRange? = nil) -> AttributedString {
 		return style.set(to: self, range: range)
 	}
 	
@@ -135,7 +135,7 @@ public extension AttributedString {
 	///   - range: 	range of substring where style is applied, `nil` to use the entire string.
 	/// - Returns: 	same instance of the receiver with - eventually - modified attributes.
 	@discardableResult
-	public func set(styles: [StyleProtocol], range: NSRange? = nil) -> AttributedString {
+	func set(styles: [StyleProtocol], range: NSRange? = nil) -> AttributedString {
 		return styles.mergeStyle().set(to: self, range: range)
 	}
 	
@@ -146,7 +146,7 @@ public extension AttributedString {
 	///   - range: 	range of substring where style will be removed, `nil` to use the entire string.
 	/// - Returns: 	same instance of the receiver with - eventually - modified attributes.
 	@discardableResult
-	public func removeAttributes(_ keys: [NSAttributedString.Key], range: NSRange) -> Self {
+	func removeAttributes(_ keys: [NSAttributedString.Key], range: NSRange) -> Self {
 		keys.forEach { self.removeAttribute($0, range: range) }
 		return self
 	}
@@ -155,7 +155,7 @@ public extension AttributedString {
 	///
 	/// - Parameter style: style to use.
 	/// - Returns: 	same instance of the receiver with - eventually - modified attributes.
-	public func remove(_ style: StyleProtocol) -> Self {
+	func remove(_ style: StyleProtocol) -> Self {
 		self.removeAttributes(Array(style.attributes.keys), range: NSMakeRange(0, self.length))
 		return self
 	}

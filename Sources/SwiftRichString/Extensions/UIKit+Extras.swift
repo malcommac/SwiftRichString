@@ -67,14 +67,15 @@ extension UILabel {
 		}
 	}
 	
-	/// Use this to render automatically the texct with the currently set style instance or styleName.
+	/// Use this to render automatically the text with the currently set style instance or styleName.
 	public var styledText: String? {
 		get {
 			return attributedText?.string
 		}
 		set {
 			guard let text = newValue else { return }
-			self.attributedText = self.style?.set(to: text, range: nil)
+            let style = self.style ?? Style()
+            self.attributedText = style.set(to: text, range: nil)
 		}
 	}
 	
@@ -108,14 +109,15 @@ extension UITextField {
 		}
 	}
 	
-	/// Use this to render automatically the texct with the currently set style instance or styleName.
+	/// Use this to render automatically the text with the currently set style instance or styleName.
 	public var styledText: String? {
 		get {
 			return attributedText?.string
 		}
 		set {
 			guard let text = newValue else { return }
-			self.attributedText = self.style?.set(to: text, range: nil)
+            let style = self.style ?? Style()
+            self.attributedText = style.set(to: text, range: nil)
 		}
 	}
 	
@@ -149,14 +151,15 @@ extension UITextView {
 		}
 	}
 	
-	/// Use this to render automatically the texct with the currently set style instance or styleName.
+	/// Use this to render automatically the text with the currently set style instance or styleName.
 	public var styledText: String? {
 		get {
 			return attributedText?.string
 		}
 		set {
 			guard let text = newValue else { return }
-			self.attributedText = self.style?.set(to: text, range: nil)
+            let style = self.style ?? Style()
+            self.attributedText = style.set(to: text, range: nil)
 		}
 	}
 	
