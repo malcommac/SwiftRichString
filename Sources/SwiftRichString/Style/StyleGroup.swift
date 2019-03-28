@@ -86,7 +86,7 @@ public class StyleGroup: StyleProtocol {
 		private func extractParametersFromTags(_ string: String) -> [String: String]? {
 			guard let _ = string.firstIndex(of: " ") else { return nil } // no tags
 
-			let pattern = "\\w*\\s*=\\s*\"?\\s*([\\w\\s%#\\/\\.;:_-]*)\\s*\"?.*?" // maybe shorter?
+			let pattern = "\\w*\\s*=\\s*\"?\\s*([^\"][^\"]*)\\s*\"?.*?" // maybe shorter?
 			guard let regex = try? NSRegularExpression(pattern: pattern, options: .dotMatchesLineSeparators) else {
 				return nil
 			}
@@ -312,7 +312,7 @@ public extension Array where Array.Element == StyleProtocol {
 	/// Merge is made in order where each n+1 elements may replace existing keys defined by n-1 elements.
 	///
 	/// - Returns: merged style
-	public func mergeStyle() -> Style {
+	func mergeStyle() -> Style {
 		var attributes: [NSAttributedString.Key:Any] = [:]
 		self.forEach { attributes.merge($0.attributes, uniquingKeysWith: { (_, new) in return new }) }
 		return Style(dictionary: attributes)
