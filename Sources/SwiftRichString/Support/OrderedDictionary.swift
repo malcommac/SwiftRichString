@@ -56,7 +56,7 @@ public struct OrderedDictionary<K: Hashable, V> {
 	}
 	
 	public mutating func remove(key: K) -> V? {
-		guard let idx = self.keys.index(of: key) else { return nil }
+		guard let idx = self.keys.firstIndex(of: key) else { return nil }
 		self.keys.remove(at: idx)
 		return self.dict.removeValue(forKey: key)
 	}

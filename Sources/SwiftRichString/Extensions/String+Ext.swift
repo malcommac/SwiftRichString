@@ -49,7 +49,7 @@ public extension String {
 	///   - style: name of style registered in `StylesManager` singleton.
 	///   - range: range of substring where style is applied, `nil` to use the entire string.
 	/// - Returns: rendered attributed string, `nil` if style is not registered.
-	public func set(style: String, range: NSRange? = nil) -> AttributedString? {
+	func set(style: String, range: NSRange? = nil) -> AttributedString? {
 		return StylesManager.shared[style]?.set(to: self, range: range)
 	}
 	
@@ -63,7 +63,7 @@ public extension String {
 	///   - styles: ordered list of styles name to apply. Styles must be registed in `StylesManager`.
 	///   - range: range of substring where style is applied, `nil` to use the entire string.
 	/// - Returns: attributed string, `nil` if all specified styles required are not registered.
-	public func set(styles: [String], range: NSRange? = nil) -> AttributedString? {
+	func set(styles: [String], range: NSRange? = nil) -> AttributedString? {
 		return StylesManager.shared[styles]?.mergeStyle().set(to: self, range: range)
 	}
 	
@@ -73,7 +73,7 @@ public extension String {
 	///   - style: style to apply.
 	///   - range: range of substring where style is applied, `nil` to use the entire string.
 	/// - Returns: rendered attributed string.
-	public func set(style: StyleProtocol, range: NSRange? = nil) -> AttributedString {
+	func set(style: StyleProtocol, range: NSRange? = nil) -> AttributedString {
 		return style.set(to: self, range: range)
 	}
 	
@@ -86,7 +86,7 @@ public extension String {
 	///   - styles: ordered list of styles to apply. Styles must be registed in `StylesManager`.
 	///   - range: range of substring where style is applied, `nil` to use the entire string.
 	/// - Returns: attributed string.
-	public func set(styles: [StyleProtocol], range: NSRange? = nil) -> AttributedString {
+	func set(styles: [StyleProtocol], range: NSRange? = nil) -> AttributedString {
 		return styles.mergeStyle().set(to: self, range: range)
 	}
 	

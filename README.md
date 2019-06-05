@@ -367,7 +367,7 @@ let style = Style {
 SwiftRichString also support some dynamic elements in style applied by reading specific tag parameter's value.
 The following example render the `linkURL` property by reading the value from the source string inside `href` tag (like in real HTML text):
 
-```
+```swift
   let normal = Style {
 	$0.color = UIColor.black
   }
