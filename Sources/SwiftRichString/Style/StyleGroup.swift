@@ -264,14 +264,14 @@ public class StyleGroup: StyleProtocol {
 						removeTag(index: index, with: "\n")
 						continue
 					}
-					guard let attribute = self.styles[tag.name] else { continue }
+					
 					
 					removeTag(index: index)
 					if let closeIndex = tag.endingTagIndex {
 						guard closeIndex < tagQueue.count else { continue }
 						let closingTag = tagQueue[closeIndex]
 						removeTag(index: closeIndex)
-						
+						guard let attribute = self.styles[tag.name] else { continue }
 						let location = tag.range.location
 						let length = closingTag.range.location-location
 						let range = NSRange(location: location, length: length)
