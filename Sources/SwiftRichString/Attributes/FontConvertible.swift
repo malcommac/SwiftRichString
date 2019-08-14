@@ -62,7 +62,7 @@ extension Font: FontConvertible {
 		#elseif os(watchOS)
 		return Font(name: self.fontName, size: (size ?? WATCHOS_SYSTEMFONT_SIZE))!
 		#else
-		return Font(name: self.fontName, size: (size ?? Font.systemFontSize))!
+		return Font(descriptor: self.fontDescriptor, size: (size ?? Font.systemFontSize))
 		#endif
 	}
 	
