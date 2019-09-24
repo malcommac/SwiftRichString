@@ -59,10 +59,12 @@ extension Font: FontConvertible {
 	public func font(size: CGFloat?) -> Font {
 		#if os(tvOS)
 		return Font(name: self.fontName, size: (size ?? TVOS_SYSTEMFONT_SIZE))!
+        #elseif os(iOS)
+        return Font(name: self.fontName, size: (size ?? TVOS_SYSTEMFONT_SIZE))!
 		#elseif os(watchOS)
 		return Font(name: self.fontName, size: (size ?? WATCHOS_SYSTEMFONT_SIZE))!
-		#else
-		return Font(descriptor: self.fontDescriptor, size: (size ?? Font.systemFontSize))
+		#elseif os(macOS)
+        return Font(descriptor: self.fontDescriptor, size: (size ?? Font.systemFontSize))!
 		#endif
 	}
 	

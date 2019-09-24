@@ -72,13 +72,6 @@
       "idiom" : "watch-marketing",
       "size" : "1024x1024",
       "scale" : "1x"
-    },
-    {
-      "size" : "44x44",
-      "idiom" : "watch",
-      "scale" : "2x",
-      "role" : "longLook",
-      "subtype" : "42mm"
     }
   ],
   "info" : {
