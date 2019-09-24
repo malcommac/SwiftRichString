@@ -60,7 +60,7 @@ extension Font: FontConvertible {
 		#if os(tvOS)
 		return Font(name: self.fontName, size: (size ?? TVOS_SYSTEMFONT_SIZE))!
         #elseif os(iOS)
-        return Font(name: self.fontName, size: (size ?? TVOS_SYSTEMFONT_SIZE))!
+        return Font(name: self.fontName, size: (size ?? Font.systemFontSize))!
 		#elseif os(watchOS)
 		return Font(name: self.fontName, size: (size ?? WATCHOS_SYSTEMFONT_SIZE))!
 		#elseif os(macOS)
