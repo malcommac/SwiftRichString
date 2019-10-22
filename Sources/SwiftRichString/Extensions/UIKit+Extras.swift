@@ -75,7 +75,7 @@ extension UILabel {
 		set {
 			guard let text = newValue else { return }
             let style = self.style ?? Style()
-            self.attributedText = style.set(to: text, range: nil)
+            self.attributedText =  try? style.set(to: text, range: nil)
 		}
 	}
 	
@@ -117,7 +117,7 @@ extension UITextField {
 		set {
 			guard let text = newValue else { return }
             let style = self.style ?? Style()
-            self.attributedText = style.set(to: text, range: nil)
+            self.attributedText = try? style.set(to: text, range: nil)
 		}
 	}
 	
@@ -159,7 +159,7 @@ extension UITextView {
 		set {
 			guard let text = newValue else { return }
             let style = self.style ?? Style()
-            self.attributedText = style.set(to: text, range: nil)
+            self.attributedText = try? style.set(to: text, range: nil)
 		}
 	}
 	

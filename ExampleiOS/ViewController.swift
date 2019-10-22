@@ -75,8 +75,15 @@ class ViewController: UIViewController {
 					$0.font = UIFont.systemFont(ofSize: self.baseFontSize / 1.2)
 					$0.baselineOffset = Float(self.baseFontSize) / 3.5
 				}])
+        do {
+            self.textView?.attributedText =  try bodyHTML.set(style: style)
+        }catch let error {
+            if let nserror = error as? NSError {
+                print(nserror)
+            }
+            
+        }
 		
-		self.textView?.attributedText = bodyHTML.set(style: style)
         if #available(iOS 10.0, *) {
             self.textView?.adjustsFontForContentSizeCategory = true
         }

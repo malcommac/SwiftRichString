@@ -48,9 +48,9 @@ public extension AttributedString {
 	///   - range: 	range of substring where style is applied, `nil` to use the entire string.
 	/// - Returns: 	same instance of the receiver with - eventually - modified attributes.
 	@discardableResult
-	func add(style: String, range: NSRange? = nil) -> AttributedString {
+	func add(style: String, range: NSRange? = nil) throws -> AttributedString {
 		guard let style = Styles[style] else { return self }
-		return style.add(to: self, range: range)
+		return try style.add(to: self, range: range)
 	}
 	
 	/// Append ordered sequence of styles registered in `StyleManager` to the receiver.
@@ -61,9 +61,9 @@ public extension AttributedString {
 	///   - range: 	range of substring where style is applied, `nil` to use the entire string.
 	/// - Returns: 	same instance of the receiver with - eventually - modified attributes.
 	@discardableResult
-	func add(styles: [String], range: NSRange? = nil) -> AttributedString {
+	func add(styles: [String], range: NSRange? = nil) throws -> AttributedString {
 		guard let styles = Styles[styles] else { return self }
-		return styles.mergeStyle().set(to: self, range: range)
+		return try styles.mergeStyle().set(to: self, range: range)
 	}
 	
 	/// Replace any existing attributed string's style into the receiver/substring of the receiver
@@ -74,9 +74,9 @@ public extension AttributedString {
 	///   - range: 	range of substring where style is applied, `nil` to use the entire string.
 	/// - Returns: 	same instance of the receiver with - eventually - modified attributes.
 	@discardableResult
-	func set(style: String, range: NSRange? = nil) -> AttributedString {
+	func set(style: String, range: NSRange? = nil) throws-> AttributedString {
 		guard let style = Styles[style] else { return self }
-		return style.set(to: self, range: range)
+		return try style.set(to: self, range: range)
 	}
 	
 	/// Replace any existing attributed string's style into the receiver/substring of the receiver
@@ -88,9 +88,9 @@ public extension AttributedString {
 	///   - range: 	range of substring where style is applied, `nil` to use the entire string.
 	/// - Returns: 	same instance of the receiver with - eventually - modified attributes.
 	@discardableResult
-	func set(styles: [String], range: NSRange? = nil) -> AttributedString {
+	func set(styles: [String], range: NSRange? = nil) throws -> AttributedString {
 		guard let styles = Styles[styles] else { return self }
-		return styles.mergeStyle().set(to: self, range: range)
+		return try styles.mergeStyle().set(to: self, range: range)
 	}
 	
 	/// Append passed style to the receiver.
@@ -100,8 +100,8 @@ public extension AttributedString {
 	///   - range: 	range of substring where style is applied, `nil` to use the entire string.
 	/// - Returns: 	same instance of the receiver with - eventually - modified attributes.
 	@discardableResult
-	func add(style: StyleProtocol, range: NSRange? = nil) -> AttributedString {
-		return style.add(to: self, range: range)
+	func add(style: StyleProtocol, range: NSRange? = nil) throws -> AttributedString {
+		return try style.add(to: self, range: range)
 	}
 	
 	/// Append passed sequences of styles to the receiver.
@@ -112,8 +112,8 @@ public extension AttributedString {
 	///   - range: 	range of substring where style is applied, `nil` to use the entire string.
 	/// - Returns: 	same instance of the receiver with - eventually - modified attributes.
 	@discardableResult
-	func add(styles: [StyleProtocol], range: NSRange? = nil) -> AttributedString {
-		return styles.mergeStyle().add(to: self, range: range)
+	func add(styles: [StyleProtocol], range: NSRange? = nil) throws -> AttributedString {
+		return try styles.mergeStyle().add(to: self, range: range)
 	}
 	
 	/// Replace the attributes of the string with passed style.
@@ -123,8 +123,8 @@ public extension AttributedString {
 	///   - range: 	range of substring where style is applied, `nil` to use the entire string.
 	/// - Returns: 	same instance of the receiver with - eventually - modified attributes.
 	@discardableResult
-	func set(style: StyleProtocol, range: NSRange? = nil) -> AttributedString {
-		return style.set(to: self, range: range)
+	func set(style: StyleProtocol, range: NSRange? = nil) throws -> AttributedString {
+		return try style.set(to: self, range: range)
 	}
 	
 	/// Replace the attributes of the string with a style which is an ordered merge of passed
@@ -135,8 +135,8 @@ public extension AttributedString {
 	///   - range: 	range of substring where style is applied, `nil` to use the entire string.
 	/// - Returns: 	same instance of the receiver with - eventually - modified attributes.
 	@discardableResult
-	func set(styles: [StyleProtocol], range: NSRange? = nil) -> AttributedString {
-		return styles.mergeStyle().set(to: self, range: range)
+	func set(styles: [StyleProtocol], range: NSRange? = nil) throws -> AttributedString {
+		return try styles.mergeStyle().set(to: self, range: range)
 	}
 	
 	/// Remove passed attribute's keys from the receiver.

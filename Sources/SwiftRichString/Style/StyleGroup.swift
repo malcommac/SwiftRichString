@@ -180,9 +180,9 @@ public class StyleGroup: StyleProtocol {
 	///   - source: source to render.
 	///   - range: range of characters to render, `nil` to apply rendering to the entire content.
 	/// - Returns: attributed string
-	public func set(to source: String, range: NSRange?) -> AttributedString {
+	public func set(to source: String, range: NSRange?) throws -> AttributedString {
 		let attributed = NSMutableAttributedString(string: source)
-		return self.apply(to: attributed, adding: true, range: range)
+		return try self.apply(to: attributed, adding: true, range: range)
 	}
 	
 	/// Render given source string by appending parsed styles to the existing attributed string.
@@ -191,8 +191,8 @@ public class StyleGroup: StyleProtocol {
 	///   - source: source attributed string.
 	///   - range: range of parse.
 	/// - Returns: same istance of `source` with applied styles.
-	public func add(to source: AttributedString, range: NSRange?) -> AttributedString {
-		return self.apply(to: source, adding: true, range: range)
+	public func add(to source: AttributedString, range: NSRange?) throws -> AttributedString {
+		return try self.apply(to: source, adding: true, range: range)
 	}
 	
 	/// Render given source string by replacing existing styles to parsed tags.
@@ -201,8 +201,8 @@ public class StyleGroup: StyleProtocol {
 	///   - source: source attributed string.
 	///   - range: range of parse.
 	/// - Returns: same istance of `source` with applied styles.
-	public func set(to source: AttributedString, range: NSRange?) -> AttributedString {
-		return self.apply(to: source, adding: false, range: range)
+	public func set(to source: AttributedString, range: NSRange?) throws -> AttributedString  {
+		return try self.apply(to: source, adding: false, range: range)
 	}
 	
 	/// Parse tags and render the attributed string with the styles defined into the receiver.
@@ -212,13 +212,13 @@ public class StyleGroup: StyleProtocol {
 	///   - adding: `true` to add styles defined to existing styles, `false` to replace any existing style inside tags.
 	///   - range: range of operation, `nil` for entire string.
 	/// - Returns: modified attributed string, same instance of the `source`.
-	public func apply(to attrStr: AttributedString, adding: Bool, range: NSRange?) -> AttributedString {
+	public func apply(to attrStr: AttributedString, adding: Bool, range: NSRange?) throws -> AttributedString {
 		let tagRegex = "</?[a-zA-Z][^<>]*>"
 		var tagQueue:[TagAttribute] = []
 		let str = attrStr.string
 		
 		// Apply default base style if specified
-		self.baseStyle?.set(to: attrStr, range: nil)
+        try? self.baseStyle?.set(to: attrStr, range: nil)
 		
 		// Parse tags
 		if let regex = try? NSRegularExpression(pattern: tagRegex, options: .dotMatchesLineSeparators) {
@@ -264,7 +264,11 @@ public class StyleGroup: StyleProtocol {
 						removeTag(index: index, with: "\n")
 						continue
 					}
-					guard let attribute = self.styles[tag.name] else { continue }
+					guard let attribute = self.styles[tag.name] else {
+                        let error = NSError(domain: "SwiftStringStrings", code: 400, userInfo: [NSLocalizedDescriptionKey:"Unsupported tag",
+                                                                                                NSDebugDescriptionErrorKey:tag.name])
+                        throw error
+                    }
 					
 					removeTag(index: index)
 					if let closeIndex = tag.endingTagIndex {
