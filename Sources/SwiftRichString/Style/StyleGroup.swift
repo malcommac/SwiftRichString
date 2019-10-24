@@ -102,7 +102,7 @@ public class StyleGroup: StyleProtocol {
 					let key = String(block[block.startIndex..<dividerIndex])
 					let value = String(block[block.index(dividerIndex, offsetBy: 2)..<block.index(block.endIndex, offsetBy: -1)])
 
-                    let parsed = value.replacingOccurrences(of: "\\'", with: "").replacingOccurrences(of: "\'", with: "")
+                    let parsed = value.replacingOccurrences(of: "'", with: "")
 
 					paramDict?[key] = parsed
 				}
