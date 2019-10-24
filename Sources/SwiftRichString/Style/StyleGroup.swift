@@ -101,7 +101,10 @@ public class StyleGroup: StyleProtocol {
 				if let dividerIndex = block.firstIndex(of: "=") {
 					let key = String(block[block.startIndex..<dividerIndex])
 					let value = String(block[block.index(dividerIndex, offsetBy: 2)..<block.index(block.endIndex, offsetBy: -1)])
-					paramDict?[key] = value
+
+                    let parsed = value.replacingOccurrences(of: "\\'", with: "").replacingOccurrences(of: "\'", with: "")
+
+					paramDict?[key] = parsed
 				}
 				return paramDict
 			}

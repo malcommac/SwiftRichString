@@ -52,12 +52,23 @@ class ViewController: UIViewController {
 		let italicStyle = Style {
 			$0.font = UIFont.italicSystemFont(ofSize: self.baseFontSize)
 		}
+        
+        
 		
 		let style = StyleGroup(base: Style {
 			$0.font = UIFont.systemFont(ofSize: self.baseFontSize)
 			$0.lineSpacing = 2
 			$0.kerning = Kerning.adobe(-15)
 			}, [
+                "font": Style {
+                    $0.color = DynamicColorRepresentable(tagKey: "color", defaultColor:"#000000")
+                },
+                "strike": Style{
+                    $0.strikethrough = (NSUnderlineStyle.single,UIColor.black)
+                },
+                "a":Style{
+                    $0.linkURL = URLRepresentable.tagAttribute("href")
+                },
 				"h3": headerStyle,
 				"h4": headerStyle,
 				"h5": headerStyle,
