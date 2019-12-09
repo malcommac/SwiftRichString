@@ -267,6 +267,20 @@ public class StyleGroup: StyleProtocol {
 						removeTag(index: index, with: "\n")
 						continue
 					}
+                    guard tag.name != "p" else {
+                        if index > 0 {
+                            removeTag(index: index, with: "\n")
+                        }
+                        else {
+                            removeTag(index:index)
+                        }
+                        if let closeIndex = tag.endingTagIndex {
+                            guard closeIndex < tagQueue.count else { continue }
+                            let closingTag = tagQueue[closeIndex]
+                            removeTag(index: closeIndex, with: "\n")
+                        }
+                        continue
+                    }
 					guard let attribute = self.styles[tag.name] else {
                         let error = NSError(domain: "SwiftStringStrings", code: 400, userInfo: [NSLocalizedDescriptionKey:"Unsupported tag",
                                                                                                 NSDebugDescriptionErrorKey:tag.name])
