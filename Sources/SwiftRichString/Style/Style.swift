@@ -616,6 +616,9 @@ public class Style: StyleProtocol {
 		// string to generate a single attributes dictionary for `NSAttributedString`.
 		let fontAttributes = self.fontData?.attributes ?? [:]
 		self.cachedAttributes = self.innerAttributes.merging(fontAttributes) { (_, new) in return new }
+        if let font = self.fontData?.font {
+            self.cachedAttributes?[.font] = font
+        }
 		return self.cachedAttributes!
 	}
 	
