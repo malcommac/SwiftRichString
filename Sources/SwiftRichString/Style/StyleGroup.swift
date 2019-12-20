@@ -42,6 +42,8 @@ public class StyleGroup: StyleProtocol {
 	/// Does not return anything for groups.
 	public var fontData: FontData? = nil
 
+    public var textTransform: TextTransform?
+
 	/// TagAttribute represent a single tag in a source string after the text is parsed.
 	public class TagAttribute {
 		let wholeTag: String

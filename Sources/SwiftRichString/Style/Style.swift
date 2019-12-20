@@ -57,6 +57,8 @@ public class Style: StyleProtocol {
 	private var cachedAttributes: [NSAttributedString.Key : Any]? = nil
 	
 	//MARK: - PROPERTIES
+    
+    public var textTransform: TextTransform?
 
 	/// Alter the size of the currently set font to the specified value (expressed in point)
 	/// **Note**: in order to be used you must also set the `.font` attribute of the style.
@@ -616,9 +618,9 @@ public class Style: StyleProtocol {
 		// string to generate a single attributes dictionary for `NSAttributedString`.
 		let fontAttributes = self.fontData?.attributes ?? [:]
 		self.cachedAttributes = self.innerAttributes.merging(fontAttributes) { (_, new) in return new }
-        if let font = self.fontData?.font {
-            self.cachedAttributes?[.font] = font
-        }
+//        if let font = self.fontData?.font {
+//            self.cachedAttributes?[.font] = font
+//        }
 		return self.cachedAttributes!
 	}
 	

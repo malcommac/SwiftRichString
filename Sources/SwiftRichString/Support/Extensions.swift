@@ -57,3 +57,14 @@ extension NSNumber {
 	}
 	
 }
+
+extension NSAttributedString {
+    
+    @nonobjc func mutableStringCopy() -> NSMutableAttributedString {
+        guard let copy = mutableCopy() as? NSMutableAttributedString else {
+            fatalError("Failed to mutableCopy() \(self)")
+        }
+        return copy
+    }
+
+}
