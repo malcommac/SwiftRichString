@@ -86,7 +86,7 @@ open class StandardXMLAttributesResolver: XMLDynamicAttributesResolver {
             case "a": // href support
                 finalStyleToApply.linkURL = URL(string: attributes?["href"])
             
-            #if os(OSX) || os(iOS)
+            #if os(iOS)
             case "img":
                 if let url = attributes?["url"] {
                     if let image = AttributedString(imageURL: url, bounds: attributes?["rect"]) {

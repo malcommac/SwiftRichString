@@ -36,7 +36,7 @@ import AppKit
 import UIKit
 #endif
 
-#if os(OSX) || os(iOS)
+#if os(iOS)
 
 public extension AttributedString {
     

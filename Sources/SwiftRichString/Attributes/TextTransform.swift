@@ -45,22 +45,34 @@ public enum TextTransform {
     var transformer: TransformFunction {
         switch self {
             case .lowercase:
-                return { string in string.localizedLowercase }
+                return { string in
+                    string.localizedLowercase
+                }
             
             case .uppercase:
-                return { string in string.localizedUppercase }
+                return { string in
+                    string.localizedUppercase
+                }
             
             case .capitalized:
-                return { string in string.localizedCapitalized }
+                return { string in
+                    string.localizedCapitalized
+                }
             
             case .lowercaseWithLocale(let locale):
-                return { string in string.lowercased(with: locale) }
+                return { string in
+                    string.lowercased(with: locale)
+                }
             
             case .uppercaseWithLocale(let locale):
-                return { string in string.uppercased(with: locale) }
+                return { string in
+                    string.uppercased(with: locale)
+                }
             
             case .capitalizedWithLocale(let locale):
-                return { string in string.capitalized(with: locale) }
+                return { string in
+                    string.capitalized(with: locale)
+                }
             
             case .custom(let transform):
                 return transform
