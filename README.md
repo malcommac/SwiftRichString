@@ -549,7 +549,7 @@ self.textView?.attributedText = taggedText.set(style: ...)
 
 This is the result:
 
-<img src="Documentation_Assests/image_6.png" alt="" style="width: 400px;"/>
+<img src="Documentation_Assests/image_6.png" alt="" style="width: 120px;"/>
 
 <a name="stylemanager"/>
 
