@@ -6,7 +6,6 @@
 [![Carthage Compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
 [![Twitter](https://img.shields.io/badge/twitter-@danielemargutti-blue.svg?style=flat)](http://twitter.com/danielemargutti)
 
-
 SwiftRichString is a lightweight library which allows to create and manipulate attributed strings easily both in iOS, macOS, tvOS and even watchOS.
 It provides convenient way to store styles you can reuse in your app's UI elements, allows complex tag-based strings rendering and also includes integration with Interface Builder.
 
@@ -61,14 +60,11 @@ self.label?.attributedText = str.set(style: myGroup)
 
 That's the result!
 
-<img src="Documentation_Assests/image_2.png" alt="" style="width: 70px;"/>
-
---
+<img src="Documentation_Assests/image_2.png" alt="" width=70px/>
 
 ## Documentation
 
 - [Introduction to `Style`, `StyleGroup` & `StyleRegEx`](#stylestylegroup)
-	- [Introduction](#introduction)
 	- [String & Attributed String concatenation](#concatenation)
 	- [Apply styles to `String` & `Attributed String`](#manualstyling)
 	- [Fonts & Colors in `Style`](#fontscolors)
@@ -95,17 +91,13 @@ Other info:
 
 ## Introduction to `Style`, `StyleGroup`, `StyleRegEx`
 
-<a name="introduction"/>
-
-### Introduction
-
 The main concept behind SwiftRichString is the use of `StyleProtocol` as generic container of the attributes you can apply to both `String` and `NSMutableAttributedString`.
 Concrete classes derivated by `StyleProtocol` are: `Style`, `StyleGroup` and `StyleRegEx`.
 
 Each of these classes can be used as source for styles you can apply to a string, substring or attributed string.
 
 
-#### `Style`: apply style to strings or attributed strings
+### `Style`: apply style to strings or attributed strings
 
 A `Style` is a class which encapsulate all the attributes you can apply to a string. The vast majority of the attributes of both AppKit/UIKit are currently available via type-safe properties by this class.
 
@@ -121,7 +113,7 @@ let style = Style {
 let attrString = "Some text".set(style: style) // attributed string
 ```
 
-#### `StyleGroup`: Apply styles for tag-based complex string
+### `StyleGroup`: Apply styles for tag-based complex string
 
 `Style` instances are anonymous; if you want to use a style instance to render a tag-based plain string you need to include it inside a `StyleGroup`. You can consider a `StyleGroup` as a container of `Styles` (but, in fact, thanks to the conformance to a common `StyleProtocol`'s protocol your group may contains other sub-groups too).
 
@@ -140,7 +132,7 @@ The following code defines a group where:
 - we have defined two other styles named `h1` and `h2`; these styles are applied to the source string when parser encounter some text enclosed by these tags.
 
 
-#### `StyleRegEx`: Apply styles via regular expressions
+### `StyleRegEx`: Apply styles via regular expressions
 
 `StyleRegEx` allows you to define a style which is applied when certain regular expression is matched inside the target string/attributed string.
 
@@ -156,11 +148,11 @@ let attrString = "My email is hello@danielemargutti.com and my website is http:/
 
 The result is this:
 
-<img src="Documentation_Assests/image_4.png" alt="" style="width: 400px;"/>
+<img src="Documentation_Assests/image_4.png" alt="" width=400px/>
 
 <a name="concatenation"/>
 
-### String & Attributed String concatenation
+## String & Attributed String concatenation
 SwiftRichString allows you to simplify string concatenation by providing custom `+` operator between `String`,`AttributedString` (typealias of `NSMutableAttributedString`) and `Style`.
 
 This a an example:
@@ -187,11 +179,11 @@ let attStr = "Hello" + ("\(username)" + big)
 
 <a name="manualstyling"/>
 
-### Apply styles to `String` & `Attributed String`
+## Apply styles to `String` & `Attributed String`
 
 Both `String` and `Attributed String` (aka `NSMutableAttributedString`) has a come convenience methods you can use to create an manipulate attributed text easily via code:
 
-#### Strings Instance Methods
+### Strings Instance Methods
 
 - `set(style: String, range: NSRange? = nil)`: apply a globally registered style to the string (or a substring) by producing an attributed string.
 - `set(styles: [String], range: NSRange? = nil)`: apply an ordered sequence of globally registered styles to the string (or a substring) by producing an attributed string.
@@ -216,7 +208,7 @@ let a2: AttributedString = "Hello <h1>world</h1>, <h2>welcome here</h2>".set(sty
 let a3 = "Hello Guys!".set(Style({ $0.font = SystemFonts.Helvetica_Bold.font(size: 20) }), range: NSMakeRange(0,4))
 ```
 
-#### AttributedString Instance Methods
+### AttributedString Instance Methods
 
 Similar methods are also available to attributed strings.
 
@@ -297,7 +289,7 @@ Clearly you can still pass instances of both colors/fonts.
 
 <a name="derivatingstyle"/>
 
-### Derivating a `Style`
+## Derivating a `Style`
 
 Sometimes you may need to infer properties of a new style from an existing one. In this case you can use `byAdding()` function of `Style` to produce a new style with all the properties of the receiver and the chance to configure additional/replacing attributes.
 
@@ -335,7 +327,7 @@ let style = Style {
 
 <a name="xmlstrings"/>
 
-### Render XML tagged strings
+## Render XML/HTML tagged strings
 
 SwiftRichString is also able to parse and render xml tagged strings to produce a valid `NSAttributedString` instance. This is particularly useful when you receive dynamic strings from remote services and you need to produce a rendered string easily.
 
@@ -374,7 +366,7 @@ self.textView?.attributedText = bodyHTML.set(style: group)
 
 <a name="customizexmlstrings"/>
 
-### Customize XML rendering: react to tag's attributes and unknown tags
+## Customize XML rendering: react to tag's attributes and unknown tags
 
 You can also add custom attributes to your tags and render it as you prefer: you need to provide a croncrete implementation of `XMLDynamicAttributesResolver` protocol and assign it to the `StyleGroup`'s `.xmlAttributesResolver` property. 
 
@@ -455,13 +447,13 @@ self.textView?.attributedText = sourceHTML.set(style: groupStyle)
 
 The result is this:
 
-<img src="Documentation_Assests/image_5.png" alt="" style="width: 300px;"/>
+<img src="Documentation_Assests/image_5.png" alt="" width=300px/>
 
 where the `b` tag's blue color was overriden by the color tag attributes and the link in 'here' is clickable.
 
 <a name="texttransforms"/>
 
-### Custom Text Transforms
+## Custom Text Transforms
 
 Sometimes you want to apply custom text transforms to your string; for example you may want to make some text with a given style uppercased with current locale.  
 In order to provide custom text transform in `Style` instances just set one or more `TextTransform` to your `Style`'s `.textTransforms` property:
@@ -496,7 +488,7 @@ All text transforms are applied in the same ordered you set in `textTransform` p
 
 <a name="images"/>
 
-### Local & Remote Images inside text
+## Local & Remote Images inside text
 
 SwiftRichString supports local and remote attached images along with attributed text.  
 You can create an attributed string with an image with a single line:
@@ -529,7 +521,7 @@ self.textView?.attributedText = taggedText.set(style: ...)
 
 This is the result:
 
-<img src="Documentation_Assests/image_6.png" alt="" style="width: 100px;"/>
+<img src="Documentation_Assests/image_6.png" alt="" width=100px/>
 
 <a name="stylemanager"/>
 
@@ -537,7 +529,7 @@ This is the result:
 
 <a name="globalregister"/>
 
-### Register globally available styles
+## Register globally available styles
 Styles can be created as you need or registered globally to be used once you need.
 This second approach is strongly suggested because allows you to theme your app as you need and also avoid duplication of the code.
 
@@ -573,7 +565,7 @@ or you can assign `body` string to the `styledText` via Interface Builder design
 
 <a name="defer"/>
 
-### Defer style creation on demand
+## Defer style creation on demand
 Sometimes you may need to return a particular style used only in small portion of your app; while you can still set it directly you can also defer its creation in `StylesManager`.
 
 By implementing `onDeferStyle()` callback you have an option to create a new style once required: you will receive the identifier of the style.
@@ -606,7 +598,7 @@ The following code return a valid style for `myStyle` identifier and cache it; i
 
 Now you can use your style to render, for example, a tag based text into an `UILabel`: just set the name of the style to use.
 
-<img src="Documentation_Assests/image_3.png" alt="" style="width: 400px;"/>
+<img src="Documentation_Assests/image_3.png" alt="" width=400px>
 
 <a name="ib"/>
 
