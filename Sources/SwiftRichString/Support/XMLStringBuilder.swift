@@ -196,17 +196,34 @@ public class XMLStringBuilder: NSObject, XMLParserDelegate {
     
 }
 
+// MARK: - XMLDynamicStyle
+
 public class XMLDynamicStyle {
+    
+    // MARK: - Public Properties
+    
+    /// Tag read for this style.
     public let tag: String
+    
+    /// Style found in receiver `StyleGroup` instance.
     public let style: StyleProtocol?
+    
+    /// Attributes found into the xml tag.
     public let xmlAttributes: [String: String]?
     
-    public init(tag: String, style: StyleProtocol?, xmlAttributes: [String: String]? = nil) {
+    // MARK: - Initialization
+    
+    internal init(tag: String, style: StyleProtocol?, xmlAttributes: [String: String]? = nil) {
         self.tag = tag
         self.style = style
         self.xmlAttributes = ((xmlAttributes?.keys.isEmpty ?? true) == false ? xmlAttributes : nil)
     }
     
+    // MARK: - Public function
+    
+    /// Shortcut to enumarate attributes found in tags along with their respective values.
+    ///
+    /// - Parameter handler: handler function.
     public func enumerateAttributes(_ handler: ((_ key: String, _ value: String) -> Void)) {
         guard let xmlAttributes = xmlAttributes else {
             return

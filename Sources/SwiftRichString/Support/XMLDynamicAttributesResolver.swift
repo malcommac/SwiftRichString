@@ -39,8 +39,24 @@ import UIKit
 
 public protocol XMLDynamicAttributesResolver {
     
+    /// You are receiving this event when SwiftRichString correctly render an existing tag but the tag
+    /// contains extra attributes you may want to handle.
+    /// For example you can pass a specific tag `<bold color="#db13f2">text/<bold>` and you want to override
+    /// the color with passed value in tags.
+    ///
+    /// - Parameters:
+    ///   - attributedString: attributed string. You will receive it after the style is applied.
+    ///   - xmlStyle: xml style information with tag, applied style and the dictionary with extra attributes.
     func applyDynamicAttributes(to attributedString: inout AttributedString, xmlStyle: XMLDynamicStyle)
     
+    /// You will receive this event when SwiftRichString can't found a received style name into provided group tags.
+    /// You can decide to handle it. The default receiver for example uses the `a` tag to render passed url if `href`
+    /// attribute is alo present.
+    ///
+    /// - Parameters:
+    ///   - tag: tag name received.
+    ///   - attributedString: attributed string received.
+    ///   - attributes: attributes of the tag received.
     func styleForUnknownXMLTag(_ tag: String, to attributedString: inout AttributedString, attributes: [String: String]?)
 
 }
@@ -53,7 +69,7 @@ open class StandardXMLAttributesResolver: XMLDynamicAttributesResolver {
         let finalStyleToApply = Style()
         xmlStyle.enumerateAttributes { key, value  in
             switch key {
-                case "color":
+                case "color": // color support
                     finalStyleToApply.color = Color(hexString: value)
                 
                 default:
@@ -67,7 +83,7 @@ open class StandardXMLAttributesResolver: XMLDynamicAttributesResolver {
     public func styleForUnknownXMLTag(_ tag: String, to attributedString: inout AttributedString, attributes: [String: String]?) {
         let finalStyleToApply = Style()
         switch tag {
-            case "a":
+            case "a": // href support
                 finalStyleToApply.linkURL = URL(string: attributes?["href"])
             
             default:
@@ -75,6 +91,5 @@ open class StandardXMLAttributesResolver: XMLDynamicAttributesResolver {
         }
         attributedString.add(style: finalStyleToApply)
     }
-    
     
 }
