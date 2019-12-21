@@ -42,7 +42,7 @@ public class StyleGroup: StyleProtocol {
 	/// Does not return anything for groups.
 	public var fontData: FontData? = nil
 
-    public var textTransform: TextTransform?
+    public var textTransforms: [TextTransform]?
 
 	/// TagAttribute represent a single tag in a source string after the text is parsed.
 	public class TagAttribute {
@@ -316,8 +316,15 @@ public extension Array where Array.Element == StyleProtocol {
 	/// - Returns: merged style
 	func mergeStyle() -> Style {
 		var attributes: [NSAttributedString.Key:Any] = [:]
-		self.forEach { attributes.merge($0.attributes, uniquingKeysWith: { (_, new) in return new }) }
-		return Style(dictionary: attributes)
+        var textTransforms = [TextTransform]()
+		self.forEach {
+            attributes.merge($0.attributes, uniquingKeysWith: {
+                (_, new) in
+                return new
+            })
+            textTransforms.append(contentsOf: $0.textTransforms ?? [])
+        }
+        return Style(dictionary: attributes, textTransforms: (textTransforms.isEmpty ? nil : textTransforms))
 	}
 	
 }

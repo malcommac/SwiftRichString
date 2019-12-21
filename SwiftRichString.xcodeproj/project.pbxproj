@@ -139,6 +139,22 @@
 		647AD65221F389A400CF787E /* URLRepresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 647AD64C21F3898400CF787E /* URLRepresentable.swift */; };
 		647AD65321F389A400CF787E /* URLRepresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 647AD64C21F3898400CF787E /* URLRepresentable.swift */; };
 		647AD65421F389A800CF787E /* URLRepresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 647AD64C21F3898400CF787E /* URLRepresentable.swift */; };
+		647D775623AD8AF900733374 /* TextTransform.swift in Sources */ = {isa = PBXBuildFile; fileRef = 647D775523AD8AF900733374 /* TextTransform.swift */; };
+		647D775723AD8AF900733374 /* TextTransform.swift in Sources */ = {isa = PBXBuildFile; fileRef = 647D775523AD8AF900733374 /* TextTransform.swift */; };
+		647D775823AD8AF900733374 /* TextTransform.swift in Sources */ = {isa = PBXBuildFile; fileRef = 647D775523AD8AF900733374 /* TextTransform.swift */; };
+		647D775923AD8AF900733374 /* TextTransform.swift in Sources */ = {isa = PBXBuildFile; fileRef = 647D775523AD8AF900733374 /* TextTransform.swift */; };
+		647D775A23AD8B8700733374 /* TextTransform.swift in Sources */ = {isa = PBXBuildFile; fileRef = 647D775523AD8AF900733374 /* TextTransform.swift */; };
+		647D775B23AD8B8800733374 /* TextTransform.swift in Sources */ = {isa = PBXBuildFile; fileRef = 647D775523AD8AF900733374 /* TextTransform.swift */; };
+		647D775C23AD8B8800733374 /* TextTransform.swift in Sources */ = {isa = PBXBuildFile; fileRef = 647D775523AD8AF900733374 /* TextTransform.swift */; };
+		647D775D23AD8B9C00733374 /* TextTransform.swift in Sources */ = {isa = PBXBuildFile; fileRef = 647D775523AD8AF900733374 /* TextTransform.swift */; };
+		647D775F23AE080200733374 /* XMLStringBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 647D775E23AE080200733374 /* XMLStringBuilder.swift */; };
+		647D776023AE080200733374 /* XMLStringBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 647D775E23AE080200733374 /* XMLStringBuilder.swift */; };
+		647D776123AE080200733374 /* XMLStringBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 647D775E23AE080200733374 /* XMLStringBuilder.swift */; };
+		647D776223AE080200733374 /* XMLStringBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 647D775E23AE080200733374 /* XMLStringBuilder.swift */; };
+		647D776323AE09CD00733374 /* XMLStringBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 647D775E23AE080200733374 /* XMLStringBuilder.swift */; };
+		647D776423AE09CD00733374 /* XMLStringBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 647D775E23AE080200733374 /* XMLStringBuilder.swift */; };
+		647D776523AE09CE00733374 /* XMLStringBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 647D775E23AE080200733374 /* XMLStringBuilder.swift */; };
+		647D776623AE09CE00733374 /* XMLStringBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 647D775E23AE080200733374 /* XMLStringBuilder.swift */; };
 		648932CA209DE194000E691A /* CommonsAttributes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 648932C9209DE194000E691A /* CommonsAttributes.swift */; };
 		648932CB209DE194000E691A /* CommonsAttributes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 648932C9209DE194000E691A /* CommonsAttributes.swift */; };
 		648932CC209DE194000E691A /* CommonsAttributes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 648932C9209DE194000E691A /* CommonsAttributes.swift */; };
@@ -305,6 +321,8 @@
 		64507F1820B1911B009455BD /* PushNotificationPayload.apns */ = {isa = PBXFileReference; lastKnownFileType = text; path = PushNotificationPayload.apns; sourceTree = "<group>"; };
 		64774AD2213E91B9008F8DC3 /* file.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = file.txt; sourceTree = "<group>"; };
 		647AD64C21F3898400CF787E /* URLRepresentable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLRepresentable.swift; sourceTree = "<group>"; };
+		647D775523AD8AF900733374 /* TextTransform.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextTransform.swift; sourceTree = "<group>"; };
+		647D775E23AE080200733374 /* XMLStringBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XMLStringBuilder.swift; sourceTree = "<group>"; };
 		648932C9209DE194000E691A /* CommonsAttributes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonsAttributes.swift; sourceTree = "<group>"; };
 		648932D3209DE44E000E691A /* FontConvertible.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FontConvertible.swift; sourceTree = "<group>"; };
 		648932DC209DE474000E691A /* ExampleiOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ExampleiOS.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -496,6 +514,7 @@
 				6489332420A0CA76000E691A /* FontInfoAttribute.swift */,
 				D53F4E7A21F03E690085D26F /* DynamicText.swift */,
 				647AD64C21F3898400CF787E /* URLRepresentable.swift */,
+				647D775523AD8AF900733374 /* TextTransform.swift */,
 			);
 			path = Attributes;
 			sourceTree = "<group>";
@@ -503,6 +522,7 @@
 		64507EB220B05C08009455BD /* Support */ = {
 			isa = PBXGroup;
 			children = (
+				647D775E23AE080200733374 /* XMLStringBuilder.swift */,
 				64507E7020AEF12C009455BD /* AssociatedValues.swift */,
 				64507E7720AEF611009455BD /* OrderedDictionary.swift */,
 				64507EBD20B18489009455BD /* Extensions.swift */,
@@ -1072,6 +1092,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				647D775F23AE080200733374 /* XMLStringBuilder.swift in Sources */,
+				647D775623AD8AF900733374 /* TextTransform.swift in Sources */,
 				D53F4E7B21F03E690085D26F /* DynamicText.swift in Sources */,
 				648932CA209DE194000E691A /* CommonsAttributes.swift in Sources */,
 				64507EBE20B18489009455BD /* Extensions.swift in Sources */,
@@ -1108,6 +1130,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				647D776123AE080200733374 /* XMLStringBuilder.swift in Sources */,
+				647D775823AD8AF900733374 /* TextTransform.swift in Sources */,
 				D53F4E7D21F03EEF0085D26F /* DynamicText.swift in Sources */,
 				648932CC209DE194000E691A /* CommonsAttributes.swift in Sources */,
 				64507EC020B18489009455BD /* Extensions.swift in Sources */,
@@ -1136,6 +1160,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				647D776223AE080200733374 /* XMLStringBuilder.swift in Sources */,
+				647D775923AD8AF900733374 /* TextTransform.swift in Sources */,
 				D53F4E7E21F03EEF0085D26F /* DynamicText.swift in Sources */,
 				648932CD209DE194000E691A /* CommonsAttributes.swift in Sources */,
 				64507EC120B18489009455BD /* Extensions.swift in Sources */,
@@ -1164,6 +1190,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				647D776023AE080200733374 /* XMLStringBuilder.swift in Sources */,
+				647D775723AD8AF900733374 /* TextTransform.swift in Sources */,
 				D53F4E7C21F03EEE0085D26F /* DynamicText.swift in Sources */,
 				648932CB209DE194000E691A /* CommonsAttributes.swift in Sources */,
 				64507EBF20B18489009455BD /* Extensions.swift in Sources */,
@@ -1199,6 +1227,7 @@
 				64507EDE20B18F0F009455BD /* AppDelegate.swift in Sources */,
 				D53F4E8021F03F240085D26F /* DynamicText.swift in Sources */,
 				64507EEC20B18F20009455BD /* StyleGroup.swift in Sources */,
+				647D775C23AD8B8800733374 /* TextTransform.swift in Sources */,
 				64507EF920B18F20009455BD /* AssociatedValues.swift in Sources */,
 				64507EF320B18F20009455BD /* UIKit+Extras.swift in Sources */,
 				64507EEB20B18F20009455BD /* Style.swift in Sources */,
@@ -1206,6 +1235,7 @@
 				64507EF620B18F20009455BD /* FontConvertible.swift in Sources */,
 				64507EED20B18F20009455BD /* StyleRegEx.swift in Sources */,
 				64507EF020B18F20009455BD /* String+Subscript.swift in Sources */,
+				647D776423AE09CD00733374 /* XMLStringBuilder.swift in Sources */,
 				64507EEF20B18F20009455BD /* String+Ext.swift in Sources */,
 				64507EFA20B18F20009455BD /* OrderedDictionary.swift in Sources */,
 				64507EF820B18F20009455BD /* FontInfoAttribute.swift in Sources */,
@@ -1226,6 +1256,7 @@
 				64507F1420B1911B009455BD /* NotificationController.swift in Sources */,
 				64507F3320B1912B009455BD /* AssociatedValues.swift in Sources */,
 				D53F4E7F21F03F230085D26F /* DynamicText.swift in Sources */,
+				647D776323AE09CD00733374 /* XMLStringBuilder.swift in Sources */,
 				64507F2420B1912B009455BD /* StyleProtocol.swift in Sources */,
 				64507F3220B1912B009455BD /* FontInfoAttribute.swift in Sources */,
 				64507F2D20B1912B009455BD /* UIKit+Extras.swift in Sources */,
@@ -1243,6 +1274,7 @@
 				643565FB2153884C00CEEE9F /* Compatibility.swift in Sources */,
 				64507F2820B1912B009455BD /* StylesManager.swift in Sources */,
 				64507F2720B1912B009455BD /* StyleRegEx.swift in Sources */,
+				647D775D23AD8B9C00733374 /* TextTransform.swift in Sources */,
 				64507F3420B1912B009455BD /* OrderedDictionary.swift in Sources */,
 				64507F2A20B1912B009455BD /* String+Subscript.swift in Sources */,
 				64507F2620B1912B009455BD /* StyleGroup.swift in Sources */,
@@ -1260,6 +1292,7 @@
 				64893322209DED04000E691A /* StyleGroup.swift in Sources */,
 				D53F4E8221F03F250085D26F /* DynamicText.swift in Sources */,
 				64507EBB20B1766D009455BD /* StyleRegEx.swift in Sources */,
+				647D775A23AD8B8700733374 /* TextTransform.swift in Sources */,
 				64507E7C20AEF611009455BD /* OrderedDictionary.swift in Sources */,
 				64507E8A20AF3609009455BD /* String+Subscript.swift in Sources */,
 				648932E1209DE474000E691A /* ViewController.swift in Sources */,
@@ -1267,6 +1300,7 @@
 				648932DF209DE474000E691A /* AppDelegate.swift in Sources */,
 				64507E7520AEF12C009455BD /* AssociatedValues.swift in Sources */,
 				64507E6E20AEEFA7009455BD /* UIKit+Extras.swift in Sources */,
+				647D776623AE09CE00733374 /* XMLStringBuilder.swift in Sources */,
 				64893314209DE8AA000E691A /* SystemFonts.swift in Sources */,
 				6489332920A0CA76000E691A /* FontInfoAttribute.swift in Sources */,
 				6489330D209DE7E3000E691A /* ColorConvertible.swift in Sources */,
@@ -1290,6 +1324,7 @@
 				648932FA209DE6C5000E691A /* ViewController.swift in Sources */,
 				D53F4E8121F03F240085D26F /* DynamicText.swift in Sources */,
 				64507EBC20B1766D009455BD /* StyleRegEx.swift in Sources */,
+				647D775B23AD8B8800733374 /* TextTransform.swift in Sources */,
 				64507EA020AF4681009455BD /* String+Ext.swift in Sources */,
 				64507E9220AF3A9C009455BD /* StyleProtocol.swift in Sources */,
 				64507E6020AEEC19009455BD /* StylesManager.swift in Sources */,
@@ -1297,6 +1332,7 @@
 				64893315209DE8AB000E691A /* SystemFonts.swift in Sources */,
 				6489332A20A0CA76000E691A /* FontInfoAttribute.swift in Sources */,
 				64507EB320B05E5A009455BD /* UIKit+Extras.swift in Sources */,
+				647D776523AE09CE00733374 /* XMLStringBuilder.swift in Sources */,
 				6489330E209DE7E3000E691A /* ColorConvertible.swift in Sources */,
 				64507EA920B05015009455BD /* AttributedString+Ext.swift in Sources */,
 				64507E7D20AEF611009455BD /* OrderedDictionary.swift in Sources */,

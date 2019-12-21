@@ -58,7 +58,8 @@ public class Style: StyleProtocol {
 	
 	//MARK: - PROPERTIES
     
-    public var textTransform: TextTransform?
+    /// Apply any transform to the text.
+    public var textTransforms: [TextTransform]?
 
 	/// Alter the size of the currently set font to the specified value (expressed in point)
 	/// **Note**: in order to be used you must also set the `.font` attribute of the style.
@@ -558,13 +559,17 @@ public class Style: StyleProtocol {
 	/// Font related attributes are not set automatically but are encapsulasted to the font object itself.
 	///
 	/// - Parameter dictionary: dictionary to set
-	public init(dictionary: [NSAttributedString.Key: Any]?) {
+    /// - Parameters:
+    ///   - dictionary: dictionary to set.
+    ///   - textTransforms: tranforms to apply.
+    public init(dictionary: [NSAttributedString.Key: Any]?, textTransforms: [TextTransform]? = nil) {
 		self.fontData?.style = self
 		if let font = dictionary?[.font] as? Font {
 			self.fontData?.font = font
 			self.fontData?.size = font.pointSize
 		}
 		self.innerAttributes = (dictionary ?? [:])
+        self.textTransforms = textTransforms
 	}
 	
 	/// Initialize a new Style by cloning an existing style.
