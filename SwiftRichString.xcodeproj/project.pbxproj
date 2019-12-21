@@ -145,6 +145,14 @@
 		6472C89823AE723D0056A21D /* AsyncTextAttachment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6472C89223AE723D0056A21D /* AsyncTextAttachment.swift */; };
 		6472C89923AE723D0056A21D /* AsyncTextAttachment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6472C89223AE723D0056A21D /* AsyncTextAttachment.swift */; };
 		6472C89A23AE723D0056A21D /* AsyncTextAttachment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6472C89223AE723D0056A21D /* AsyncTextAttachment.swift */; };
+		6472C89C23AED08D0056A21D /* AttributedString+FunctionBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6472C89B23AED08D0056A21D /* AttributedString+FunctionBuilder.swift */; };
+		6472C89D23AED08D0056A21D /* AttributedString+FunctionBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6472C89B23AED08D0056A21D /* AttributedString+FunctionBuilder.swift */; };
+		6472C89E23AED08D0056A21D /* AttributedString+FunctionBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6472C89B23AED08D0056A21D /* AttributedString+FunctionBuilder.swift */; };
+		6472C89F23AED08D0056A21D /* AttributedString+FunctionBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6472C89B23AED08D0056A21D /* AttributedString+FunctionBuilder.swift */; };
+		6472C8A023AED08D0056A21D /* AttributedString+FunctionBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6472C89B23AED08D0056A21D /* AttributedString+FunctionBuilder.swift */; };
+		6472C8A123AED08D0056A21D /* AttributedString+FunctionBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6472C89B23AED08D0056A21D /* AttributedString+FunctionBuilder.swift */; };
+		6472C8A223AED08D0056A21D /* AttributedString+FunctionBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6472C89B23AED08D0056A21D /* AttributedString+FunctionBuilder.swift */; };
+		6472C8A323AED08D0056A21D /* AttributedString+FunctionBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6472C89B23AED08D0056A21D /* AttributedString+FunctionBuilder.swift */; };
 		64774AD3213E91B9008F8DC3 /* file.txt in Resources */ = {isa = PBXBuildFile; fileRef = 64774AD2213E91B9008F8DC3 /* file.txt */; };
 		647AD64D21F3898400CF787E /* URLRepresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 647AD64C21F3898400CF787E /* URLRepresentable.swift */; };
 		647AD64E21F3898400CF787E /* URLRepresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 647AD64C21F3898400CF787E /* URLRepresentable.swift */; };
@@ -347,6 +355,7 @@
 		6472C88723AE41A00056A21D /* UIKit+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIKit+Extensions.swift"; sourceTree = "<group>"; };
 		6472C88923AE67D10056A21D /* AttributedString+Attachments.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AttributedString+Attachments.swift"; sourceTree = "<group>"; };
 		6472C89223AE723D0056A21D /* AsyncTextAttachment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AsyncTextAttachment.swift; sourceTree = "<group>"; };
+		6472C89B23AED08D0056A21D /* AttributedString+FunctionBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AttributedString+FunctionBuilder.swift"; sourceTree = "<group>"; };
 		64774AD2213E91B9008F8DC3 /* file.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = file.txt; sourceTree = "<group>"; };
 		647AD64C21F3898400CF787E /* URLRepresentable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLRepresentable.swift; sourceTree = "<group>"; };
 		647D775523AD8AF900733374 /* TextTransform.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextTransform.swift; sourceTree = "<group>"; };
@@ -528,6 +537,7 @@
 				64507E8520AF3609009455BD /* String+Subscript.swift */,
 				64507EA320B05015009455BD /* AttributedString+Extension.swift */,
 				6472C88923AE67D10056A21D /* AttributedString+Attachments.swift */,
+				6472C89B23AED08D0056A21D /* AttributedString+FunctionBuilder.swift */,
 				6489330F209DE87D000E691A /* SystemFonts.swift */,
 				64507E6120AEEE8D009455BD /* UIKit+Extras.swift */,
 			);
@@ -1130,6 +1140,7 @@
 				D53F4E7B21F03E690085D26F /* DynamicText.swift in Sources */,
 				648932CA209DE194000E691A /* CommonsAttributes.swift in Sources */,
 				64507EBE20B18489009455BD /* Extensions.swift in Sources */,
+				6472C89C23AED08D0056A21D /* AttributedString+FunctionBuilder.swift in Sources */,
 				64507E8D20AF3A9C009455BD /* StyleProtocol.swift in Sources */,
 				6472C89323AE723D0056A21D /* AsyncTextAttachment.swift in Sources */,
 				64507EA420B05015009455BD /* AttributedString+Extension.swift in Sources */,
@@ -1171,6 +1182,7 @@
 				D53F4E7D21F03EEF0085D26F /* DynamicText.swift in Sources */,
 				648932CC209DE194000E691A /* CommonsAttributes.swift in Sources */,
 				64507EC020B18489009455BD /* Extensions.swift in Sources */,
+				6472C89E23AED08D0056A21D /* AttributedString+FunctionBuilder.swift in Sources */,
 				64507E8F20AF3A9C009455BD /* StyleProtocol.swift in Sources */,
 				6472C89523AE723D0056A21D /* AsyncTextAttachment.swift in Sources */,
 				64507EA620B05015009455BD /* AttributedString+Extension.swift in Sources */,
@@ -1204,6 +1216,7 @@
 				D53F4E7E21F03EEF0085D26F /* DynamicText.swift in Sources */,
 				648932CD209DE194000E691A /* CommonsAttributes.swift in Sources */,
 				64507EC120B18489009455BD /* Extensions.swift in Sources */,
+				6472C89F23AED08D0056A21D /* AttributedString+FunctionBuilder.swift in Sources */,
 				64507E9020AF3A9C009455BD /* StyleProtocol.swift in Sources */,
 				6472C89623AE723D0056A21D /* AsyncTextAttachment.swift in Sources */,
 				64507EA720B05015009455BD /* AttributedString+Extension.swift in Sources */,
@@ -1237,6 +1250,7 @@
 				D53F4E7C21F03EEE0085D26F /* DynamicText.swift in Sources */,
 				648932CB209DE194000E691A /* CommonsAttributes.swift in Sources */,
 				64507EBF20B18489009455BD /* Extensions.swift in Sources */,
+				6472C89D23AED08D0056A21D /* AttributedString+FunctionBuilder.swift in Sources */,
 				64507E8E20AF3A9C009455BD /* StyleProtocol.swift in Sources */,
 				6472C89423AE723D0056A21D /* AsyncTextAttachment.swift in Sources */,
 				64507EA520B05015009455BD /* AttributedString+Extension.swift in Sources */,
@@ -1270,6 +1284,7 @@
 				647D777523AE29F000733374 /* XMLDynamicAttributesResolver.swift in Sources */,
 				647AD65321F389A400CF787E /* URLRepresentable.swift in Sources */,
 				64507EF120B18F20009455BD /* AttributedString+Extension.swift in Sources */,
+				6472C8A223AED08D0056A21D /* AttributedString+FunctionBuilder.swift in Sources */,
 				647D776E23AE21EE00733374 /* StyleGroup.swift in Sources */,
 				64507EDE20B18F0F009455BD /* AppDelegate.swift in Sources */,
 				D53F4E8021F03F240085D26F /* DynamicText.swift in Sources */,
@@ -1320,6 +1335,7 @@
 				64507F3120B1912B009455BD /* ColorConvertible.swift in Sources */,
 				64507F1020B1911B009455BD /* InterfaceController.swift in Sources */,
 				64507F3520B1912B009455BD /* Extensions.swift in Sources */,
+				6472C8A323AED08D0056A21D /* AttributedString+FunctionBuilder.swift in Sources */,
 				64507F2B20B1912B009455BD /* AttributedString+Extension.swift in Sources */,
 				64507F2520B1912B009455BD /* Style.swift in Sources */,
 				643565FB2153884C00CEEE9F /* Compatibility.swift in Sources */,
@@ -1356,6 +1372,7 @@
 				64507E7520AEF12C009455BD /* AssociatedValues.swift in Sources */,
 				64507E6E20AEEFA7009455BD /* UIKit+Extras.swift in Sources */,
 				647D776623AE09CE00733374 /* XMLStringBuilder.swift in Sources */,
+				6472C8A023AED08D0056A21D /* AttributedString+FunctionBuilder.swift in Sources */,
 				64893314209DE8AA000E691A /* SystemFonts.swift in Sources */,
 				6489332920A0CA76000E691A /* FontInfoAttribute.swift in Sources */,
 				6489330D209DE7E3000E691A /* ColorConvertible.swift in Sources */,
@@ -1377,6 +1394,7 @@
 				647AD65221F389A400CF787E /* URLRepresentable.swift in Sources */,
 				64507E7620AEF12C009455BD /* AssociatedValues.swift in Sources */,
 				647D776D23AE21ED00733374 /* StyleGroup.swift in Sources */,
+				6472C8A123AED08D0056A21D /* AttributedString+FunctionBuilder.swift in Sources */,
 				648932FA209DE6C5000E691A /* ViewController.swift in Sources */,
 				D53F4E8121F03F240085D26F /* DynamicText.swift in Sources */,
 				64507EBC20B1766D009455BD /* StyleRegEx.swift in Sources */,
@@ -1545,7 +1563,7 @@
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
@@ -1596,7 +1614,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
 				VERSIONING_SYSTEM = "apple-generic";
@@ -1748,6 +1766,7 @@
 				SDKROOT = appletvos;
 				SKIP_INSTALL = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 3;
 				TVOS_DEPLOYMENT_TARGET = 9.2;
 			};
@@ -1772,6 +1791,7 @@
 				SDKROOT = appletvos;
 				SKIP_INSTALL = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 3;
 				TVOS_DEPLOYMENT_TARGET = 9.2;
 			};
@@ -1955,7 +1975,6 @@
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
-				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = 4;
 				WATCHOS_DEPLOYMENT_TARGET = 2.0;
 			};
@@ -1983,7 +2002,6 @@
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
-				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = 4;
 				WATCHOS_DEPLOYMENT_TARGET = 2.0;
 			};

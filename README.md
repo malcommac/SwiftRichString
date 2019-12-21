@@ -18,6 +18,7 @@ It provides convenient way to store styles you can reuse in your app's UI elemen
 | 🧬 	| Fast & high customizable XML/HTML tagged string rendering 	|
 | 🌟 	| Apply text transforms within styles	|
 | 📐 	| Native support for iOS 11 Dynamic Type	|
+| 🖇 	| Support for Swift 5.1's function builder to compose strings	|
 | ⏱ 	| Compact code base with no external dependencies. 	|
 | 🐦 	| Fully made in Swift 5 from Swift ❥ lovers 	|
 
@@ -175,6 +176,18 @@ You can also use `+` operator to add a style to a plain or attributed string:
 // string with an attributed string created via + operator
 // between a plain string and a style
 let attStr = "Hello" + ("\(username)" + big)
+```
+
+Finally you can concatente strings usint function builders:
+
+```swift
+let bold = Style { ... }
+let italic = Style { ... }
+        
+let attributedString = AttributedString.composing {
+  "hello".set(style: bold)
+  "world".set(style: italic)
+}
 ```
 
 <a name="manualstyling"/>
@@ -692,8 +705,7 @@ The following properties are available:
 
 ## Requirements
 
-SwiftRichString is compatible with Swift 5.x.
-All Apple platforms are supported:
+SwiftRichString is compatible with Swift 5.1+ on:
 
 * iOS 8.0+
 * macOS 10.10+
