@@ -87,7 +87,6 @@ You can still use the 1.x release by using tagged version 1.1.0.
 
 Full changelog is available in [CHANGELOG.md](CHANGELOG.md) file.
 
-- [Versions (1.x, 2.x and old Swift 3.x branch)](#versions)
 - [Introduction to `Style`, `StyleGroup` & `StyleRegEx`](#stylestylegroup)
 	- [Introduction](#introduction)
 	- [String & Attributed String concatenation](#concatenation)
@@ -98,6 +97,7 @@ Full changelog is available in [CHANGELOG.md](CHANGELOG.md) file.
 	- [Render XML tagged strings](#customizexmlstrings)
 	- [Customize XML rendering: react to tag's attributes and unknown tags](#xmlstrings)
 	- [Custom Text Transforms](#texttransforms)
+	- [Local & Remote Images in text](#images)
 - [The `StyleManager`](#stylemanager)
 	- [Register globally available styles](#globalregister)
 	- [Defer style creation on demand](#defer)
@@ -110,14 +110,6 @@ Other info:
 - [Installation](#installation)
 - [Contributing](#contributing)
 - [Copyright](#copyright)
-
-<a name="versions"/>
-
-### Versions
-
-- **SwiftRichString 2.x branch (current)**. The latest version is [2.0.2](https://github.com/malcommac/SwiftRichString/releases/tag/2.0.2).
-- **SwiftRichString 1.x branch (supported)**. Use [1.1.0 tag](https://github.com/malcommac/SwiftRichString/releases/tag/1.1.0). Its compatible with Swift 4.x.
-- **Swift 3.x (no longer mantained)**. Use [0.9.1 release](https://github.com/malcommac/SwiftRichString/releases/tag/0.9.10).
 
 <a name="stylestylegroup"/>
 
@@ -521,6 +513,43 @@ let markdownBold = Style({
 ```
 
 All text transforms are applied in the same ordered you set in `textTransform` property.
+
+<a name="images"/>
+
+### Local & Remote Images in text
+
+SwiftRichString supports local and remote attached images along with attributed text.  
+You can create an attributed string with an image with a single line:
+
+```swift
+// You can specify the bounds of the image, both for size and the location respecting the base line of the text.
+let localTextAndImage = AttributedString(image: UIImage(named: "rocket")!, bounds: CGRect(x: 0, y: -20, width: 25, height: 25))
+
+// You can also load a remote image. If you not specify bounds size is the original size of the image.
+let remoteTextAndImage = AttributedString(imageURL: "http://...")
+
+// You can now compose it with other attributed or simple string
+let finalString = "...".set(style: myStyle) + remoteTextAndImage + " bye!"
+```
+
+Images can also be loaded by rending an XML string by using the `img` tag:
+
+```swift
+
+let taggedText = """
+			     Some text and this image:
+				 <img named="rocket" rect="0,-50,30,30"/>
+
+				This other is loaded from remote URL:
+				<img url="https://www.macitynet.it/wp-content/uploads/2018/05/video_ApplePark_magg18.jpg"/>
+				"""
+
+self.textView?.attributedText = taggedText.set(style: ...)
+```
+
+This is the result:
+
+<img src="Documentation_Assests/image_6.png" alt="" style="width: 400px;"/>
 
 <a name="stylemanager"/>
 
