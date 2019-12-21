@@ -36,10 +36,10 @@ import AppKit
 import UIKit
 #endif
 
-#if os(OSX) || os(iOS)
-
 public extension AttributedString {
     
+    #if os(iOS)
+
     /// Initialize a new text attachment with a remote image resource.
     /// Image will be loaded asynchronously after the text appear inside the control.
     ///
@@ -61,6 +61,10 @@ public extension AttributedString {
         self.init(attachment: attachment)
     }
     
+    #endif
+    
+    #if os(iOS) || os(OSX)
+
     /// Initialize a new text attachment with local image contained into the assets.
     ///
     /// - Parameters:
@@ -71,8 +75,9 @@ public extension AttributedString {
             return nil
         }
         
+        let image = Image(named: imageNamed)
         let boundsRect = CGRect(string: bounds)
-        self.init(image: Image(named: imageNamed), bounds: boundsRect)
+        self.init(image: image, bounds: boundsRect)
     }
     
     /// Initialize a new attributed string from an image.
@@ -85,12 +90,16 @@ public extension AttributedString {
             return nil
         }
         
+        #if os(OSX)
+        let attachment = NSTextAttachment(data: image.pngData()!, ofType: "png")
+        #else
         var attachment: NSTextAttachment!
         if #available(iOS 13.0, *) {
             attachment = NSTextAttachment(image: image)
         } else {
             attachment = NSTextAttachment(data: image.pngData()!, ofType: "png")
         }
+        #endif
         
         if let bounds = bounds {
             attachment.bounds = bounds
@@ -98,7 +107,7 @@ public extension AttributedString {
         
         self.init(attachment: attachment)
     }
+    
+    #endif
         
 }
-
-#endif

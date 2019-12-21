@@ -86,18 +86,24 @@ open class StandardXMLAttributesResolver: XMLDynamicAttributesResolver {
             case "a": // href support
                 finalStyleToApply.linkURL = URL(string: attributes?["href"])
             
-            #if os(OSX) || os(iOS)
             case "img":
+                #if os(iOS)
+                // Remote Image URL support
                 if let url = attributes?["url"] {
                     if let image = AttributedString(imageURL: url, bounds: attributes?["rect"]) {
                         attributedString.append(image)
                     }
-                } else {
-                    if let image = AttributedString(imageNamed: attributes?["named"], bounds: attributes?["rect"]) {
+                }
+                #endif
+                
+                #if os(iOS) || os(OSX)
+                // Local Image support
+                if let imageName = attributes?["named"] {
+                    if let image = AttributedString(imageNamed: imageName, bounds: attributes?["rect"]) {
                         attributedString.append(image)
                     }
                 }
-            #endif
+                #endif
             
             default:
                 break

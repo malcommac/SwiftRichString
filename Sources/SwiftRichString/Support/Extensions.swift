@@ -113,3 +113,20 @@ extension CGRect {
     }
     
 }
+
+#if os(OSX)
+
+public extension NSImage {
+    
+    /// PNG data of the image.
+    func pngData() -> Data? {
+        self.lockFocus()
+        let bitmap = NSBitmapImageRep(focusedViewRect: NSRect(x: 0, y: 0, width: size.width, height: size.height))
+        let pngData = bitmap!.representation(using: .png, properties: [:])
+        self.unlockFocus()
+        return pngData
+    }
+    
+}
+
+#endif
