@@ -34,7 +34,7 @@ let style = Style {
 let attributedText = "Hello World!".set(style: style) // et voilà!
 ```
 
-### 3. Complex XML/HTML based rendering
+### XML/HTML tag based rendering
 SwiftRichString allows you to render complex strings by parsing text's tags: each style will be identified by an unique name (used inside the tag) and you can create a `StyleGroup` which allows you to encapsulate all of them and reuse as you need (clearly you can register it globally).
 
 ```swift
@@ -61,7 +61,7 @@ self.label?.attributedText = str.set(style: myGroup)
 
 That's the result!
 
-<img src="Documentation_Assests/image_2.png" alt="" style="width: 150px;"/>
+<img src="Documentation_Assests/image_2.png" alt="" style="width: 70px;"/>
 
 --
 
