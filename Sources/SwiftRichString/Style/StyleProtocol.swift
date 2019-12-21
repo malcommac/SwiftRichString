@@ -39,6 +39,8 @@ public protocol StyleProtocol: class {
 	
 	/// Font unique attributes dictionary.
 	var fontData: FontData? { get }
+    
+    var textTransforms: [TextTransform]? { get }
 	
 	func set(to source: String, range: NSRange?) -> AttributedString
 	
@@ -57,20 +59,20 @@ public extension StyleProtocol {
 		let attributedText = NSMutableAttributedString(string: source)
 		self.fontData?.addAttributes(to: attributedText, range: nil)
 		attributedText.addAttributes(self.attributes, range: (range ?? NSMakeRange(0, attributedText.length)))
-		return attributedText
+        return applyTextTransform(self.textTransforms, to: attributedText)
 	}
 	
 	func add(to source: AttributedString, range: NSRange?) -> AttributedString {
 		self.fontData?.addAttributes(to: source, range: range)
 		source.addAttributes(self.attributes, range: (range ?? NSMakeRange(0, source.length)))
-		return source
+        return applyTextTransform(self.textTransforms, to: source)
 	}
 	
 	@discardableResult
 	func set(to source: AttributedString, range: NSRange?) -> AttributedString {
 		self.fontData?.addAttributes(to: source, range: range)
 		source.addAttributes(self.attributes, range: (range ?? NSMakeRange(0, source.length)))
-		return source
+        return applyTextTransform(self.textTransforms, to: source)
 	}
 	
 	@discardableResult
@@ -78,7 +80,25 @@ public extension StyleProtocol {
 		self.attributes.keys.forEach({
 			source.removeAttribute($0, range: (range ?? NSMakeRange(0, source.length)))
 		})
-		return source
+        return applyTextTransform(self.textTransforms, to: source)
 	}
+    
+    private func applyTextTransform(_ transforms: [TextTransform]?, to string: AttributedString) -> AttributedString {
+        guard let transforms = self.textTransforms else {
+            return string
+        }
+        
+        let mutable = string.mutableStringCopy()
+        let fullRange = NSRange(location: 0, length: mutable.length)
+        mutable.enumerateAttributes(in: fullRange, options: [], using: { (_, range, _) in
+            var substring = mutable.attributedSubstring(from: range).string
+            transforms.forEach {
+                substring = $0.transformer(substring)
+            }
+            mutable.replaceCharacters(in: range, with: substring)
+        })
+        
+        return mutable
+    }
 	
 }

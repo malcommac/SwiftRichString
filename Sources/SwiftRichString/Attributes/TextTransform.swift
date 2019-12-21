@@ -30,22 +30,41 @@
 
 import Foundation
 
-public protocol URLRepresentable {
-    var url: URL { get }
-}
-
-extension URL: URLRepresentable {
-
-    public var url: URL {
-        return self
-    }
+public enum TextTransform {
+    public typealias TransformFunction = (String) -> String
     
-    public init?(string: String?) {
-        guard let string = string else {
-            return nil
+    case lowercase
+    case uppercase
+    case capitalized
+    
+    case lowercaseWithLocale(Locale)
+    case uppercaseWithLocale(Locale)
+    case capitalizedWithLocale(Locale)
+    case custom(TransformFunction)
+    
+    var transformer: TransformFunction {
+        switch self {
+            case .lowercase:
+                return { string in string.localizedLowercase }
+            
+            case .uppercase:
+                return { string in string.localizedUppercase }
+            
+            case .capitalized:
+                return { string in string.localizedCapitalized }
+            
+            case .lowercaseWithLocale(let locale):
+                return { string in string.lowercased(with: locale) }
+            
+            case .uppercaseWithLocale(let locale):
+                return { string in string.uppercased(with: locale) }
+            
+            case .capitalizedWithLocale(let locale):
+                return { string in string.capitalized(with: locale) }
+            
+            case .custom(let transform):
+                return transform
         }
-        self.init(string: string)
     }
     
 }
-
