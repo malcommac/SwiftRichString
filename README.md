@@ -60,7 +60,7 @@ self.label?.attributedText = str.set(style: myGroup)
 
 That's the result!
 
-<img src="Documentation_Assests/image_2.png" alt="" width=70px/>
+<img src="Documentation_Assests/image_2.png" alt="" width=100px/>
 
 ## Documentation
 
@@ -148,7 +148,7 @@ let attrString = "My email is hello@danielemargutti.com and my website is http:/
 
 The result is this:
 
-<img src="Documentation_Assests/image_4.png" alt="" width=400px/>
+<img src="Documentation_Assests/image_4.png" alt="" width=500px/>
 
 <a name="concatenation"/>
 
@@ -447,7 +447,7 @@ self.textView?.attributedText = sourceHTML.set(style: groupStyle)
 
 The result is this:
 
-<img src="Documentation_Assests/image_5.png" alt="" width=300px/>
+<img src="Documentation_Assests/image_5.png" alt="" width=500px/>
 
 where the `b` tag's blue color was overriden by the color tag attributes and the link in 'here' is clickable.
 
