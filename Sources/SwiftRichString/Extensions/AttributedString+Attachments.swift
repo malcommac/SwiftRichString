@@ -36,10 +36,36 @@ import AppKit
 import UIKit
 #endif
 
+#if os(OSX) || os(iOS)
+
 public extension AttributedString {
     
-    #if os(OSX) || os(iOS)
+    /// Initialize a new text attachment with a remote image resource.
+    /// Image will be loaded asynchronously after the text appear inside the control.
+    ///
+    /// - Parameters:
+    ///   - imageURL: url of the image. If url is not valid resource will be not downloaded.
+    ///   - bounds: set a non `nil` value to express set the rect of attachment.
+    convenience init?(imageURL: String?, bounds: String? = nil) {
+        guard let imageURL = imageURL, let url = URL(string: imageURL) else {
+            return nil
+        }
+                
+        let attachment = AsyncTextAttachment()
+        attachment.imageURL = url
+        
+        if let bounds = CGRect(string: bounds) {
+            attachment.bounds = bounds
+        }
     
+        self.init(attachment: attachment)
+    }
+    
+    /// Initialize a new text attachment with local image contained into the assets.
+    ///
+    /// - Parameters:
+    ///   - imageNamed: name of the image into the assets; if `nil` resource will be not loaded.
+    ///   - bounds: set a non `nil` value to express set the rect of attachment.
     convenience init?(imageNamed: String?, bounds: String? = nil) {
         guard let imageNamed = imageNamed else {
             return nil
@@ -72,6 +98,7 @@ public extension AttributedString {
         
         self.init(attachment: attachment)
     }
-    #endif
-    
+        
 }
+
+#endif

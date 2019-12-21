@@ -88,8 +88,14 @@ open class StandardXMLAttributesResolver: XMLDynamicAttributesResolver {
             
             #if os(OSX) || os(iOS)
             case "img":
-                if let image = AttributedString(imageNamed: attributes?["named"], bounds: attributes?["rect"]) {
-                    attributedString.append(image)
+                if let url = attributes?["url"] {
+                    if let image = AttributedString(imageURL: url, bounds: attributes?["rect"]) {
+                        attributedString.append(image)
+                    }
+                } else {
+                    if let image = AttributedString(imageNamed: attributes?["named"], bounds: attributes?["rect"]) {
+                        attributedString.append(image)
+                    }
                 }
             #endif
             

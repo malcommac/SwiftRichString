@@ -1,6 +1,8 @@
 <strong>Parler du don d'organe n'est plus tabou. Je me renseigne, j'en discute avec mes proches,... <rainbow>et je décide!</rainbow></strong>
 
-<img named="rocket" rect="0,-50,30,30"></img>
+<img named="rocket" rect="0,-50,30,30"/>
+
+<img url="https://www.macitynet.it/wp-content/uploads/2018/05/video_ApplePark_magg18.jpg"/>
 
 <strong color="#db13f2">En Belgique</strong>, au début des années 2000, le nombre de donneurs d’organes avait tendance à diminuer et les listes d’attente à augmenter considérablement ayant comme corollaire une augmentation de la mortalité des patients inscrits sur les listes d’attente.
 
