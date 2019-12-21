@@ -117,7 +117,7 @@ class ViewController: UIViewController {
 			$0.font = UIFont.italicSystemFont(ofSize: self.baseFontSize)
 		}
 		
-		let style = StyleGroup2(base: Style {
+		let style = StyleGroup(base: Style {
 			$0.font = UIFont.systemFont(ofSize: self.baseFontSize)
 			$0.lineSpacing = 2
 			$0.kerning = Kerning.adobe(-15)

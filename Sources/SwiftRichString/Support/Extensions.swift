@@ -68,3 +68,24 @@ extension NSAttributedString {
     }
 
 }
+
+public extension Array where Array.Element == StyleProtocol {
+    
+    /// Merge styles from array of `StyleProtocol` elements.
+    /// Merge is made in order where each n+1 elements may replace existing keys defined by n-1 elements.
+    ///
+    /// - Returns: merged style
+    func mergeStyle() -> Style {
+        var attributes: [NSAttributedString.Key:Any] = [:]
+        var textTransforms = [TextTransform]()
+        self.forEach {
+            attributes.merge($0.attributes, uniquingKeysWith: {
+                (_, new) in
+                return new
+            })
+            textTransforms.append(contentsOf: $0.textTransforms ?? [])
+        }
+        return Style(dictionary: attributes, textTransforms: (textTransforms.isEmpty ? nil : textTransforms))
+    }
+    
+}

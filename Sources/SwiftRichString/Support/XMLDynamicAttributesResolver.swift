@@ -40,6 +40,8 @@ import UIKit
 public protocol XMLDynamicAttributesResolver {
     
     func applyDynamicAttributes(to attributedString: inout AttributedString, xmlStyle: XMLDynamicStyle)
+    
+    func styleForUnknownXMLTag(_ tag: String, to attributedString: inout AttributedString, attributes: [String: String]?)
 
 }
 
@@ -48,19 +50,31 @@ public protocol XMLDynamicAttributesResolver {
 open class StandardXMLAttributesResolver: XMLDynamicAttributesResolver {
     
     public func applyDynamicAttributes(to attributedString: inout AttributedString, xmlStyle: XMLDynamicStyle) {
-        #if os(iOS)
+        let finalStyleToApply = Style()
         xmlStyle.enumerateAttributes { key, value  in
             switch key {
                 case "color":
-                    attributedString.set(style: Style({
-                        $0.color = UIColor.yellow
-                    }))
+                    finalStyleToApply.color = Color(hexString: value)
                 
                 default:
                     break
             }
         }
-        #endif
+        
+        attributedString.add(style: finalStyleToApply)
     }
+    
+    public func styleForUnknownXMLTag(_ tag: String, to attributedString: inout AttributedString, attributes: [String: String]?) {
+        let finalStyleToApply = Style()
+        switch tag {
+            case "a":
+                finalStyleToApply.linkURL = URL(string: attributes?["href"])
+            
+            default:
+                break
+        }
+        attributedString.add(style: finalStyleToApply)
+    }
+    
     
 }

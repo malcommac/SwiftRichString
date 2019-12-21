@@ -106,7 +106,7 @@ public class XMLStringBuilder: NSObject, XMLParserDelegate {
         self.styles = styles
         
         if let baseStyle = baseStyle {
-            self.xmlStylers.append( XMLDynamicStyle(style: baseStyle) )
+            self.xmlStylers.append( XMLDynamicStyle(tag: XMLStringBuilder.topTag, style: baseStyle) )
         }
         
         super.init()
@@ -158,8 +158,8 @@ public class XMLStringBuilder: NSObject, XMLParserDelegate {
             return
         }
         
-        if elementName != XMLStringBuilder.topTag, let namedStyle = styles[elementName] {
-            xmlStylers.append( XMLDynamicStyle(style: namedStyle, xmlAttributes: attributes) )
+        if elementName != XMLStringBuilder.topTag {
+            xmlStylers.append( XMLDynamicStyle(tag: elementName, style: styles[elementName], xmlAttributes: attributes) )
         }
     }
     
@@ -176,11 +176,19 @@ public class XMLStringBuilder: NSObject, XMLParserDelegate {
         
         var newAttributedString = AttributedString(string: newString)
         for xmlStyle in xmlStylers {
-            newAttributedString.add(style: xmlStyle.style)
-            
-            if xmlStyle.xmlAttributes != nil {
-                xmlAttributesResolver.applyDynamicAttributes(to: &newAttributedString, xmlStyle: xmlStyle)
+            // Apply
+            if let style = xmlStyle.style {
+                // it's a know style
+                newAttributedString.add(style: style)
+                // Also apply the xml attributes if needed
+                if xmlStyle.xmlAttributes != nil {
+                    xmlAttributesResolver.applyDynamicAttributes(to: &newAttributedString, xmlStyle: xmlStyle)
+                }
+            } else {
+                // it's an unknown tag, we can call the resolver for unknown tags
+                xmlAttributesResolver.styleForUnknownXMLTag(xmlStyle.tag, to: &newAttributedString, attributes: xmlStyle.xmlAttributes)
             }
+
         }
         attributedString.append(newAttributedString)
         currentString = nil
@@ -189,10 +197,12 @@ public class XMLStringBuilder: NSObject, XMLParserDelegate {
 }
 
 public class XMLDynamicStyle {
-    public let style: StyleProtocol
+    public let tag: String
+    public let style: StyleProtocol?
     public let xmlAttributes: [String: String]?
     
-    public init(style: StyleProtocol, xmlAttributes: [String: String]? = nil) {
+    public init(tag: String, style: StyleProtocol?, xmlAttributes: [String: String]? = nil) {
+        self.tag = tag
         self.style = style
         self.xmlAttributes = ((xmlAttributes?.keys.isEmpty ?? true) == false ? xmlAttributes : nil)
     }
