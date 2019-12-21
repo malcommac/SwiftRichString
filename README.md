@@ -463,6 +463,30 @@ open class MyXMLDynamicAttributesResolver: XMLDynamicAttributesResolver {
 You will receive all read tag attributes inside the `attributes` parameter.  
 You can alter attributes or the entire string received as `inout` parameter in `attributedString` property.
 
+A default resolver is also provided by the library and used by default: `StandardXMLAttributesResolver`.  It will support both `color` attribute in tags and `<a href>` tag with url linking.
+
+```swift
+let sourceHTML = "My <b color=\"#db13f2\">webpage</b> is really <b>cool</b>. Take a look <a href=\"http://danielemargutti.com\">here</a>"
+        
+let styleBase = Style({
+    $0.font = UIFont.boldSystemFont(ofSize: 15)
+})
+        
+let styleBold = Style({
+    $0.font = UIFont.boldSystemFont(ofSize: 20)
+    $0.color = UIColor.blue
+})
+        
+let groupStyle = StyleGroup.init(base: styleBase, ["b" : styleBold])
+self.textView?.attributedText = sourceHTML.set(style: groupStyle)
+```
+
+The result is this:
+
+<img src="Documentation_Assests/image_5.png" alt="" style="width: 300px;"/>
+
+where the `b` tag's blue color was overriden by the color tag attributes and the link in 'here' is clickable.
+
 <a name="texttransforms"/>
 
 ### Custom Text Transforms
