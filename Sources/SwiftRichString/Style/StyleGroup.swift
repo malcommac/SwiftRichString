@@ -53,6 +53,7 @@ public class StyleGroup: StyleProtocol {
     public var xmlParsingOptions: XMLParsingOptions = []
     
     /// Dynamic attributes resolver.
+    /// By default the `StandardXMLAttributesResolver` instance is used.
     public var xmlAttributesResolver: XMLDynamicAttributesResolver = StandardXMLAttributesResolver()
     
     // MARK: - Initialization

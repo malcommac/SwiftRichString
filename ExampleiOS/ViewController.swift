@@ -29,75 +29,11 @@ class ViewController: UIViewController {
 
 	override func viewDidLoad() {
 		super.viewDidLoad()
-        
-       /* let baseStyle = Style {
-            $0.font =  SystemFonts.AmericanTypewriter.font(size: 17)//UIFont.systemFont(ofSize: 17)
-            $0.color = UIColor.darkGray
-        }
-        
-        let redStyle = Style {
-            $0.font =  SystemFonts.Futura_Bold.font(size: 32)//UIFont.systemFont(ofSize: 17)
-            $0.color = UIColor.red
-        }
-        
-        let strikeStyle = baseStyle.byAdding {
-            $0.strikethrough = (style: .single, color: UIColor.blue)
-            $0.textTransforms = [.custom({
-                return "**\($0)**"
-            })]
-        }
-        
-        let source = "Hello <b>wor<r>ld</r></b> my name"//is <i type='1 px'>Daniele</i>"
-        let x = XMLStringBuilder(string: source, options: [], baseStyle: baseStyle, styles: ["b": strikeStyle, "r": redStyle])
-        let att = try! x.parse()
-        debugPrint("ciao")
-        */
-    /*
-        
-        let strikeStyle = baseStyle.byAdding {
-            $0.strikethrough = (style: .single, color: UIColor.blue)
-            $0.textTransform = .custom({
-                return "**\($0)**"
-            })
-        }
-        
-         let redBodyStyle = baseStyle.byAdding {
-            $0.color = UIColor.red
-            $0.font = SystemFonts.Zapfino.font(size: 32)//UIFont.systemFont(ofSize: 32).withWeight(.medium)
-        }
-        
-        let g = StyleGroup(base: baseStyle, [("s", strikeStyle), ("r", redBodyStyle)])*/
-        
-        /*
-        
-        let boldStyle = Style {
-           // $0.font = UIFont.boldSystemFont(ofSize: self.baseFontSize)
-            $0.font = SystemFonts.AmericanTypewriter.font(size: self.baseFontSize)
-            $0.color = UIColor.blue
-            /*if #available(iOS 11.0, *) {
-                $0.dynamicText = DynamicText {
-                    $0.style = .body
-                    $0.maximumSize = 35.0
-                    $0.traitCollection = UITraitCollection(userInterfaceIdiom: .phone)
-                }
-            }*/
-        }
-        
-        let headerStyle = Style {
-            $0.font = SystemFonts.ArialHebrew.font(size: 22)
-            $0.color = UIColor.red
-        }
-        
-        let g = StyleGroup(base: headerStyle, ["c" : boldStyle])
-        */
-       //self.textView?.attributedText = "ciao ciao <s>altro</s> merda <r>test</r>".set(style: g)
-    //    self.textView?.attributedText = "ciao ciao <s>altro</s> merda <r>test</r>".set(style: strikeStyle)
-
-
 		
 		let bodyHTML = try! String(contentsOfFile: Bundle.main.path(forResource: "file", ofType: "txt")!)
 		
-
+        // Create a set of styles
+        
 		let headerStyle = Style {
 			$0.font = UIFont.boldSystemFont(ofSize: self.baseFontSize * 1.15)
 			$0.lineSpacing = 1
@@ -116,8 +52,9 @@ class ViewController: UIViewController {
 		let italicStyle = Style {
 			$0.font = UIFont.italicSystemFont(ofSize: self.baseFontSize)
 		}
-		
-		let style = StyleGroup(base: Style {
+        
+        // And a group of them
+		let styleGroup = StyleGroup(base: Style {
 			$0.font = UIFont.systemFont(ofSize: self.baseFontSize)
 			$0.lineSpacing = 2
 			$0.kerning = Kerning.adobe(-15)
@@ -137,14 +74,55 @@ class ViewController: UIViewController {
 				"sup": Style {
 					$0.font = UIFont.systemFont(ofSize: self.baseFontSize / 1.2)
 					$0.baselineOffset = Float(self.baseFontSize) / 3.5
-				}])
-		
-		self.textView?.attributedText = bodyHTML.set(style: style)
+        }])
+
+        // Apply a custom xml attribute resolver
+        styleGroup.xmlAttributesResolver = MyXMLDynamicAttributesResolver()
+
+        // Render
+		self.textView?.attributedText = bodyHTML.set(style: styleGroup)
+        
+        // Accessibility support
         if #available(iOS 10.0, *) {
             self.textView?.adjustsFontForContentSizeCategory = true
         }
         
-        
-        
 	}
+}
+
+public class MyXMLDynamicAttributesResolver: StandardXMLAttributesResolver {
+    
+    public override func styleForUnknownXMLTag(_ tag: String, to attributedString: inout AttributedString, attributes: [String : String]?) {
+        super.styleForUnknownXMLTag(tag, to: &attributedString, attributes: attributes)
+        
+        if tag == "rainbow" {
+            let colors = UIColor.randomColors(attributedString.length)
+            for i in 0..<attributedString.length {
+                attributedString.add(style: Style({
+                    $0.color = colors[i]
+                }), range: NSMakeRange(i, 1))
+            }
+        }
+        
+    }
+    
+}
+
+extension UIColor {
+    
+    public static func randomColors(_ count: Int) -> [UIColor] {
+        return (0..<count).map { _ -> UIColor in
+            randomColor()
+        }
+    }
+    
+    public static func randomColor() -> UIColor {
+        let redValue = CGFloat.random(in: 0...1)
+        let greenValue = CGFloat.random(in: 0...1)
+        let blueValue = CGFloat.random(in: 0...1)
+        
+        let randomColor = UIColor(red: redValue, green: greenValue, blue: blueValue, alpha: 1.0)
+        return randomColor
+    }
+    
 }
