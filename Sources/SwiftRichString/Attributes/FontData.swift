@@ -180,7 +180,8 @@ public struct FontData {
 		#if os(iOS) || os(tvOS) || os(OSX)
 		var attributes: [FontInfoAttribute] = []
 
-		attributes += [self.numberCase].compactMap { $0 }
+        attributes += [self.numberCase].compactMap { $0 }
+        attributes += [self.numberSpacing].compactMap { $0 }
 		attributes += [self.fractions].compactMap { $0 }
 		attributes += [self.superscript].compactMap { $0 }.map { ($0 == true ? VerticalPosition.superscript : VerticalPosition.normal) } as [FontInfoAttribute]
 		attributes += [self.subscript].compactMap { $0 }.map { ($0 ? VerticalPosition.`subscript` : VerticalPosition.normal) } as [FontInfoAttribute]
