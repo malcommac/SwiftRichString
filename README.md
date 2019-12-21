@@ -178,7 +178,7 @@ You can also use `+` operator to add a style to a plain or attributed string:
 let attStr = "Hello" + ("\(username)" + big)
 ```
 
-Finally you can concatente strings usint function builders:
+Finally you can concatente strings using function builders:
 
 ```swift
 let bold = Style { ... }
@@ -705,8 +705,7 @@ The following properties are available:
 
 ## Requirements
 
-SwiftRichString is compatible with Swift 5.1+ on:
-
+* Swift 5.1+
 * iOS 8.0+
 * macOS 10.10+
 * watchOS 2.0+
@@ -716,51 +715,29 @@ SwiftRichString is compatible with Swift 5.1+ on:
 
 ## Installation
 
-<a name="cocoapods" />
+### CocoaPods
 
-### Install via CocoaPods
-
-[CocoaPods](http://cocoapods.org) is a dependency manager for Objective-C, which automates and simplifies the process of using 3rd-party libraries like SwiftRichString in your projects. You can install it with the following command:
-
-```bash
-$ sudo gem install cocoapods
-```
-
-> CocoaPods 1.8+ is required to build SwiftRichString.
-
-#### Install via Podfile
-
-To integrate SwiftRichString into your Xcode project using CocoaPods, specify it in your `Podfile`:
+[CocoaPods](https://cocoapods.org/) is a dependency manager for Cocoa projects. For usage and installation instructions, visit their website. To integrate Alamofire into your Xcode project using CocoaPods, specify it in your Podfile:
 
 ```ruby
-source 'https://github.com/CocoaPods/Specs.git'
-platform :ios, '8.0'
-
-target 'TargetName' do
-use_frameworks!
 pod 'SwiftRichString'
-end
 ```
 
-Then, run the following command:
+### Swift Package Manager
 
-```bash
-$ pod install
+The [Swift Package Manager](https://swift.org/package-manager/) is a tool for automating the distribution of Swift code and is integrated into the swift compiler. It is in early development, but Alamofire does support its use on supported platforms.
+
+Once you have your Swift package set up, adding Alamofire as a dependency is as easy as adding it to the dependencies value of your Package.swift.
+
+```swift
+dependencies: [
+    .package(url: "https://github.com/malcommac/SwiftRichString.git", from: "3.5.0")
+]
 ```
-
-<a name="carthage" />
 
 ### Carthage
 
-[Carthage](https://github.com/Carthage/Carthage) is a decentralized dependency manager that builds your dependencies and provides you with binary frameworks.
-
-You can install Carthage with [Homebrew](http://brew.sh/) using the following command:
-
-```bash
-$ brew update
-$ brew install carthage
-```
-
+[Carthage](https://github.com/Carthage/Carthage) is a decentralized dependency manager that builds your dependencies and provides you with binary frameworks.  
 To integrate SwiftRichString into your Xcode project using Carthage, specify it in your `Cartfile`:
 
 ```ogdl
