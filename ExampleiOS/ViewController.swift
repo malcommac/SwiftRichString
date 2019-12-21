@@ -16,7 +16,13 @@ class ViewController: UIViewController {
 
 	override func viewDidLoad() {
 		super.viewDidLoad()
-		
+        
+//        self.textView?.attributedText = "ciao ciao " + AttributedString(image: UIImage(named: "rocket")!,
+//                                                                        bounds: CGRect(x: 0, y: -20, width: 25, height: 25)) + "ciao ciao"
+//
+//
+//        return
+//
 		let bodyHTML = try! String(contentsOfFile: Bundle.main.path(forResource: "file", ofType: "txt")!)
 		
         // Create a set of styles

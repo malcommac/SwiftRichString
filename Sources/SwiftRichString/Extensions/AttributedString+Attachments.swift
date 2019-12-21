@@ -39,7 +39,26 @@ import UIKit
 public extension AttributedString {
     
     #if os(OSX) || os(iOS)
-    convenience init(image: Image, bounds: CGRect? = nil) {
+    
+    convenience init?(imageNamed: String?, bounds: String? = nil) {
+        guard let imageNamed = imageNamed else {
+            return nil
+        }
+        
+        let boundsRect = CGRect(string: bounds)
+        self.init(image: Image(named: imageNamed), bounds: boundsRect)
+    }
+    
+    /// Initialize a new attributed string from an image.
+    ///
+    /// - Parameters:
+    ///   - image: image to use.
+    ///   - bounds: location and size of the image, if `nil` the default bounds is applied.
+    convenience init?(image: Image?, bounds: CGRect? = nil) {
+        guard let image = image else {
+            return nil
+        }
+        
         var attachment: NSTextAttachment!
         if #available(iOS 13.0, *) {
             attachment = NSTextAttachment(image: image)
@@ -56,12 +75,3 @@ public extension AttributedString {
     #endif
     
 }
-
-/*
-let iconImage = UIImage(named: "icon.png")!
-var icon = NSTextAttachment()
-icon.bounds = CGRect(x: 0, y: (titleFont.capHeight - iconImage.size.height).rounded() / 2, width: iconImage.size.width, height: iconImage.size.height)
-icon.image = iconImage
-let iconString = NSAttributedString(attachment: icon)
-titleText.append(iconString)
-*/

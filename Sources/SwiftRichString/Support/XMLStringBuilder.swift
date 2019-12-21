@@ -168,13 +168,11 @@ public class XMLStringBuilder: NSObject, XMLParserDelegate {
     }
     
     func foundNewString() {
-        guard let newString = currentString else {
-            return
+       /*guard let newString = currentString else {
+            return // to support images tags
         }
-        
-        //let resolvedStyles = xmlStylers.map { $0.composedStyle }
-        
-        var newAttributedString = AttributedString(string: newString)
+       */
+        var newAttributedString = AttributedString(string: currentString ?? "")
         for xmlStyle in xmlStylers {
             // Apply
             if let style = xmlStyle.style {
