@@ -707,7 +707,7 @@ The following properties are available:
 
 * Swift 5.1+
 * iOS 8.0+
-* macOS 10.10+
+* macOS 11.0+
 * watchOS 2.0+
 * tvOS 11.0+
 
