@@ -42,7 +42,7 @@ Styles.register("MyStyle", style: style)
 
 Now you can reuse it everything in your app; SwiftRichString exposes a `styleName` property for the most common text containers and you can set it directly in Interface Builder:
 
-<img src="Documentation_Assests/image_1.png" alt="" style="width: 500px;"/>
+<img src="Documentation_Assests/image_1.png" alt="" style="width: 250px;"/>
 
 ### 3. Complex Rendering with tag-based strings
 SwiftRichString allows you to render complex strings by parsing text's tags: each style will be identified by an unique name (used inside the tag) and you can create a `StyleGroup` which allows you to encapsulate all of them and reuse as you need (clearly you can register it globally).
@@ -74,7 +74,7 @@ self.label?.attributedText = str.set(style: myGroup)
 
 That's the result!
 
-<img src="Documentation_Assests/image_2.png" alt="" style="width: 300px;"/>
+<img src="Documentation_Assests/image_2.png" alt="" style="width: 150px;"/>
 
 --
 
