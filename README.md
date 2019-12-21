@@ -10,16 +10,19 @@
 SwiftRichString is a lightweight library which allows to create and manipulate attributed strings easily both in iOS, macOS, tvOS and even watchOS.
 It provides convenient way to store styles you can reuse in your app's UI elements, allows complex tag-based strings rendering and also includes integration with Interface Builder.
 
-It even support **iOS 11's Dynamic Type**!
+## Main Features
 
-If you manipulate `NSAttributedString` in Swift, SwiftRichString allows you to keep your code manteniable, readable and easy to evolve.
+|  	| Features Highlights 	|
+|---	|---------------------------------------------------------------------------------	|
+| 🦄 	| Easy styling with declarative syntax	|
+| 🏞 	| Attach local and remote images inside text 	|
+| 🧬 	| Fast & high customizable XML/HTML tagged string rendering 	|
+| 🌟 	| Apply text transforms within styles	|
+| 📐 	| Native support for iOS 11 Dynamic Type	|
+| ⏱ 	| Compact code base with no external dependencies. 	|
+| 🐦 	| Fully made in Swift 5 from Swift ❥ lovers 	|
 
-## Features Highlights
-
-Want to know what SwiftRichString can do in your app? Lets take a look to these feature highlights!
-
-### 1. Easy Styling
-The main concept behind this lib is the `Style`: a style is just a collection of text attributes you can apply to a string. The following example show how to create a style an produce an attributed string with it:
+### Easy Styling
 
 ```swift
 let style = Style {
@@ -31,20 +34,7 @@ let style = Style {
 let attributedText = "Hello World!".set(style: style) // et voilà!
 ```
 
-### 2. Global Styles & Interface Builder Integration
-Styles can be also registered globally and reused in your app.
-Just define your own style and register using `Styles.register()` function:
-
-```swift
-let myStyle = Style { // define style's attributes... }
-Styles.register("MyStyle", style: style)
-```
-
-Now you can reuse it everything in your app; SwiftRichString exposes a `styleName` property for the most common text containers and you can set it directly in Interface Builder:
-
-<img src="Documentation_Assests/image_1.png" alt="" style="width: 250px;"/>
-
-### 3. Complex Rendering with tag-based strings
+### 3. Complex XML/HTML based rendering
 SwiftRichString allows you to render complex strings by parsing text's tags: each style will be identified by an unique name (used inside the tag) and you can create a `StyleGroup` which allows you to encapsulate all of them and reuse as you need (clearly you can register it globally).
 
 ```swift
@@ -64,10 +54,7 @@ let italic = normal.byAdding {
 	$0.traitVariants = .italic
 }
 
-// Create a group which contains your style, each identified by a tag.
 let myGroup = StyleGroup(base: normal, ["bold": bold, "italic": italic])
-		
-// Use tags in your plain string	
 let str = "Hello <bold>Daniele!</bold>. You're ready to <italic>play with us!</italic>"
 self.label?.attributedText = str.set(style: myGroup)
 ```
@@ -80,13 +67,6 @@ That's the result!
 
 ## Documentation
 
-**Are you using SwiftRichString 1.x in your project? Don't miss to take a look at [Migration section of the documentation](#migration).**
-You can still use the 1.x release by using tagged version 1.1.0.
-
-**Table Of Contents**
-
-Full changelog is available in [CHANGELOG.md](CHANGELOG.md) file.
-
 - [Introduction to `Style`, `StyleGroup` & `StyleRegEx`](#stylestylegroup)
 	- [Introduction](#introduction)
 	- [String & Attributed String concatenation](#concatenation)
@@ -96,8 +76,8 @@ Full changelog is available in [CHANGELOG.md](CHANGELOG.md) file.
 	- [Support Dynamic Type](#dynamictype)
 	- [Render XML tagged strings](#customizexmlstrings)
 	- [Customize XML rendering: react to tag's attributes and unknown tags](#xmlstrings)
-	- [Custom Text Transforms](#texttransforms)
-	- [Local & Remote Images in text](#images)
+	- [Custom text transforms](#texttransforms)
+	- [Local & Remote Images inside text](#images)
 - [The `StyleManager`](#stylemanager)
 	- [Register globally available styles](#globalregister)
 	- [Defer style creation on demand](#defer)
@@ -516,7 +496,7 @@ All text transforms are applied in the same ordered you set in `textTransform` p
 
 <a name="images"/>
 
-### Local & Remote Images in text
+### Local & Remote Images inside text
 
 SwiftRichString supports local and remote attached images along with attributed text.  
 You can create an attributed string with an image with a single line:
@@ -549,7 +529,7 @@ self.textView?.attributedText = taggedText.set(style: ...)
 
 This is the result:
 
-<img src="Documentation_Assests/image_6.png" alt="" style="width: 120px;"/>
+<img src="Documentation_Assests/image_6.png" alt="" style="width: 100px;"/>
 
 <a name="stylemanager"/>
 
