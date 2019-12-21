@@ -1,6 +1,6 @@
 <strong>Parler du don d'organe n'est plus tabou. Je me renseigne, j'en discute avec mes proches,... <rainbow>et je décide!</rainbow></strong>
 
-<img named="rocket" rect="0,-50,30,30"/>
+<img named="therocket" rect="0,-50,30,30"/>
 
 <img url="https://www.macitynet.it/wp-content/uploads/2018/05/video_ApplePark_magg18.jpg"/>
 
