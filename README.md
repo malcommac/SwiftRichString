@@ -529,20 +529,20 @@ let localTextAndImage = AttributedString(image: UIImage(named: "rocket")!, bound
 let remoteTextAndImage = AttributedString(imageURL: "http://...")
 
 // You can now compose it with other attributed or simple string
-let finalString = "...".set(style: myStyle) + remoteTextAndImage + " bye!"
+let finalString = "...".set(style: myStyle) + remoteTextAndImage + " some other text"
 ```
 
-Images can also be loaded by rending an XML string by using the `img` tag:
+Images can also be loaded by rending an XML string by using the `img` tag (with `named` tag for local resource and `url` for remote url).  
+`rect` parameter is optional and allows you to specify resize and relocation of the resource.
 
 ```swift
-
 let taggedText = """
-			     Some text and this image:
-				 <img named="rocket" rect="0,-50,30,30"/>
-
-				This other is loaded from remote URL:
-				<img url="https://www.macitynet.it/wp-content/uploads/2018/05/video_ApplePark_magg18.jpg"/>
-				"""
+  Some text and this image:
+  <img named="rocket" rect="0,-50,30,30"/>
+  
+  This other is loaded from remote URL:
+  <img url="https://www.macitynet.it/wp-content/uploads/2018/05/video_ApplePark_magg18.jpg"/>
+"""
 
 self.textView?.attributedText = taggedText.set(style: ...)
 ```
