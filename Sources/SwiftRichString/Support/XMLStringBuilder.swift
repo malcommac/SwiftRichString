@@ -179,7 +179,7 @@ public class XMLStringBuilder: NSObject, XMLParserDelegate {
             // Apply
             if let style = xmlStyle.style {
                 // it's a know style
-                newAttributedString.add(style: style)
+                newAttributedString = newAttributedString.add(style: style)
                 // Also apply the xml attributes if needed
                 if xmlStyle.xmlAttributes != nil {
                     xmlAttributesResolver.applyDynamicAttributes(to: &newAttributedString, xmlStyle: xmlStyle)

@@ -40,12 +40,21 @@ class ViewController: UIViewController {
 			$0.font = UIFont.italicSystemFont(ofSize: self.baseFontSize)
 		}
         
+        let uppercasedRed = Style {
+            $0.font = UIFont.italicSystemFont(ofSize: self.baseFontSize)
+            $0.color = UIColor.red
+            $0.textTransforms = [
+                .uppercase
+            ]
+        }
+                
         // And a group of them
 		let styleGroup = StyleGroup(base: Style {
 			$0.font = UIFont.systemFont(ofSize: self.baseFontSize)
 			$0.lineSpacing = 2
 			$0.kerning = Kerning.adobe(-15)
 			}, [
+                "ur": uppercasedRed,
 				"h3": headerStyle,
 				"h4": headerStyle,
 				"h5": headerStyle,
