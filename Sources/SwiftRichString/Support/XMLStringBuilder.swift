@@ -57,7 +57,7 @@ public struct XMLParsingOptions: OptionSet {
 // MARK: - XMLStringBuilder
 
 public class XMLStringBuilder: NSObject, XMLParserDelegate {
-    
+        
     // MARK: Private Properties
     private static let topTag = "source"
     
@@ -77,7 +77,10 @@ public class XMLStringBuilder: NSObject, XMLParserDelegate {
     private var styles: [String: StyleProtocol]
     
     /// Styles applied at each fragment.
-    private var xmlStylers = [StyleProtocol]()
+    private var xmlStylers = [XMLDynamicStyle]()
+    
+    /// XML Attributes resolver
+    public var xmlAttributesResolver: XMLDynamicAttributesResolver
 
     // The XML parser sometimes splits strings, which can break localization-sensitive
     // string transforms. Work around this by using the currentString variable to
@@ -87,7 +90,9 @@ public class XMLStringBuilder: NSObject, XMLParserDelegate {
     
     // MARK: - Initialization
 
-    public init(string: String, options: XMLParsingOptions, baseStyle: StyleProtocol?, styles: [String: StyleProtocol]) {
+    public init(string: String, options: XMLParsingOptions,
+                baseStyle: StyleProtocol?, styles: [String: StyleProtocol],
+                xmlAttributesResolver: XMLDynamicAttributesResolver) {
         let xml = (options.contains(.doNotWrapXML) ? string : "<\(XMLStringBuilder.topTag)>\(string)</\(XMLStringBuilder.topTag)>")
         guard let data = xml.data(using: String.Encoding.utf8) else {
             fatalError("Unable to convert to UTF8")
@@ -95,12 +100,13 @@ public class XMLStringBuilder: NSObject, XMLParserDelegate {
         
         self.options = options
         self.attributedString = NSMutableAttributedString()
+        self.xmlAttributesResolver = xmlAttributesResolver
         self.xmlParser = XMLParser(data: data)
         self.baseStyle = baseStyle
         self.styles = styles
         
         if let baseStyle = baseStyle {
-            self.xmlStylers.append(baseStyle)
+            self.xmlStylers.append( XMLDynamicStyle(style: baseStyle) )
         }
         
         super.init()
@@ -153,7 +159,7 @@ public class XMLStringBuilder: NSObject, XMLParserDelegate {
         }
         
         if elementName != XMLStringBuilder.topTag, let namedStyle = styles[elementName] {
-            xmlStylers.append(namedStyle)
+            xmlStylers.append( XMLDynamicStyle(style: namedStyle, xmlAttributes: attributes) )
         }
     }
     
@@ -166,9 +172,39 @@ public class XMLStringBuilder: NSObject, XMLParserDelegate {
             return
         }
         
-        let newAttributedString = newString.set(styles: xmlStylers)
+        //let resolvedStyles = xmlStylers.map { $0.composedStyle }
+        
+        var newAttributedString = AttributedString(string: newString)
+        for xmlStyle in xmlStylers {
+            newAttributedString.add(style: xmlStyle.style)
+            
+            if xmlStyle.xmlAttributes != nil {
+                xmlAttributesResolver.applyDynamicAttributes(to: &newAttributedString, xmlStyle: xmlStyle)
+            }
+        }
         attributedString.append(newAttributedString)
         currentString = nil
+    }
+    
+}
+
+public class XMLDynamicStyle {
+    public let style: StyleProtocol
+    public let xmlAttributes: [String: String]?
+    
+    public init(style: StyleProtocol, xmlAttributes: [String: String]? = nil) {
+        self.style = style
+        self.xmlAttributes = ((xmlAttributes?.keys.isEmpty ?? true) == false ? xmlAttributes : nil)
+    }
+    
+    public func enumerateAttributes(_ handler: ((_ key: String, _ value: String) -> Void)) {
+        guard let xmlAttributes = xmlAttributes else {
+            return
+        }
+        
+        xmlAttributes.keys.forEach {
+            handler($0, xmlAttributes[$0]!)
+        }
     }
     
 }

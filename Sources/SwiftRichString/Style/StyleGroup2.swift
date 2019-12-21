@@ -52,6 +52,9 @@ public class StyleGroup2: StyleProtocol {
     /// Parsing options.
     public var xmlParsingOptions: XMLParsingOptions = []
     
+    /// Dynamic attributes resolver.
+    public var xmlAttributesResolver: XMLDynamicAttributesResolver = StandardXMLAttributesResolver()
+    
     // MARK: - Initialization
     
     /// Initialize a new `StyleGroup` with a dictionary of style and names.
@@ -129,8 +132,10 @@ public class StyleGroup2: StyleProtocol {
     /// - Returns: modified attributed string, same instance of the `source`.
     public func apply(to attrStr: AttributedString, adding: Bool, range: NSRange?) -> AttributedString {
         do {
-            let xml = XMLStringBuilder(string: attrStr.string, options: xmlParsingOptions, baseStyle: baseStyle, styles: styles)
-            return try xml.parse()
+            let xmlParser = XMLStringBuilder(string: attrStr.string, options: xmlParsingOptions,
+                                       baseStyle: baseStyle, styles: styles,
+                                       xmlAttributesResolver: xmlAttributesResolver)
+            return try xmlParser.parse()
         } catch {
             debugPrint("Failed to generate attributed string from xml: \(error)")
             return attrStr

@@ -163,6 +163,14 @@
 		647D776D23AE21ED00733374 /* StyleGroup2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 647D776723AE1F6800733374 /* StyleGroup2.swift */; };
 		647D776E23AE21EE00733374 /* StyleGroup2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 647D776723AE1F6800733374 /* StyleGroup2.swift */; };
 		647D776F23AE21EE00733374 /* StyleGroup2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 647D776723AE1F6800733374 /* StyleGroup2.swift */; };
+		647D777123AE248300733374 /* XMLDynamicAttributesResolver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 647D777023AE248300733374 /* XMLDynamicAttributesResolver.swift */; };
+		647D777223AE248300733374 /* XMLDynamicAttributesResolver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 647D777023AE248300733374 /* XMLDynamicAttributesResolver.swift */; };
+		647D777323AE248300733374 /* XMLDynamicAttributesResolver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 647D777023AE248300733374 /* XMLDynamicAttributesResolver.swift */; };
+		647D777423AE248300733374 /* XMLDynamicAttributesResolver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 647D777023AE248300733374 /* XMLDynamicAttributesResolver.swift */; };
+		647D777523AE29F000733374 /* XMLDynamicAttributesResolver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 647D777023AE248300733374 /* XMLDynamicAttributesResolver.swift */; };
+		647D777623AE29F000733374 /* XMLDynamicAttributesResolver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 647D777023AE248300733374 /* XMLDynamicAttributesResolver.swift */; };
+		647D777723AE29F100733374 /* XMLDynamicAttributesResolver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 647D777023AE248300733374 /* XMLDynamicAttributesResolver.swift */; };
+		647D777823AE29F200733374 /* XMLDynamicAttributesResolver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 647D777023AE248300733374 /* XMLDynamicAttributesResolver.swift */; };
 		648932CA209DE194000E691A /* CommonsAttributes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 648932C9209DE194000E691A /* CommonsAttributes.swift */; };
 		648932CB209DE194000E691A /* CommonsAttributes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 648932C9209DE194000E691A /* CommonsAttributes.swift */; };
 		648932CC209DE194000E691A /* CommonsAttributes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 648932C9209DE194000E691A /* CommonsAttributes.swift */; };
@@ -332,6 +340,7 @@
 		647D775523AD8AF900733374 /* TextTransform.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextTransform.swift; sourceTree = "<group>"; };
 		647D775E23AE080200733374 /* XMLStringBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XMLStringBuilder.swift; sourceTree = "<group>"; };
 		647D776723AE1F6800733374 /* StyleGroup2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StyleGroup2.swift; sourceTree = "<group>"; };
+		647D777023AE248300733374 /* XMLDynamicAttributesResolver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XMLDynamicAttributesResolver.swift; sourceTree = "<group>"; };
 		648932C9209DE194000E691A /* CommonsAttributes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonsAttributes.swift; sourceTree = "<group>"; };
 		648932D3209DE44E000E691A /* FontConvertible.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FontConvertible.swift; sourceTree = "<group>"; };
 		648932DC209DE474000E691A /* ExampleiOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ExampleiOS.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -533,6 +542,7 @@
 			isa = PBXGroup;
 			children = (
 				647D775E23AE080200733374 /* XMLStringBuilder.swift */,
+				647D777023AE248300733374 /* XMLDynamicAttributesResolver.swift */,
 				64507E7020AEF12C009455BD /* AssociatedValues.swift */,
 				64507E7720AEF611009455BD /* OrderedDictionary.swift */,
 				64507EBD20B18489009455BD /* Extensions.swift */,
@@ -1112,6 +1122,7 @@
 				64893309209DE7C5000E691A /* ColorConvertible.swift in Sources */,
 				64507E8620AF3609009455BD /* String+Subscript.swift in Sources */,
 				647AD64D21F3898400CF787E /* URLRepresentable.swift in Sources */,
+				647D777123AE248300733374 /* XMLDynamicAttributesResolver.swift in Sources */,
 				64507EAC20B056FB009455BD /* FontData.swift in Sources */,
 				648932D4209DE44E000E691A /* FontConvertible.swift in Sources */,
 				647D776823AE1F6800733374 /* StyleGroup2.swift in Sources */,
@@ -1151,6 +1162,7 @@
 				6489330B209DE7C5000E691A /* ColorConvertible.swift in Sources */,
 				64507E8820AF3609009455BD /* String+Subscript.swift in Sources */,
 				647AD64F21F3898400CF787E /* URLRepresentable.swift in Sources */,
+				647D777323AE248300733374 /* XMLDynamicAttributesResolver.swift in Sources */,
 				64507EAE20B056FB009455BD /* FontData.swift in Sources */,
 				648932D6209DE44E000E691A /* FontConvertible.swift in Sources */,
 				647D776A23AE1F6800733374 /* StyleGroup2.swift in Sources */,
@@ -1182,6 +1194,7 @@
 				6489330C209DE7C5000E691A /* ColorConvertible.swift in Sources */,
 				64507E8920AF3609009455BD /* String+Subscript.swift in Sources */,
 				647AD65021F3898400CF787E /* URLRepresentable.swift in Sources */,
+				647D777423AE248300733374 /* XMLDynamicAttributesResolver.swift in Sources */,
 				64507EAF20B056FB009455BD /* FontData.swift in Sources */,
 				648932D7209DE44E000E691A /* FontConvertible.swift in Sources */,
 				647D776B23AE1F6800733374 /* StyleGroup2.swift in Sources */,
@@ -1213,6 +1226,7 @@
 				6489330A209DE7C5000E691A /* ColorConvertible.swift in Sources */,
 				64507E8720AF3609009455BD /* String+Subscript.swift in Sources */,
 				647AD64E21F3898400CF787E /* URLRepresentable.swift in Sources */,
+				647D777223AE248300733374 /* XMLDynamicAttributesResolver.swift in Sources */,
 				64507EAD20B056FB009455BD /* FontData.swift in Sources */,
 				648932D5209DE44E000E691A /* FontConvertible.swift in Sources */,
 				647D776923AE1F6800733374 /* StyleGroup2.swift in Sources */,
@@ -1236,6 +1250,7 @@
 			files = (
 				64507EE020B18F0F009455BD /* ViewController.swift in Sources */,
 				64507EEA20B18F20009455BD /* StyleProtocol.swift in Sources */,
+				647D777523AE29F000733374 /* XMLDynamicAttributesResolver.swift in Sources */,
 				647AD65321F389A400CF787E /* URLRepresentable.swift in Sources */,
 				64507EF120B18F20009455BD /* AttributedString+Ext.swift in Sources */,
 				647D776E23AE21EE00733374 /* StyleGroup2.swift in Sources */,
@@ -1293,6 +1308,7 @@
 				647D775D23AD8B9C00733374 /* TextTransform.swift in Sources */,
 				64507F3420B1912B009455BD /* OrderedDictionary.swift in Sources */,
 				64507F2A20B1912B009455BD /* String+Subscript.swift in Sources */,
+				647D777823AE29F200733374 /* XMLDynamicAttributesResolver.swift in Sources */,
 				64507F2620B1912B009455BD /* StyleGroup.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1303,6 +1319,7 @@
 			files = (
 				64507EA820B05015009455BD /* AttributedString+Ext.swift in Sources */,
 				648932EE209DE47C000E691A /* CommonsAttributes.swift in Sources */,
+				647D777723AE29F100733374 /* XMLDynamicAttributesResolver.swift in Sources */,
 				647AD65121F389A400CF787E /* URLRepresentable.swift in Sources */,
 				64507E9120AF3A9C009455BD /* StyleProtocol.swift in Sources */,
 				647D776C23AE21ED00733374 /* StyleGroup2.swift in Sources */,
@@ -1336,6 +1353,7 @@
 			files = (
 				64893305209DE6CD000E691A /* CommonsAttributes.swift in Sources */,
 				64893323209DED04000E691A /* StyleGroup.swift in Sources */,
+				647D777623AE29F000733374 /* XMLDynamicAttributesResolver.swift in Sources */,
 				647AD65221F389A400CF787E /* URLRepresentable.swift in Sources */,
 				64507E7620AEF12C009455BD /* AssociatedValues.swift in Sources */,
 				647D776D23AE21ED00733374 /* StyleGroup2.swift in Sources */,
