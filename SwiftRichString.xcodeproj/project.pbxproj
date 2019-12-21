@@ -155,6 +155,14 @@
 		647D776423AE09CD00733374 /* XMLStringBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 647D775E23AE080200733374 /* XMLStringBuilder.swift */; };
 		647D776523AE09CE00733374 /* XMLStringBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 647D775E23AE080200733374 /* XMLStringBuilder.swift */; };
 		647D776623AE09CE00733374 /* XMLStringBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 647D775E23AE080200733374 /* XMLStringBuilder.swift */; };
+		647D776823AE1F6800733374 /* StyleGroup2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 647D776723AE1F6800733374 /* StyleGroup2.swift */; };
+		647D776923AE1F6800733374 /* StyleGroup2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 647D776723AE1F6800733374 /* StyleGroup2.swift */; };
+		647D776A23AE1F6800733374 /* StyleGroup2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 647D776723AE1F6800733374 /* StyleGroup2.swift */; };
+		647D776B23AE1F6800733374 /* StyleGroup2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 647D776723AE1F6800733374 /* StyleGroup2.swift */; };
+		647D776C23AE21ED00733374 /* StyleGroup2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 647D776723AE1F6800733374 /* StyleGroup2.swift */; };
+		647D776D23AE21ED00733374 /* StyleGroup2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 647D776723AE1F6800733374 /* StyleGroup2.swift */; };
+		647D776E23AE21EE00733374 /* StyleGroup2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 647D776723AE1F6800733374 /* StyleGroup2.swift */; };
+		647D776F23AE21EE00733374 /* StyleGroup2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 647D776723AE1F6800733374 /* StyleGroup2.swift */; };
 		648932CA209DE194000E691A /* CommonsAttributes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 648932C9209DE194000E691A /* CommonsAttributes.swift */; };
 		648932CB209DE194000E691A /* CommonsAttributes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 648932C9209DE194000E691A /* CommonsAttributes.swift */; };
 		648932CC209DE194000E691A /* CommonsAttributes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 648932C9209DE194000E691A /* CommonsAttributes.swift */; };
@@ -323,6 +331,7 @@
 		647AD64C21F3898400CF787E /* URLRepresentable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLRepresentable.swift; sourceTree = "<group>"; };
 		647D775523AD8AF900733374 /* TextTransform.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextTransform.swift; sourceTree = "<group>"; };
 		647D775E23AE080200733374 /* XMLStringBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XMLStringBuilder.swift; sourceTree = "<group>"; };
+		647D776723AE1F6800733374 /* StyleGroup2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StyleGroup2.swift; sourceTree = "<group>"; };
 		648932C9209DE194000E691A /* CommonsAttributes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonsAttributes.swift; sourceTree = "<group>"; };
 		648932D3209DE44E000E691A /* FontConvertible.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FontConvertible.swift; sourceTree = "<group>"; };
 		648932DC209DE474000E691A /* ExampleiOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ExampleiOS.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -486,6 +495,7 @@
 				64507E8C20AF3A9C009455BD /* StyleProtocol.swift */,
 				64893316209DEAFF000E691A /* Style.swift */,
 				6489331D209DED04000E691A /* StyleGroup.swift */,
+				647D776723AE1F6800733374 /* StyleGroup2.swift */,
 				64507EB620B1766D009455BD /* StyleRegEx.swift */,
 				64507E5A20AEEB36009455BD /* StylesManager.swift */,
 			);
@@ -1104,6 +1114,7 @@
 				647AD64D21F3898400CF787E /* URLRepresentable.swift in Sources */,
 				64507EAC20B056FB009455BD /* FontData.swift in Sources */,
 				648932D4209DE44E000E691A /* FontConvertible.swift in Sources */,
+				647D776823AE1F6800733374 /* StyleGroup2.swift in Sources */,
 				64507E7120AEF12C009455BD /* AssociatedValues.swift in Sources */,
 				64893310209DE87D000E691A /* SystemFonts.swift in Sources */,
 				64507EB720B1766D009455BD /* StyleRegEx.swift in Sources */,
@@ -1142,6 +1153,7 @@
 				647AD64F21F3898400CF787E /* URLRepresentable.swift in Sources */,
 				64507EAE20B056FB009455BD /* FontData.swift in Sources */,
 				648932D6209DE44E000E691A /* FontConvertible.swift in Sources */,
+				647D776A23AE1F6800733374 /* StyleGroup2.swift in Sources */,
 				64507E7320AEF12C009455BD /* AssociatedValues.swift in Sources */,
 				64893312209DE87D000E691A /* SystemFonts.swift in Sources */,
 				64507EB920B1766D009455BD /* StyleRegEx.swift in Sources */,
@@ -1172,6 +1184,7 @@
 				647AD65021F3898400CF787E /* URLRepresentable.swift in Sources */,
 				64507EAF20B056FB009455BD /* FontData.swift in Sources */,
 				648932D7209DE44E000E691A /* FontConvertible.swift in Sources */,
+				647D776B23AE1F6800733374 /* StyleGroup2.swift in Sources */,
 				64507E7420AEF12C009455BD /* AssociatedValues.swift in Sources */,
 				64893313209DE87D000E691A /* SystemFonts.swift in Sources */,
 				64507EBA20B1766D009455BD /* StyleRegEx.swift in Sources */,
@@ -1202,6 +1215,7 @@
 				647AD64E21F3898400CF787E /* URLRepresentable.swift in Sources */,
 				64507EAD20B056FB009455BD /* FontData.swift in Sources */,
 				648932D5209DE44E000E691A /* FontConvertible.swift in Sources */,
+				647D776923AE1F6800733374 /* StyleGroup2.swift in Sources */,
 				64507E7220AEF12C009455BD /* AssociatedValues.swift in Sources */,
 				64893311209DE87D000E691A /* SystemFonts.swift in Sources */,
 				64507EB820B1766D009455BD /* StyleRegEx.swift in Sources */,
@@ -1224,6 +1238,7 @@
 				64507EEA20B18F20009455BD /* StyleProtocol.swift in Sources */,
 				647AD65321F389A400CF787E /* URLRepresentable.swift in Sources */,
 				64507EF120B18F20009455BD /* AttributedString+Ext.swift in Sources */,
+				647D776E23AE21EE00733374 /* StyleGroup2.swift in Sources */,
 				64507EDE20B18F0F009455BD /* AppDelegate.swift in Sources */,
 				D53F4E8021F03F240085D26F /* DynamicText.swift in Sources */,
 				64507EEC20B18F20009455BD /* StyleGroup.swift in Sources */,
@@ -1252,6 +1267,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				647D776F23AE21EE00733374 /* StyleGroup2.swift in Sources */,
 				64507F2920B1912B009455BD /* String+Ext.swift in Sources */,
 				64507F1420B1911B009455BD /* NotificationController.swift in Sources */,
 				64507F3320B1912B009455BD /* AssociatedValues.swift in Sources */,
@@ -1289,6 +1305,7 @@
 				648932EE209DE47C000E691A /* CommonsAttributes.swift in Sources */,
 				647AD65121F389A400CF787E /* URLRepresentable.swift in Sources */,
 				64507E9120AF3A9C009455BD /* StyleProtocol.swift in Sources */,
+				647D776C23AE21ED00733374 /* StyleGroup2.swift in Sources */,
 				64893322209DED04000E691A /* StyleGroup.swift in Sources */,
 				D53F4E8221F03F250085D26F /* DynamicText.swift in Sources */,
 				64507EBB20B1766D009455BD /* StyleRegEx.swift in Sources */,
@@ -1321,6 +1338,7 @@
 				64893323209DED04000E691A /* StyleGroup.swift in Sources */,
 				647AD65221F389A400CF787E /* URLRepresentable.swift in Sources */,
 				64507E7620AEF12C009455BD /* AssociatedValues.swift in Sources */,
+				647D776D23AE21ED00733374 /* StyleGroup2.swift in Sources */,
 				648932FA209DE6C5000E691A /* ViewController.swift in Sources */,
 				D53F4E8121F03F240085D26F /* DynamicText.swift in Sources */,
 				64507EBC20B1766D009455BD /* StyleRegEx.swift in Sources */,

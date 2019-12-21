@@ -56,7 +56,7 @@ public struct XMLParsingOptions: OptionSet {
 
 // MARK: - XMLStringBuilder
 
-class XMLStringBuilder: NSObject, XMLParserDelegate {
+public class XMLStringBuilder: NSObject, XMLParserDelegate {
     
     // MARK: Private Properties
     private static let topTag = "source"
@@ -71,7 +71,7 @@ class XMLStringBuilder: NSObject, XMLParserDelegate {
     private var attributedString: AttributedString
     
     /// Base style to apply as common style of the entire string.
-    private var baseStyle: StyleProtocol
+    private var baseStyle: StyleProtocol?
     
     /// Styles to apply.
     private var styles: [String: StyleProtocol]
@@ -87,7 +87,7 @@ class XMLStringBuilder: NSObject, XMLParserDelegate {
     
     // MARK: - Initialization
 
-    public init(string: String, options: XMLParsingOptions, baseStyle: StyleProtocol, styles: [String: StyleProtocol]) {
+    public init(string: String, options: XMLParsingOptions, baseStyle: StyleProtocol?, styles: [String: StyleProtocol]) {
         let xml = (options.contains(.doNotWrapXML) ? string : "<\(XMLStringBuilder.topTag)>\(string)</\(XMLStringBuilder.topTag)>")
         guard let data = xml.data(using: String.Encoding.utf8) else {
             fatalError("Unable to convert to UTF8")
@@ -98,7 +98,10 @@ class XMLStringBuilder: NSObject, XMLParserDelegate {
         self.xmlParser = XMLParser(data: data)
         self.baseStyle = baseStyle
         self.styles = styles
-        self.xmlStylers.append(baseStyle)
+        
+        if let baseStyle = baseStyle {
+            self.xmlStylers.append(baseStyle)
+        }
         
         super.init()
         
@@ -124,12 +127,12 @@ class XMLStringBuilder: NSObject, XMLParserDelegate {
     
     // MARK: XMLParserDelegate
     
-    @objc func parser(_ parser: XMLParser, didStartElement elementName: String, namespaceURI: String?, qualifiedName qName: String?, attributes attributeDict: [String: String]) {
+    @objc public func parser(_ parser: XMLParser, didStartElement elementName: String, namespaceURI: String?, qualifiedName qName: String?, attributes attributeDict: [String: String]) {
         foundNewString()
         enter(element: elementName, attributes: attributeDict)
     }
     
-    @objc func parser(_ parser: XMLParser, didEndElement elementName: String, namespaceURI: String?, qualifiedName qName: String?) {
+    @objc public func parser(_ parser: XMLParser, didEndElement elementName: String, namespaceURI: String?, qualifiedName qName: String?) {
         foundNewString()
         guard elementName != XMLStringBuilder.topTag else {
             return
@@ -138,7 +141,7 @@ class XMLStringBuilder: NSObject, XMLParserDelegate {
         exit(element: elementName)
     }
     
-    @objc func parser(_ parser: XMLParser, foundCharacters string: String) {
+    @objc public func parser(_ parser: XMLParser, foundCharacters string: String) {
         currentString = (currentString ?? "").appending(string)
     }
     
