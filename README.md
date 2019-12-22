@@ -13,7 +13,7 @@ It provides convenient way to store styles you can reuse in your app's UI elemen
 
 |  	| Features Highlights 	|
 |---	|---------------------------------------------------------------------------------	|
-| 🦄 	| Easy styling with declarative syntax	|
+| 🦄 	| Easy styling and typography managment with coincise declarative syntax	|
 | 🏞 	| Attach local and remote images inside text 	|
 | 🧬 	| Fast & high customizable XML/HTML tagged string rendering 	|
 | 🌟 	| Apply text transforms within styles	|
