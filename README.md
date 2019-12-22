@@ -61,7 +61,7 @@ self.label?.attributedText = str.set(style: myGroup)
 
 That's the result!
 
-<img src="Documentation_Assests/image_2.png" alt="" width=100px/>
+<img src="Documentation_Assests/image_2.png" alt="" width=200px/>
 
 ## Documentation
 
