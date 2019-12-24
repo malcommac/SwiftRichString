@@ -46,17 +46,29 @@ public enum TextTransform {
         switch self {
             case .lowercase:
                 return { string in
-                    string.localizedLowercase
+                    if #available(iOS 9.0, iOSApplicationExtension 9.0, *) {
+                        return string.localizedLowercase
+                    } else {
+                        return string.lowercased(with: Locale.current)
+                    }
                 }
             
             case .uppercase:
                 return { string in
-                    string.localizedUppercase
+                    if #available(iOS 9.0, iOSApplicationExtension 9.0, *) {
+                        return string.localizedUppercase
+                    } else {
+                        return string.uppercased(with: Locale.current)
+                    }
                 }
             
             case .capitalized:
                 return { string in
-                    string.localizedCapitalized
+                    if #available(iOS 9.0, iOSApplicationExtension 9.0, *) {
+                        return string.localizedCapitalized
+                    } else {
+                        return string.capitalized(with: Locale.current)
+                    }
                 }
             
             case .lowercaseWithLocale(let locale):
