@@ -76,8 +76,7 @@ public extension AttributedString {
         }
         
         let image = Image(named: imageNamed)
-        let boundsRect = CGRect(string: bounds)
-        self.init(image: image, bounds: boundsRect)
+        self.init(image: image, bounds: bounds)
     }
     
     /// Initialize a new attributed string from an image.
@@ -85,7 +84,7 @@ public extension AttributedString {
     /// - Parameters:
     ///   - image: image to use.
     ///   - bounds: location and size of the image, if `nil` the default bounds is applied.
-    convenience init?(image: Image?, bounds: CGRect? = nil) {
+    convenience init?(image: Image?, bounds: String? = nil) {
         guard let image = image else {
             return nil
         }
@@ -110,8 +109,8 @@ public extension AttributedString {
         }
         #endif
         
-        if let bounds = bounds {
-            attachment.bounds = bounds
+        if let boundsRect = CGRect(string: bounds) {
+            attachment.bounds = boundsRect
         }
         
         self.init(attachment: attachment)

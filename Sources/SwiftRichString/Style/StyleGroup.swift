@@ -35,9 +35,11 @@ import AppKit
 import UIKit
 #endif
 
-public class StyleGroup: StyleProtocol {
+public typealias StyleGroup = StyleXML
+
+public class StyleXML: StyleProtocol {
     
-    // The following attributes are ignored for StyleGroup because are read from the sub styles.
+    // The following attributes are ignored for StyleXML because are read from the sub styles.
     public var attributes: [NSAttributedString.Key : Any] = [:]
     public var fontData: FontData? = nil
     public var textTransforms: [TextTransform]? = nil
@@ -49,8 +51,11 @@ public class StyleGroup: StyleProtocol {
     /// to the existing source.
     public var baseStyle: StyleProtocol?
     
-    /// Parsing options.
+    /// XML Parsing options.
     public var xmlParsingOptions: XMLParsingOptions = []
+    
+    /// Mapped image for memory based images.
+    public private(set) var imagesMap: [String: UIImage]? = nil
     
     /// Dynamic attributes resolver.
     /// By default the `StandardXMLAttributesResolver` instance is used.
@@ -58,14 +63,18 @@ public class StyleGroup: StyleProtocol {
     
     // MARK: - Initialization
     
-    /// Initialize a new `StyleGroup` with a dictionary of style and names.
+    /// Initialize a new `StyleXML` with a dictionary of style and names.
     /// Note: Ordered is not guarantee, use `init(_ styles:[(String, StyleProtocol)]` if you
     /// need to keep the order of the styles.
     ///
-    /// - Parameter styles: styles dictionary
-    public init(base: StyleProtocol? = nil, _ styles: [String: StyleProtocol]) {
+    /// - Parameters:
+    ///   - base: base style applied to the entire string.
+    ///   - styles: styles dictionary used to map your xml tags to styles definitions.
+    ///   - images: images used in XML. If a named image is not assigned here the default assets is used (aka `UIImage(named:)`).
+    public init(base: StyleProtocol? = nil, _ styles: [String: StyleProtocol] = [:], images: [String: UIImage]? = nil) {
         self.styles = styles
         self.baseStyle = base
+        self.imagesMap = images
     }
     
     // MARK: - Public Methods
@@ -133,9 +142,7 @@ public class StyleGroup: StyleProtocol {
     /// - Returns: modified attributed string, same instance of the `source`.
     public func apply(to attrStr: AttributedString, adding: Bool, range: NSRange?) -> AttributedString {
         do {
-            let xmlParser = XMLStringBuilder(string: attrStr.string, options: xmlParsingOptions,
-                                       baseStyle: baseStyle, styles: styles,
-                                       xmlAttributesResolver: xmlAttributesResolver)
+            let xmlParser = XMLStringBuilder(styleXML: self, string: attrStr.string)
             return try xmlParser.parse()
         } catch {
             debugPrint("Failed to generate attributed string from xml: \(error)")
