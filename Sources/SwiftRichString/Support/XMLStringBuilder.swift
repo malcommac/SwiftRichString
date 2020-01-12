@@ -65,22 +65,30 @@ public class XMLStringBuilder: NSObject, XMLParserDelegate {
     private var xmlParser: XMLParser
     
     /// Parsing options.
-    private var options: XMLParsingOptions
+    private var options: XMLParsingOptions {
+        return styleXML.xmlParsingOptions
+    }
     
     /// Produced final attributed string
     private var attributedString: AttributedString
     
     /// Base style to apply as common style of the entire string.
-    private var baseStyle: StyleProtocol?
+    private var baseStyle: StyleProtocol? {
+        return styleXML.baseStyle
+    }
     
     /// Styles to apply.
-    private var styles: [String: StyleProtocol]
+    private var styles: [String: StyleProtocol] {
+        return styleXML.styles
+    }
     
     /// Styles applied at each fragment.
     private var xmlStylers = [XMLDynamicStyle]()
     
     /// XML Attributes resolver
-    public var xmlAttributesResolver: XMLDynamicAttributesResolver
+    public var xmlAttributesResolver: XMLDynamicAttributesResolver {
+        return styleXML.xmlAttributesResolver
+    }
 
     // The XML parser sometimes splits strings, which can break localization-sensitive
     // string transforms. Work around this by using the currentString variable to
@@ -88,24 +96,23 @@ public class XMLStringBuilder: NSObject, XMLParserDelegate {
     // when the current element ends, or when a new one is started.
     var currentString: String?
     
+    /// StyleXML instance.
+    private weak var styleXML: StyleXML!
+        
     // MARK: - Initialization
 
-    public init(string: String, options: XMLParsingOptions,
-                baseStyle: StyleProtocol?, styles: [String: StyleProtocol],
-                xmlAttributesResolver: XMLDynamicAttributesResolver) {
-        let xml = (options.contains(.doNotWrapXML) ? string : "<\(XMLStringBuilder.topTag)>\(string)</\(XMLStringBuilder.topTag)>")
+    public init(styleXML: StyleXML, string: String) {
+        self.styleXML = styleXML
+
+        let xml = (styleXML.xmlParsingOptions.contains(.doNotWrapXML) ? string : "<\(XMLStringBuilder.topTag)>\(string)</\(XMLStringBuilder.topTag)>")
         guard let data = xml.data(using: String.Encoding.utf8) else {
             fatalError("Unable to convert to UTF8")
         }
         
-        self.options = options
         self.attributedString = NSMutableAttributedString()
-        self.xmlAttributesResolver = xmlAttributesResolver
         self.xmlParser = XMLParser(data: data)
-        self.baseStyle = baseStyle
-        self.styles = styles
         
-        if let baseStyle = baseStyle {
+        if let baseStyle = styleXML.baseStyle {
             self.xmlStylers.append( XMLDynamicStyle(tag: XMLStringBuilder.topTag, style: baseStyle) )
         }
         
@@ -180,11 +187,11 @@ public class XMLStringBuilder: NSObject, XMLParserDelegate {
                 newAttributedString = newAttributedString.add(style: style)
                 // Also apply the xml attributes if needed
                 if xmlStyle.xmlAttributes != nil {
-                    xmlAttributesResolver.applyDynamicAttributes(to: &newAttributedString, xmlStyle: xmlStyle)
+                    xmlAttributesResolver.applyDynamicAttributes(to: &newAttributedString, xmlStyle: xmlStyle, fromStyle: styleXML)
                 }
             } else {
                 // it's an unknown tag, we can call the resolver for unknown tags
-                xmlAttributesResolver.styleForUnknownXMLTag(xmlStyle.tag, to: &newAttributedString, attributes: xmlStyle.xmlAttributes)
+                xmlAttributesResolver.styleForUnknownXMLTag(xmlStyle.tag, to: &newAttributedString, attributes: xmlStyle.xmlAttributes, fromStyle: styleXML)
             }
 
         }
@@ -203,7 +210,7 @@ public class XMLDynamicStyle {
     /// Tag read for this style.
     public let tag: String
     
-    /// Style found in receiver `StyleGroup` instance.
+    /// Style found in receiver `StyleXML` instance.
     public let style: StyleProtocol?
     
     /// Attributes found into the xml tag.

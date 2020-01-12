@@ -76,8 +76,7 @@ public extension AttributedString {
         }
         
         let image = Image(named: imageNamed)
-        let boundsRect = CGRect(string: bounds)
-        self.init(image: image, bounds: boundsRect)
+        self.init(image: image, bounds: bounds)
     }
     
     /// Initialize a new attributed string from an image.
@@ -85,7 +84,7 @@ public extension AttributedString {
     /// - Parameters:
     ///   - image: image to use.
     ///   - bounds: location and size of the image, if `nil` the default bounds is applied.
-    convenience init?(image: Image?, bounds: CGRect? = nil) {
+    convenience init?(image: Image?, bounds: String? = nil) {
         guard let image = image else {
             return nil
         }
@@ -95,14 +94,23 @@ public extension AttributedString {
         #else
         var attachment: NSTextAttachment!
         if #available(iOS 13.0, *) {
-            attachment = NSTextAttachment(image: image)
+            // Due to a bug (?) in UIKit we should use two methods to allocate the text attachment
+            // in order to render the image as template or original. If we use the
+            // NSTextAttachment(image: image) with a .alwaysOriginal rendering mode it will be
+            // ignored.
+            if image.renderingMode == .alwaysTemplate {
+                attachment = NSTextAttachment(image: image)
+            } else {
+                attachment =  NSTextAttachment()
+                attachment.image = image.withRenderingMode(.alwaysOriginal)
+            }
         } else {
             attachment = NSTextAttachment(data: image.pngData()!, ofType: "png")
         }
         #endif
         
-        if let bounds = bounds {
-            attachment.bounds = bounds
+        if let boundsRect = CGRect(string: bounds) {
+            attachment.bounds = boundsRect
         }
         
         self.init(attachment: attachment)
