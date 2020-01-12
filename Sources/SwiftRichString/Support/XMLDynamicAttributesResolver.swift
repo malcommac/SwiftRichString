@@ -47,7 +47,7 @@ public protocol XMLDynamicAttributesResolver {
     /// - Parameters:
     ///   - name: name of the image to get.
     ///   - fromStyle: caller instance of `StyleXML.
-    func imageWithName(_ name: String, fromStyle style: StyleXML) -> UIImage?
+    func imageWithName(_ name: String, fromStyle style: StyleXML) -> Image?
     
     /// You are receiving this event when SwiftRichString correctly render an existing tag but the tag
     /// contains extra attributes you may want to handle.
@@ -75,9 +75,9 @@ public protocol XMLDynamicAttributesResolver {
 
 extension XMLDynamicAttributesResolver {
     
-    public func imageWithName(_ name: String, fromStyle style: StyleXML) -> UIImage? {
+    public func imageWithName(_ name: String, fromStyle style: StyleXML) -> Image? {
         guard let mappedImage = style.imageProvider?(name) else {
-            return UIImage(named: name) // xcassets fallback
+            return Image(named: name) // xcassets fallback
         }
 
         // origin xml style contains mapped image.
