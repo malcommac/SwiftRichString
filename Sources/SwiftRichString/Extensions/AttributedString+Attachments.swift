@@ -95,7 +95,16 @@ public extension AttributedString {
         #else
         var attachment: NSTextAttachment!
         if #available(iOS 13.0, *) {
-            attachment = NSTextAttachment(image: image)
+            // Due to a bug (?) in UIKit we should use two methods to allocate the text attachment
+            // in order to render the image as template or original. If we use the
+            // NSTextAttachment(image: image) with a .alwaysOriginal rendering mode it will be
+            // ignored.
+            if image.renderingMode == .alwaysTemplate {
+                attachment = NSTextAttachment(image: image)
+            } else {
+                attachment =  NSTextAttachment()
+                attachment.image = image.withRenderingMode(.alwaysOriginal)
+            }
         } else {
             attachment = NSTextAttachment(data: image.pngData()!, ofType: "png")
         }
