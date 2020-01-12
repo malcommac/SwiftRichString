@@ -94,8 +94,8 @@ class ViewController: UIViewController {
 
 public class MyXMLDynamicAttributesResolver: StandardXMLAttributesResolver {
     
-    public override func styleForUnknownXMLTag(_ tag: String, to attributedString: inout AttributedString, attributes: [String : String]?) {
-        super.styleForUnknownXMLTag(tag, to: &attributedString, attributes: attributes)
+    public override func styleForUnknownXMLTag(_ tag: String, to attributedString: inout AttributedString, attributes: [String : String]?, fromStyle forStyle: StyleXML) {
+        super.styleForUnknownXMLTag(tag, to: &attributedString, attributes: attributes, fromStyle: forStyle)
         
         if tag == "rainbow" {
             let colors = UIColor.randomColors(attributedString.length)
