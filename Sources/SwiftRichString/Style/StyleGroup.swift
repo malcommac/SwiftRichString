@@ -54,8 +54,9 @@ public class StyleXML: StyleProtocol {
     /// XML Parsing options.
     public var xmlParsingOptions: XMLParsingOptions = []
     
-    /// Mapped image for memory based images.
-    public private(set) var imagesMap: [String: UIImage]? = nil
+    /// Image provider is called to provide custom image when `StyleXML` encounter a `img` tag image.
+    /// If not implemented the image is automatically searched inside any bundled `xcassets`.
+    public var imageProvider: ((String) -> UIImage?)? = nil
     
     /// Dynamic attributes resolver.
     /// By default the `StandardXMLAttributesResolver` instance is used.
@@ -70,11 +71,9 @@ public class StyleXML: StyleProtocol {
     /// - Parameters:
     ///   - base: base style applied to the entire string.
     ///   - styles: styles dictionary used to map your xml tags to styles definitions.
-    ///   - images: images used in XML. If a named image is not assigned here the default assets is used (aka `UIImage(named:)`).
-    public init(base: StyleProtocol? = nil, _ styles: [String: StyleProtocol] = [:], images: [String: UIImage]? = nil) {
+    public init(base: StyleProtocol? = nil, _ styles: [String: StyleProtocol] = [:]) {
         self.styles = styles
         self.baseStyle = base
-        self.imagesMap = images
     }
     
     // MARK: - Public Methods

@@ -76,7 +76,7 @@ public protocol XMLDynamicAttributesResolver {
 extension XMLDynamicAttributesResolver {
     
     public func imageWithName(_ name: String, fromStyle style: StyleXML) -> UIImage? {
-        guard let mappedImage = style.imagesMap?[name] else {
+        guard let mappedImage = style.imageProvider?(name) else {
             return UIImage(named: name) // xcassets fallback
         }
 
