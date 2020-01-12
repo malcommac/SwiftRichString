@@ -14,7 +14,7 @@ It provides convenient way to store styles you can reuse in your app's UI elemen
 |  	| Features Highlights 	|
 |---	|---------------------------------------------------------------------------------	|
 | 🦄 	| Easy styling and typography managment with coincise declarative syntax	|
-| 🏞 	| Attach local and remote images inside text 	|
+| 🏞 	| Attach local images (lazy/static) and remote images inside text 	|
 | 🧬 	| Fast & high customizable XML/HTML tagged string rendering 	|
 | 🌟 	| Apply text transforms within styles	|
 | 📐 	| Native support for iOS 11 Dynamic Type	|
@@ -35,7 +35,7 @@ let attributedText = "Hello World!".set(style: style) // et voilà!
 ```
 
 ### XML/HTML tag based rendering
-SwiftRichString allows you to render complex strings by parsing text's tags: each style will be identified by an unique name (used inside the tag) and you can create a `StyleGroup` which allows you to encapsulate all of them and reuse as you need (clearly you can register it globally).
+SwiftRichString allows you to render complex strings by parsing text's tags: each style will be identified by an unique name (used inside the tag) and you can create a `StyleXML` (was `StyleGroup`) which allows you to encapsulate all of them and reuse as you need (clearly you can register it globally).
 
 ```swift
 // Create your own styles
@@ -54,7 +54,7 @@ let italic = normal.byAdding {
 	$0.traitVariants = .italic
 }
 
-let myGroup = StyleGroup(base: normal, ["bold": bold, "italic": italic])
+let myGroup = StyleXML(base: normal, ["bold": bold, "italic": italic])
 let str = "Hello <bold>Daniele!</bold>. You're ready to <italic>play with us!</italic>"
 self.label?.attributedText = str.set(style: myGroup)
 ```
@@ -65,7 +65,7 @@ That's the result!
 
 ## Documentation
 
-- [Introduction to `Style`, `StyleGroup` & `StyleRegEx`](#stylestylegroup)
+- [Introduction to `Style`, `StyleXML` & `StyleRegEx`](#styleStyleXML)
 	- [String & Attributed String concatenation](#concatenation)
 	- [Apply styles to `String` & `Attributed String`](#manualstyling)
 	- [Fonts & Colors in `Style`](#fontscolors)
@@ -88,12 +88,12 @@ Other info:
 - [Contributing](#contributing)
 - [Copyright](#copyright)
 
-<a name="stylestylegroup"/>
+<a name="styleStyleXML"/>
 
-## Introduction to `Style`, `StyleGroup`, `StyleRegEx`
+## Introduction to `Style`, `StyleXML`, `StyleRegEx`
 
 The main concept behind SwiftRichString is the use of `StyleProtocol` as generic container of the attributes you can apply to both `String` and `NSMutableAttributedString`.
-Concrete classes derivated by `StyleProtocol` are: `Style`, `StyleGroup` and `StyleRegEx`.
+Concrete classes derivated by `StyleProtocol` are: `Style`, `StyleXML` and `StyleRegEx`.
 
 Each of these classes can be used as source for styles you can apply to a string, substring or attributed string.
 
@@ -114,15 +114,15 @@ let style = Style {
 let attrString = "Some text".set(style: style) // attributed string
 ```
 
-### `StyleGroup`: Apply styles for tag-based complex string
+### `StyleXML`: Apply styles for tag-based complex string
 
-`Style` instances are anonymous; if you want to use a style instance to render a tag-based plain string you need to include it inside a `StyleGroup`. You can consider a `StyleGroup` as a container of `Styles` (but, in fact, thanks to the conformance to a common `StyleProtocol`'s protocol your group may contains other sub-groups too).
+`Style` instances are anonymous; if you want to use a style instance to render a tag-based plain string you need to include it inside a `StyleXML`. You can consider a `StyleXML` as a container of `Styles` (but, in fact, thanks to the conformance to a common `StyleProtocol`'s protocol your group may contains other sub-groups too).
 
 ```swift
 let bodyStyle: Style = ...
 let h1Style: Style = ...
 let h2Style: Style = ...
-let group = StyleGroup(base: bodyStyle, ["h1": h1Style, "h2": h2Style])
+let group = StyleXML(base: bodyStyle, ["h1": h1Style, "h2": h2Style])
 
 let attrString = "Some <h1>text</h1>, <h2>welcome here</h2>".set(style: group)
 ```
@@ -200,8 +200,8 @@ Both `String` and `Attributed String` (aka `NSMutableAttributedString`) has a co
 
 - `set(style: String, range: NSRange? = nil)`: apply a globally registered style to the string (or a substring) by producing an attributed string.
 - `set(styles: [String], range: NSRange? = nil)`: apply an ordered sequence of globally registered styles to the string (or a substring) by producing an attributed string.
-- `set(style: StyleProtocol, range: NSRange? = nil)`: apply an instance of `Style` or `StyleGroup` (to render tag-based text) to the string (or a substring) by producting an attributed string.
-- `set(styles: [StyleProtocol], range: NSRange? = nil)`: apply a sequence of `Style`/`StyleGroup` instance in order to produce a single attributes collection which will be applied to the string (or substring) to produce an attributed string.
+- `set(style: StyleProtocol, range: NSRange? = nil)`: apply an instance of `Style` or `StyleXML` (to render tag-based text) to the string (or a substring) by producting an attributed string.
+- `set(styles: [StyleProtocol], range: NSRange? = nil)`: apply a sequence of `Style`/`StyleXML` instance in order to produce a single attributes collection which will be applied to the string (or substring) to produce an attributed string.
 
 Some examples:
 
@@ -214,8 +214,8 @@ let a1: AttributedString = "Hello world".set(style: "MyStyle")
 // styleH1 and styleH2 will be applied only for text inside that tags.
 let styleH1: Style = ...
 let styleH2: Style = ...
-let styleGroup = StyleGroup(base: commonStyle, ["h1" : styleH1, "h2" : styleH2])
-let a2: AttributedString = "Hello <h1>world</h1>, <h2>welcome here</h2>".set(style: styleGroup)
+let StyleXML = StyleXML(base: commonStyle, ["h1" : styleH1, "h2" : styleH2])
+let a2: AttributedString = "Hello <h1>world</h1>, <h2>welcome here</h2>".set(style: StyleXML)
 
 // Apply a style defined via closure to a portion of the string
 let a3 = "Hello Guys!".set(Style({ $0.font = SystemFonts.Helvetica_Bold.font(size: 20) }), range: NSMakeRange(0,4))
@@ -344,7 +344,7 @@ let style = Style {
 
 SwiftRichString is also able to parse and render xml tagged strings to produce a valid `NSAttributedString` instance. This is particularly useful when you receive dynamic strings from remote services and you need to produce a rendered string easily.
 
-In order to render an XML string you need to create a compisition of all styles you are planning to render in a single `StyleGroup` instance and apply it to your source string as just you made for a single `Style`.
+In order to render an XML string you need to create a compisition of all styles you are planning to render in a single `StyleXML` instance and apply it to your source string as just you made for a single `Style`.
 
 For example:
 
@@ -370,7 +370,7 @@ let italicStyle = Style {
 }
 
 // A group container includes all the style defined.
-let groupStyle = StyleGroup.init(base: baseStyle, ["b" : boldStyle, "i": italicStyle])
+let groupStyle = StyleXML.init(base: baseStyle, ["b" : boldStyle, "i": italicStyle])
 
 // We can render our string
 let bodyHTML = "Hello <b>world!</b>, my name is <i>Daniele</i>"
@@ -381,12 +381,12 @@ self.textView?.attributedText = bodyHTML.set(style: group)
 
 ## Customize XML rendering: react to tag's attributes and unknown tags
 
-You can also add custom attributes to your tags and render it as you prefer: you need to provide a croncrete implementation of `XMLDynamicAttributesResolver` protocol and assign it to the `StyleGroup`'s `.xmlAttributesResolver` property. 
+You can also add custom attributes to your tags and render it as you prefer: you need to provide a croncrete implementation of `XMLDynamicAttributesResolver` protocol and assign it to the `StyleXML`'s `.xmlAttributesResolver` property. 
 
 The protocol will receive two kind of events:
 
 - `applyDynamicAttributes(to attributedString: inout AttributedString, xmlStyle: XMLDynamicStyle)` is received when parser encounter an existing style with custom attributes. Style is applied and event is called so you can make further customizations.
-- `func styleForUnknownXMLTag(_ tag: String, to attributedString: inout AttributedString, attributes: [String: String]?)` is received when a unknown (not defined in `StyleGroup`'s styles) tag is received. You can decide to ignore or perform customizations.
+- `func styleForUnknownXMLTag(_ tag: String, to attributedString: inout AttributedString, attributes: [String: String]?)` is received when a unknown (not defined in `StyleXML`'s styles) tag is received. You can decide to ignore or perform customizations.
 
 The following example is used to override text color for when used for any known tag:
 
@@ -410,8 +410,8 @@ open class MyXMLDynamicAttributesResolver: XMLDynamicAttributesResolver {
     }
 }
 
-// Then set it to our's StyleGroup instance before rendering text.
-let groupStyle = StyleGroup.init(base: baseStyle, ["b" : boldStyle, "i": italicStyle])
+// Then set it to our's StyleXML instance before rendering text.
+let groupStyle = StyleXML.init(base: baseStyle, ["b" : boldStyle, "i": italicStyle])
 groupStyle.xmlAttributesResolver = MyXMLDynamicAttributesResolver()
 ```
 
@@ -454,7 +454,7 @@ let styleBold = Style({
     $0.color = UIColor.blue
 })
         
-let groupStyle = StyleGroup.init(base: styleBase, ["b" : styleBold])
+let groupStyle = StyleXML.init(base: styleBase, ["b" : styleBold])
 self.textView?.attributedText = sourceHTML.set(style: groupStyle)
 ```
 
@@ -536,6 +536,30 @@ This is the result:
 
 <img src="Documentation_Assests/image_6.png" alt="" width=100px/>
 
+Sometimes you may want to provide these images lazily. In order to do it just provide a custom implementation of the `imageProvider` callback in `StyleXML` instance:
+
+```swift
+let xmlText = "- <img named=\"check\"/> has done!"
+        
+let xmlStyle = StyleXML(base: {
+  /// some attributes for base style
+})
+
+// This method is called when a new `img` tag is found. It's your chance to
+// return a custom image. If you return `nil` (or you don't implement this method)
+// image is searched inside any bundled `xcasset` file.
+xmlStyle.imageProvider = { imageName in
+	switch imageName {
+		case "check":
+		   // create & return your own image
+		default:
+		   // ...
+	}
+}
+        
+self.textView?.attributedText = xmlText.set(style: x)
+```
+
 <a name="stylemanager"/>
 
 ## The `StyleManager`
@@ -546,7 +570,7 @@ This is the result:
 Styles can be created as you need or registered globally to be used once you need.
 This second approach is strongly suggested because allows you to theme your app as you need and also avoid duplication of the code.
 
-To register a `Style` or a `StyleGroup` globally you need to assign an unique identifier to it and call `register()` function via `Styles` shortcut (which is equal to call `StylesManager.shared`).
+To register a `Style` or a `StyleXML` globally you need to assign an unique identifier to it and call `register()` function via `Styles` shortcut (which is equal to call `StylesManager.shared`).
 
 In order to keep your code type-safer you can use a non-instantiable struct to keep the name of your styles, then use it to register style:
 
@@ -601,7 +625,7 @@ Styles.onDeferStyle = { name in
 			$0.traitVariants = .italic
 		}
 				
-		return (StyleGroup(base: normal, ["bold": bold, "italic": italic]), true)
+		return (StyleXML(base: normal, ["bold": bold, "italic": italic]), true)
 	}
 			
 	return (nil,false)
@@ -628,10 +652,10 @@ has three additional properties:
 - `style: StyleProtocol`: you can set it to render the text of the control with an instance of style instance.
 - `styledText: String`: use this property, instead of `attributedText` to set a new text for the control and render it with already set style. You can continue to use `attributedText` and set the value using `.set()` functions of `String`/`AttributedString`.
 
-Assigned style can be a `Style`, `StyleGroup` or `StyleRegEx`:
+Assigned style can be a `Style`, `StyleXML` or `StyleRegEx`:
 
 - if style is a `Style` the entire text of the control is set with the attributes defined by the style.
-- if style is a `StyleGroup` a base attribute is set (if `base` is valid) and other attributes are applied once each tag is found.
+- if style is a `StyleXML` a base attribute is set (if `base` is valid) and other attributes are applied once each tag is found.
 - if style is a `StyleRegEx` a base attribute is set (if `base` is valid) and the attribute is applied only for matches of the specified pattern.
 
 Typically you will set the style of a label via `Style Name` (`styleName`) property in IB and update the content of the control by setting the `styledText`:
