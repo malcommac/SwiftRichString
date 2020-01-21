@@ -56,7 +56,7 @@ public class StyleXML: StyleProtocol {
     
     /// Image provider is called to provide custom image when `StyleXML` encounter a `img` tag image.
     /// If not implemented the image is automatically searched inside any bundled `xcassets`.
-    public var imageProvider: ((String) -> Image?)? = nil
+    public var imageProvider: ((_ name: String, _ attributes: [String: String]?) -> Image?)? = nil
     
     /// Dynamic attributes resolver.
     /// By default the `StandardXMLAttributesResolver` instance is used.

@@ -539,7 +539,7 @@ This is the result:
 Sometimes you may want to provide these images lazily. In order to do it just provide a custom implementation of the `imageProvider` callback in `StyleXML` instance:
 
 ```swift
-let xmlText = "- <img named=\"check\"/> has done!"
+let xmlText = "- <img named=\"check\" background=\"#0000\"/> has done!"
         
 let xmlStyle = StyleXML(base: {
   /// some attributes for base style
@@ -548,7 +548,7 @@ let xmlStyle = StyleXML(base: {
 // This method is called when a new `img` tag is found. It's your chance to
 // return a custom image. If you return `nil` (or you don't implement this method)
 // image is searched inside any bundled `xcasset` file.
-xmlStyle.imageProvider = { imageName in
+xmlStyle.imageProvider = { (imageName, attributes) in
 	switch imageName {
 		case "check":
 		   // create & return your own image
