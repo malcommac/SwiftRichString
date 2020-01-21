@@ -17,6 +17,23 @@ class ViewController: UIViewController {
 	override func viewDidLoad() {
 		super.viewDidLoad()
         
+        let text = """
+- <img named="check" att="5"/> Performed!
+"""
+        let base = Style {
+            $0.font = UIFont.boldSystemFont(ofSize: 14)
+            $0.color = UIColor(hexString: "#8E8E8E")
+        }
+        
+        let xmlStyle = StyleXML(base: base)
+        xmlStyle.imageProvider = { imageName, attributes in
+            fatalError()
+        }
+        
+        self.textView?.attributedText = text.set(style: xmlStyle)
+        
+        return
+        
 //        self.textView?.attributedText = "ciao ciao " + AttributedString(image: UIImage(named: "rocket")!,
 //                                                                        bounds: CGRect(x: 0, y: -20, width: 25, height: 25)) + "ciao ciao"
 //
