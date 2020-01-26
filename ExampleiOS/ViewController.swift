@@ -30,9 +30,9 @@ class ViewController: UIViewController {
             fatalError()
         }
         
-        self.textView?.attributedText = text.set(style: xmlStyle)
+//        self.textView?.attributedText = text.set(style: xmlStyle)
         
-        return
+//        return
         
 //        self.textView?.attributedText = "ciao ciao " + AttributedString(image: UIImage(named: "rocket")!,
 //                                                                        bounds: CGRect(x: 0, y: -20, width: 25, height: 25)) + "ciao ciao"
@@ -85,6 +85,7 @@ class ViewController: UIViewController {
 				"b": boldStyle,
 				"em": italicStyle,
 				"i": italicStyle,
+                "a": uppercasedRed,
 				"li": Style {
 					$0.paragraphSpacingBefore = self.baseFontSize / 2
 					$0.firstLineHeadIndent = self.baseFontSize
