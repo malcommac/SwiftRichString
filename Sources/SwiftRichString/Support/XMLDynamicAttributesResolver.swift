@@ -90,6 +90,8 @@ extension XMLDynamicAttributesResolver {
 
 open class StandardXMLAttributesResolver: XMLDynamicAttributesResolver {
     
+    public init() {}
+    
     open func applyDynamicAttributes(to attributedString: inout AttributedString, xmlStyle: XMLDynamicStyle, fromStyle: StyleXML) {
         let finalStyleToApply = Style()
         xmlStyle.enumerateAttributes { key, value  in
