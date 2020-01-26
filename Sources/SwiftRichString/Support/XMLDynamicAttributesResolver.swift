@@ -90,22 +90,23 @@ extension XMLDynamicAttributesResolver {
 
 open class StandardXMLAttributesResolver: XMLDynamicAttributesResolver {
     
-    public func applyDynamicAttributes(to attributedString: inout AttributedString, xmlStyle: XMLDynamicStyle, fromStyle: StyleXML) {
+    public init() {}
+    
+    open func applyDynamicAttributes(to attributedString: inout AttributedString, xmlStyle: XMLDynamicStyle, fromStyle: StyleXML) {
         let finalStyleToApply = Style()
         xmlStyle.enumerateAttributes { key, value  in
             switch key {
                 case "color": // color support
                     finalStyleToApply.color = Color(hexString: value)
                 
-                default:
-                    break
+                default: break
             }
         }
-        
+        self.styleForUnknownXMLTag(xmlStyle.tag, to: &attributedString, attributes: xmlStyle.xmlAttributes, fromStyle: fromStyle)
         attributedString.add(style: finalStyleToApply)
     }
     
-    public func styleForUnknownXMLTag(_ tag: String, to attributedString: inout AttributedString, attributes: [String: String]?, fromStyle: StyleXML) {
+    open func styleForUnknownXMLTag(_ tag: String, to attributedString: inout AttributedString, attributes: [String: String]?, fromStyle: StyleXML) {
         let finalStyleToApply = Style()
         switch tag {
             case "a": // href support

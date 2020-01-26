@@ -52,6 +52,12 @@ public struct XMLParsingOptions: OptionSet {
     /// recommended that you include a root node yourself and pass this option.
     public static let doNotWrapXML = XMLParsingOptions(rawValue: 1)
     
+    /// Perform string escaping to replace all characters which is not supported by NSXMLParser
+    /// into the specified encoding with decimal entity.
+    /// For example if your string contains '&' character parser will break the style.
+    /// This option is active by default.
+    public static let escapeString = XMLParsingOptions(rawValue: 2)
+    
 }
 
 // MARK: - XMLStringBuilder
@@ -104,7 +110,8 @@ public class XMLStringBuilder: NSObject, XMLParserDelegate {
     public init(styleXML: StyleXML, string: String) {
         self.styleXML = styleXML
 
-        let xml = (styleXML.xmlParsingOptions.contains(.doNotWrapXML) ? string : "<\(XMLStringBuilder.topTag)>\(string)</\(XMLStringBuilder.topTag)>")
+        let xmlString = (styleXML.xmlParsingOptions.contains(.escapeString) ? string.escapeWithUnicodeEntities() : string)
+        let xml = (styleXML.xmlParsingOptions.contains(.doNotWrapXML) ? xmlString : "<\(XMLStringBuilder.topTag)>\(xmlString)</\(XMLStringBuilder.topTag)>")
         guard let data = xml.data(using: String.Encoding.utf8) else {
             fatalError("Unable to convert to UTF8")
         }
