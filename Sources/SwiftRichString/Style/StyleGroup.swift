@@ -52,7 +52,8 @@ public class StyleXML: StyleProtocol {
     public var baseStyle: StyleProtocol?
     
     /// XML Parsing options.
-    public var xmlParsingOptions: XMLParsingOptions = []
+    /// By default `escapeString` is applied.
+    public var xmlParsingOptions: XMLParsingOptions = [.escapeString]
     
     /// Image provider is called to provide custom image when `StyleXML` encounter a `img` tag image.
     /// If not implemented the image is automatically searched inside any bundled `xcassets`.
