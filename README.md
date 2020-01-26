@@ -6,20 +6,23 @@
 [![Carthage Compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
 [![Twitter](https://img.shields.io/badge/twitter-@danielemargutti-blue.svg?style=flat)](http://twitter.com/danielemargutti)
 
-
 SwiftRichString is a lightweight library which allows to create and manipulate attributed strings easily both in iOS, macOS, tvOS and even watchOS.
 It provides convenient way to store styles you can reuse in your app's UI elements, allows complex tag-based strings rendering and also includes integration with Interface Builder.
 
-It even support **iOS 11's Dynamic Type**!
+## Main Features
 
-If you manipulate `NSAttributedString` in Swift, SwiftRichString allows you to keep your code manteniable, readable and easy to evolve.
+|  	| Features Highlights 	|
+|---	|---------------------------------------------------------------------------------	|
+| 🦄 	| Easy styling and typography managment with coincise declarative syntax	|
+| 🏞 	| Attach local images (lazy/static) and remote images inside text 	|
+| 🧬 	| Fast & high customizable XML/HTML tagged string rendering 	|
+| 🌟 	| Apply text transforms within styles	|
+| 📐 	| Native support for iOS 11 Dynamic Type	|
+| 🖇 	| Support for Swift 5.1's function builder to compose strings	|
+| ⏱ 	| Compact code base with no external dependencies. 	|
+| 🐦 	| Fully made in Swift 5 from Swift ❥ lovers 	|
 
-## Features Highlights
-
-Want to know what SwiftRichString can do in your app? Lets take a look to these feature highlights!
-
-### 1. Easy Styling
-The main concept behind this lib is the `Style`: a style is just a collection of text attributes you can apply to a string. The following example show how to create a style an produce an attributed string with it:
+### Easy Styling
 
 ```swift
 let style = Style {
@@ -31,21 +34,8 @@ let style = Style {
 let attributedText = "Hello World!".set(style: style) // et voilà!
 ```
 
-### 2. Global Styles & Interface Builder Integration
-Styles can be also registered globally and reused in your app.
-Just define your own style and register using `Styles.register()` function:
-
-```swift
-let myStyle = Style { // define style's attributes... }
-Styles.register("MyStyle", style: style)
-```
-
-Now you can reuse it everything in your app; SwiftRichString exposes a `styleName` property for the most common text containers and you can set it directly in Interface Builder:
-
-<img src="Documentation_Assests/image_1.png" alt="" style="width: 500px;"/>
-
-### 3. Complex Rendering with tag-based strings
-SwiftRichString allows you to render complex strings by parsing text's tags: each style will be identified by an unique name (used inside the tag) and you can create a `StyleGroup` which allows you to encapsulate all of them and reuse as you need (clearly you can register it globally).
+### XML/HTML tag based rendering
+SwiftRichString allows you to render complex strings by parsing text's tags: each style will be identified by an unique name (used inside the tag) and you can create a `StyleXML` (was `StyleGroup`) which allows you to encapsulate all of them and reuse as you need (clearly you can register it globally).
 
 ```swift
 // Create your own styles
@@ -64,38 +54,27 @@ let italic = normal.byAdding {
 	$0.traitVariants = .italic
 }
 
-// Create a group which contains your style, each identified by a tag.
-let myGroup = StyleGroup(base: normal, ["bold": bold, "italic": italic])
-		
-// Use tags in your plain string	
+let myGroup = StyleXML(base: normal, ["bold": bold, "italic": italic])
 let str = "Hello <bold>Daniele!</bold>. You're ready to <italic>play with us!</italic>"
 self.label?.attributedText = str.set(style: myGroup)
 ```
 
 That's the result!
 
-<img src="Documentation_Assests/image_2.png" alt="" style="width: 300px;"/>
-
---
+<img src="Documentation_Assests/image_2.png" alt="" width=400px/>
 
 ## Documentation
 
-**Are you using SwiftRichString 1.x in your project? Don't miss to take a look at [Migration section of the documentation](#migration).**
-You can still use the 1.x release by using tagged version 1.1.0.
-
-**Table Of Contents**
-
-Full changelog is available in [CHANGELOG.md](CHANGELOG.md) file.
-
-- [Versions (1.x, 2.x and old Swift 3.x branch)](#versions)
-- [Introduction to `Style`, `StyleGroup` & `StyleRegEx`](#stylestylegroup)
-	- [Introduction](#introduction)
+- [Introduction to `Style`, `StyleXML` & `StyleRegEx`](#styleStyleXML)
 	- [String & Attributed String concatenation](#concatenation)
 	- [Apply styles to `String` & `Attributed String`](#manualstyling)
 	- [Fonts & Colors in `Style`](#fontscolors)
 	- [Derivating a `Style`](#derivatingstyle)
-	- [Support iOS's `Dynamic Type`](#dynamictype)
-	- [Dynamic Attributes from Tag's Params](#dynamicattributes)
+	- [Support Dynamic Type](#dynamictype)
+	- [Render XML tagged strings](#customizexmlstrings)
+	- [Customize XML rendering: react to tag's attributes and unknown tags](#xmlstrings)
+	- [Custom text transforms](#texttransforms)
+	- [Local & Remote Images inside text](#images)
 - [The `StyleManager`](#stylemanager)
 	- [Register globally available styles](#globalregister)
 	- [Defer style creation on demand](#defer)
@@ -104,35 +83,22 @@ Full changelog is available in [CHANGELOG.md](CHANGELOG.md) file.
 
 Other info:
 
-- [Migration from SwiftRichString 1.x](#migration)
 - [Requirements](#requirements)
 - [Installation](#installation)
 - [Contributing](#contributing)
 - [Copyright](#copyright)
 
-<a name="versions"/>
+<a name="styleStyleXML"/>
 
-### Versions
-
-- **SwiftRichString 2.x branch (current)**. The latest version is [2.0.2](https://github.com/malcommac/SwiftRichString/releases/tag/2.0.2).
-- **SwiftRichString 1.x branch (supported)**. Use [1.1.0 tag](https://github.com/malcommac/SwiftRichString/releases/tag/1.1.0). Its compatible with Swift 4.x.
-- **Swift 3.x (no longer mantained)**. Use [0.9.1 release](https://github.com/malcommac/SwiftRichString/releases/tag/0.9.10).
-
-<a name="stylestylegroup"/>
-
-## Introduction to `Style`, `StyleGroup`, `StyleRegEx`
-
-<a name="introduction"/>
-
-### Introduction
+## Introduction to `Style`, `StyleXML`, `StyleRegEx`
 
 The main concept behind SwiftRichString is the use of `StyleProtocol` as generic container of the attributes you can apply to both `String` and `NSMutableAttributedString`.
-Concrete classes derivated by `StyleProtocol` are: `Style`, `StyleGroup` and `StyleRegEx`.
+Concrete classes derivated by `StyleProtocol` are: `Style`, `StyleXML` and `StyleRegEx`.
 
 Each of these classes can be used as source for styles you can apply to a string, substring or attributed string.
 
 
-#### `Style`: apply style to strings or attributed strings
+### `Style`: apply style to strings or attributed strings
 
 A `Style` is a class which encapsulate all the attributes you can apply to a string. The vast majority of the attributes of both AppKit/UIKit are currently available via type-safe properties by this class.
 
@@ -148,15 +114,15 @@ let style = Style {
 let attrString = "Some text".set(style: style) // attributed string
 ```
 
-#### `StyleGroup`: Apply styles for tag-based complex string
+### `StyleXML`: Apply styles for tag-based complex string
 
-`Style` instances are anonymous; if you want to use a style instance to render a tag-based plain string you need to include it inside a `StyleGroup`. You can consider a `StyleGroup` as a container of `Styles` (but, in fact, thanks to the conformance to a common `StyleProtocol`'s protocol your group may contains other sub-groups too).
+`Style` instances are anonymous; if you want to use a style instance to render a tag-based plain string you need to include it inside a `StyleXML`. You can consider a `StyleXML` as a container of `Styles` (but, in fact, thanks to the conformance to a common `StyleProtocol`'s protocol your group may contains other sub-groups too).
 
 ```swift
 let bodyStyle: Style = ...
 let h1Style: Style = ...
 let h2Style: Style = ...
-let group = StyleGroup(base: bodyStyle, ["h1": h1Style, "h2": h2Style])
+let group = StyleXML(base: bodyStyle, ["h1": h1Style, "h2": h2Style])
 
 let attrString = "Some <h1>text</h1>, <h2>welcome here</h2>".set(style: group)
 ```
@@ -167,7 +133,7 @@ The following code defines a group where:
 - we have defined two other styles named `h1` and `h2`; these styles are applied to the source string when parser encounter some text enclosed by these tags.
 
 
-#### `StyleRegEx`: Apply styles via regular expressions
+### `StyleRegEx`: Apply styles via regular expressions
 
 `StyleRegEx` allows you to define a style which is applied when certain regular expression is matched inside the target string/attributed string.
 
@@ -183,11 +149,11 @@ let attrString = "My email is hello@danielemargutti.com and my website is http:/
 
 The result is this:
 
-<img src="Documentation_Assests/image_4.png" alt="" style="width: 400px;"/>
+<img src="Documentation_Assests/image_4.png" alt="" width=500px/>
 
 <a name="concatenation"/>
 
-### String & Attributed String concatenation
+## String & Attributed String concatenation
 SwiftRichString allows you to simplify string concatenation by providing custom `+` operator between `String`,`AttributedString` (typealias of `NSMutableAttributedString`) and `Style`.
 
 This a an example:
@@ -212,18 +178,30 @@ You can also use `+` operator to add a style to a plain or attributed string:
 let attStr = "Hello" + ("\(username)" + big)
 ```
 
+Finally you can concatente strings using function builders:
+
+```swift
+let bold = Style { ... }
+let italic = Style { ... }
+        
+let attributedString = AttributedString.composing {
+  "hello".set(style: bold)
+  "world".set(style: italic)
+}
+```
+
 <a name="manualstyling"/>
 
-### Apply styles to `String` & `Attributed String`
+## Apply styles to `String` & `Attributed String`
 
 Both `String` and `Attributed String` (aka `NSMutableAttributedString`) has a come convenience methods you can use to create an manipulate attributed text easily via code:
 
-#### Strings Instance Methods
+### Strings Instance Methods
 
 - `set(style: String, range: NSRange? = nil)`: apply a globally registered style to the string (or a substring) by producing an attributed string.
 - `set(styles: [String], range: NSRange? = nil)`: apply an ordered sequence of globally registered styles to the string (or a substring) by producing an attributed string.
-- `set(style: StyleProtocol, range: NSRange? = nil)`: apply an instance of `Style` or `StyleGroup` (to render tag-based text) to the string (or a substring) by producting an attributed string.
-- `set(styles: [StyleProtocol], range: NSRange? = nil)`: apply a sequence of `Style`/`StyleGroup` instance in order to produce a single attributes collection which will be applied to the string (or substring) to produce an attributed string.
+- `set(style: StyleProtocol, range: NSRange? = nil)`: apply an instance of `Style` or `StyleXML` (to render tag-based text) to the string (or a substring) by producting an attributed string.
+- `set(styles: [StyleProtocol], range: NSRange? = nil)`: apply a sequence of `Style`/`StyleXML` instance in order to produce a single attributes collection which will be applied to the string (or substring) to produce an attributed string.
 
 Some examples:
 
@@ -236,14 +214,14 @@ let a1: AttributedString = "Hello world".set(style: "MyStyle")
 // styleH1 and styleH2 will be applied only for text inside that tags.
 let styleH1: Style = ...
 let styleH2: Style = ...
-let styleGroup = StyleGroup(base: commonStyle, ["h1" : styleH1, "h2" : styleH2])
-let a2: AttributedString = "Hello <h1>world</h1>, <h2>welcome here</h2>".set(style: styleGroup)
+let StyleXML = StyleXML(base: commonStyle, ["h1" : styleH1, "h2" : styleH2])
+let a2: AttributedString = "Hello <h1>world</h1>, <h2>welcome here</h2>".set(style: StyleXML)
 
 // Apply a style defined via closure to a portion of the string
 let a3 = "Hello Guys!".set(Style({ $0.font = SystemFonts.Helvetica_Bold.font(size: 20) }), range: NSMakeRange(0,4))
 ```
 
-#### AttributedString Instance Methods
+### AttributedString Instance Methods
 
 Similar methods are also available to attributed strings.
 
@@ -324,7 +302,7 @@ Clearly you can still pass instances of both colors/fonts.
 
 <a name="derivatingstyle"/>
 
-### Derivating a `Style`
+## Derivating a `Style`
 
 Sometimes you may need to infer properties of a new style from an existing one. In this case you can use `byAdding()` function of `Style` to produce a new style with all the properties of the receiver and the chance to configure additional/replacing attributes.
 
@@ -360,25 +338,226 @@ let style = Style {
 }
 ``` 
 
-<a name="dynamicattributes"/>
+<a name="xmlstrings"/>
 
-### Dynamic Attributes from Tag's Params
+## Render XML/HTML tagged strings
 
-SwiftRichString also support some dynamic elements in style applied by reading specific tag parameter's value.
-The following example render the `linkURL` property by reading the value from the source string inside `href` tag (like in real HTML text):
+SwiftRichString is also able to parse and render xml tagged strings to produce a valid `NSAttributedString` instance. This is particularly useful when you receive dynamic strings from remote services and you need to produce a rendered string easily.
+
+In order to render an XML string you need to create a compisition of all styles you are planning to render in a single `StyleXML` instance and apply it to your source string as just you made for a single `Style`.
+
+For example:
 
 ```swift
-  let normal = Style {
-	$0.color = UIColor.black
-  }
-  let link = Style {
-	  $0.color = UIColor.red
-	  $0.linkURL = URLRepresentable.tagAttribute("href")
-  }
-  let group = StyleGroup.init(base: normal, ["a" : link])
+// The base style is applied to the entire string
+let baseStyle = Style {
+	$0.font = UIFont.boldSystemFont(ofSize: self.baseFontSize * 1.15)
+	$0.lineSpacing = 1
+	$0.kerning = Kerning.adobe(-20)
+}
 
-  let bodyHTML = "Go to <a href=\"http://www.apple.com\">Apple</a> web site!"
-  self.textView?.attributedText = bodyHTML.set(style: group)
+let boldStyle = Style {
+	$0.font = UIFont.boldSystemFont(ofSize: self.baseFontSize)
+    $0.dynamicText = DynamicText {
+    $0.style = .body
+    $0.maximumSize = 35.0
+    $0.traitCollection = UITraitCollection(userInterfaceIdiom: .phone)
+    }
+}
+		
+let italicStyle = Style {
+	$0.font = UIFont.italicSystemFont(ofSize: self.baseFontSize)
+}
+
+// A group container includes all the style defined.
+let groupStyle = StyleXML.init(base: baseStyle, ["b" : boldStyle, "i": italicStyle])
+
+// We can render our string
+let bodyHTML = "Hello <b>world!</b>, my name is <i>Daniele</i>"
+self.textView?.attributedText = bodyHTML.set(style: group)
+```
+
+<a name="customizexmlstrings"/>
+
+## Customize XML rendering: react to tag's attributes and unknown tags
+
+You can also add custom attributes to your tags and render it as you prefer: you need to provide a croncrete implementation of `XMLDynamicAttributesResolver` protocol and assign it to the `StyleXML`'s `.xmlAttributesResolver` property. 
+
+The protocol will receive two kind of events:
+
+- `applyDynamicAttributes(to attributedString: inout AttributedString, xmlStyle: XMLDynamicStyle)` is received when parser encounter an existing style with custom attributes. Style is applied and event is called so you can make further customizations.
+- `func styleForUnknownXMLTag(_ tag: String, to attributedString: inout AttributedString, attributes: [String: String]?)` is received when a unknown (not defined in `StyleXML`'s styles) tag is received. You can decide to ignore or perform customizations.
+
+The following example is used to override text color for when used for any known tag:
+
+```swift
+// First define our own resolver for attributes
+open class MyXMLDynamicAttributesResolver: XMLDynamicAttributesResolver {
+    
+    public func applyDynamicAttributes(to attributedString: inout AttributedString, xmlStyle: XMLDynamicStyle) {
+        let finalStyleToApply = Style()
+        xmlStyle.enumerateAttributes { key, value  in
+            switch key {
+                case "color": // color support
+                    finalStyleToApply.color = Color(hexString: value)
+                
+                default:
+                    break
+            }
+        }
+        
+        attributedString.add(style: finalStyleToApply)
+    }
+}
+
+// Then set it to our's StyleXML instance before rendering text.
+let groupStyle = StyleXML.init(base: baseStyle, ["b" : boldStyle, "i": italicStyle])
+groupStyle.xmlAttributesResolver = MyXMLDynamicAttributesResolver()
+```
+
+The following example define the behaviour for a non known tag called `rainbow`.  
+Specifically it alter the string by setting a custom color for each letter of the source string.
+
+```swift
+open class MyXMLDynamicAttributesResolver: XMLDynamicAttributesResolver {
+
+  public override func styleForUnknownXMLTag(_ tag: String, to attributedString: inout AttributedString, attributes: [String : String]?) {
+        super.styleForUnknownXMLTag(tag, to: &attributedString, attributes: attributes)
+        
+        if tag == "rainbow" {
+            let colors = UIColor.randomColors(attributedString.length)
+            for i in 0..<attributedString.length {
+                attributedString.add(style: Style({
+                    $0.color = colors[i]
+                }), range: NSMakeRange(i, 1))
+            }
+        }
+        
+    }
+  }
+}
+```
+You will receive all read tag attributes inside the `attributes` parameter.  
+You can alter attributes or the entire string received as `inout` parameter in `attributedString` property.
+
+A default resolver is also provided by the library and used by default: `StandardXMLAttributesResolver`.  It will support both `color` attribute in tags and `<a href>` tag with url linking.
+
+```swift
+let sourceHTML = "My <b color=\"#db13f2\">webpage</b> is really <b>cool</b>. Take a look <a href=\"http://danielemargutti.com\">here</a>"
+        
+let styleBase = Style({
+    $0.font = UIFont.boldSystemFont(ofSize: 15)
+})
+        
+let styleBold = Style({
+    $0.font = UIFont.boldSystemFont(ofSize: 20)
+    $0.color = UIColor.blue
+})
+        
+let groupStyle = StyleXML.init(base: styleBase, ["b" : styleBold])
+self.textView?.attributedText = sourceHTML.set(style: groupStyle)
+```
+
+The result is this:
+
+<img src="Documentation_Assests/image_5.png" alt="" width=500px/>
+
+where the `b` tag's blue color was overriden by the color tag attributes and the link in 'here' is clickable.
+
+<a name="texttransforms"/>
+
+## Custom Text Transforms
+
+Sometimes you want to apply custom text transforms to your string; for example you may want to make some text with a given style uppercased with current locale.  
+In order to provide custom text transform in `Style` instances just set one or more `TextTransform` to your `Style`'s `.textTransforms` property:
+
+```swift
+let allRedAndUppercaseStyle = Style({
+	$0.font = UIFont.boldSystemFont(ofSize: 16.0)
+	$0.color = UIColor.red
+	$0.textTransforms = [
+		.uppercaseWithLocale(Locale.current)
+	]
+})
+
+let text = "test".set(style: allRedAndUppercaseStyle) // will become red and uppercased (TEST)
+```
+
+While `TextTransform` is an enum with a predefined set of transform you can also provide your own function which have a `String` as source and another `String` as destination:
+
+```swift
+let markdownBold = Style({
+	$0.font = UIFont.boldSystemFont(ofSize: 16.0)
+	$0.color = UIColor.red
+	$0.textTransforms = [
+		.custom({
+			return "**\($0)**"
+		})
+	]
+})
+```
+
+All text transforms are applied in the same ordered you set in `textTransform` property.
+
+<a name="images"/>
+
+## Local & Remote Images inside text
+
+SwiftRichString supports local and remote attached images along with attributed text.  
+You can create an attributed string with an image with a single line:
+
+```swift
+// You can specify the bounds of the image, both for size and the location respecting the base line of the text.
+let localTextAndImage = AttributedString(image: UIImage(named: "rocket")!, bounds: CGRect(x: 0, y: -20, width: 25, height: 25))
+
+// You can also load a remote image. If you not specify bounds size is the original size of the image.
+let remoteTextAndImage = AttributedString(imageURL: "http://...")
+
+// You can now compose it with other attributed or simple string
+let finalString = "...".set(style: myStyle) + remoteTextAndImage + " some other text"
+```
+
+Images can also be loaded by rending an XML string by using the `img` tag (with `named` tag for local resource and `url` for remote url).  
+`rect` parameter is optional and allows you to specify resize and relocation of the resource.
+
+```swift
+let taggedText = """
+  Some text and this image:
+  <img named="rocket" rect="0,-50,30,30"/>
+  
+  This other is loaded from remote URL:
+  <img url="https://www.macitynet.it/wp-content/uploads/2018/05/video_ApplePark_magg18.jpg"/>
+"""
+
+self.textView?.attributedText = taggedText.set(style: ...)
+```
+
+This is the result:
+
+<img src="Documentation_Assests/image_6.png" alt="" width=100px/>
+
+Sometimes you may want to provide these images lazily. In order to do it just provide a custom implementation of the `imageProvider` callback in `StyleXML` instance:
+
+```swift
+let xmlText = "- <img named=\"check\" background=\"#0000\"/> has done!"
+        
+let xmlStyle = StyleXML(base: {
+  /// some attributes for base style
+})
+
+// This method is called when a new `img` tag is found. It's your chance to
+// return a custom image. If you return `nil` (or you don't implement this method)
+// image is searched inside any bundled `xcasset` file.
+xmlStyle.imageProvider = { (imageName, attributes) in
+	switch imageName {
+		case "check":
+		   // create & return your own image
+		default:
+		   // ...
+	}
+}
+        
+self.textView?.attributedText = xmlText.set(style: x)
 ```
 
 <a name="stylemanager"/>
@@ -387,11 +566,11 @@ The following example render the `linkURL` property by reading the value from th
 
 <a name="globalregister"/>
 
-### Register globally available styles
+## Register globally available styles
 Styles can be created as you need or registered globally to be used once you need.
 This second approach is strongly suggested because allows you to theme your app as you need and also avoid duplication of the code.
 
-To register a `Style` or a `StyleGroup` globally you need to assign an unique identifier to it and call `register()` function via `Styles` shortcut (which is equal to call `StylesManager.shared`).
+To register a `Style` or a `StyleXML` globally you need to assign an unique identifier to it and call `register()` function via `Styles` shortcut (which is equal to call `StylesManager.shared`).
 
 In order to keep your code type-safer you can use a non-instantiable struct to keep the name of your styles, then use it to register style:
 
@@ -423,7 +602,7 @@ or you can assign `body` string to the `styledText` via Interface Builder design
 
 <a name="defer"/>
 
-### Defer style creation on demand
+## Defer style creation on demand
 Sometimes you may need to return a particular style used only in small portion of your app; while you can still set it directly you can also defer its creation in `StylesManager`.
 
 By implementing `onDeferStyle()` callback you have an option to create a new style once required: you will receive the identifier of the style.
@@ -446,7 +625,7 @@ Styles.onDeferStyle = { name in
 			$0.traitVariants = .italic
 		}
 				
-		return (StyleGroup(base: normal, ["bold": bold, "italic": italic]), true)
+		return (StyleXML(base: normal, ["bold": bold, "italic": italic]), true)
 	}
 			
 	return (nil,false)
@@ -456,7 +635,7 @@ The following code return a valid style for `myStyle` identifier and cache it; i
 
 Now you can use your style to render, for example, a tag based text into an `UILabel`: just set the name of the style to use.
 
-<img src="Documentation_Assests/image_3.png" alt="" style="width: 400px;"/>
+<img src="Documentation_Assests/image_3.png" alt="" width=400px>
 
 <a name="ib"/>
 
@@ -473,10 +652,10 @@ has three additional properties:
 - `style: StyleProtocol`: you can set it to render the text of the control with an instance of style instance.
 - `styledText: String`: use this property, instead of `attributedText` to set a new text for the control and render it with already set style. You can continue to use `attributedText` and set the value using `.set()` functions of `String`/`AttributedString`.
 
-Assigned style can be a `Style`, `StyleGroup` or `StyleRegEx`:
+Assigned style can be a `Style`, `StyleXML` or `StyleRegEx`:
 
 - if style is a `Style` the entire text of the control is set with the attributes defined by the style.
-- if style is a `StyleGroup` a base attribute is set (if `base` is valid) and other attributes are applied once each tag is found.
+- if style is a `StyleXML` a base attribute is set (if `base` is valid) and other attributes are applied once each tag is found.
 - if style is a `StyleRegEx` a base attribute is set (if `base` is valid) and the attribute is applied only for matches of the specified pattern.
 
 Typically you will set the style of a label via `Style Name` (`styleName`) property in IB and update the content of the control by setting the `styledText`:
@@ -546,27 +725,13 @@ The following properties are available:
 | kerning                       | `Kerning`                               | Tracking to apply.                                                                                                                         | 
 | traitVariants                 | `TraitVariant`                          | Describe trait variants to apply to the font                                                                                               | 
 
-<a name="migration"/>
-
-## Migration from 1.x
-SwiftRichString is a complete rewrite of the library. While some inner concept are the same, in order to keep the code cleaner and simpler I've made some important changes.
-
-- A `StyleProtocol` is now a common entry point for every style definition; both `Style` and `StyleGroup` are conform to this protocol which is the central repository to make actions on text (in 1.x `String` and `AttributedString` act directly to parse text).
-- `Style` some properties of the class has a different (but quite equal) name, changed to better reflect the purpose of the attribute. Some attributes like `underline` or `striketought` are now tuple of elements instead of different properties.
-- `Style` are now anonymous; you don't need to assign a name to a style; only if you need to parse tag-based text you need to group used styles in a `StyleGroup` instance where you define the name/id of each tag.
-- There is not any `parseTag` function; just pass the `StyleGroup` as parameter to render a text and the tag-based parsing will be done automatically.
-- There is not any default style; `StyleGroup` implements a `base` style used to render common attributes of your text. You can also use `Styles` to register globally available `StyleProtocol` instances and use them in your app.
-- In order to simplify our APIs some init methods of `Style` are now removed. You should not miss them, but let me know via PR in case.
-
 <a name="requirements"/>
 
 ## Requirements
 
-SwiftRichString is compatible with Swift 4.x.
-All Apple platforms are supported:
-
+* Swift 5.1+
 * iOS 8.0+
-* macOS 10.10+
+* macOS 11.0+
 * watchOS 2.0+
 * tvOS 11.0+
 
@@ -574,51 +739,29 @@ All Apple platforms are supported:
 
 ## Installation
 
-<a name="cocoapods" />
+### CocoaPods
 
-### Install via CocoaPods
-
-[CocoaPods](http://cocoapods.org) is a dependency manager for Objective-C, which automates and simplifies the process of using 3rd-party libraries like SwiftRichString in your projects. You can install it with the following command:
-
-```bash
-$ sudo gem install cocoapods
-```
-
-> CocoaPods 1.0.1+ is required to build SwiftRichString.
-
-#### Install via Podfile
-
-To integrate SwiftRichString into your Xcode project using CocoaPods, specify it in your `Podfile`:
+[CocoaPods](https://cocoapods.org/) is a dependency manager for Cocoa projects. For usage and installation instructions, visit their website. To integrate Alamofire into your Xcode project using CocoaPods, specify it in your Podfile:
 
 ```ruby
-source 'https://github.com/CocoaPods/Specs.git'
-platform :ios, '8.0'
-
-target 'TargetName' do
-use_frameworks!
 pod 'SwiftRichString'
-end
 ```
 
-Then, run the following command:
+### Swift Package Manager
 
-```bash
-$ pod install
+The [Swift Package Manager](https://swift.org/package-manager/) is a tool for automating the distribution of Swift code and is integrated into the swift compiler. It is in early development, but Alamofire does support its use on supported platforms.
+
+Once you have your Swift package set up, adding Alamofire as a dependency is as easy as adding it to the dependencies value of your Package.swift.
+
+```swift
+dependencies: [
+    .package(url: "https://github.com/malcommac/SwiftRichString.git", from: "3.5.0")
+]
 ```
-
-<a name="carthage" />
 
 ### Carthage
 
-[Carthage](https://github.com/Carthage/Carthage) is a decentralized dependency manager that builds your dependencies and provides you with binary frameworks.
-
-You can install Carthage with [Homebrew](http://brew.sh/) using the following command:
-
-```bash
-$ brew update
-$ brew install carthage
-```
-
+[Carthage](https://github.com/Carthage/Carthage) is a decentralized dependency manager that builds your dependencies and provides you with binary frameworks.  
 To integrate SwiftRichString into your Xcode project using Carthage, specify it in your `Cartfile`:
 
 ```ogdl
@@ -639,21 +782,3 @@ Contributors are expected to abide by the [Contributor Covenant Code of Conduct]
 SwiftRichString is available under the MIT license. See the LICENSE file for more info.
 
 Daniele Margutti: [hello@danielemargutti.com](mailto:hello@danielemargutti.com), [@danielemargutti](https://twitter.com/danielemargutti)
-
-## Other Libraries You May Like
-
-I'm also working on several other projects you may like.
-Take a look below:
-
-
-| Library         | Description                                      |
-|-----------------|--------------------------------------------------|
-| [**SwiftDate**](https://github.com/malcommac/SwiftDate)       | The best way to manage date/timezones in Swift   |
-| [**Hydra**](https://github.com/malcommac/Hydra)           | Write better async code: async/await & promises  |
-| [**FlowKit**](https://github.com/malcommac/FlowKit) | A new declarative approach to table/collection managment. Forget datasource & delegates. |
-| [**SwiftRichString**](https://github.com/malcommac/SwiftRichString) | Elegant & Painless NSAttributedString in Swift   |
-| [**SwiftLocation**](https://github.com/malcommac/SwiftLocation)   | Efficient location manager                       |
-| [**SwiftMsgPack**](https://github.com/malcommac/SwiftMsgPack)    | Fast/efficient msgPack encoder/decoder           |
-</p>
-
-

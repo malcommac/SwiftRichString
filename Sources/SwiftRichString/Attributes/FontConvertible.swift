@@ -51,7 +51,7 @@ public protocol FontConvertible {
 
 // MARK: - FontConvertible for UIFont/NSFont
 extension Font: FontConvertible {
-	
+
 	/// Return the same instance of the font with specified size.
 	///
 	/// - Parameter size: size of the font in points. If size is `nil`, `Font.systemFontSize` is used.
@@ -61,16 +61,18 @@ extension Font: FontConvertible {
 		return Font(name: self.fontName, size: (size ?? TVOS_SYSTEMFONT_SIZE))!
 		#elseif os(watchOS)
 		return Font(name: self.fontName, size: (size ?? WATCHOS_SYSTEMFONT_SIZE))!
+		#elseif os(macOS)
+		return Font(descriptor: self.fontDescriptor, size: (size ?? Font.systemFontSize))!
 		#else
-		return Font(name: self.fontName, size: (size ?? Font.systemFontSize))!
+		return Font(descriptor: self.fontDescriptor, size: (size ?? Font.systemFontSize))
 		#endif
 	}
-	
+
 }
 
 // MARK: - FontConvertible for String
 extension String: FontConvertible {
-	
+
 	/// Transform a string to a valid `UIFont`/`NSFont` instance.
 	/// String must contain a valid Postscript font's name.
 	///
@@ -85,5 +87,5 @@ extension String: FontConvertible {
 		return Font(name: self, size: (size ?? Font.systemFontSize))!
 		#endif
 	}
-	
+
 }

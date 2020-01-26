@@ -55,6 +55,8 @@ public class StyleRegEx: StyleProtocol {
 		return self.style.attributes
 	}
 	
+    public var textTransforms: [TextTransform]?
+    
 	/// Font attributes
 	public var fontData: FontData? {
 		return self.style.fontData

@@ -1,4 +1,4 @@
-//
+////
 //  SwiftRichString
 //  Elegant Strings & Attributed Strings Toolkit for Swift
 //
@@ -30,22 +30,19 @@
 
 import Foundation
 
-public protocol URLRepresentable {
-    var url: URL { get }
+@_functionBuilder
+public class AttributedStringBuilder {
+    public static func buildBlock(_ components: AttributedString...) -> AttributedString {
+        let result = NSMutableAttributedString(string: "")
+        
+        return components.reduce(into: result) { (result, current) in result.append(current) }
+    }
 }
 
-extension URL: URLRepresentable {
-
-    public var url: URL {
-        return self
-    }
+extension AttributedString {
     
-    public init?(string: String?) {
-        guard let string = string else {
-            return nil
-        }
-        self.init(string: string)
+    public class func composing(@AttributedStringBuilder _ parts: () -> AttributedString) -> AttributedString {
+        return parts()
     }
     
 }
-
