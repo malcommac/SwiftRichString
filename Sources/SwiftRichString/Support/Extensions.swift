@@ -37,49 +37,15 @@ import UIKit
 
 extension String {
     
-    // Current implementation by @alexaubry in
-    // https://github.com/alexaubry/HTMLString
-    public func escapeWithUnicodeEntities() -> String {
-        var copy = self
-        copy.addUnicodeEntities()
-        return copy
-    }
-    
-    internal mutating func addUnicodeEntities() {
-        var position: String.Index? = startIndex
-        let requiredEscapes: Set<Character> = ["!", "\"", "$", "%", "&", "'", "+", ",", "<", "=", ">", "@", "[", "]", "`", "{", "}"]
-        
-        while let cursorPosition = position {
-            guard cursorPosition != endIndex else { break }
-            let character = self[cursorPosition]
-            
-            if requiredEscapes.contains(character) {
-                // One of the required escapes for security reasons
-                let escape = "&#\(character.asciiValue!);" // required escapes can can only be ASCII
-                position = positionAfterReplacingCharacter(at: cursorPosition, with: escape)
-            } else {
-                // Not a required escape, no need to replace the character
-                position = index(cursorPosition, offsetBy: 1, limitedBy: endIndex)
-            }
-        }
-    }
-    
-    /// Replaces the character at the given position with the escape and returns the new position.
-    fileprivate mutating func positionAfterReplacingCharacter(at position: String.Index, with escape: String) -> String.Index? {
-        let nextIndex = index(position, offsetBy: 1)
-        
-        if let fittingPosition = index(position, offsetBy: escape.count, limitedBy: endIndex) {
-            // Check if we can fit the whole escape in the receiver
-            replaceSubrange(position ..< nextIndex, with: escape)
-            return fittingPosition
-        } else {
-            // If we can't, remove the character and insert the escape to make it fit.
-            remove(at: position)
-            insert(contentsOf: escape, at: position)
-            return index(position, offsetBy: escape.count, limitedBy: endIndex)
-        }
-    }
+    private static let escapeAmpRegExp = try! NSRegularExpression(pattern: "&(?!(#[0-9]{2,4}|[A-z]{2,6});)", options: NSRegularExpression.Options(rawValue: 0))
 
+    public func escapeWithUnicodeEntities() -> String {
+        let range = NSRange(location: 0, length: self.count)
+        return String.escapeAmpRegExp.stringByReplacingMatches(in: self,
+                                                               options: NSRegularExpression.MatchingOptions(rawValue: 0),
+                                                               range: range,
+                                                               withTemplate: "&amp;")
+    }
     
 }
 
