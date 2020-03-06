@@ -12,8 +12,6 @@ import XCTest
 class FontDataTests: XCTestCase {
     
     private func fontAttributes<T>(for fontData: FontData, attribute: UIFontDescriptor.AttributeName) -> T? {
-        super.setUp()
-        
         let attributes: [NSAttributedString.Key: Any] = fontData.attributes(currentFont: UIFont.systemFont(ofSize: 12), size: 12)
         XCTAssertFalse(attributes.isEmpty, "empty attributes")
         
