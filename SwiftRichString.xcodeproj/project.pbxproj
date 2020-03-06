@@ -239,9 +239,6 @@
 		6489332820A0CA76000E691A /* FontInfoAttribute.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6489332420A0CA76000E691A /* FontInfoAttribute.swift */; };
 		6489332920A0CA76000E691A /* FontInfoAttribute.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6489332420A0CA76000E691A /* FontInfoAttribute.swift */; };
 		6489332A20A0CA76000E691A /* FontInfoAttribute.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6489332420A0CA76000E691A /* FontInfoAttribute.swift */; };
-		8933C78E1EB5B82C000D00A4 /* SwiftRichStringTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8933C7891EB5B82A000D00A4 /* SwiftRichStringTests.swift */; };
-		8933C78F1EB5B82C000D00A4 /* SwiftRichStringTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8933C7891EB5B82A000D00A4 /* SwiftRichStringTests.swift */; };
-		8933C7901EB5B82D000D00A4 /* SwiftRichStringTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8933C7891EB5B82A000D00A4 /* SwiftRichStringTests.swift */; };
 		D53F4E7B21F03E690085D26F /* DynamicText.swift in Sources */ = {isa = PBXBuildFile; fileRef = D53F4E7A21F03E690085D26F /* DynamicText.swift */; };
 		D53F4E7C21F03EEE0085D26F /* DynamicText.swift in Sources */ = {isa = PBXBuildFile; fileRef = D53F4E7A21F03E690085D26F /* DynamicText.swift */; };
 		D53F4E7D21F03EEF0085D26F /* DynamicText.swift in Sources */ = {isa = PBXBuildFile; fileRef = D53F4E7A21F03E690085D26F /* DynamicText.swift */; };
@@ -252,6 +249,10 @@
 		D53F4E8221F03F250085D26F /* DynamicText.swift in Sources */ = {isa = PBXBuildFile; fileRef = D53F4E7A21F03E690085D26F /* DynamicText.swift */; };
 		DD7502881C68FEDE006590AF /* SwiftRichString.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 52D6DA0F1BF000BD002C0205 /* SwiftRichString.framework */; };
 		DD7502921C690C7A006590AF /* SwiftRichString.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 52D6D9F01BEFFFBE002C0205 /* SwiftRichString.framework */; };
+		F06E3FC02412994300D99B5B /* StyleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F06E3FBF2412994300D99B5B /* StyleTests.swift */; };
+		F06E3FC12412994700D99B5B /* StyleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F06E3FBF2412994300D99B5B /* StyleTests.swift */; };
+		F0A8C2BB24128C8200512946 /* FontDataTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0A8C2BA24128C8200512946 /* FontDataTests.swift */; };
+		F0A8C2BD24128C8F00512946 /* FontDataTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0A8C2BA24128C8200512946 /* FontDataTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -382,12 +383,13 @@
 		6489330F209DE87D000E691A /* SystemFonts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SystemFonts.swift; sourceTree = "<group>"; };
 		64893316209DEAFF000E691A /* Style.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Style.swift; sourceTree = "<group>"; };
 		6489332420A0CA76000E691A /* FontInfoAttribute.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FontInfoAttribute.swift; sourceTree = "<group>"; };
-		8933C7891EB5B82A000D00A4 /* SwiftRichStringTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftRichStringTests.swift; sourceTree = "<group>"; };
 		AD2FAA261CD0B6D800659CF4 /* SwiftRichString.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = SwiftRichString.plist; sourceTree = "<group>"; };
 		AD2FAA281CD0B6E100659CF4 /* SwiftRichStringTests.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = SwiftRichStringTests.plist; sourceTree = "<group>"; };
 		D53F4E7A21F03E690085D26F /* DynamicText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DynamicText.swift; sourceTree = "<group>"; };
 		DD75027A1C68FCFC006590AF /* SwiftRichString-macOS Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "SwiftRichString-macOS Tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		DD75028D1C690C7A006590AF /* SwiftRichString-tvOS Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "SwiftRichString-tvOS Tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		F06E3FBF2412994300D99B5B /* StyleTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StyleTests.swift; sourceTree = "<group>"; };
+		F0A8C2BA24128C8200512946 /* FontDataTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FontDataTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -665,7 +667,8 @@
 		8933C7831EB5B7EB000D00A4 /* Tests */ = {
 			isa = PBXGroup;
 			children = (
-				8933C7891EB5B82A000D00A4 /* SwiftRichStringTests.swift */,
+				F0A8C2BA24128C8200512946 /* FontDataTests.swift */,
+				F06E3FBF2412994300D99B5B /* StyleTests.swift */,
 			);
 			name = Tests;
 			path = Tests/SwiftRichStringTests;
@@ -1169,7 +1172,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8933C7901EB5B82D000D00A4 /* SwiftRichStringTests.swift in Sources */,
+				F0A8C2BB24128C8200512946 /* FontDataTests.swift in Sources */,
+				F06E3FC02412994300D99B5B /* StyleTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1425,7 +1429,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8933C78F1EB5B82C000D00A4 /* SwiftRichStringTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1433,7 +1436,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8933C78E1EB5B82C000D00A4 /* SwiftRichStringTests.swift in Sources */,
+				F0A8C2BD24128C8F00512946 /* FontDataTests.swift in Sources */,
+				F06E3FC12412994700D99B5B /* StyleTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
