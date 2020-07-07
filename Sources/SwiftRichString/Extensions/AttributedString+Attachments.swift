@@ -105,7 +105,10 @@ public extension AttributedString {
                 attachment.image = image.withRenderingMode(.alwaysOriginal)
             }
         } else {
-            attachment = NSTextAttachment(data: image.pngData()!, ofType: "png")
+            // It does not work on iOS12, return empty set.s
+            // attachment = NSTextAttachment(data: image.pngData()!, ofType: "png")
+            attachment =  NSTextAttachment()
+            attachment.image = image.withRenderingMode(.alwaysOriginal)
         }
         #endif
         
