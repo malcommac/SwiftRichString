@@ -15,7 +15,8 @@ Pod::Spec.new do |s|
   s.tvos.deployment_target = "9.2"
   s.source       = { :git => "https://github.com/malcommac/SwiftRichString.git", :tag => s.version.to_s }
   #s.source_files  = "Sources/SwiftRichString/**/*"
-  s.source_files  = ['Sources/**/*.swift', 'Sources/**/*.h']
+  s.source_files  = ['Sources/**/*.swift', 'Sources/**/*.c']
+  s.ios.public_header_files =  'Sources/**/*.h'
   s.xcconfig      = {
                       'HEADER_SEARCH_PATHS' => '$(SDKROOT)/usr/include/libxml2',
                       'OTHER_LDFLAGS' => '-lxml2'
