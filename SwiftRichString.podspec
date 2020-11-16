@@ -14,28 +14,7 @@ Pod::Spec.new do |s|
   s.watchos.deployment_target = "2.0"
   s.tvos.deployment_target = "9.2"
   s.source       = { :git => "https://github.com/malcommac/SwiftRichString.git", :tag => s.version.to_s }
-  #ås.source_files  = "Sources/SwiftRichString/**/*.swift"
+  s.source_files  = "Sources/SwiftRichString/**/*"
   s.frameworks  = "Foundation"
   s.swift_versions = ['5.0', '5.1', '5.3']
-
-  #s.dependency 'SwiftRichString/CHTMLSAXParser'
-  s.default_subspec = 'Core'
-
-  s.subspec 'CHTMLSAXParser' do |ss|
-    ss.source_files = 'Sources/CHTMLSAXParser/**/*'
-    ss.ios.deployment_target = '9.0'
-    ss.osx.deployment_target = '10.11'
-    ss.tvos.deployment_target = '9.2'
-    ss.watchos.deployment_target = '2.0'
-  end
-
-  s.subspec 'Core' do |ss|
-    ss.source_files  = "Sources/SwiftRichString/**/*.swift"
-    ss.dependency 'SwiftRichString/CHTMLSAXParser'
-    ss.ios.deployment_target = '9.0'
-    ss.osx.deployment_target = '10.11'
-    ss.tvos.deployment_target = '9.2'
-    ss.watchos.deployment_target = '2.0'
-  end
-
 end

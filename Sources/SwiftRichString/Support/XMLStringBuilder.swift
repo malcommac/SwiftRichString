@@ -23,7 +23,10 @@
 //
 
 import Foundation
+
+#if canImport(CHTMLSAXParser)
 import CHTMLSAXParser
+#endif
 
 public enum RichStringError: LocalizedError {
     case xmlError(String)
