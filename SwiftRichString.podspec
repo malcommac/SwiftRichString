@@ -18,7 +18,7 @@ Pod::Spec.new do |s|
   s.frameworks  = "Foundation"
   s.swift_versions = ['5.0', '5.1', '5.3']
 
-  s.dependency 'SwiftRichString /CHTMLSAXParser'
+  s.dependency 'SwiftRichString/CHTMLSAXParser'
 
   s.subspec 'CHTMLSAXParser' do |ss|
     ss.source_files = 'Sources/CHTMLSAXParser/**/*.swift'
