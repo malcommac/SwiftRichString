@@ -1,6 +1,7 @@
 import XCTest
-@testable import SwiftRichStringTests
 
-XCTMain([
-    testCase(SwiftRichStringTests.allTests),
-])
+import SwiftRichStringTests
+
+var tests = [XCTestCaseEntry]()
+tests += SwiftRichStringTests.allTests()
+XCTMain(tests)

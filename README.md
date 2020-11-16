@@ -1,10 +1,8 @@
 <p align="center" >
-<img src="https://raw.githubusercontent.com/malcommac/SwiftRichString/master/SRRLogo.png" width=450px alt="SwiftRichString" title="SwiftRichString">
+  <img src="banner.png" width=300px alt="SwiftLocation" title="SwiftLocation">
 </p>
 
-[![Platform](https://img.shields.io/cocoapods/p/SwiftRichString.svg?style=flat)](http://cocoadocs.org/docsets/SwiftRichString) [![Version](https://img.shields.io/cocoapods/v/SwiftRichString.svg?style=flat)](http://cocoadocs.org/docsets/SwiftRichString) 
-[![Carthage Compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
-[![Twitter](https://img.shields.io/badge/twitter-@danielemargutti-blue.svg?style=flat)](http://twitter.com/danielemargutti)
+<p align="center"><strong> Elegant Attributed String composition in Swift sauce</strong></p>
 
 SwiftRichString is a lightweight library which allows to create and manipulate attributed strings easily both in iOS, macOS, tvOS and even watchOS.
 It provides convenient way to store styles you can reuse in your app's UI elements, allows complex tag-based strings rendering and also includes integration with Interface Builder.
@@ -20,7 +18,6 @@ It provides convenient way to store styles you can reuse in your app's UI elemen
 | 📐 	| Native support for iOS 11 Dynamic Type	|
 | 🖇 	| Support for Swift 5.1's function builder to compose strings	|
 | ⏱ 	| Compact code base with no external dependencies. 	|
-| 🐦 	| Fully made in Swift 5 from Swift ❥ lovers 	|
 
 ### Easy Styling
 
@@ -62,6 +59,10 @@ self.label?.attributedText = str.set(style: myGroup)
 That's the result!
 
 <img src="Documentation_Assests/image_2.png" alt="" width=400px/>
+
+## Upgrading for 3.x
+
+Since 4.0, SwiftRichString's `Style`, `StyleXML` and `StyleRegEx` are all structs and no classes anymore. This should simplify and keep the library resilient over multi-threading operations.
 
 ## Documentation
 

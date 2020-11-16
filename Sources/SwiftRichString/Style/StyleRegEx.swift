@@ -1,32 +1,26 @@
 //
 //  SwiftRichString
-//  Elegant Strings & Attributed Strings Toolkit for Swift
+//  https://github.com/malcommac/SwiftRichString
+//  Copyright (c) 2020 Daniele Margutti (hello@danielemargutti.com).
 //
-//  Created by Daniele Margutti.
-//  Copyright © 2018 Daniele Margutti. All rights reserved.
+//  Permission is hereby granted, free of charge, to any person obtaining a copy
+//  of this software and associated documentation files (the "Software"), to deal
+//  in the Software without restriction, including without limitation the rights
+//  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+//  copies of the Software, and to permit persons to whom the Software is
+//  furnished to do so, subject to the following conditions:
 //
-//	Web: http://www.danielemargutti.com
-//	Email: hello@danielemargutti.com
-//	Twitter: @danielemargutti
+//  The above copyright notice and this permission notice shall be included in
+//  all copies or substantial portions of the Software.
 //
+//  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+//  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+//  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+//  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+//  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+//  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+//  THE SOFTWARE.
 //
-//	Permission is hereby granted, free of charge, to any person obtaining a copy
-//	of this software and associated documentation files (the "Software"), to deal
-//	in the Software without restriction, including without limitation the rights
-//	to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-//	copies of the Software, and to permit persons to whom the Software is
-//	furnished to do so, subject to the following conditions:
-//
-//	The above copyright notice and this permission notice shall be included in
-//	all copies or substantial portions of the Software.
-//
-//	THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-//	IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-//	FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-//	AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-//	LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-//	OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-//	THE SOFTWARE.
 
 import Foundation
 #if os(OSX)
@@ -52,14 +46,14 @@ public class StyleRegEx: StyleProtocol {
 	
 	/// Style attributes
 	public var attributes: [NSAttributedString.Key : Any] {
-		return self.style.attributes
+		return style.attributes
 	}
 	
     public var textTransforms: [TextTransform]?
     
 	/// Font attributes
-	public var fontData: FontData? {
-		return self.style.fontData
+	public var fontStyle: FontStyle? {
+		return style.fontStyle
 	}
 	
 	//MARK: - INIT
@@ -86,22 +80,22 @@ public class StyleRegEx: StyleProtocol {
 	//MARK: - METHOD OVERRIDES
 	
 	public func set(to source: String, range: NSRange?) -> AttributedString {
-		let attributed = NSMutableAttributedString(string: source, attributes: (self.baseStyle?.attributes ?? [:]))
-		return self.applyStyle(to: attributed, add: false, range: range)
+		let attributed = NSMutableAttributedString(string: source, attributes: (baseStyle?.attributes ?? [:]))
+		return applyStyle(to: attributed, add: false, range: range)
 	}
 	
 	public func add(to source: AttributedString, range: NSRange?) -> AttributedString {
-		if let base = self.baseStyle {
+		if let base = baseStyle {
 			source.addAttributes(base.attributes, range: (range ?? NSMakeRange(0, source.length)))
 		}
-		return self.applyStyle(to: source, add: true, range: range)
+		return applyStyle(to: source, add: true, range: range)
 	}
 	
 	public func set(to source: AttributedString, range: NSRange?) -> AttributedString {
-		if let base = self.baseStyle {
+		if let base = baseStyle {
 			source.setAttributes(base.attributes, range: (range ?? NSMakeRange(0, source.length)))
 		}
-		return self.applyStyle(to: source, add: false, range: range)
+		return applyStyle(to: source, add: false, range: range)
 	}
 	
 	//MARK: - INTERNAL FUNCTIONS
@@ -117,13 +111,13 @@ public class StyleRegEx: StyleProtocol {
 		let rangeValue = (range ?? NSMakeRange(0, str.length))
 		
 		let matchOpts = NSRegularExpression.MatchingOptions(rawValue: 0)
-		self.regex.enumerateMatches(in: str.string, options: matchOpts, range: rangeValue) {
+		regex.enumerateMatches(in: str.string, options: matchOpts, range: rangeValue) {
 			(result : NSTextCheckingResult?, _, _) in
 			if let r = result {
 				if add {
-					str.addAttributes(self.attributes, range: r.range)
+					str.addAttributes(attributes, range: r.range)
 				} else {
-					str.setAttributes(self.attributes, range: r.range)
+					str.setAttributes(attributes, range: r.range)
 				}
 			}
 		}

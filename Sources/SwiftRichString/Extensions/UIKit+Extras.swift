@@ -1,32 +1,26 @@
 //
 //  SwiftRichString
-//  Elegant Strings & Attributed Strings Toolkit for Swift
+//  https://github.com/malcommac/SwiftRichString
+//  Copyright (c) 2020 Daniele Margutti (hello@danielemargutti.com).
 //
-//  Created by Daniele Margutti.
-//  Copyright © 2018 Daniele Margutti. All rights reserved.
+//  Permission is hereby granted, free of charge, to any person obtaining a copy
+//  of this software and associated documentation files (the "Software"), to deal
+//  in the Software without restriction, including without limitation the rights
+//  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+//  copies of the Software, and to permit persons to whom the Software is
+//  furnished to do so, subject to the following conditions:
 //
-//	Web: http://www.danielemargutti.com
-//	Email: hello@danielemargutti.com
-//	Twitter: @danielemargutti
+//  The above copyright notice and this permission notice shall be included in
+//  all copies or substantial portions of the Software.
 //
+//  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+//  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+//  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+//  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+//  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+//  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+//  THE SOFTWARE.
 //
-//	Permission is hereby granted, free of charge, to any person obtaining a copy
-//	of this software and associated documentation files (the "Software"), to deal
-//	in the Software without restriction, including without limitation the rights
-//	to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-//	copies of the Software, and to permit persons to whom the Software is
-//	furnished to do so, subject to the following conditions:
-//
-//	The above copyright notice and this permission notice shall be included in
-//	all copies or substantial portions of the Software.
-//
-//	THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-//	IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-//	FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-//	AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-//	LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-//	OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-//	THE SOFTWARE.
 
 import Foundation
 
@@ -46,10 +40,10 @@ extension UILabel {
 	/// The name of a style in the global `NamedStyles` registry.
 	@IBInspectable
 	public var styleName: String? {
-		get { return getAssociatedValue(key: IBInterfaceKeys.styleName.rawValue, object: self) }
+		get { getAssociatedValue(key: IBInterfaceKeys.styleName.rawValue, object: self) }
 		set {
 			set(associatedValue: newValue, key: IBInterfaceKeys.styleName.rawValue, object: self)
-			self.style = StylesManager.shared[newValue]
+			style = StylesManager.shared[newValue]
 		}
 	}
 	
@@ -57,7 +51,7 @@ extension UILabel {
 	public var style: StyleProtocol? {
 		set {
 			set(associatedValue: newValue, key: IBInterfaceKeys.styleObj.rawValue, object: self)
-			self.styledText = self.text
+			styledText = self.text
 		}
 		get {
 			if let innerValue: StyleProtocol? = getAssociatedValue(key: IBInterfaceKeys.styleObj.rawValue, object: self) {
@@ -70,15 +64,15 @@ extension UILabel {
 	/// Use this to render automatically the text with the currently set style instance or styleName.
 	public var styledText: String? {
 		get {
-			return attributedText?.string
+            attributedText?.string
 		}
 		set {
 			guard let text = newValue else {
-                self.attributedText = nil
+                attributedText = nil
                 return 
             }
             let style = self.style ?? Style()
-            self.attributedText = style.set(to: text, range: nil)
+            attributedText = style.set(to: text, range: nil)
 		}
 	}
 	
@@ -94,7 +88,7 @@ extension UITextField {
 		get { return getAssociatedValue(key: IBInterfaceKeys.styleName.rawValue, object: self) }
 		set {
 			set(associatedValue: newValue, key: IBInterfaceKeys.styleName.rawValue, object: self)
-			self.style = StylesManager.shared[newValue]
+			style = StylesManager.shared[newValue]
 		}
 	}
 	
@@ -102,7 +96,7 @@ extension UITextField {
 	public var style: StyleProtocol? {
 		set {
 			set(associatedValue: newValue, key: IBInterfaceKeys.styleObj.rawValue, object: self)
-			self.styledText = self.text
+			styledText = self.text
 		}
 		get {
 			if let innerValue: StyleProtocol? = getAssociatedValue(key: IBInterfaceKeys.styleObj.rawValue, object: self) {
@@ -115,15 +109,15 @@ extension UITextField {
 	/// Use this to render automatically the text with the currently set style instance or styleName.
 	public var styledText: String? {
 		get {
-			return attributedText?.string
+            attributedText?.string
 		}
 		set {
 			guard let text = newValue else {
-                self.attributedText = nil
+                attributedText = nil
                 return 
             }
             let style = self.style ?? Style()
-            self.attributedText = style.set(to: text, range: nil)
+            attributedText = style.set(to: text, range: nil)
 		}
 	}
 	
@@ -139,7 +133,7 @@ extension UITextView {
 		get { return getAssociatedValue(key: IBInterfaceKeys.styleName.rawValue, object: self) }
 		set {
 			set(associatedValue: newValue, key: IBInterfaceKeys.styleName.rawValue, object: self)
-			self.style = StylesManager.shared[newValue]
+			style = StylesManager.shared[newValue]
 		}
 	}
 	
@@ -147,7 +141,7 @@ extension UITextView {
 	public var style: StyleProtocol? {
 		set {
 			set(associatedValue: newValue, key: IBInterfaceKeys.styleObj.rawValue, object: self)
-			self.styledText = self.text
+			styledText = self.text
 		}
 		get {
 			if let innerValue: StyleProtocol? = getAssociatedValue(key: IBInterfaceKeys.styleObj.rawValue, object: self) {
@@ -160,15 +154,15 @@ extension UITextView {
 	/// Use this to render automatically the text with the currently set style instance or styleName.
 	public var styledText: String? {
 		get {
-			return attributedText?.string
+            attributedText?.string
 		}
 		set {
 			guard let text = newValue else {
-                self.attributedText = nil
+                attributedText = nil
                 return 
             }
             let style = self.style ?? Style()
-            self.attributedText = style.set(to: text, range: nil)
+            attributedText = style.set(to: text, range: nil)
 		}
 	}
 	

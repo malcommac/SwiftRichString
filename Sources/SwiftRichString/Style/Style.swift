@@ -1,32 +1,26 @@
 //
 //  SwiftRichString
-//  Elegant Strings & Attributed Strings Toolkit for Swift
+//  https://github.com/malcommac/SwiftRichString
+//  Copyright (c) 2020 Daniele Margutti (hello@danielemargutti.com).
 //
-//  Created by Daniele Margutti.
-//  Copyright © 2018 Daniele Margutti. All rights reserved.
+//  Permission is hereby granted, free of charge, to any person obtaining a copy
+//  of this software and associated documentation files (the "Software"), to deal
+//  in the Software without restriction, including without limitation the rights
+//  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+//  copies of the Software, and to permit persons to whom the Software is
+//  furnished to do so, subject to the following conditions:
 //
-//	Web: http://www.danielemargutti.com
-//	Email: hello@danielemargutti.com
-//	Twitter: @danielemargutti
+//  The above copyright notice and this permission notice shall be included in
+//  all copies or substantial portions of the Software.
 //
+//  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+//  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+//  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+//  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+//  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+//  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+//  THE SOFTWARE.
 //
-//	Permission is hereby granted, free of charge, to any person obtaining a copy
-//	of this software and associated documentation files (the "Software"), to deal
-//	in the Software without restriction, including without limitation the rights
-//	to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-//	copies of the Software, and to permit persons to whom the Software is
-//	furnished to do so, subject to the following conditions:
-//
-//	The above copyright notice and this permission notice shall be included in
-//	all copies or substantial portions of the Software.
-//
-//	THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-//	IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-//	FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-//	AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-//	LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-//	OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-//	THE SOFTWARE.
 
 import Foundation
 #if os(OSX)
@@ -36,25 +30,28 @@ import UIKit
 #endif
 
 /// Style class encapsulate all the information about the attributes you can apply to a text.
-public class Style: StyleProtocol {
+public struct Style: StyleProtocol {
 	
 	//MARK: - INTERNAL PROPERTIES
 
 	/// Handler to initialize a new style.
-	public typealias StyleInitHandler = ((Style) -> (Void))
+	public typealias StyleInitHandler = ((inout Style) -> (Void))
 	
 	/// Contains font description and size along with all other additional
 	/// attributes to render the text. You should not need to modify this object;
 	/// configurable attributes are exposed at `Style` level.
-	public var fontData: FontData? = FontData()
+	public var fontStyle: FontStyle? = FontStyle()
+    
+    
+    /// See `fontStyle`.
+    @available(*, deprecated, message: "Use fontStyle instead")
+    public var fontData: FontStyle? {
+        fontStyle
+    }
 	
 	/// Attributes defined by the style. This is the dictionary modified when you
 	/// set a style attributed.
 	private var innerAttributes: [NSAttributedString.Key : Any] = [:]
-	
-	/// This is a cache array used to avoid the evaluation of font description and other
-	/// sensitive data. Cache is invalidated automatically when needed.
-	private var cachedAttributes: [NSAttributedString.Key : Any]? = nil
 	
 	//MARK: - PROPERTIES
     
@@ -64,13 +61,8 @@ public class Style: StyleProtocol {
 	/// Alter the size of the currently set font to the specified value (expressed in point)
 	/// **Note**: in order to be used you must also set the `.font` attribute of the style.
 	public var size: CGFloat? {
-		set {
-			self.fontData?.size = newValue
-			self.invalidateCache()
-		}
-		get {
-			return self.fontData?.size
-		}
+		set { fontStyle?.size = newValue }
+		get { fontStyle?.size }
 	}
 	
 	/// Set the font of the style.
@@ -79,15 +71,10 @@ public class Style: StyleProtocol {
 	/// so you are able to pass a valid font as a string, from predefined list or directly as an instance.
 	public var font: FontConvertible? {
 		set {
-			self.fontData?.font = newValue
-			if let f = newValue as? Font {
-				self.fontData?.size = f.pointSize
-			}
-			self.invalidateCache()
+			fontStyle?.font = newValue
+            fontStyle?.size = (newValue as? Font)?.pointSize
 		}
-		get {
-			return self.fontData?.font
-		}
+		get { fontStyle?.font }
 	}
 
 	#if os(tvOS) || os(watchOS) || os(iOS)
@@ -95,8 +82,8 @@ public class Style: StyleProtocol {
     /// **Note**: in order to be used you must also set the `.font`/`.size` attribute of the style.
     @available(iOS 11.0, tvOS 11.0, iOSApplicationExtension 11.0, watchOS 4, *)
     public var dynamicText: DynamicText? {
-        set { self.fontData?.dynamicText = newValue }
-        get { return self.fontData?.dynamicText }
+        set { fontStyle?.dynamicText = newValue }
+        get { fontStyle?.dynamicText }
     }
 	#endif
 
@@ -104,16 +91,16 @@ public class Style: StyleProtocol {
 	/// You can pass any `ColorConvertible` conform object, it will be transformed to a valid `UIColor`/`NSColor`
 	/// automatically. Both `UIColor`/`NSColor` and `String` are conform to this protocol.
 	public var color: ColorConvertible? {
-		set { self.set(attribute: newValue?.color, forKey: .foregroundColor) }
-		get { return self.get(attributeForKey: .foregroundColor) }
+		set { set(attribute: newValue?.color, forKey: .foregroundColor) }
+        mutating get { get(attributeForKey: .foregroundColor) }
 	}
 	
 	/// Set the background color of the style.
 	/// You can pass any `ColorConvertible` conform object, it will be transformed to a valid `UIColor`/`NSColor`
 	/// automatically. Both `UIColor`/`NSColor` and `String` are conform to this protocol.
 	public var backColor: ColorConvertible? {
-		set { self.set(attribute: newValue?.color, forKey: .backgroundColor) }
-		get { return self.get(attributeForKey: .backgroundColor) }
+		set { set(attribute: newValue?.color, forKey: .backgroundColor) }
+        mutating get { get(attributeForKey: .backgroundColor) }
 	}
 	
 	/// This value indicates whether the text is underlined.
@@ -121,12 +108,12 @@ public class Style: StyleProtocol {
 	/// and the optional color of the line (if `nil`, foreground color is used instead).
 	public var underline: (style: NSUnderlineStyle?, color: ColorConvertible?)? {
 		set {
-			self.set(attribute: NSNumber.from(underlineStyle: newValue?.style), forKey: .underlineStyle)
-			self.set(attribute: newValue?.color?.color, forKey: .underlineColor)
+			set(attribute: NSNumber.from(underlineStyle: newValue?.style), forKey: .underlineStyle)
+			set(attribute: newValue?.color?.color, forKey: .underlineColor)
 		}
-		get {
-			let style: NSNumber? = self.get(attributeForKey: .underlineStyle)
-			let color: Color? = self.get(attributeForKey: .underlineColor)
+        mutating get {
+			let style: NSNumber? = get(attributeForKey: .underlineStyle)
+			let color: Color? = get(attributeForKey: .underlineColor)
 			return (style?.toUnderlineStyle(),color)
 		}
 	}
@@ -144,12 +131,12 @@ public class Style: StyleProtocol {
 	/// outlined text would be -3.0.
 	public var stroke: (color: ColorConvertible?, width: Float?)? {
 		set {
-			self.set(attribute: newValue?.color?.color, forKey: .strokeColor)
-			self.set(attribute: NSNumber.from(float: newValue?.width), forKey: .strokeWidth)
+			set(attribute: newValue?.color?.color, forKey: .strokeColor)
+			set(attribute: NSNumber.from(float: newValue?.width), forKey: .strokeWidth)
 		}
-		get {
-			let color: Color? = self.get(attributeForKey: .strokeColor)
-			let width: NSNumber? = self.get(attributeForKey: .strokeWidth)
+        mutating get {
+			let color: Color? = get(attributeForKey: .strokeColor)
+			let width: NSNumber? = get(attributeForKey: .strokeWidth)
 			return (color,width?.floatValue)
 		}
 	}
@@ -159,12 +146,12 @@ public class Style: StyleProtocol {
 	/// and the optional color of the line (if `nil`, foreground color is used instead).
 	public var strikethrough: (style: NSUnderlineStyle?, color: ColorConvertible?)? {
 		set {
-			self.set(attribute: NSNumber.from(underlineStyle: newValue?.style), forKey: .strikethroughStyle)
-			self.set(attribute: newValue?.color?.color, forKey: .strikethroughColor)
+			set(attribute: NSNumber.from(underlineStyle: newValue?.style), forKey: .strikethroughStyle)
+			set(attribute: newValue?.color?.color, forKey: .strikethroughColor)
 		}
-		get {
-			let style: NSNumber? = self.get(attributeForKey: .strikethroughStyle)
-			let color: Color? = self.get(attributeForKey: .strikethroughColor)
+        mutating get {
+			let style: NSNumber? = get(attributeForKey: .strikethroughStyle)
+			let color: Color? = get(attributeForKey: .strikethroughColor)
 			return (style?.toUnderlineStyle(),color)
 		}
 	}
@@ -172,9 +159,9 @@ public class Style: StyleProtocol {
 	/// Floating point value indicating the character’s offset from the baseline, in points.
 	/// Default value when not set is 0.
 	public var baselineOffset: Float? {
-		set { self.set(attribute: NSNumber.from(float: newValue), forKey: .baselineOffset) }
-		get {
-			let value: NSNumber? = self.get(attributeForKey: .baselineOffset)
+		set { set(attribute: NSNumber.from(float: newValue), forKey: .baselineOffset) }
+        mutating get {
+			let value: NSNumber? = get(attributeForKey: .baselineOffset)
 			return value?.floatValue
 		}
 	}
@@ -183,18 +170,9 @@ public class Style: StyleProtocol {
 	/// A new `NSMutableParagraphStyle` instance is created automatically when you set any paragraph
 	/// related property if an instance is not set yet.
 	public var paragraph: NSMutableParagraphStyle {
-		set {
-			self.invalidateCache()
-			self.set(attribute: newValue, forKey: .paragraphStyle)
-		}
-		get {
-			if let paragraph: NSMutableParagraphStyle = self.get(attributeForKey: .paragraphStyle) {
-				return paragraph
-			}
-			let paragraph = NSMutableParagraphStyle()
-			self.set(attribute: paragraph, forKey: .paragraphStyle)
-			return paragraph
-		}
+		set { set(attribute: newValue, forKey: .paragraphStyle) }
+        mutating get { get(attributeForKey: .paragraphStyle, builder: { NSMutableParagraphStyle() })! }
+		
 	}
 	
 	/// The distance in points between the bottom of one line fragment and the top of the next.
@@ -202,8 +180,8 @@ public class Style: StyleProtocol {
 	/// This value is included in the line fragment heights in the layout manager.
 	/// The default value is 0.
 	public var lineSpacing: CGFloat {
-		set { self.paragraph.lineSpacing = newValue }
-		get { return self.paragraph.lineSpacing }
+		set { paragraph.lineSpacing = newValue }
+        mutating get { paragraph.lineSpacing }
 	}
 	
 	/// The distance between the paragraph’s top and the beginning of its text content.
@@ -212,8 +190,8 @@ public class Style: StyleProtocol {
 	///
 	/// The default value of this property is 0.
 	public var paragraphSpacingBefore: CGFloat {
-		set { self.paragraph.paragraphSpacingBefore = newValue }
-		get { return self.paragraph.paragraphSpacingBefore }
+		set { paragraph.paragraphSpacingBefore = newValue }
+        mutating get { paragraph.paragraphSpacingBefore }
 	}
 	
 	/// This property contains the space (measured in points) added at the end of the paragraph
@@ -225,8 +203,8 @@ public class Style: StyleProtocol {
 	///
 	/// Default value is 0.
 	public var paragraphSpacingAfter: CGFloat {
-		set { self.paragraph.paragraphSpacing = newValue }
-		get { return self.paragraph.paragraphSpacing }
+		set { paragraph.paragraphSpacing = newValue }
+        mutating get { paragraph.paragraphSpacing }
 	}
 	
 	/// The text alignment of the receiver.
@@ -236,8 +214,8 @@ public class Style: StyleProtocol {
 	///
 	/// Default value is `natural`.
 	public var alignment: NSTextAlignment {
-		set { self.paragraph.alignment = newValue }
-		get { return self.paragraph.alignment }
+		set { paragraph.alignment = newValue }
+        mutating get { paragraph.alignment }
 	}
 	
 	/// The distance (in points) from the leading margin of a text container to
@@ -246,8 +224,8 @@ public class Style: StyleProtocol {
 	///
 	/// Default value is 0.
 	public var firstLineHeadIndent: CGFloat {
-		set { self.paragraph.firstLineHeadIndent = newValue }
-		get { return self.paragraph.firstLineHeadIndent }
+		set { paragraph.firstLineHeadIndent = newValue }
+        mutating get { paragraph.firstLineHeadIndent }
 	}
 	
 	/// The distance (in points) from the leading margin of a text container to the beginning
@@ -256,8 +234,8 @@ public class Style: StyleProtocol {
 	///
 	/// Default value is 0.
 	public var headIndent: CGFloat {
-		set { self.paragraph.headIndent = newValue }
-		get { return self.paragraph.headIndent }
+		set { paragraph.headIndent = newValue }
+        mutating get { paragraph.headIndent }
 	}
 	
 	/// If positive, this value is the distance from the leading margin
@@ -266,16 +244,16 @@ public class Style: StyleProtocol {
 	///
 	/// Default value is `0.0`.
 	public var tailIndent: CGFloat {
-		set { self.paragraph.tailIndent = newValue }
-		get { return self.paragraph.tailIndent }
+		set { paragraph.tailIndent = newValue }
+        mutating get { paragraph.tailIndent }
 	}
 	
 	/// The mode that should be used to break lines.
 	///
 	/// Default value is `byTruncatingTail`.
 	public var lineBreakMode: LineBreak {
-		set { self.paragraph.lineBreakMode = newValue }
-		get { return self.paragraph.lineBreakMode }
+		set { paragraph.lineBreakMode = newValue }
+        mutating get { paragraph.lineBreakMode }
 	}
 	
 	/// The minimum height in points that any line in the receiver will occupy,
@@ -284,8 +262,8 @@ public class Style: StyleProtocol {
 	///
 	/// The default value is 0.
 	public var minimumLineHeight: CGFloat {
-		set { self.paragraph.minimumLineHeight = newValue }
-		get { return self.paragraph.minimumLineHeight }
+		set { paragraph.minimumLineHeight = newValue }
+        mutating get { paragraph.minimumLineHeight }
 	}
 	
 	/// The maximum height in points that any line in the receiver will occupy,
@@ -298,8 +276,8 @@ public class Style: StyleProtocol {
 	///
 	/// The default value is 0.
 	public var maximumLineHeight: CGFloat {
-		set { self.paragraph.maximumLineHeight = newValue }
-		get { return self.paragraph.maximumLineHeight }
+		set { paragraph.maximumLineHeight = newValue }
+        mutating get { paragraph.maximumLineHeight }
 	}
 	
 	/// The initial writing direction used to determine the actual writing direction for text.
@@ -309,8 +287,8 @@ public class Style: StyleProtocol {
 	/// If you know the base writing direction of the text you are rendering, you can set the value of this property
 	/// to the correct direction to help the text system.
 	public var baseWritingDirection: NSWritingDirection {
-		set { self.paragraph.baseWritingDirection = newValue }
-		get { return self.paragraph.baseWritingDirection }
+		set { paragraph.baseWritingDirection = newValue }
+        mutating get { paragraph.baseWritingDirection }
 	}
 	
 	/// The natural line height of the receiver is multiplied by this factor (if positive)
@@ -318,14 +296,14 @@ public class Style: StyleProtocol {
 	///
 	/// The default value of this property is 0.
 	public var lineHeightMultiple: CGFloat {
-		set { self.paragraph.lineHeightMultiple = newValue }
-		get { return self.paragraph.lineHeightMultiple }
+		set { paragraph.lineHeightMultiple = newValue }
+        mutating get { paragraph.lineHeightMultiple }
 	}
 	
 	/// The threshold controlling when hyphenation is attempted.
 	public var hyphenationFactor: Float {
-		set { self.paragraph.hyphenationFactor = newValue }
-		get { return self.paragraph.hyphenationFactor }
+		set { paragraph.hyphenationFactor = newValue }
+        mutating get { paragraph.hyphenationFactor }
 	}
 	
 	/// Ligatures cause specific character combinations to be rendered using a single custom glyph that corresponds
@@ -334,10 +312,10 @@ public class Style: StyleProtocol {
 	/// The default value for this attribute is `defaults`. (Value `all` is unsupported on iOS.)
 	public var ligatures: Ligatures? {
 		set {
-			self.set(attribute: NSNumber.from(int: newValue?.rawValue), forKey: .ligature)
+			set(attribute: NSNumber.from(int: newValue?.rawValue), forKey: .ligature)
 		}
-		get {
-			guard let value: NSNumber = self.get(attributeForKey: .ligature) else { return nil }
+        mutating get {
+			guard let value: NSNumber = get(attributeForKey: .ligature) else { return nil }
 			return Ligatures(rawValue: value.intValue)
 		}
 	}
@@ -346,12 +324,8 @@ public class Style: StyleProtocol {
 
 	/// The value of this attribute is an `NSShadow` object. The default value of this property is nil.
 	public var shadow: NSShadow? {
-		set {
-			self.set(attribute: newValue, forKey: .shadow)
-		}
-		get {
-			return self.get(attributeForKey: .shadow)
-		}
+		set { set(attribute: newValue, forKey: .shadow) }
+        mutating get { get(attributeForKey: .shadow) }
 	}
 
 	#endif
@@ -360,14 +334,14 @@ public class Style: StyleProtocol {
 	
 	/// Enable spoken of all punctuation in the text.
 	public var speaksPunctuation: Bool? {
-		set { self.set(attribute: newValue, forKey: NSAttributedString.Key(convertFromNSAttributedStringKey(NSAttributedString.Key.accessibilitySpeechPunctuation))) }
-		get { return self.get(attributeForKey: NSAttributedString.Key(convertFromNSAttributedStringKey(NSAttributedString.Key.accessibilitySpeechPunctuation))) }
+        set { set(attribute: newValue, forKey: NSAttributedString.Key(NSAttributedString.Key.accessibilitySpeechPunctuation.rawValue)) }
+        mutating get { get(attributeForKey: NSAttributedString.Key(NSAttributedString.Key.accessibilitySpeechPunctuation.rawValue)) }
 	}
 	
 	/// The language to use when speaking a string (value is a BCP 47 language code string).
 	public var speakingLanguage: String? {
-		set { self.set(attribute: newValue, forKey: NSAttributedString.Key(convertFromNSAttributedStringKey(NSAttributedString.Key.accessibilitySpeechLanguage))) }
-		get { return self.get(attributeForKey: NSAttributedString.Key(convertFromNSAttributedStringKey(NSAttributedString.Key.accessibilitySpeechLanguage))) }
+        set { set(attribute: newValue, forKey: NSAttributedString.Key(NSAttributedString.Key.accessibilitySpeechLanguage.rawValue)) }
+        mutating get { get(attributeForKey: NSAttributedString.Key(NSAttributedString.Key.accessibilitySpeechLanguage.rawValue)) }
 	}
 	
 	/// Pitch to apply to spoken content. Value must be in range range 0.0 to 2.0.
@@ -377,16 +351,16 @@ public class Style: StyleProtocol {
 	///
 	/// The default value for this attribute is 1.0, which indicates a normal pitch.
 	public var speakingPitch: Double? {
-		set { self.set(attribute: newValue, forKey: NSAttributedString.Key(convertFromNSAttributedStringKey(NSAttributedString.Key.accessibilitySpeechPitch))) }
-		get { return self.get(attributeForKey: NSAttributedString.Key(convertFromNSAttributedStringKey(NSAttributedString.Key.accessibilitySpeechPitch))) }
+        set { set(attribute: newValue, forKey: NSAttributedString.Key(NSAttributedString.Key.accessibilitySpeechPitch.rawValue)) }
+        mutating get { get(attributeForKey: NSAttributedString.Key(NSAttributedString.Key.accessibilitySpeechPitch.rawValue)) }
 	}
 
 	/// No overview available.
 	/// Note: available only from iOS 11, tvOS 11 and watchOS 4.
 	@available(iOS 11.0, tvOS 11.0, iOSApplicationExtension 11.0, watchOS 4, *)
 	public var speakingPronunciation: String? {
-		set { self.set(attribute: newValue, forKey: NSAttributedString.Key(convertFromNSAttributedStringKey(NSAttributedString.Key.accessibilitySpeechIPANotation))) }
-		get { return self.get(attributeForKey: NSAttributedString.Key(convertFromNSAttributedStringKey(NSAttributedString.Key.accessibilitySpeechIPANotation))) }
+        set { set(attribute: newValue, forKey: NSAttributedString.Key(NSAttributedString.Key.accessibilitySpeechIPANotation.rawValue)) }
+        mutating get { get(attributeForKey: NSAttributedString.Key(NSAttributedString.Key.accessibilitySpeechIPANotation.rawValue)) }
 	}
 	
 	/// Spoken text is queued behind, or interrupts, existing spoken content.
@@ -397,16 +371,16 @@ public class Style: StyleProtocol {
 	@available(iOS 11.0, tvOS 11.0, iOSApplicationExtension 11.0, watchOS 4, *)
 	public var shouldQueueSpeechAnnouncement: Bool? {
 		set {
-			let key = NSAttributedString.Key(convertFromNSAttributedStringKey(NSAttributedString.Key.accessibilitySpeechQueueAnnouncement))
+            let key = NSAttributedString.Key(NSAttributedString.Key.accessibilitySpeechQueueAnnouncement.rawValue)
 			guard let v = newValue else {
-				self.innerAttributes.removeValue(forKey: key)
+				innerAttributes.removeValue(forKey: key)
 				return
 			}
-			self.set(attribute: NSNumber.init(value: v), forKey: key)
+			set(attribute: NSNumber.init(value: v), forKey: key)
 		}
-		get {
-			let key = NSAttributedString.Key(convertFromNSAttributedStringKey(NSAttributedString.Key.accessibilitySpeechQueueAnnouncement))
-			if let n: NSNumber = self.get(attributeForKey: key) {
+        mutating get {
+            let key = NSAttributedString.Key(NSAttributedString.Key.accessibilitySpeechQueueAnnouncement.rawValue)
+			if let n: NSNumber = get(attributeForKey: key) {
 				return n.boolValue
 			} else { return false }
 		}
@@ -418,16 +392,16 @@ public class Style: StyleProtocol {
 	@available(iOS 11.0, tvOS 11.0, iOSApplicationExtension 11.0, watchOS 4, *)
 	public var headingLevel: HeadingLevel? {
 		set {
-			let key = NSAttributedString.Key(convertFromNSAttributedStringKey(NSAttributedString.Key.accessibilityTextHeadingLevel))
+            let key = NSAttributedString.Key(NSAttributedString.Key.accessibilityTextHeadingLevel.rawValue)
 			guard let v = newValue else {
-				self.innerAttributes.removeValue(forKey: key)
+				innerAttributes.removeValue(forKey: key)
 				return
 			}
-			self.set(attribute: v.rawValue, forKey: key)
+			set(attribute: v.rawValue, forKey: key)
 		}
-		get {
-			let key = NSAttributedString.Key(convertFromNSAttributedStringKey(NSAttributedString.Key.accessibilityTextHeadingLevel))
-			if let n: Int = self.get(attributeForKey: key) {
+        mutating get {
+            let key = NSAttributedString.Key(NSAttributedString.Key.accessibilityTextHeadingLevel.rawValue)
+			if let n: Int = get(attributeForKey: key) {
 				return HeadingLevel(rawValue: n)
 			} else { return nil }
 		}
@@ -438,67 +412,75 @@ public class Style: StyleProtocol {
 	/// The value of this attribute is an NSURL object (preferred) or an NSString object.
 	/// The default value of this property is nil, indicating no link.
 	public var linkURL: URLRepresentable? {
-		set { self.set(attribute: newValue, forKey: .link) }
-		get { return self.get(attributeForKey: .link) }
+		set { set(attribute: newValue, forKey: .link) }
+        mutating get { get(attributeForKey: .link) }
 	}
 	
 	#if os(OSX) || os(iOS) || os(tvOS)
 	
 	///  Configuration for the number case, also known as "figure style".
 	/// **Note**: in order to be used you must also set the `.font`/`.size` attribute of the style.
+    @available(*, deprecated, message: "Use fontStyle.numberCase instead")
 	public var numberCase: NumberCase? {
-		set { self.fontData?.numberCase = newValue }
-		get { return self.fontData?.numberCase }
+		set { fontStyle?.numberCase = newValue }
+		get { fontStyle?.numberCase }
 	}
 	
 	/// Configuration for number spacing, also known as "figure spacing".
 	/// **Note**: in order to be used you must also set the `.font`/`.size` attribute of the style.
+    @available(*, deprecated, message: "Use fontStyle.numberSpacing instead")
 	public var numberSpacing: NumberSpacing? {
-		set { self.fontData?.numberSpacing = newValue }
-		get { return self.fontData?.numberSpacing }
+		set { fontStyle?.numberSpacing = newValue }
+		get { fontStyle?.numberSpacing }
 	}
 	
 	/// Configuration for displyaing a fraction.
 	/// **Note**: in order to be used you must also set the `.font`/`.size` attribute of the style.
+    @available(*, deprecated, message: "Use fontStyle.fractions instead")
 	public var fractions: Fractions? {
-		set { self.fontData?.fractions = newValue }
-		get { return self.fontData?.fractions }
+		set { fontStyle?.fractions = newValue }
+		get { fontStyle?.fractions }
 	}
 	
 	/// Superscript (superior) glpyh variants are used, as in footnotes¹.
 	/// **Note**: in order to be used you must also set the `.font`/`.size` attribute of the style.
+    @available(*, deprecated, message: "Use fontStyle.superscript instead")
 	public var superscript: Bool? {
-		set { self.fontData?.superscript = newValue }
-		get { return self.fontData?.superscript }
+		set { fontStyle?.subscript = newValue }
+		get { fontStyle?.superscript }
 	}
 	
 	/// Subscript (inferior) glyph variants are used: vₑ.
 	/// **Note**: in order to be used you must also set the `.font`/`.size` attribute of the style.
+    @available(*, deprecated, message: "Use fontStyle.subscript instead")
 	public var `subscript`: Bool? {
-		set { self.fontData?.subscript = newValue }
-		get { return self.fontData?.subscript }
+		set { fontStyle?.subscript = newValue }
+		get { fontStyle?.subscript }
 	}
 
 	/// Ordinal glyph variants are used, as in the common typesetting of 4th.
 	/// **Note**: in order to be used you must also set the `.font`/`.size` attribute of the style.
+    @available(*, deprecated, message: "Use fontStyle.ordinals instead")
 	public var ordinals: Bool? {
-		set { self.fontData?.ordinals = newValue }
-		get { return self.fontData?.ordinals }
+		set { fontStyle?.ordinals = newValue }
+		get { fontStyle?.ordinals }
 	}
 	
 	/// Scientific inferior glyph variants are used: H₂O
 	/// **Note**: in order to be used you must also set the `.font`/`.size` attribute of the style.
+    @available(*, deprecated, message: "Use fontStyle.scientificInferiors instead")
 	public var scientificInferiors: Bool? {
-		set { self.fontData?.scientificInferiors = newValue }
-		get { return self.fontData?.scientificInferiors }
+        set { fontStyle?.scientificInferiors = newValue }
+		get { fontStyle?.scientificInferiors }
 	}
 	
 	/// Configure small caps behavior.
 	/// `fromUppercase` and `fromLowercase` can be combined: they are not mutually exclusive.
 	/// **Note**: in order to be used you must also set the `.font`/`.size` attribute of the style.
+    @available(*, deprecated, message: "Use fontStyle.smallCaps instead")
 	public var smallCaps: Set<SmallCaps> {
-		set { self.fontData?.smallCaps = newValue }
-		get { return self.fontData?.smallCaps ?? Set() }
+        set { fontStyle?.smallCaps = newValue }
+		get { fontStyle?.smallCaps ?? Set() }
 	}
 
 	/// Different stylistic alternates available for customizing a font.
@@ -509,31 +491,35 @@ public class Style: StyleProtocol {
 	/// For example, in Apple's San Francisco font, turn on alternate set "six" to
 	/// enable high-legibility alternates for ambiguous characters like: 0lI164.
 	/// **Note**: in order to be used you must also set the `.font`/`.size` attribute of the style.
+    @available(*, deprecated, message: "Use fontStyle.stylisticAlternates instead")
 	public var stylisticAlternates: StylisticAlternates {
-		set { self.fontData?.stylisticAlternates = newValue }
-		get { return self.fontData?.stylisticAlternates ?? StylisticAlternates() }
+        set { fontStyle?.stylisticAlternates = newValue }
+		get { fontStyle?.stylisticAlternates ?? StylisticAlternates() }
 	}
 	
 	/// Different contextual alternates available for customizing a font.
 	/// Note: Not all fonts support all (or any) of these options.
 	/// **Note**: in order to be used you must also set the `.font`/`.size` attribute of the style.
+    @available(*, deprecated, message: "Use fontStyle.contextualAlternates instead")
 	public var contextualAlternates: ContextualAlternates {
-		set { self.fontData?.contextualAlternates = newValue }
-		get { return self.fontData?.contextualAlternates ?? ContextualAlternates() }
+        set { fontStyle?.contextualAlternates = newValue }
+		get { fontStyle?.contextualAlternates ?? ContextualAlternates() }
 	}
 	
 	/// Tracking to apply.
 	/// **Note**: in order to be used you must also set the `.font`/`.size` attribute of the style.
+    @available(*, deprecated, message: "Use fontStyle.kerning instead")
 	public var kerning: Kerning? {
-		set { self.fontData?.kerning = newValue }
-		get { return self.fontData?.kerning }
+        set { fontStyle?.kerning = newValue }
+		get { fontStyle?.kerning }
 	}
 	
 	/// Describe trait variants to apply to the font.
 	/// **Note**: in order to be used you must also set the `.font`/`.size` attribute of the style.
+    @available(*, deprecated, message: "Use fontStyle.traitVariants instead")
 	public var traitVariants: TraitVariant? {
-		set { self.fontData?.traitVariants = newValue }
-		get { return self.fontData?.traitVariants }
+        set { fontStyle?.traitVariants = newValue }
+		get { fontStyle?.traitVariants }
 	}
 
 	#endif
@@ -544,15 +530,7 @@ public class Style: StyleProtocol {
 	///
 	/// - Parameter handler: configuration handler callback.
 	public init(_ handler: StyleInitHandler? = nil) {
-		self.fontData?.style = self
-		/*#if os(tvOS)
-		self.set(attribute: Font.systemFont(ofSize: TVOS_SYSTEMFONT_SIZE), forKey: .font)
-		#elseif os(watchOS)
-		self.set(attribute: Font.systemFont(ofSize: WATCHOS_SYSTEMFONT_SIZE), forKey: .font)
-		#else
-		self.set(attribute: Font.systemFont(ofSize: Font.systemFontSize), forKey: .font)
-		#endif*/
-		handler?(self)
+		handler?(&self)
 	}
 	
 	/// Initialize a new style from a predefined set of attributes.
@@ -562,30 +540,21 @@ public class Style: StyleProtocol {
     /// - Parameters:
     ///   - dictionary: dictionary to set.
     ///   - textTransforms: tranforms to apply.
-    public init(dictionary: [NSAttributedString.Key: Any]?, textTransforms: [TextTransform]? = nil) {
-		self.fontData?.style = self
+    public init(dictionary: [NSAttributedString.Key: Any]?, textTransforms newTextTransforms: [TextTransform]? = nil) {
 		if let font = dictionary?[.font] as? Font {
-			self.fontData?.font = font
-			self.fontData?.size = font.pointSize
+			fontStyle?.font = font
+			fontStyle?.size = font.pointSize
 		}
-		self.innerAttributes = (dictionary ?? [:])
-        self.textTransforms = textTransforms
+		innerAttributes = (dictionary ?? [:])
+        textTransforms = newTextTransforms
 	}
 	
 	/// Initialize a new Style by cloning an existing style.
 	///
 	/// - Parameter style: style to clone
 	public init(style: Style) {
-		self.fontData?.style = self
-		self.innerAttributes = style.innerAttributes
-		self.fontData = style.fontData
-	}
-	
-	//MARK: - INTERNAL METHODS
-
-	/// Invalidate cache
-	internal func invalidateCache() {
-		self.cachedAttributes = nil
+		innerAttributes = style.innerAttributes
+		fontStyle = style.fontStyle
 	}
 	
 	//MARK: - PUBLIC METHODS
@@ -595,38 +564,38 @@ public class Style: StyleProtocol {
 	/// - Parameters:
 	///   - value: valid value to set, `nil` to remove exiting value for given key.
 	///   - key: key to set
-	public func set<T>(attribute value: T?, forKey key: NSAttributedString.Key) {
+	public mutating func set<T>(attribute value: T?, forKey key: NSAttributedString.Key) {
 		guard let value = value else {
-			self.innerAttributes.removeValue(forKey: key)
+			innerAttributes.removeValue(forKey: key)
 			return
 		}
-		self.innerAttributes[key] = value
-		self.invalidateCache()
+		innerAttributes[key] = value
 	}
 	
 	/// Get the raw value for given `NSAttributedStringKey` key.
 	///
 	/// - Parameter key: key to read.
 	/// - Returns: value or `nil` if value is not set.
-	public func get<T>(attributeForKey key: NSAttributedString.Key) -> T? {
-		return (self.innerAttributes[key] as? T)
+    public mutating func get<T>(attributeForKey key: NSAttributedString.Key, builder: (() -> T?)? = nil) -> T? {
+        guard let value = innerAttributes[key] as? T else {
+            if let newValue = builder?() {
+                set(attribute: newValue, forKey: key)
+                return newValue
+            }
+            
+            return nil
+        }
+        
+        return value
 	}
 	
 	/// Return attributes defined by the style.
 	/// Not all attributes are returned, fonts attributes may be omitted.
 	/// Refer to `attributes` to get the complete list.
 	public var attributes: [NSAttributedString.Key : Any] {
-		if let cachedAttributes = self.cachedAttributes {
-			return cachedAttributes
-		}
-		// generate font from `fontInfo` attributes collection, then merge it with the inner attributes of the
-		// string to generate a single attributes dictionary for `NSAttributedString`.
-		let fontAttributes = self.fontData?.attributes ?? [:]
-		self.cachedAttributes = self.innerAttributes.merging(fontAttributes) { (_, new) in return new }
-//        if let font = self.fontData?.font {
-//            self.cachedAttributes?[.font] = font
-//        }
-		return self.cachedAttributes!
+		var fontAttributes = fontStyle?.attributes ?? [:]
+        fontAttributes.merge(innerAttributes) { (_, new) in return new }
+		return fontAttributes
 	}
 	
 	/// Create a new style copy of `self` with the opportunity to configure it via configuration callback.
@@ -634,8 +603,9 @@ public class Style: StyleProtocol {
 	/// - Parameter handler: configuration handler.
 	/// - Returns: configured style.
 	public func byAdding(_ handler: StyleInitHandler) -> Style {
-		let styleCopy = Style(style: self)
-		handler(styleCopy)
+		var styleCopy = Style(style: self)
+        handler(&styleCopy)
 		return styleCopy
 	}
+    
 }

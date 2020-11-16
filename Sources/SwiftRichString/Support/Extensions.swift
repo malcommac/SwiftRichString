@@ -1,32 +1,26 @@
 //
 //  SwiftRichString
-//  Elegant Strings & Attributed Strings Toolkit for Swift
+//  https://github.com/malcommac/SwiftRichString
+//  Copyright (c) 2020 Daniele Margutti (hello@danielemargutti.com).
 //
-//  Created by Daniele Margutti.
-//  Copyright © 2018 Daniele Margutti. All rights reserved.
+//  Permission is hereby granted, free of charge, to any person obtaining a copy
+//  of this software and associated documentation files (the "Software"), to deal
+//  in the Software without restriction, including without limitation the rights
+//  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+//  copies of the Software, and to permit persons to whom the Software is
+//  furnished to do so, subject to the following conditions:
 //
-//	Web: http://www.danielemargutti.com
-//	Email: hello@danielemargutti.com
-//	Twitter: @danielemargutti
+//  The above copyright notice and this permission notice shall be included in
+//  all copies or substantial portions of the Software.
 //
+//  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+//  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+//  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+//  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+//  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+//  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+//  THE SOFTWARE.
 //
-//	Permission is hereby granted, free of charge, to any person obtaining a copy
-//	of this software and associated documentation files (the "Software"), to deal
-//	in the Software without restriction, including without limitation the rights
-//	to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-//	copies of the Software, and to permit persons to whom the Software is
-//	furnished to do so, subject to the following conditions:
-//
-//	The above copyright notice and this permission notice shall be included in
-//	all copies or substantial portions of the Software.
-//
-//	THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-//	IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-//	FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-//	AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-//	LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-//	OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-//	THE SOFTWARE.
 
 import Foundation
 #if os(OSX)
@@ -40,7 +34,7 @@ extension String {
     private static let escapeAmpRegExp = try! NSRegularExpression(pattern: "&(?!(#[0-9]{2,4}|[A-z]{2,6});)", options: NSRegularExpression.Options(rawValue: 0))
 
     public func escapeWithUnicodeEntities() -> String {
-        let range = NSRange(location: 0, length: self.count)
+        let range = NSRange(location: 0, length: count)
         return String.escapeAmpRegExp.stringByReplacingMatches(in: self,
                                                                options: NSRegularExpression.MatchingOptions(rawValue: 0),
                                                                range: range,
@@ -67,7 +61,7 @@ extension NSNumber {
 	}
 	
 	internal func toUnderlineStyle() -> NSUnderlineStyle? {
-		return NSUnderlineStyle.init(rawValue: self.intValue)
+		return NSUnderlineStyle.init(rawValue: intValue)
 	}
 	
 }
@@ -92,7 +86,7 @@ public extension Array where Array.Element == StyleProtocol {
     func mergeStyle() -> Style {
         var attributes: [NSAttributedString.Key:Any] = [:]
         var textTransforms = [TextTransform]()
-        self.forEach {
+        forEach {
             attributes.merge($0.attributes, uniquingKeysWith: {
                 (_, new) in
                 return new
@@ -134,10 +128,10 @@ public extension NSImage {
     
     /// PNG data of the image.
     func pngData() -> Data? {
-        self.lockFocus()
+        lockFocus()
         let bitmap = NSBitmapImageRep(focusedViewRect: NSRect(x: 0, y: 0, width: size.width, height: size.height))
         let pngData = bitmap!.representation(using: .png, properties: [:])
-        self.unlockFocus()
+        unlockFocus()
         return pngData
     }
     

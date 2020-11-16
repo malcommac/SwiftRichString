@@ -1,0 +1,5 @@
+module CHTMLSAXParser {
+    header "CHTMLSAXParser.h"
+    link "xml2"
+    export *
+}
