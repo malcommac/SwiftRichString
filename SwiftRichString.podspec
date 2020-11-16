@@ -14,7 +14,13 @@ Pod::Spec.new do |s|
   s.watchos.deployment_target = "2.0"
   s.tvos.deployment_target = "9.2"
   s.source       = { :git => "https://github.com/malcommac/SwiftRichString.git", :tag => s.version.to_s }
-  s.source_files  = "Sources/SwiftRichString/**/*"
+  #s.source_files  = "Sources/SwiftRichString/**/*"
+  s.source_files  = ['Sources/**/*.swift', 'Sources/**/*.h']
+  s.xcconfig      = {
+                      'HEADER_SEARCH_PATHS' => '$(SDKROOT)/usr/include/libxml2',
+                      'OTHER_LDFLAGS' => '-lxml2'
+                    }
+
   s.frameworks  = "Foundation"
   s.swift_versions = ['5.0', '5.1', '5.3']
 end
