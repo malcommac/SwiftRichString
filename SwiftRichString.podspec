@@ -19,6 +19,7 @@ Pod::Spec.new do |s|
   s.swift_versions = ['5.0', '5.1', '5.3']
 
   #s.dependency 'SwiftRichString/CHTMLSAXParser'
+  s.default_subspec = 'Core'
 
   s.subspec 'CHTMLSAXParser' do |ss|
     ss.source_files = 'Sources/CHTMLSAXParser/**/*.swift'
@@ -28,7 +29,7 @@ Pod::Spec.new do |s|
     ss.watchos.deployment_target = '2.0'
   end
 
-  s.subspec 'SwiftRichString' do |ss|
+  s.subspec 'Core' do |ss|
     ss.source_files  = "Sources/SwiftRichString/**/*.swift"
     s.dependency 'SwiftRichString/CHTMLSAXParser'
     ss.ios.deployment_target = '9.0'
