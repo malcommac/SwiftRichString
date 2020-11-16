@@ -19,7 +19,9 @@
 //
 
 import Foundation
+#if canImport(CHTMLSAXParser)
 import CHTMLSAXParser
+#endif
 
 public enum HTMLQuoteCharacter: Character {
     case none = "\0"

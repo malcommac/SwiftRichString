@@ -19,7 +19,9 @@
 //
 
 import Foundation
+#if canImport(CHTMLSAXParser)
 import CHTMLSAXParser
+#endif
 
 internal extension HTMLSAXParser {
 
