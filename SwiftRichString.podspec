@@ -1,7 +1,7 @@
 Pod::Spec.new do |s|
   s.name         = "SwiftRichString"
-  s.version      = "3.7.2"
-  s.summary      = "Elegant Strings & Attributed Strings Toolkit for Swift"
+  s.version      = "4.0.0"
+  s.summary      = "Elegant Attributed String composition in Swift sauce"
   s.description  = <<-DESC
     SwiftRichString is the best toolkit to work easily with Strings and Attributed Strings.
   DESC
@@ -16,11 +16,10 @@ Pod::Spec.new do |s|
   s.source       = { :git => "https://github.com/malcommac/SwiftRichString.git", :tag => s.version.to_s }
   s.source_files  = "Sources/**/*"
   s.ios.public_header_files =  'Sources/**/*.h'
-  s.xcconfig      = {
-                      'HEADER_SEARCH_PATHS' => '$(SDKROOT)/usr/include/libxml2',
-                      'OTHER_LDFLAGS' => '-lxml2'
-                    }
-
+  s.xcconfig = {
+    'HEADER_SEARCH_PATHS' => '$(SDKROOT)/usr/include/libxml2',
+    'OTHER_LDFLAGS' => '-lxml2'
+  }
   s.frameworks  = "Foundation"
   s.swift_versions = ['5.0', '5.1', '5.3']
 end
