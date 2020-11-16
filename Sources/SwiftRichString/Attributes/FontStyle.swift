@@ -30,6 +30,9 @@ import AppKit
 import UIKit
 #endif
 
+internal let TVOS_SYSTEMFONT_SIZE: CGFloat = 29.0
+internal let WATCHOS_SYSTEMFONT_SIZE: CGFloat = 12.0
+
 /// FontInfo is an internal struct which describe the inner attributes related to a font instance.
 /// User don't interact with this object directly but via `Style`'s properties.
 /// Using the `attributes` property this object return a valid instance of the attributes to describe
