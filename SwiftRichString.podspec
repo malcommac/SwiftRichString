@@ -31,7 +31,7 @@ Pod::Spec.new do |s|
 
   s.subspec 'Core' do |ss|
     ss.source_files  = "Sources/SwiftRichString/**/*.swift"
-    ss.dependency 'SwiftRichString/CHTMLSAXParser'
+    ss.dependency 'CHTMLSAXParser'
     ss.ios.deployment_target = '9.0'
     ss.osx.deployment_target = '10.11'
     ss.tvos.deployment_target = '9.2'
