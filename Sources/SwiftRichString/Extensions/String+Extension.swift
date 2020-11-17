@@ -88,14 +88,6 @@ public extension String {
 
 //MARK: - Operations
 
-/// Create a new attributed string using + where the left operand is a plain string and left is a style.
-///
-/// - Parameters:
-///   - lhs: plain string.
-///   - rhs: style to apply.
-/// - Returns: rendered attributed string instance
 public func + (lhs: String, rhs: StyleProtocol) -> AttributedString {
-    var rhsCopy = rhs
-	return rhsCopy.set(to: lhs, range: nil)
+    return StyleDecorator.set(style: rhs, to: lhs, range: nil)
 }
-

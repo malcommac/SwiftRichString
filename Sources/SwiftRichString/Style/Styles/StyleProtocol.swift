@@ -34,10 +34,13 @@ public protocol StyleProtocol {
 	/// Font unique attributes dictionary.
 	var fontStyle: FontStyle? { get }
     
+    /// Text transform.
     var textTransforms: [TextTransform]? { get }
-	
+    
+    @discardableResult
     mutating func set(to source: String, range: NSRange?) -> AttributedString
 	
+    @discardableResult
     mutating func add(to source: AttributedString, range: NSRange?) -> AttributedString
 	
 	@discardableResult
@@ -46,6 +49,8 @@ public protocol StyleProtocol {
 	@discardableResult
     mutating func remove(from source: AttributedString, range: NSRange?) -> AttributedString
 }
+
+// MARK: - StyleProtocol Implementation
 
 public extension StyleProtocol {
     
