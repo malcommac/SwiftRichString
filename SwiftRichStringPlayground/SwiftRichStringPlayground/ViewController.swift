@@ -19,25 +19,25 @@ class ViewController: UIViewController {
         
         // Do any additional setup after loading the view.
         
-        /*do {
+        do {
             
             let base = Style {
                 $0.font = UIFont.monospacedSystemFont(ofSize: 12, weight: .regular)
             }
             
             let rTag  = Style {
-                $0.color = UIColor.darkGray
+                $0.color = UIColor.red
             }
             
             let bTag = Style {
-                $0.underline = (NSUnderlineStyle.double,UIColor.red)
+                $0.underline = (NSUnderlineStyle.double,UIColor.green)
             }
             
             let iTag = Style {
-                $0.color = UIColor.yellow
+                $0.color = UIColor.blue
             }
             
-            let style = StyleXML(base: base, styles: [
+            let style = StyleXML(base: base, [
                 "r": rTag,
                 "b": bTag,
                 "i": iTag
@@ -48,7 +48,7 @@ class ViewController: UIViewController {
             textView.attributedText = attributed
         } catch {
             print(error.localizedDescription)
-        }*/
+        }
     }
 
 

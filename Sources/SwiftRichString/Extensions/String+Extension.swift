@@ -44,8 +44,9 @@ public extension String {
 	///   - range: range of substring where style is applied, `nil` to use the entire string.
 	/// - Returns: rendered attributed string, `nil` if style is not registered.
 	func set(style: String, range: NSRange? = nil) -> AttributedString? {
-        var foundStyle = StylesManager.shared[style]
-		return foundStyle?.set(to: self, range: range)
+        //var foundStyle = StylesManager.shared[style]
+		//return foundStyle?.set(to: self, range: range)
+        StyleDecorator.set(style: StylesManager.shared[style], to: self, range: range)
 	}
 	
 	/// Apply a sequence of styles defied in global `StylesManager` to the receiver string.
@@ -59,7 +60,9 @@ public extension String {
 	///   - range: range of substring where style is applied, `nil` to use the entire string.
 	/// - Returns: attributed string, `nil` if all specified styles required are not registered.
 	func set(styles: [String], range: NSRange? = nil) -> AttributedString? {
-		return StylesManager.shared[styles]?.mergeStyle().set(to: self, range: range)
+        let mergedStyle = StylesManager.shared[styles]?.mergeStyle()
+        return StyleDecorator.set(style: mergedStyle, to: self, range: range)
+		// return StylesManager.shared[styles]?.mergeStyle().set(to: self, range: range)
 	}
 	
 	/// Apply passed style to the receiver string.
@@ -69,8 +72,9 @@ public extension String {
 	///   - range: range of substring where style is applied, `nil` to use the entire string.
 	/// - Returns: rendered attributed string.
 	func set(style: StyleProtocol, range: NSRange? = nil) -> AttributedString {
-        var styleCopy = style
-		return styleCopy.set(to: self, range: range)
+        //var styleCopy = style
+		//return styleCopy.set(to: self, range: range)
+        StyleDecorator.set(style: style, to: self, range: range)
 	}
 	
 	/// Apply passed sequence of `StyleProtocol` instances to the receiver.
@@ -83,7 +87,8 @@ public extension String {
 	///   - range: range of substring where style is applied, `nil` to use the entire string.
 	/// - Returns: attributed string.
 	func set(styles: [StyleProtocol], range: NSRange? = nil) -> AttributedString {
-		return styles.mergeStyle().set(to: self, range: range)
+		//return styles.mergeStyle().set(to: self, range: range)
+        StyleDecorator.set(style: styles.mergeStyle(), to: self, range: range)
 	}
 	
 }

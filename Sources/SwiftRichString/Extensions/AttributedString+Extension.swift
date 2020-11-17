@@ -43,8 +43,9 @@ public extension AttributedString {
 	/// - Returns: 	same instance of the receiver with - eventually - modified attributes.
 	@discardableResult
 	func add(style: String, range: NSRange? = nil) -> AttributedString {
-		guard var style = Styles[style] else { return self }
-		return style.add(to: self, range: range)
+		//guard var style = Styles[style] else { return self }
+		//return style.add(to: self, range: range)
+        StyleDecorator.add(style: Styles[style], to: self, range: range)
 	}
 	
 	/// Append ordered sequence of styles registered in `StyleManager` to the receiver.
@@ -56,8 +57,9 @@ public extension AttributedString {
 	/// - Returns: 	same instance of the receiver with - eventually - modified attributes.
 	@discardableResult
 	func add(styles: [String], range: NSRange? = nil) -> AttributedString {
-		guard let styles = Styles[styles] else { return self }
-		return styles.mergeStyle().set(to: self, range: range)
+		//guard let styles = Styles[styles] else { return self }
+		//return styles.mergeStyle().set(to: self, range: range)
+        StyleDecorator.set(style: Styles[styles]?.mergeStyle(), to: self, range: range)
 	}
 	
 	/// Replace any existing attributed string's style into the receiver/substring of the receiver
@@ -69,8 +71,9 @@ public extension AttributedString {
 	/// - Returns: 	same instance of the receiver with - eventually - modified attributes.
 	@discardableResult
 	func set(style: String, range: NSRange? = nil) -> AttributedString {
-		guard var style = Styles[style] else { return self }
-		return style.set(to: self, range: range)
+		//guard var style = Styles[style] else { return self }
+		//return style.set(to: self, range: range)
+        StyleDecorator.set(style: Styles[style], to: self, range: range)
 	}
 	
 	/// Replace any existing attributed string's style into the receiver/substring of the receiver
@@ -83,8 +86,9 @@ public extension AttributedString {
 	/// - Returns: 	same instance of the receiver with - eventually - modified attributes.
 	@discardableResult
 	func set(styles: [String], range: NSRange? = nil) -> AttributedString {
-		guard let styles = Styles[styles] else { return self }
-		return styles.mergeStyle().set(to: self, range: range)
+		//guard let styles = Styles[styles] else { return self }
+		//return styles.mergeStyle().set(to: self, range: range)
+        StyleDecorator.set(style: Styles[styles]?.mergeStyle(), to: self, range: range)
 	}
 	
 	/// Append passed style to the receiver.
@@ -95,8 +99,9 @@ public extension AttributedString {
 	/// - Returns: 	same instance of the receiver with - eventually - modified attributes.
 	@discardableResult
 	func add(style: StyleProtocol, range: NSRange? = nil) -> AttributedString {
-        var styleCopy = style
-		return styleCopy.add(to: self, range: range)
+        //var styleCopy = style
+		//return styleCopy.add(to: self, range: range)
+        StyleDecorator.add(style: style, to: self, range: range)
 	}
 	
 	/// Append passed sequences of styles to the receiver.
@@ -108,7 +113,8 @@ public extension AttributedString {
 	/// - Returns: 	same instance of the receiver with - eventually - modified attributes.
 	@discardableResult
 	func add(styles: [StyleProtocol], range: NSRange? = nil) -> AttributedString {
-		return styles.mergeStyle().add(to: self, range: range)
+		// return styles.mergeStyle().add(to: self, range: range)
+        StyleDecorator.add(style: styles.mergeStyle(), to: self, range: range)
 	}
 	
 	/// Replace the attributes of the string with passed style.
@@ -119,8 +125,9 @@ public extension AttributedString {
 	/// - Returns: 	same instance of the receiver with - eventually - modified attributes.
 	@discardableResult
 	func set(style: StyleProtocol, range: NSRange? = nil) -> AttributedString {
-        var styleCopy = style
-		return styleCopy.set(to: self, range: range)
+        //var styleCopy = style
+		//return styleCopy.set(to: self, range: range)
+        StyleDecorator.set(style: style, to: self, range: range)
 	}
 	
 	/// Replace the attributes of the string with a style which is an ordered merge of passed
@@ -132,7 +139,8 @@ public extension AttributedString {
 	/// - Returns: 	same instance of the receiver with - eventually - modified attributes.
 	@discardableResult
 	func set(styles: [StyleProtocol], range: NSRange? = nil) -> AttributedString {
-		return styles.mergeStyle().set(to: self, range: range)
+		// return styles.mergeStyle().set(to: self, range: range)
+        StyleDecorator.set(style: styles.mergeStyle(), to: self, range: range)
 	}
 	
 	/// Remove passed attribute's keys from the receiver.
@@ -142,18 +150,20 @@ public extension AttributedString {
 	///   - range: 	range of substring where style will be removed, `nil` to use the entire string.
 	/// - Returns: 	same instance of the receiver with - eventually - modified attributes.
 	@discardableResult
-	func removeAttributes(_ keys: [NSAttributedString.Key], range: NSRange) -> Self {
-		keys.forEach { removeAttribute($0, range: range) }
-		return self
+	func removeAttributes(_ keys: [NSAttributedString.Key], range: NSRange) -> AttributedString {
+		//keys.forEach { removeAttribute($0, range: range) }
+		//return self
+        StyleDecorator.remove(attributes: keys, from: self, range: range)
 	}
 	
 	/// Remove all keys defined into passed style from the receiver.
 	///
 	/// - Parameter style: style to use.
 	/// - Returns: 	same instance of the receiver with - eventually - modified attributes.
-	func remove(_ style: StyleProtocol) -> Self {
-		removeAttributes(Array(style.attributes.keys), range: NSMakeRange(0, length))
-		return self
+	func remove(_ style: StyleProtocol) -> AttributedString {
+        StyleDecorator.remove(attributes: Array(style.attributes.keys), from: self, range: NSMakeRange(0, length))
+		//removeAttributes(Array(style.attributes.keys), range: NSMakeRange(0, length))
+		//return self
 	}
 	
 }

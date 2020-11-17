@@ -611,31 +611,37 @@ public struct Style: StyleProtocol {
     // MARK ---
     
     public func set(to source: String, range: NSRange?) -> AttributedString {
-        let attributedText = NSMutableAttributedString(string: source)
+        /*let attributedText = NSMutableAttributedString(string: source)
         fontStyle?.addAttributes(to: attributedText, range: nil)
         attributedText.addAttributes(attributes, range: (range ?? NSMakeRange(0, attributedText.length)))
-        return attributedText.applyTextTransform(textTransforms)
+        return attributedText.applyTextTransform(textTransforms)*/
+        StyleDecorator.set(style: self, to: source, range: range)
     }
     
     public func add(to source: AttributedString, range: NSRange?) -> AttributedString {
-        fontStyle?.addAttributes(to: source, range: range)
+        /*fontStyle?.addAttributes(to: source, range: range)
         source.addAttributes(attributes, range: (range ?? NSMakeRange(0, source.length)))
-        return source.applyTextTransform(textTransforms)
+        return source.applyTextTransform(textTransforms)*/
+        StyleDecorator.add(style: self, to: source, range: range)
     }
     
     @discardableResult
     public func set(to source: AttributedString, range: NSRange?) -> AttributedString {
-        fontStyle?.addAttributes(to: source, range: range)
+       /* fontStyle?.addAttributes(to: source, range: range)
         source.addAttributes(attributes, range: (range ?? NSMakeRange(0, source.length)))
-        return source.applyTextTransform(textTransforms)
+        //return source.applyTextTransform(textTransforms)
+        return StyleDecorator.applyTextTransform(textTransforms, to: source)
+        */
+        return StyleDecorator.set(style: self, to: source, range: range)
     }
     
     @discardableResult
     public func remove(from source: AttributedString, range: NSRange?) -> AttributedString {
-        attributes.keys.forEach({
+        /*attributes.keys.forEach({
             source.removeAttribute($0, range: (range ?? NSMakeRange(0, source.length)))
         })
-        return source.applyTextTransform(textTransforms)
+        return source.applyTextTransform(textTransforms)*/
+        StyleDecorator.remove(style: self, from: source, range: range)
     }
     
 }

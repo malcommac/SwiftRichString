@@ -68,7 +68,7 @@ public struct StyleXML: StyleProtocol {
     /// - Parameters:
     ///   - base: base style applied to the entire string.
     ///   - styles: styles dictionary used to map your xml tags to styles definitions.
-    public init(base: StyleProtocol? = nil, styles: [String: StyleProtocol] = [:]) {
+    public init(base: StyleProtocol? = nil, _ styles: [String: StyleProtocol] = [:]) {
         self.styles = styles
         self.baseStyle = base
     }
@@ -86,7 +86,7 @@ public struct StyleXML: StyleProtocol {
     ///   - style: style you want to add.
     ///   - name: unique name of the style.
     public mutating func add(style: Style, as name: String) {
-        return styles[name] = style
+        styles[name] = style
     }
     
     
@@ -96,7 +96,7 @@ public struct StyleXML: StyleProtocol {
     /// - Returns: removed style instance.
     @discardableResult
     public mutating func remove(style name: String) -> StyleProtocol? {
-        return styles.removeValue(forKey: name)
+        styles.removeValue(forKey: name)
     }
     
     //MARK: - Rendering Methods
@@ -153,10 +153,12 @@ public struct StyleXML: StyleProtocol {
     
     @discardableResult
     public func remove(from source: AttributedString, range: NSRange?) -> AttributedString {
-        attributes.keys.forEach({
+        /*attributes.keys.forEach({
             source.removeAttribute($0, range: (range ?? NSMakeRange(0, source.length)))
         })
-        return source.applyTextTransform(textTransforms)
+        return source.applyTextTransform(textTransforms)*/
+    
+        return StyleDecorator.remove(style: self, from: source, range: range)
        // return applyTextTransform(textTransforms, to: source)
     }
     

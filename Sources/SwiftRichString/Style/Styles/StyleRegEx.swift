@@ -80,22 +80,27 @@ public class StyleRegEx: StyleProtocol {
 	//MARK: - METHOD OVERRIDES
 	
 	public func set(to source: String, range: NSRange?) -> AttributedString {
-		let attributed = NSMutableAttributedString(string: source, attributes: (baseStyle?.attributes ?? [:]))
-		return applyStyle(to: attributed, add: false, range: range)
+		//let attributed = NSMutableAttributedString(string: source, attributes: (baseStyle?.attributes ?? [:]))
+		//return setWithRegExp(to: attributed, add: false, range: range)
+        return StyleDecorator.set(regexStyle: self, to: source, add: true, range: range)
 	}
 	
 	public func add(to source: AttributedString, range: NSRange?) -> AttributedString {
-		if let base = baseStyle {
+		/*if let base = baseStyle {
 			source.addAttributes(base.attributes, range: (range ?? NSMakeRange(0, source.length)))
-		}
-		return applyStyle(to: source, add: true, range: range)
+		}*/
+        
+        return StyleDecorator.set(regexStyle: self, to: source, add: true, range: range)
+		//return setWithRegExp(to: source, add: true, range: range)
 	}
 	
 	public func set(to source: AttributedString, range: NSRange?) -> AttributedString {
-		if let base = baseStyle {
+		/*if let base = baseStyle {
 			source.setAttributes(base.attributes, range: (range ?? NSMakeRange(0, source.length)))
-		}
-		return applyStyle(to: source, add: false, range: range)
+		}*/
+        
+        return StyleDecorator.set(regexStyle: self, to: source, add: false, range: range)
+		//return setWithRegExp(to: source, add: false, range: range)
 	}
 	
 	//MARK: - INTERNAL FUNCTIONS
@@ -107,7 +112,7 @@ public class StyleRegEx: StyleProtocol {
 	///   - add: `true` to append styles, `false` to replace existing styles.
 	///   - range: range, `nil` to apply the style to entire string.
 	/// - Returns: modified attributed string
-	private func applyStyle(to str: AttributedString, add: Bool, range: NSRange?) -> AttributedString {
+	/*private func setWithRegExp(to str: AttributedString, add: Bool, range: NSRange?) -> AttributedString {
 		let rangeValue = (range ?? NSMakeRange(0, str.length))
 		
 		let matchOpts = NSRegularExpression.MatchingOptions(rawValue: 0)
@@ -123,23 +128,24 @@ public class StyleRegEx: StyleProtocol {
 		}
 		
 		return str
-	}
+	}*/
     
     
     // MARK: ---
     
     @discardableResult
     public func remove(from source: AttributedString, range: NSRange?) -> AttributedString {
-        attributes.keys.forEach({
-            source.removeAttribute($0, range: (range ?? NSMakeRange(0, source.length)))
-        })
+      //  attributes.keys.forEach({
+      //      source.removeAttribute($0, range: (range ?? NSMakeRange(0, source.length)))
+      //  })
         //return applyTextTransform(textTransforms, to: source)
-        return source.applyTextTransform(textTransforms)
+    //    return source.applyTextTransform(textTransforms)
+        return StyleDecorator.remove(style: self, from: source, range: nil)
     }
 	
 }
 
-
+/*
 public extension AttributedString {
     
     func applyTextTransform(_ transforms: [TextTransform]?) -> AttributedString {
@@ -161,3 +167,4 @@ public extension AttributedString {
     }
     
 }
+*/
