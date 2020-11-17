@@ -71,7 +71,7 @@ extension UILabel {
                 attributedText = nil
                 return 
             }
-            let style = self.style ?? Style()
+            var style = self.style ?? Style()
             attributedText = style.set(to: text, range: nil)
 		}
 	}
@@ -116,7 +116,7 @@ extension UITextField {
                 attributedText = nil
                 return 
             }
-            let style = self.style ?? Style()
+            var style = self.style ?? Style()
             attributedText = style.set(to: text, range: nil)
 		}
 	}
@@ -161,7 +161,7 @@ extension UITextView {
                 attributedText = nil
                 return 
             }
-            let style = self.style ?? Style()
+            var style = self.style ?? Style()
             attributedText = style.set(to: text, range: nil)
 		}
 	}

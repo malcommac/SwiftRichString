@@ -43,7 +43,7 @@ public extension AttributedString {
 	/// - Returns: 	same instance of the receiver with - eventually - modified attributes.
 	@discardableResult
 	func add(style: String, range: NSRange? = nil) -> AttributedString {
-		guard let style = Styles[style] else { return self }
+		guard var style = Styles[style] else { return self }
 		return style.add(to: self, range: range)
 	}
 	
@@ -69,7 +69,7 @@ public extension AttributedString {
 	/// - Returns: 	same instance of the receiver with - eventually - modified attributes.
 	@discardableResult
 	func set(style: String, range: NSRange? = nil) -> AttributedString {
-		guard let style = Styles[style] else { return self }
+		guard var style = Styles[style] else { return self }
 		return style.set(to: self, range: range)
 	}
 	
@@ -95,7 +95,8 @@ public extension AttributedString {
 	/// - Returns: 	same instance of the receiver with - eventually - modified attributes.
 	@discardableResult
 	func add(style: StyleProtocol, range: NSRange? = nil) -> AttributedString {
-		return style.add(to: self, range: range)
+        var styleCopy = style
+		return styleCopy.add(to: self, range: range)
 	}
 	
 	/// Append passed sequences of styles to the receiver.
@@ -118,7 +119,8 @@ public extension AttributedString {
 	/// - Returns: 	same instance of the receiver with - eventually - modified attributes.
 	@discardableResult
 	func set(style: StyleProtocol, range: NSRange? = nil) -> AttributedString {
-		return style.set(to: self, range: range)
+        var styleCopy = style
+		return styleCopy.set(to: self, range: range)
 	}
 	
 	/// Replace the attributes of the string with a style which is an ordered merge of passed

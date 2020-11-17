@@ -36,19 +36,19 @@ public protocol StyleProtocol {
     
     var textTransforms: [TextTransform]? { get }
 	
-	func set(to source: String, range: NSRange?) -> AttributedString
+    mutating func set(to source: String, range: NSRange?) -> AttributedString
 	
-	func add(to source: AttributedString, range: NSRange?) -> AttributedString
-	
-	@discardableResult
-	func set(to source: AttributedString, range: NSRange?) -> AttributedString
+    mutating func add(to source: AttributedString, range: NSRange?) -> AttributedString
 	
 	@discardableResult
-	func remove(from source: AttributedString, range: NSRange?) -> AttributedString
+    mutating func set(to source: AttributedString, range: NSRange?) -> AttributedString
+	
+	@discardableResult
+    mutating func remove(from source: AttributedString, range: NSRange?) -> AttributedString
 }
 
 public extension StyleProtocol {
-	
+	/*
 	func set(to source: String, range: NSRange?) -> AttributedString {
 		let attributedText = NSMutableAttributedString(string: source)
 		fontStyle?.addAttributes(to: attributedText, range: nil)
@@ -93,6 +93,6 @@ public extension StyleProtocol {
         })
         
         return mutable
-    }
+    }*/
 	
 }

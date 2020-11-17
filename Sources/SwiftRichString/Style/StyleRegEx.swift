@@ -124,5 +124,40 @@ public class StyleRegEx: StyleProtocol {
 		
 		return str
 	}
+    
+    
+    // MARK: ---
+    
+    @discardableResult
+    public func remove(from source: AttributedString, range: NSRange?) -> AttributedString {
+        attributes.keys.forEach({
+            source.removeAttribute($0, range: (range ?? NSMakeRange(0, source.length)))
+        })
+        //return applyTextTransform(textTransforms, to: source)
+        return source.applyTextTransform(textTransforms)
+    }
 	
+}
+
+
+public extension AttributedString {
+    
+    func applyTextTransform(_ transforms: [TextTransform]?) -> AttributedString {
+        guard let transforms = transforms else {
+            return self
+        }
+        
+        let mutable = mutableStringCopy()
+        let fullRange = NSRange(location: 0, length: mutable.length)
+        mutable.enumerateAttributes(in: fullRange, options: [], using: { (_, range, _) in
+            var substring = mutable.attributedSubstring(from: range).string
+            transforms.forEach {
+                substring = $0.transformer(substring)
+            }
+            mutable.replaceCharacters(in: range, with: substring)
+        })
+        
+        return mutable
+    }
+    
 }

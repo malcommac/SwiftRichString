@@ -44,7 +44,8 @@ public extension String {
 	///   - range: range of substring where style is applied, `nil` to use the entire string.
 	/// - Returns: rendered attributed string, `nil` if style is not registered.
 	func set(style: String, range: NSRange? = nil) -> AttributedString? {
-		return StylesManager.shared[style]?.set(to: self, range: range)
+        var foundStyle = StylesManager.shared[style]
+		return foundStyle?.set(to: self, range: range)
 	}
 	
 	/// Apply a sequence of styles defied in global `StylesManager` to the receiver string.
@@ -68,7 +69,8 @@ public extension String {
 	///   - range: range of substring where style is applied, `nil` to use the entire string.
 	/// - Returns: rendered attributed string.
 	func set(style: StyleProtocol, range: NSRange? = nil) -> AttributedString {
-		return style.set(to: self, range: range)
+        var styleCopy = style
+		return styleCopy.set(to: self, range: range)
 	}
 	
 	/// Apply passed sequence of `StyleProtocol` instances to the receiver.
@@ -95,6 +97,7 @@ public extension String {
 ///   - rhs: style to apply.
 /// - Returns: rendered attributed string instance
 public func + (lhs: String, rhs: StyleProtocol) -> AttributedString {
-	return rhs.set(to: lhs, range: nil)
+    var rhsCopy = rhs
+	return rhsCopy.set(to: lhs, range: nil)
 }
 

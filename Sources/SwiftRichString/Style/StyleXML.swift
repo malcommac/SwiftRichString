@@ -149,4 +149,15 @@ public struct StyleXML: StyleProtocol {
         }
     }
     
+    // MARK: --
+    
+    @discardableResult
+    public func remove(from source: AttributedString, range: NSRange?) -> AttributedString {
+        attributes.keys.forEach({
+            source.removeAttribute($0, range: (range ?? NSMakeRange(0, source.length)))
+        })
+        return source.applyTextTransform(textTransforms)
+       // return applyTextTransform(textTransforms, to: source)
+    }
+    
 }
