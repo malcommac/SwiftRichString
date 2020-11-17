@@ -417,7 +417,6 @@ public struct Style: StyleProtocol {
 	
 	///  Configuration for the number case, also known as "figure style".
 	/// **Note**: in order to be used you must also set the `.font`/`.size` attribute of the style.
-    @available(*, deprecated, message: "Use fontStyle.numberCase instead")
 	public var numberCase: NumberCase? {
 		set { fontStyle?.numberCase = newValue }
 		get { fontStyle?.numberCase }
@@ -425,7 +424,6 @@ public struct Style: StyleProtocol {
 	
 	/// Configuration for number spacing, also known as "figure spacing".
 	/// **Note**: in order to be used you must also set the `.font`/`.size` attribute of the style.
-    @available(*, deprecated, message: "Use fontStyle.numberSpacing instead")
 	public var numberSpacing: NumberSpacing? {
 		set { fontStyle?.numberSpacing = newValue }
 		get { fontStyle?.numberSpacing }
@@ -433,7 +431,6 @@ public struct Style: StyleProtocol {
 	
 	/// Configuration for displyaing a fraction.
 	/// **Note**: in order to be used you must also set the `.font`/`.size` attribute of the style.
-    @available(*, deprecated, message: "Use fontStyle.fractions instead")
 	public var fractions: Fractions? {
 		set { fontStyle?.fractions = newValue }
 		get { fontStyle?.fractions }
@@ -441,7 +438,6 @@ public struct Style: StyleProtocol {
 	
 	/// Superscript (superior) glpyh variants are used, as in footnotes¹.
 	/// **Note**: in order to be used you must also set the `.font`/`.size` attribute of the style.
-    @available(*, deprecated, message: "Use fontStyle.superscript instead")
 	public var superscript: Bool? {
 		set { fontStyle?.subscript = newValue }
 		get { fontStyle?.superscript }
@@ -449,7 +445,6 @@ public struct Style: StyleProtocol {
 	
 	/// Subscript (inferior) glyph variants are used: vₑ.
 	/// **Note**: in order to be used you must also set the `.font`/`.size` attribute of the style.
-    @available(*, deprecated, message: "Use fontStyle.subscript instead")
 	public var `subscript`: Bool? {
 		set { fontStyle?.subscript = newValue }
 		get { fontStyle?.subscript }
@@ -457,7 +452,6 @@ public struct Style: StyleProtocol {
 
 	/// Ordinal glyph variants are used, as in the common typesetting of 4th.
 	/// **Note**: in order to be used you must also set the `.font`/`.size` attribute of the style.
-    @available(*, deprecated, message: "Use fontStyle.ordinals instead")
 	public var ordinals: Bool? {
 		set { fontStyle?.ordinals = newValue }
 		get { fontStyle?.ordinals }
@@ -465,7 +459,6 @@ public struct Style: StyleProtocol {
 	
 	/// Scientific inferior glyph variants are used: H₂O
 	/// **Note**: in order to be used you must also set the `.font`/`.size` attribute of the style.
-    @available(*, deprecated, message: "Use fontStyle.scientificInferiors instead")
 	public var scientificInferiors: Bool? {
         set { fontStyle?.scientificInferiors = newValue }
 		get { fontStyle?.scientificInferiors }
@@ -474,7 +467,6 @@ public struct Style: StyleProtocol {
 	/// Configure small caps behavior.
 	/// `fromUppercase` and `fromLowercase` can be combined: they are not mutually exclusive.
 	/// **Note**: in order to be used you must also set the `.font`/`.size` attribute of the style.
-    @available(*, deprecated, message: "Use fontStyle.smallCaps instead")
 	public var smallCaps: Set<SmallCaps> {
         set { fontStyle?.smallCaps = newValue }
 		get { fontStyle?.smallCaps ?? Set() }
@@ -488,7 +480,6 @@ public struct Style: StyleProtocol {
 	/// For example, in Apple's San Francisco font, turn on alternate set "six" to
 	/// enable high-legibility alternates for ambiguous characters like: 0lI164.
 	/// **Note**: in order to be used you must also set the `.font`/`.size` attribute of the style.
-    @available(*, deprecated, message: "Use fontStyle.stylisticAlternates instead")
 	public var stylisticAlternates: StylisticAlternates {
         set { fontStyle?.stylisticAlternates = newValue }
 		get { fontStyle?.stylisticAlternates ?? StylisticAlternates() }
@@ -497,7 +488,6 @@ public struct Style: StyleProtocol {
 	/// Different contextual alternates available for customizing a font.
 	/// Note: Not all fonts support all (or any) of these options.
 	/// **Note**: in order to be used you must also set the `.font`/`.size` attribute of the style.
-    @available(*, deprecated, message: "Use fontStyle.contextualAlternates instead")
 	public var contextualAlternates: ContextualAlternates {
         set { fontStyle?.contextualAlternates = newValue }
 		get { fontStyle?.contextualAlternates ?? ContextualAlternates() }
@@ -505,7 +495,6 @@ public struct Style: StyleProtocol {
 	
 	/// Tracking to apply.
 	/// **Note**: in order to be used you must also set the `.font`/`.size` attribute of the style.
-    @available(*, deprecated, message: "Use fontStyle.kerning instead")
 	public var kerning: Kerning? {
         set { fontStyle?.kerning = newValue }
 		get { fontStyle?.kerning }
@@ -513,7 +502,6 @@ public struct Style: StyleProtocol {
 	
 	/// Describe trait variants to apply to the font.
 	/// **Note**: in order to be used you must also set the `.font`/`.size` attribute of the style.
-    @available(*, deprecated, message: "Use fontStyle.traitVariants instead")
 	public var traitVariants: TraitVariant? {
         set { fontStyle?.traitVariants = newValue }
 		get { fontStyle?.traitVariants }
