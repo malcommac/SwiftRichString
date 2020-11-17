@@ -54,6 +54,31 @@ internal enum StyleDecorator {
     }
     
     static func set(style: StyleProtocol?, to source: StylableString, range: NSRange?) -> AttributedString {
+        switch style {
+        case let xmlStyle as StyleXML:
+            return set(xmlStyle: xmlStyle, to: source, range: range)
+        case let plainStyle as Style:
+            return set(plainStyle: plainStyle, to: source, range: range)
+        case let regExStyle as StyleRegEx:
+            return set(regexStyle: regExStyle, to: source, add: false, range: range)
+        default:
+            return source.attributedString(nil)
+        }
+    }
+    
+    static func set(xmlStyle: StyleXML, to source: StylableString, range: NSRange?) -> AttributedString {
+        let attributedString = source.attributedString(nil)
+        
+        do {
+            let xmlParser = XMLStringBuilder(styleXML: xmlStyle, string: attributedString.string)
+            return try xmlParser.parse()
+        } catch {
+            debugPrint("Failed to generate attributed string from xml: \(error)")
+            return attributedString
+        }
+    }
+    
+    static func set(plainStyle style: Style?, to source: StylableString, range: NSRange?) -> AttributedString {
         let attributedSource = source.attributedString(nil)
         guard let style = style else { return attributedSource }
 
@@ -73,13 +98,6 @@ internal enum StyleDecorator {
     
     @discardableResult
     static func remove(style: StyleProtocol?, from source: StylableString, range: NSRange?) -> AttributedString {
-        /*let attributedSource = source.attributedString(nil)
-        guard let style = style else { return attributedSource }
-
-        style.attributes.keys.forEach({
-            attributedSource.removeAttribute($0, range: (range ?? NSMakeRange(0, attributedSource.length)))
-        })*/
-        
         let allKeys = (style?.attributes.keys != nil ? Array(style!.attributes.keys) : nil)
         let attributedSource = StyleDecorator.remove(attributes: allKeys, from: source, range: range)
         return StyleDecorator.applyTextTransform(style?.textTransforms, to: attributedSource)

@@ -31,8 +31,14 @@ import UIKit
 
 /// Style class encapsulate all the information about the attributes you can apply to a text.
 public struct Style: StyleProtocol {
+    
+    // MARK: - Private Properties
+    
+    /// Attributes defined by the style. This is the dictionary modified when you
+    /// set a style attributed.
+    private var innerAttributes: [NSAttributedString.Key : Any] = [:]
 	
-	//MARK: - INTERNAL PROPERTIES
+	// MARK: - Public Properties
 
 	/// Handler to initialize a new style.
 	public typealias StyleInitHandler = ((inout Style) -> (Void))
@@ -42,19 +48,10 @@ public struct Style: StyleProtocol {
 	/// configurable attributes are exposed at `Style` level.
 	public var fontStyle: FontStyle? = FontStyle()
     
-    
     /// See `fontStyle`.
     @available(*, deprecated, message: "Use fontStyle instead")
-    public var fontData: FontStyle? {
-        fontStyle
-    }
-	
-	/// Attributes defined by the style. This is the dictionary modified when you
-	/// set a style attributed.
-	private var innerAttributes: [NSAttributedString.Key : Any] = [:]
-	
-	//MARK: - PROPERTIES
-    
+    public var fontData: FontStyle? { fontStyle }
+
     /// Apply any transform to the text.
     public var textTransforms: [TextTransform]?
 
@@ -607,41 +604,5 @@ public struct Style: StyleProtocol {
         handler(&styleCopy)
 		return styleCopy
 	}
-    
-    // MARK ---
-    
-    public func set(to source: String, range: NSRange?) -> AttributedString {
-        /*let attributedText = NSMutableAttributedString(string: source)
-        fontStyle?.addAttributes(to: attributedText, range: nil)
-        attributedText.addAttributes(attributes, range: (range ?? NSMakeRange(0, attributedText.length)))
-        return attributedText.applyTextTransform(textTransforms)*/
-        StyleDecorator.set(style: self, to: source, range: range)
-    }
-    
-    public func add(to source: AttributedString, range: NSRange?) -> AttributedString {
-        /*fontStyle?.addAttributes(to: source, range: range)
-        source.addAttributes(attributes, range: (range ?? NSMakeRange(0, source.length)))
-        return source.applyTextTransform(textTransforms)*/
-        StyleDecorator.add(style: self, to: source, range: range)
-    }
-    
-    @discardableResult
-    public func set(to source: AttributedString, range: NSRange?) -> AttributedString {
-       /* fontStyle?.addAttributes(to: source, range: range)
-        source.addAttributes(attributes, range: (range ?? NSMakeRange(0, source.length)))
-        //return source.applyTextTransform(textTransforms)
-        return StyleDecorator.applyTextTransform(textTransforms, to: source)
-        */
-        return StyleDecorator.set(style: self, to: source, range: range)
-    }
-    
-    @discardableResult
-    public func remove(from source: AttributedString, range: NSRange?) -> AttributedString {
-        /*attributes.keys.forEach({
-            source.removeAttribute($0, range: (range ?? NSMakeRange(0, source.length)))
-        })
-        return source.applyTextTransform(textTransforms)*/
-        StyleDecorator.remove(style: self, from: source, range: range)
-    }
     
 }

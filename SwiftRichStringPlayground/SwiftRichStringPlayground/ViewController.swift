@@ -10,7 +10,7 @@ import SwiftRichString
 
 
 class ViewController: UIViewController {
-
+    
     var str = NSAttributedString()
     @IBOutlet public var textView: UITextView!
     
@@ -19,38 +19,32 @@ class ViewController: UIViewController {
         
         // Do any additional setup after loading the view.
         
-        do {
-            
-            let base = Style {
-                $0.font = UIFont.monospacedSystemFont(ofSize: 12, weight: .regular)
-            }
-            
-            let rTag  = Style {
-                $0.color = UIColor.red
-            }
-            
-            let bTag = Style {
-                $0.underline = (NSUnderlineStyle.double,UIColor.green)
-            }
-            
-            let iTag = Style {
-                $0.color = UIColor.blue
-            }
-            
-            let style = StyleXML(base: base, [
-                "r": rTag,
-                "b": bTag,
-                "i": iTag
-            ])
-            let string = "<r>Ciao come <b>sta andando <i>il cazzo</i></b><i>di</i> progetto?</r>"
-            let x = XMLStringBuilder(styleXML: style, string: string)
-            let attributed = try x.parse()
-            textView.attributedText = attributed
-        } catch {
-            print(error.localizedDescription)
+        
+        let base = Style {
+            $0.font = UIFont.monospacedSystemFont(ofSize: 12, weight: .regular)
         }
+        
+        let rTag  = Style {
+            $0.color = UIColor.red
+        }
+        
+        let bTag = Style {
+            $0.underline = (NSUnderlineStyle.double,UIColor.green)
+        }
+        
+        let iTag = Style {
+            $0.color = UIColor.blue
+        }
+        
+        let style = StyleXML(base: base, [
+            "r": rTag,
+            "b": bTag,
+            "i": iTag
+        ])
+        let string = "<r>Ciao come <b>sta andando <i>il cazzo</i></b><i>di</i> progetto?</r>"
+        textView.attributedText = string.set(style: style)
     }
-
-
+    
+    
 }
 

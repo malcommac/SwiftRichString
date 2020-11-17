@@ -32,9 +32,7 @@ import UIKit
 public typealias StyleGroup = StyleXML
 
 public struct StyleXML: StyleProtocol {
-    
-    private var xmlParser: XMLStringBuilder?
-    
+        
     // The following attributes are ignored for StyleXML because are read from the sub styles.
     public var attributes: [NSAttributedString.Key : Any] = [:]
     public var fontStyle: FontStyle? = nil
@@ -98,68 +96,5 @@ public struct StyleXML: StyleProtocol {
     public mutating func remove(style name: String) -> StyleProtocol? {
         styles.removeValue(forKey: name)
     }
-    
-    //MARK: - Rendering Methods
-    
-    /// Render given source with styles defined inside the receiver.
-    /// Styles are added as sum to any existing
-    ///
-    /// - Parameters:
-    ///   - source: source to render.
-    ///   - range: range of characters to render, `nil` to apply rendering to the entire content.
-    /// - Returns: attributed string
-    public mutating func set(to source: String, range: NSRange?) -> AttributedString {
-        apply(to: NSMutableAttributedString(string: source), adding: true, range: range)
-    }
-    
-    /// Render given source string by appending parsed styles to the existing attributed string.
-    ///
-    /// - Parameters:
-    ///   - source: source attributed string.
-    ///   - range: range of parse.
-    /// - Returns: same istance of `source` with applied styles.
-    public mutating func add(to source: AttributedString, range: NSRange?) -> AttributedString {
-        apply(to: source, adding: true, range: range)
-    }
-    
-    /// Render given source string by replacing existing styles to parsed tags.
-    ///
-    /// - Parameters:
-    ///   - source: source attributed string.
-    ///   - range: range of parse.
-    /// - Returns: same istance of `source` with applied styles.
-    public mutating func set(to source: AttributedString, range: NSRange?) -> AttributedString {
-        apply(to: source, adding: false, range: range)
-    }
-    
-    /// Parse tags and render the attributed string with the styles defined into the receiver.
-    ///
-    /// - Parameters:
-    ///   - attrStr: source attributed string
-    ///   - adding: `true` to add styles defined to existing styles, `false` to replace any existing style inside tags.
-    ///   - range: range of operation, `nil` for entire string.
-    /// - Returns: modified attributed string, same instance of the `source`.
-    public mutating func apply(to attrStr: AttributedString, adding: Bool, range: NSRange?) -> AttributedString {
-        do {
-            xmlParser = XMLStringBuilder(styleXML: self, string: attrStr.string)
-            return try xmlParser?.parse() ?? AttributedString()
-        } catch {
-            debugPrint("Failed to generate attributed string from xml: \(error)")
-            return attrStr
-        }
-    }
-    
-    // MARK: --
-    
-    @discardableResult
-    public func remove(from source: AttributedString, range: NSRange?) -> AttributedString {
-        /*attributes.keys.forEach({
-            source.removeAttribute($0, range: (range ?? NSMakeRange(0, source.length)))
-        })
-        return source.applyTextTransform(textTransforms)*/
-    
-        return StyleDecorator.remove(style: self, from: source, range: range)
-       // return applyTextTransform(textTransforms, to: source)
-    }
-    
+
 }

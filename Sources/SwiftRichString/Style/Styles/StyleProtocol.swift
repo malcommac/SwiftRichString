@@ -48,51 +48,23 @@ public protocol StyleProtocol {
 }
 
 public extension StyleProtocol {
-	/*
-	func set(to source: String, range: NSRange?) -> AttributedString {
-		let attributedText = NSMutableAttributedString(string: source)
-		fontStyle?.addAttributes(to: attributedText, range: nil)
-		attributedText.addAttributes(attributes, range: (range ?? NSMakeRange(0, attributedText.length)))
-        return applyTextTransform(textTransforms, to: attributedText)
-	}
-	
-	func add(to source: AttributedString, range: NSRange?) -> AttributedString {
-		fontStyle?.addAttributes(to: source, range: range)
-		source.addAttributes(attributes, range: (range ?? NSMakeRange(0, source.length)))
-        return applyTextTransform(textTransforms, to: source)
-	}
-	
-	@discardableResult
-	func set(to source: AttributedString, range: NSRange?) -> AttributedString {
-		fontStyle?.addAttributes(to: source, range: range)
-		source.addAttributes(attributes, range: (range ?? NSMakeRange(0, source.length)))
-        return applyTextTransform(textTransforms, to: source)
-	}
-	
-	@discardableResult
-	func remove(from source: AttributedString, range: NSRange?) -> AttributedString {
-		attributes.keys.forEach({
-			source.removeAttribute($0, range: (range ?? NSMakeRange(0, source.length)))
-		})
-        return applyTextTransform(textTransforms, to: source)
-	}
     
-    private func applyTextTransform(_ transforms: [TextTransform]?, to string: AttributedString) -> AttributedString {
-        guard let transforms = textTransforms else {
-            return string
-        }
-        
-        let mutable = string.mutableStringCopy()
-        let fullRange = NSRange(location: 0, length: mutable.length)
-        mutable.enumerateAttributes(in: fullRange, options: [], using: { (_, range, _) in
-            var substring = mutable.attributedSubstring(from: range).string
-            transforms.forEach {
-                substring = $0.transformer(substring)
-            }
-            mutable.replaceCharacters(in: range, with: substring)
-        })
-        
-        return mutable
-    }*/
-	
+    func set(to source: String, range: NSRange?) -> AttributedString {
+        StyleDecorator.set(style: self, to: source, range: range)
+    }
+    
+    func add(to source: AttributedString, range: NSRange?) -> AttributedString {
+        StyleDecorator.add(style: self, to: source, range: range)
+    }
+    
+    @discardableResult
+    func set(to source: AttributedString, range: NSRange?) -> AttributedString {
+        StyleDecorator.set(style: self, to: source, range: range)
+    }
+    
+    @discardableResult
+    func remove(from source: AttributedString, range: NSRange?) -> AttributedString {
+        StyleDecorator.remove(style: self, from: source, range: range)
+    }
+    
 }
