@@ -7,34 +7,41 @@
 
 import Foundation
 
-public protocol StylableString {
+// MARK: - StyleDecorable
+
+public protocol StyleDecorable {
     
+    /// Return an attributed string from a stylable source data.
+    /// - Parameter attributes: attribures
     func attributedString(_ attributes: [NSAttributedString.Key: Any]?) -> AttributedString
     
 }
 
-extension String: StylableString {
+extension String: StyleDecorable {
     
     public func attributedString(_ attributes: [NSAttributedString.Key : Any]? = nil) -> AttributedString {
+        // transform to attributed string
         AttributedString(string: self, attributes: attributes)
     }
     
 }
 
-extension AttributedString: StylableString {
+extension AttributedString: StyleDecorable {
     
     public func attributedString(_ attributes: [NSAttributedString.Key : Any]? = nil) -> AttributedString {
         if let attributes = attributes {
             self.addAttributes(attributes, range: NSMakeRange(0, length))
         }
-        return self
+        return self // just return self because it's mutable
     }
     
 }
 
+// MARK: - StyleDecorator
+
 internal enum StyleDecorator {
     
-    static func set(regexStyle style: StyleRegEx, to str: StylableString, add: Bool, range: NSRange?) -> AttributedString {
+    static func set(regexStyle style: StyleRegEx, to str: StyleDecorable, add: Bool, range: NSRange?) -> AttributedString {
         let attributedSource = str.attributedString(style.baseStyle?.attributes)
         let rangeValue = (range ?? NSMakeRange(0, attributedSource.length))
         
@@ -53,7 +60,7 @@ internal enum StyleDecorator {
         return attributedSource
     }
     
-    static func set(style: StyleProtocol?, to source: StylableString, range: NSRange?) -> AttributedString {
+    static func set(style: StyleProtocol?, to source: StyleDecorable, range: NSRange?) -> AttributedString {
         switch style {
         case let xmlStyle as StyleXML:
             return set(xmlStyle: xmlStyle, to: source, range: range)
@@ -66,7 +73,7 @@ internal enum StyleDecorator {
         }
     }
     
-    static func set(xmlStyle: StyleXML, to source: StylableString, range: NSRange?) -> AttributedString {
+    static func set(xmlStyle: StyleXML, to source: StyleDecorable, range: NSRange?) -> AttributedString {
         let attributedString = source.attributedString(nil)
         
         do {
@@ -78,7 +85,7 @@ internal enum StyleDecorator {
         }
     }
     
-    static func set(plainStyle style: Style?, to source: StylableString, range: NSRange?) -> AttributedString {
+    static func set(plainStyle style: Style?, to source: StyleDecorable, range: NSRange?) -> AttributedString {
         let attributedSource = source.attributedString(nil)
         guard let style = style else { return attributedSource }
 
@@ -87,7 +94,7 @@ internal enum StyleDecorator {
         return StyleDecorator.applyTextTransform(style.textTransforms, to: attributedSource)
     }
     
-    static func add(style: StyleProtocol?, to source: StylableString, range: NSRange?) -> AttributedString {
+    static func add(style: StyleProtocol?, to source: StyleDecorable, range: NSRange?) -> AttributedString {
         let attributedSource = source.attributedString(nil)
         guard let style = style else { return attributedSource }
 
@@ -97,14 +104,14 @@ internal enum StyleDecorator {
     }
     
     @discardableResult
-    static func remove(style: StyleProtocol?, from source: StylableString, range: NSRange?) -> AttributedString {
+    static func remove(style: StyleProtocol?, from source: StyleDecorable, range: NSRange?) -> AttributedString {
         let allKeys = (style?.attributes.keys != nil ? Array(style!.attributes.keys) : nil)
         let attributedSource = StyleDecorator.remove(attributes: allKeys, from: source, range: range)
         return StyleDecorator.applyTextTransform(style?.textTransforms, to: attributedSource)
     }
     
     @discardableResult
-    static func remove(attributes keys: [NSAttributedString.Key]?, from source: StylableString, range: NSRange?) -> AttributedString {
+    static func remove(attributes keys: [NSAttributedString.Key]?, from source: StyleDecorable, range: NSRange?) -> AttributedString {
         let attributedSource = source.attributedString(nil)
         keys?.forEach({
             attributedSource.removeAttribute($0, range: (range ?? NSMakeRange(0, attributedSource.length)))

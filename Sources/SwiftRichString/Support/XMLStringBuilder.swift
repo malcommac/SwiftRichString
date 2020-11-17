@@ -49,7 +49,7 @@ public struct XMLParsingOptions: OptionSet {
     
 }
 
-public class XMLStringBuilder {
+internal class XMLStringBuilder {
     
     // MARK: - Public Properties
     
