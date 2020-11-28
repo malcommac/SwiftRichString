@@ -10,6 +10,10 @@ let package = Package(
         .library(
             name: "SwiftRichString",
             targets: ["SwiftRichString"]),
+        .library(
+            name: "SwiftRichString-Dynamic",
+            type: .dynamic,
+            targets: ["SwiftRichString"]),
     ],
     dependencies: [
         // Dependencies declare other packages that this package depends on.
