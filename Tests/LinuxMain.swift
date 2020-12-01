@@ -2,5 +2,6 @@ import XCTest
 @testable import SwiftRichStringTests
 
 XCTMain([
-    testCase(SwiftRichStringTests.allTests),
+    testCase(FontDataTests.allTests),
+    testCase(StyleTests.allTests),
 ])
