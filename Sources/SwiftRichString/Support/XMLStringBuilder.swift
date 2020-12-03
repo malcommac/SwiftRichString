@@ -133,10 +133,6 @@ internal class XMLStringBuilder {
     }
     
     private func addNewTextFragment() {
-        guard !currentString.isEmpty else {
-            return
-        }
-        
         var attributedFragment = AttributedString(string: currentString)
         tags.forEach { tag in
             guard let style = tag.style else {
