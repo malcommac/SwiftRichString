@@ -101,6 +101,12 @@ internal class XMLStringBuilder {
     private func xmlEventHandler(_ context: HTMLSAXParseContext, _ event: HTMLSAXParser.Event) {
         switch event {
         case .startElement(let name, let attributes):
+            // Append base style tag to apply the base style to the entire string if set
+            if let baseStyle = styleXML.baseStyle {
+                let baseStyleTag = XMLDynamicStyle(tag: "root", style: baseStyle, xmlAttributes: [:])
+                tags.append(baseStyleTag)
+            }
+            
             didStartNewElementWithName(name, attributes: attributes)
         case .endElement(let name):
             didEndElementWithName(name)
@@ -122,7 +128,6 @@ internal class XMLStringBuilder {
         
         addNewTextFragment()
 
-        // print("didStart [\(name)]")
         let tag = XMLDynamicStyle(tag: name, style: styles[name], xmlAttributes: attributes)
         tags.append(tag)
     }
