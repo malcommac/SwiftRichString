@@ -11,7 +11,7 @@ It provides convenient way to store styles you can reuse in your app's UI elemen
 
 |  	| Features Highlights 	|
 |---	|---------------------------------------------------------------------------------	|
-| 🦄 	| Easy styling and typography managment with coincise declarative syntax	|
+| 🦄 	| Easy styling and typography management with coincise declarative syntax	|
 | 🏞 	| Attach local images (lazy/static) and remote images inside text 	|
 | 🧬 	| Fast & high customizable XML/HTML tagged string rendering 	|
 | 🌟 	| Apply text transforms within styles	|
@@ -33,7 +33,7 @@ let attributedText = "Hello World!".set(style: style) // et voilà!
 ```
 
 ### XML/HTML tag based rendering
-SwiftRichString allows you to render complex strings by parsing text's tags: each style will be identified by an unique name (used inside the tag) and you can create a `StyleXML` (was `StyleGroup`) which allows you to encapsulate all of them and reuse as you need (clearly you can register it globally).
+SwiftRichString allows you to render complex strings by parsing text's tags: each style will be identified by a unique name (used inside the tag) and you can create a `StyleXML` (was `StyleGroup`) which allows you to encapsulate all of them and reuse as you need (clearly you can register it globally).
 
 ```swift
 // Create your own styles
@@ -114,7 +114,7 @@ let attrString = "Some text".set(style: style) // attributed string
 
 ### `StyleXML`: Apply styles for tag-based complex string
 
-`Style` instances are anonymous; if you want to use a style instance to render a tag-based plain string you need to include it inside a `StyleXML`. You can consider a `StyleXML` as a container of `Styles` (but, in fact, thanks to the conformance to a common `StyleProtocol`'s protocol your group may contains other sub-groups too).
+`Style` instances are anonymous; if you want to use a style instance to render a tag-based plain string you need to include it inside a `StyleXML`. You can consider a `StyleXML` as a container of `Styles` (but, in fact, thanks to the conformance to a common `StyleProtocol`'s protocol your group may contain other sub-groups too).
 
 ```swift
 let bodyStyle: Style = ...
@@ -322,7 +322,7 @@ let subStyle = bold.byAdding {
 
 ### Conforming to `Dynamic Type`
 
-To support your fonts/text to dynammically scale based on the users preffered content size, you can implement style's `dynamicText` property. UIFontMetrics properties are wrapped inside `DynamicText` class.
+To support your fonts/text to dynamically scale based on the users preferred content size, you can implement style's `dynamicText` property. UIFontMetrics properties are wrapped inside `DynamicText` class.
 
 
 ```swift
@@ -342,7 +342,7 @@ let style = Style {
 
 SwiftRichString is also able to parse and render xml tagged strings to produce a valid `NSAttributedString` instance. This is particularly useful when you receive dynamic strings from remote services and you need to produce a rendered string easily.
 
-In order to render an XML string you need to create a compisition of all styles you are planning to render in a single `StyleXML` instance and apply it to your source string as just you made for a single `Style`.
+In order to render an XML string you need to create a composition of all styles you are planning to render in a single `StyleXML` instance and apply it to your source string as just you made for a single `Style`.
 
 For example:
 
@@ -413,8 +413,8 @@ let groupStyle = StyleXML.init(base: baseStyle, ["b" : boldStyle, "i": italicSty
 groupStyle.xmlAttributesResolver = MyXMLDynamicAttributesResolver()
 ```
 
-The following example define the behaviour for a non known tag called `rainbow`.  
-Specifically it alter the string by setting a custom color for each letter of the source string.
+The following example defines the behaviour for a non known tag called `rainbow`.  
+Specifically it alters the string by setting a custom color for each letter of the source string.
 
 ```swift
 open class MyXMLDynamicAttributesResolver: XMLDynamicAttributesResolver {
@@ -515,7 +515,7 @@ let remoteTextAndImage = AttributedString(imageURL: "http://...")
 let finalString = "...".set(style: myStyle) + remoteTextAndImage + " some other text"
 ```
 
-Images can also be loaded by rending an XML string by using the `img` tag (with `named` tag for local resource and `url` for remote url).  
+Images can also be loaded by rendering an XML string by using the `img` tag (with `named` tag for local resource and `url` for remote url).  
 `rect` parameter is optional and allows you to specify resize and relocation of the resource.
 
 ```swift
