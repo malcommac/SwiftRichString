@@ -96,6 +96,18 @@ open class StandardXMLAttributesResolver: XMLDynamicAttributesResolver {
         let finalStyleToApply = Style()
         xmlStyle.enumerateAttributes { key, value  in
             switch key {
+				case "style":
+					let styles = value.split(separator: ";")
+					for style in styles {
+						let styleElements = style.split(separator: ":")
+						if styleElements.count == 2 {
+							if styleElements[0] == "color" {
+								finalStyleToApply.color = Color(hexString: String(styleElements[1]))
+								break
+							}
+						}
+					}
+
                 case "color": // color support
                     finalStyleToApply.color = Color(hexString: value)
                 
