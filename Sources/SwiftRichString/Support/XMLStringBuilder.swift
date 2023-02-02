@@ -89,7 +89,10 @@ internal class XMLStringBuilder {
     
     public func parse() throws -> AttributedString {
         do {
-            try xmlParser.parse(string: sourceString, handler: xmlEventHandler)
+            try xmlParser.parse(string: sourceString, handler: { [weak self] (ctx, event) in
+                guard let self = self else { return }
+                self.xmlEventHandler(ctx, event)
+            })
             return attributedString
         } catch {
             throw RichStringError.xmlError(error.localizedDescription)
