@@ -321,7 +321,7 @@ public enum SystemFonts: String, FontConvertible {
 		#elseif os(watchOS)
 		return Font(name: self.rawValue, size: (size ?? WATCHOS_SYSTEMFONT_SIZE))!
 		#else
-		return Font(name: self.rawValue, size: (size ?? Font.systemFontSize))!
+        return Font(name: self.rawValue, size: (size ?? Font.systemFontSize)) ?? Font.systemFont(ofSize: size ?? Font.systemFontSize)
 		#endif
 	}
 
