@@ -299,6 +299,16 @@ public enum SystemFonts: String, FontConvertible {
 	case EuphemiaUCAS_Italic = "EuphemiaUCAS-Italic"
 	case EuphemiaUCAS_Bold = "EuphemiaUCAS-Bold"
 	case DINCondensed_Bold = "DINCondensed-Bold"
+    case SFUIText = "SFUIText"
+    case SFUIText_UltraLight = "SFUIText-UltraLight"
+    case SFUIText_Thin = "SFUIText-Thin"
+    case SFUIText_Light = "SFUIText-Light"
+    case SFUIText_Medium = "SFUIText-Medium"
+    case SFUIText_Semibold = "SFUIText-Semibold"
+    case SFUIText_Bold = "SFUIText-Bold"
+    case SFUIText_Heavy = "SFUIText-Heavy"
+    case SFUIText_Black = "SFUIText-Black"
+
 	
 	
 	/// Transform value to a valid font instance.
@@ -311,7 +321,7 @@ public enum SystemFonts: String, FontConvertible {
 		#elseif os(watchOS)
 		return Font(name: self.rawValue, size: (size ?? WATCHOS_SYSTEMFONT_SIZE))!
 		#else
-		return Font(name: self.rawValue, size: (size ?? Font.systemFontSize))!
+        return Font(name: self.rawValue, size: (size ?? Font.systemFontSize)) ?? Font.systemFont(ofSize: size ?? Font.systemFontSize)
 		#endif
 	}
 
